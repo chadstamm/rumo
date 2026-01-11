@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-type View = 'landing' | 'about' | 'setup' | 'home' | 'synthesis' | 'chat';
+type View = 'landing' | 'setup' | 'dashboard' | 'waves' | 'sweats' | 'synthesis' | 'settings';
 
 interface COSProfile {
   style: string;
@@ -8,119 +8,224 @@ interface COSProfile {
   tone: string;
 }
 
+interface Task {
+  id: number;
+  text: string;
+  category: string;
+  completed: boolean;
+  wave: string;
+}
+
+// WAVES: The five dimensions of fulfillment
+const WAVES = [
+  { id: 'whole', name: 'Whole', desc: 'Integration of all parts of life' },
+  { id: 'accomplished', name: 'Accomplished', desc: 'Meaningful achievement and progress' },
+  { id: 'vital', name: 'Vital', desc: 'Physical energy and health' },
+  { id: 'expressive', name: 'Expressive', desc: 'Creative output and authentic voice' },
+  { id: 'satisfied', name: 'Satisfied', desc: 'Contentment and inner alignment' },
+];
+
+// SWEATS: Daily actions that create movement
+const SWEATS = [
+  { id: 'synthesis', code: 'S', name: 'Synthesis', desc: 'Morning orientation with your Chief of Staff' },
+  { id: 'work', code: 'W', name: 'Work', desc: 'Professional contribution and advancement' },
+  { id: 'energy', code: 'E', name: 'Energy', desc: 'Physical movement and restoration' },
+  { id: 'art', code: 'A', name: 'Art', desc: 'Creative practice and expression' },
+  { id: 'ties', code: 'T', name: 'Ties', desc: 'Relationships and connection' },
+  { id: 'service', code: 'S', name: 'Service', desc: 'Contribution beyond yourself' },
+];
+
 const App = () => {
   const [view, setView] = useState<View>('landing');
   const [cosProfile, setCosProfile] = useState<COSProfile | null>(null);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [waveScores, setWaveScores] = useState<Record<string, number>>({
+    whole: 65,
+    accomplished: 72,
+    vital: 58,
+    expressive: 45,
+    satisfied: 70,
+  });
 
   const handleSetupComplete = (profile: COSProfile) => {
     setCosProfile(profile);
-    setView('home');
+    setView('dashboard');
   };
 
+  // Landing - first visit
   if (view === 'landing') {
-    return <LandingView onContinue={() => setView('about')} hasProfile={!!cosProfile} onSkip={() => setView('home')} />;
+    return <LandingView
+      onSetup={() => setView('setup')}
+      onContinue={() => setView('dashboard')}
+      hasProfile={!!cosProfile}
+    />;
   }
 
-  if (view === 'about') {
-    return <AboutView onContinue={() => setView('setup')} />;
-  }
-
+  // COS Setup
   if (view === 'setup') {
     return <SetupView onComplete={handleSetupComplete} />;
   }
 
-  if (view === 'synthesis') {
-    return <SynthesisView onBack={() => setView('home')} />;
-  }
+  // Main app with sidebar
+  return (
+    <div className="flex h-screen bg-neutral-50">
+      {/* Sidebar */}
+      <aside className="w-56 bg-neutral-900 text-white flex flex-col">
+        <div className="p-6">
+          <p className="text-lg font-light tracking-wide">RUMO</p>
+          <p className="text-xs text-neutral-500 mt-1">direction</p>
+        </div>
 
-  if (view === 'chat') {
-    return <ChatView onBack={() => setView('home')} profile={cosProfile} />;
-  }
+        <nav className="flex-1 px-3 space-y-1">
+          <NavItem
+            active={view === 'dashboard'}
+            onClick={() => setView('dashboard')}
+            label="Overview"
+          />
+          <NavItem
+            active={view === 'synthesis'}
+            onClick={() => setView('synthesis')}
+            label="Synthesis"
+          />
+          <NavItem
+            active={view === 'waves'}
+            onClick={() => setView('waves')}
+            label="WAVES"
+          />
+          <NavItem
+            active={view === 'sweats'}
+            onClick={() => setView('sweats')}
+            label="SWEATS"
+          />
+        </nav>
 
-  return <HomeView
-    onSynthesis={() => setView('synthesis')}
-    onChat={() => setView('chat')}
-    onReconfigure={() => setView('setup')}
-  />;
+        <div className="p-4 border-t border-neutral-800">
+          <button
+            onClick={() => setView('settings')}
+            className="text-sm text-neutral-500 hover:text-white transition-colors"
+          >
+            Settings
+          </button>
+        </div>
+      </aside>
+
+      {/* Main content */}
+      <main className="flex-1 overflow-y-auto">
+        {view === 'dashboard' && (
+          <DashboardView
+            waveScores={waveScores}
+            tasks={tasks}
+            onStartSynthesis={() => setView('synthesis')}
+            hasProfile={!!cosProfile}
+            onSetup={() => setView('setup')}
+          />
+        )}
+        {view === 'synthesis' && (
+          <SynthesisView profile={cosProfile} />
+        )}
+        {view === 'waves' && (
+          <WavesView scores={waveScores} />
+        )}
+        {view === 'sweats' && (
+          <SweatsView tasks={tasks} setTasks={setTasks} />
+        )}
+        {view === 'settings' && (
+          <SettingsView onReconfigure={() => setView('setup')} />
+        )}
+      </main>
+    </div>
+  );
 };
+
+// ============================================
+// NAVIGATION
+// ============================================
+const NavItem = ({ active, onClick, label }: { active: boolean; onClick: () => void; label: string }) => (
+  <button
+    onClick={onClick}
+    className={`w-full text-left px-4 py-3 text-sm transition-colors ${
+      active
+        ? 'text-white bg-neutral-800'
+        : 'text-neutral-400 hover:text-white hover:bg-neutral-800/50'
+    }`}
+  >
+    {label}
+  </button>
+);
 
 // ============================================
 // LANDING
 // ============================================
-const LandingView = ({ onContinue, hasProfile, onSkip }: { onContinue: () => void; hasProfile: boolean; onSkip: () => void }) => {
-  return (
-    <div className="min-h-screen bg-neutral-950 text-white flex flex-col justify-between px-8 py-12">
-      <div />
+const LandingView = ({ onSetup, onContinue, hasProfile }: {
+  onSetup: () => void;
+  onContinue: () => void;
+  hasProfile: boolean;
+}) => (
+  <div className="min-h-screen bg-neutral-900 text-white">
+    <div className="max-w-4xl mx-auto px-8 py-20">
 
-      <div className="max-w-2xl">
-        <p className="text-sm text-neutral-500 tracking-wide mb-12">RUMO</p>
+      <p className="text-sm text-neutral-500 tracking-wide mb-16">RUMO</p>
 
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-light leading-snug mb-8">
-          Most people aren't overwhelmed.<br />
-          <span className="text-neutral-500">They're misaligned.</span>
-        </h1>
+      <h1 className="text-4xl md:text-5xl font-light leading-tight mb-8">
+        Direction before motion.
+      </h1>
 
-        <p className="text-lg text-neutral-400 leading-relaxed mb-16 max-w-lg">
-          RUMO is a personal navigation system. It helps you see where you stand, what matters now, and what direction makes sense next.
+      <div className="max-w-2xl space-y-6 text-lg text-neutral-400 leading-relaxed mb-16">
+        <p>
+          Most people move fast without knowing where they're headed.
+          They optimise without orientation.
         </p>
+        <p>
+          RUMO helps you find your direction first. Then it helps you move—through
+          the <span className="text-white">WAVES</span> of fulfillment you're working toward,
+          and the daily <span className="text-white">SWEATS</span> that get you there.
+        </p>
+        <p>
+          It starts with your Chief of Staff—an AI configured to how you think,
+          available each morning to help you orient your day.
+        </p>
+      </div>
 
-        <div className="flex gap-6">
+      <div className="space-y-4">
+        <button
+          onClick={onSetup}
+          className="block text-lg text-white border-b border-neutral-700 pb-2 hover:border-white transition-colors"
+        >
+          {hasProfile ? 'Reconfigure Chief of Staff' : 'Set up your Chief of Staff'}
+        </button>
+
+        {hasProfile && (
           <button
             onClick={onContinue}
-            className="text-white text-lg transition-opacity duration-300 hover:opacity-60"
+            className="block text-lg text-neutral-500 hover:text-white transition-colors"
           >
-            Begin
+            Continue to dashboard
           </button>
-
-          {hasProfile && (
-            <button
-              onClick={onSkip}
-              className="text-neutral-500 text-lg transition-opacity duration-300 hover:opacity-60"
-            >
-              Continue
-            </button>
-          )}
-        </div>
+        )}
       </div>
 
-      <p className="text-xs text-neutral-700">
-        A personal navigation system
-      </p>
-    </div>
-  );
-};
-
-// ============================================
-// ABOUT
-// ============================================
-const AboutView = ({ onContinue }: { onContinue: () => void }) => {
-  return (
-    <div className="min-h-screen bg-white flex items-center px-8">
-      <div className="max-w-xl">
-        <p className="text-sm text-neutral-400 mb-12">About</p>
-
-        <div className="space-y-6 text-lg text-neutral-700 leading-relaxed mb-16">
-          <p>
-            RUMO pairs you with a Chief of Staff—an AI configured to match how you think.
-          </p>
-          <p>
-            It won't manage tasks or send reminders. It helps you maintain orientation when things get noisy.
-          </p>
-          <p>
-            You'll answer three questions to set it up.
-          </p>
+      {/* Brief framework intro */}
+      <div className="mt-32 pt-16 border-t border-neutral-800">
+        <div className="grid md:grid-cols-2 gap-16">
+          <div>
+            <p className="text-sm text-neutral-500 mb-4">WAVES</p>
+            <p className="text-neutral-400 leading-relaxed">
+              Five dimensions of fulfillment: Whole, Accomplished, Vital, Expressive, Satisfied.
+              These are the outcomes you're moving toward—not goals to achieve, but states to inhabit.
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-neutral-500 mb-4">SWEATS</p>
+            <p className="text-neutral-400 leading-relaxed">
+              Six daily practices: Synthesis, Work, Energy, Art, Ties, Service.
+              These are the actions that create movement. Synthesis comes first—your morning orientation.
+            </p>
+          </div>
         </div>
-
-        <button
-          onClick={onContinue}
-          className="text-neutral-900 text-lg transition-opacity duration-300 hover:opacity-60"
-        >
-          Set up
-        </button>
       </div>
     </div>
-  );
-};
+  </div>
+);
 
 // ============================================
 // SETUP
@@ -131,12 +236,12 @@ const SetupView = ({ onComplete }: { onComplete: (profile: COSProfile) => void }
 
   const questions = [
     {
-      question: "How do you prefer to think through problems?",
+      question: "How do you prefer to work through problems?",
       options: [
-        { label: "By talking them through", value: "verbal" },
-        { label: "By writing them down", value: "written" },
-        { label: "By seeing the full picture first", value: "visual" },
-        { label: "By breaking them into steps", value: "sequential" }
+        { label: "Talking them through", value: "verbal" },
+        { label: "Writing them down", value: "written" },
+        { label: "Seeing the full picture first", value: "visual" },
+        { label: "Breaking into steps", value: "sequential" }
       ]
     },
     {
@@ -145,11 +250,11 @@ const SetupView = ({ onComplete }: { onComplete: (profile: COSProfile) => void }
         { label: "Good questions", value: "questions" },
         { label: "Direct feedback", value: "direct" },
         { label: "Space to process", value: "space" },
-        { label: "A clearer frame", value: "reframe" }
+        { label: "A different frame", value: "reframe" }
       ]
     },
     {
-      question: "What tone works best for you?",
+      question: "What tone works best?",
       options: [
         { label: "Warm", value: "warm" },
         { label: "Direct", value: "direct" },
@@ -175,10 +280,10 @@ const SetupView = ({ onComplete }: { onComplete: (profile: COSProfile) => void }
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex items-center px-8 py-16">
-      <div className="max-w-xl w-full">
+    <div className="min-h-screen bg-white flex items-center px-8">
+      <div className="max-w-lg w-full">
         <p className="text-sm text-neutral-400 mb-16">
-          {step + 1} / {questions.length}
+          Chief of Staff — {step + 1} / {questions.length}
         </p>
 
         <h2 className="text-2xl font-light text-neutral-900 mb-12">
@@ -190,7 +295,7 @@ const SetupView = ({ onComplete }: { onComplete: (profile: COSProfile) => void }
             <button
               key={i}
               onClick={() => handleSelect(option.value)}
-              className="w-full py-4 px-5 text-left text-neutral-700 bg-white border border-neutral-200 transition-all duration-200 hover:border-neutral-400"
+              className="w-full py-4 px-5 text-left text-neutral-700 border border-neutral-200 transition-all duration-200 hover:border-neutral-400"
             >
               {option.label}
             </button>
@@ -202,41 +307,107 @@ const SetupView = ({ onComplete }: { onComplete: (profile: COSProfile) => void }
 };
 
 // ============================================
-// HOME
+// DASHBOARD
 // ============================================
-const HomeView = ({ onSynthesis, onChat, onReconfigure }: {
-  onSynthesis: () => void;
-  onChat: () => void;
-  onReconfigure: () => void;
+const DashboardView = ({
+  waveScores,
+  tasks,
+  onStartSynthesis,
+  hasProfile,
+  onSetup
+}: {
+  waveScores: Record<string, number>;
+  tasks: Task[];
+  onStartSynthesis: () => void;
+  hasProfile: boolean;
+  onSetup: () => void;
 }) => {
+  const completedToday = tasks.filter(t => t.completed).length;
+  const totalToday = tasks.length;
+
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-8">
-      <div className="max-w-md w-full">
-        <p className="text-sm text-neutral-400 mb-2">RUMO</p>
-        <div className="w-8 h-px bg-neutral-200 mb-16" />
+    <div className="p-8 max-w-5xl">
+      <div className="mb-12">
+        <p className="text-sm text-neutral-400 mb-2">Overview</p>
+        <h1 className="text-2xl font-light text-neutral-900">
+          {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+        </h1>
+      </div>
 
-        <div className="space-y-6 mb-20">
+      {/* COS prompt if not configured */}
+      {!hasProfile && (
+        <div className="mb-12 p-6 bg-neutral-100 border border-neutral-200">
+          <p className="text-neutral-700 mb-4">
+            Set up your Chief of Staff to begin daily Synthesis.
+          </p>
           <button
-            onClick={onSynthesis}
-            className="w-full py-4 text-left text-lg text-neutral-900 border-b border-neutral-100 transition-opacity duration-200 hover:opacity-60"
+            onClick={onSetup}
+            className="text-neutral-900 border-b border-neutral-400 pb-1 hover:border-neutral-900 transition-colors"
           >
-            Daily orientation
-          </button>
-
-          <button
-            onClick={onChat}
-            className="w-full py-4 text-left text-lg text-neutral-600 border-b border-neutral-100 transition-opacity duration-200 hover:opacity-60"
-          >
-            Talk with Chief of Staff
+            Set up
           </button>
         </div>
+      )}
 
-        <button
-          onClick={onReconfigure}
-          className="text-sm text-neutral-300 transition-opacity duration-200 hover:opacity-60"
-        >
-          Adjust settings
-        </button>
+      {/* Synthesis prompt */}
+      {hasProfile && (
+        <div className="mb-12 p-6 bg-neutral-900 text-white">
+          <p className="text-sm text-neutral-400 mb-2">Synthesis</p>
+          <p className="text-lg mb-4">Begin your morning orientation.</p>
+          <button
+            onClick={onStartSynthesis}
+            className="text-white border-b border-neutral-600 pb-1 hover:border-white transition-colors"
+          >
+            Start
+          </button>
+        </div>
+      )}
+
+      {/* WAVES summary */}
+      <div className="mb-12">
+        <p className="text-sm text-neutral-400 mb-6">WAVES</p>
+        <div className="grid grid-cols-5 gap-4">
+          {WAVES.map(wave => (
+            <div key={wave.id} className="text-center">
+              <p className="text-2xl font-light text-neutral-900 mb-1">
+                {waveScores[wave.id]}
+              </p>
+              <p className="text-xs text-neutral-500">{wave.name}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Today's SWEATS */}
+      <div>
+        <div className="flex justify-between items-baseline mb-6">
+          <p className="text-sm text-neutral-400">Today's SWEATS</p>
+          <p className="text-sm text-neutral-400">
+            {completedToday} / {totalToday || '—'}
+          </p>
+        </div>
+
+        {tasks.length === 0 ? (
+          <p className="text-neutral-400 py-8">
+            No actions set. Run Synthesis to plan your day.
+          </p>
+        ) : (
+          <div className="space-y-2">
+            {tasks.map(task => (
+              <div
+                key={task.id}
+                className={`p-4 border ${task.completed ? 'border-neutral-200 bg-neutral-50' : 'border-neutral-200'}`}
+              >
+                <div className="flex justify-between">
+                  <span className={task.completed ? 'text-neutral-400 line-through' : 'text-neutral-900'}>
+                    {task.text}
+                  </span>
+                  <span className="text-xs text-neutral-400 uppercase">{task.category}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -245,44 +416,18 @@ const HomeView = ({ onSynthesis, onChat, onReconfigure }: {
 // ============================================
 // SYNTHESIS
 // ============================================
-const SynthesisView = ({ onBack }: { onBack: () => void }) => {
-  return (
-    <div className="min-h-screen bg-white flex items-center px-8">
-      <div className="max-w-xl">
-        <button
-          onClick={onBack}
-          className="text-sm text-neutral-400 mb-16 transition-opacity duration-200 hover:opacity-60"
-        >
-          Back
-        </button>
-
-        <p className="text-sm text-neutral-400 mb-4">Daily orientation</p>
-
-        <p className="text-lg text-neutral-600 leading-relaxed mb-12">
-          A structured review to help you see where you stand and decide what matters today.
-        </p>
-
-        <p className="text-neutral-400">
-          Available soon.
-        </p>
-      </div>
-    </div>
-  );
-};
-
-// ============================================
-// CHAT
-// ============================================
-const ChatView = ({ onBack, profile }: { onBack: () => void; profile: COSProfile | null }) => {
-  const getOpening = () => {
-    if (!profile) return "What's on your mind?";
-    return "What would be useful to think through?";
-  };
-
+const SynthesisView = ({ profile }: { profile: COSProfile | null }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<Array<{ role: 'user' | 'cos'; text: string }>>([
-    { role: 'cos', text: getOpening() }
+    { role: 'cos', text: "What would be useful to think through this morning?" }
   ]);
   const [input, setInput] = useState('');
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -295,29 +440,25 @@ const ChatView = ({ onBack, profile }: { onBack: () => void; profile: COSProfile
         "What's the core tension there?",
         "What would clarity look like?",
         "What's actually at stake?",
-        "What are you not saying?",
-        "Where's the misalignment?"
+        "Where's the misalignment?",
+        "What's one thing that would make today useful?"
       ];
       setMessages(prev => [...prev, {
         role: 'cos',
         text: responses[Math.floor(Math.random() * responses.length)]
       }]);
-    }, 800);
+    }, 600);
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <div className="px-8 py-6 border-b border-neutral-100">
-        <button
-          onClick={onBack}
-          className="text-sm text-neutral-400 transition-opacity duration-200 hover:opacity-60"
-        >
-          Back
-        </button>
+    <div className="h-full flex flex-col">
+      <div className="p-8 border-b border-neutral-200">
+        <p className="text-sm text-neutral-400 mb-2">Synthesis</p>
+        <p className="text-lg text-neutral-900">Morning orientation</p>
       </div>
 
-      <div className="flex-1 px-8 py-10 overflow-y-auto">
-        <div className="max-w-xl space-y-8">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto p-8">
+        <div className="max-w-2xl space-y-6">
           {messages.map((msg, i) => (
             <div key={i}>
               <p className={`text-lg leading-relaxed ${
@@ -330,20 +471,151 @@ const ChatView = ({ onBack, profile }: { onBack: () => void; profile: COSProfile
         </div>
       </div>
 
-      <div className="px-8 py-6 border-t border-neutral-100">
-        <div className="max-w-xl">
+      <div className="p-8 border-t border-neutral-200">
+        <div className="max-w-2xl flex gap-4">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            placeholder=""
-            className="w-full text-lg bg-transparent text-neutral-900 outline-none"
+            className="flex-1 text-lg bg-transparent text-neutral-900 outline-none border-b border-neutral-200 pb-2 focus:border-neutral-900 transition-colors"
           />
+          <button
+            onClick={handleSend}
+            className="text-neutral-400 hover:text-neutral-900 transition-colors"
+          >
+            Send
+          </button>
         </div>
       </div>
     </div>
   );
 };
+
+// ============================================
+// WAVES
+// ============================================
+const WavesView = ({ scores }: { scores: Record<string, number> }) => (
+  <div className="p-8 max-w-3xl">
+    <div className="mb-12">
+      <p className="text-sm text-neutral-400 mb-2">WAVES</p>
+      <p className="text-lg text-neutral-600 leading-relaxed">
+        Five dimensions of fulfillment. These aren't goals to achieve—they're states to move toward and inhabit.
+      </p>
+    </div>
+
+    <div className="space-y-8">
+      {WAVES.map(wave => (
+        <div key={wave.id} className="border-b border-neutral-100 pb-8">
+          <div className="flex justify-between items-baseline mb-2">
+            <h3 className="text-xl font-light text-neutral-900">{wave.name}</h3>
+            <span className="text-2xl font-light text-neutral-400">{scores[wave.id]}</span>
+          </div>
+          <p className="text-neutral-500 mb-4">{wave.desc}</p>
+          <div className="h-1 bg-neutral-100">
+            <div
+              className="h-full bg-neutral-400 transition-all duration-500"
+              style={{ width: `${scores[wave.id]}%` }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+// ============================================
+// SWEATS
+// ============================================
+const SweatsView = ({ tasks, setTasks }: { tasks: Task[]; setTasks: (tasks: Task[]) => void }) => {
+  const [activeCategory, setActiveCategory] = useState('synthesis');
+
+  const toggleTask = (id: number) => {
+    setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+  };
+
+  const categoryTasks = tasks.filter(t => t.category === activeCategory);
+
+  return (
+    <div className="p-8 max-w-4xl">
+      <div className="mb-12">
+        <p className="text-sm text-neutral-400 mb-2">SWEATS</p>
+        <p className="text-lg text-neutral-600 leading-relaxed">
+          Six daily practices that create movement. Synthesis comes first—your morning orientation.
+        </p>
+      </div>
+
+      {/* Category selector */}
+      <div className="flex gap-1 mb-8 border-b border-neutral-200">
+        {SWEATS.map(cat => (
+          <button
+            key={cat.id}
+            onClick={() => setActiveCategory(cat.id)}
+            className={`px-4 py-3 text-sm transition-colors ${
+              activeCategory === cat.id
+                ? 'text-neutral-900 border-b-2 border-neutral-900 -mb-px'
+                : 'text-neutral-400 hover:text-neutral-600'
+            }`}
+          >
+            {cat.name}
+          </button>
+        ))}
+      </div>
+
+      {/* Category description */}
+      <div className="mb-8">
+        <p className="text-neutral-500">
+          {SWEATS.find(c => c.id === activeCategory)?.desc}
+        </p>
+      </div>
+
+      {/* Tasks for category */}
+      {categoryTasks.length === 0 ? (
+        <p className="text-neutral-400 py-8">
+          No {activeCategory} actions today.
+        </p>
+      ) : (
+        <div className="space-y-2">
+          {categoryTasks.map(task => (
+            <button
+              key={task.id}
+              onClick={() => toggleTask(task.id)}
+              className={`w-full text-left p-4 border transition-colors ${
+                task.completed
+                  ? 'border-neutral-200 bg-neutral-50 text-neutral-400'
+                  : 'border-neutral-200 hover:border-neutral-400'
+              }`}
+            >
+              <span className={task.completed ? 'line-through' : ''}>
+                {task.text}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ============================================
+// SETTINGS
+// ============================================
+const SettingsView = ({ onReconfigure }: { onReconfigure: () => void }) => (
+  <div className="p-8 max-w-xl">
+    <p className="text-sm text-neutral-400 mb-12">Settings</p>
+
+    <div className="space-y-8">
+      <div>
+        <p className="text-neutral-900 mb-2">Chief of Staff</p>
+        <button
+          onClick={onReconfigure}
+          className="text-neutral-500 border-b border-neutral-300 pb-1 hover:text-neutral-900 hover:border-neutral-900 transition-colors"
+        >
+          Reconfigure
+        </button>
+      </div>
+    </div>
+  </div>
+);
 
 export default App;
