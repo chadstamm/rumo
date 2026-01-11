@@ -773,88 +773,786 @@ const RumoLogo = () => (
 );
 
 // ============================================
-// VIEWS: Setup
+// VIEWS: Setup - COS Generator Interview
 // ============================================
+interface COSProfile {
+  stance: string;
+  toneWords: string[];
+  formatPreference: string;
+  planningStyle: string;
+  questionStyle: string;
+  role: string;
+  outcomes: string;
+  decisions: string;
+  uncertainty: string;
+  avoidance: string;
+  constraints: string;
+  goodDay: string;
+  badDay: string;
+  failureModes: string[];
+  protectedValues: string;
+  boundaries: string;
+  accountability: string;
+  currentAIUse: string;
+  idealPartner: string;
+  existingTools: string;
+  primaryLLM: string;
+  optimizationFocus: string;
+}
+
+const SETUP_SECTIONS = [
+  { id: 'stance', title: 'Stance & Style', subtitle: 'How your Chief of Staff should work with you' },
+  { id: 'context', title: 'Context Capture', subtitle: 'Your current situation and priorities' },
+  { id: 'constraints', title: 'Operating Constraints', subtitle: 'What shapes your available capacity' },
+  { id: 'values', title: 'Values & Guardrails', subtitle: 'What your COS should protect' },
+  { id: 'relationship', title: 'AI Relationship', subtitle: 'How you work with AI today' },
+  { id: 'output', title: 'Output Preferences', subtitle: 'How to configure your COS' },
+];
+
 const SetupView = ({ onComplete }: { onComplete: () => void }) => {
-  const [step, setStep] = useState(0);
+  const [section, setSection] = useState(0);
+  const [subStep, setSubStep] = useState(0);
+  const [profile, setProfile] = useState<Partial<COSProfile>>({
+    toneWords: [],
+    failureModes: [],
+  });
+  const [textInput, setTextInput] = useState('');
+  const [showOutput, setShowOutput] = useState(false);
 
-  const questions = [
-    { question: "How do you work through problems?", options: ["Talking through", "Writing down", "Visual overview", "Step by step"] },
-    { question: "What helps when stuck?", options: ["Good questions", "Direct feedback", "Space to process", "Different frame"] },
-    { question: "Preferred tone?", options: ["Warm", "Direct", "Measured", "Neutral"] },
-  ];
+  const TONE_OPTIONS = ['calm', 'direct', 'warm', 'witty', 'formal', 'concise', 'thoughtful', 'measured', 'sharp', 'patient'];
+  const FAILURE_MODES = ['overthinking', 'impulsivity', 'perfectionism', 'distraction', 'people-pleasing', 'avoidance', 'scattered focus', 'overcommitting'];
 
-  const handleSelect = () => {
-    if (step < questions.length - 1) {
-      setStep(step + 1);
+  const updateProfile = (key: keyof COSProfile, value: string | string[]) => {
+    setProfile(prev => ({ ...prev, [key]: value }));
+  };
+
+  const toggleArrayItem = (key: 'toneWords' | 'failureModes', item: string) => {
+    const current = profile[key] || [];
+    if (current.includes(item)) {
+      updateProfile(key, current.filter(i => i !== item));
     } else {
-      onComplete();
+      if (key === 'toneWords' && current.length >= 3) return;
+      updateProfile(key, [...current, item]);
     }
   };
+
+  const handleNext = () => {
+    if (textInput.trim()) {
+      // Save current text input based on section/substep
+      const textFields: Record<string, keyof COSProfile> = {
+        '1-0': 'role',
+        '1-1': 'outcomes',
+        '1-2': 'decisions',
+        '1-3': 'uncertainty',
+        '1-4': 'avoidance',
+        '2-0': 'constraints',
+        '2-1': 'goodDay',
+        '2-2': 'badDay',
+        '3-0': 'protectedValues',
+        '3-1': 'boundaries',
+        '3-2': 'accountability',
+        '4-0': 'currentAIUse',
+        '4-1': 'idealPartner',
+        '4-2': 'existingTools',
+      };
+      const fieldKey = `${section}-${subStep}`;
+      if (textFields[fieldKey]) {
+        updateProfile(textFields[fieldKey], textInput);
+      }
+      setTextInput('');
+    }
+    advanceStep();
+  };
+
+  const advanceStep = () => {
+    const maxSubSteps = [4, 5, 4, 3, 3, 2]; // substeps per section
+    if (subStep < maxSubSteps[section] - 1) {
+      setSubStep(subStep + 1);
+    } else if (section < SETUP_SECTIONS.length - 1) {
+      setSection(section + 1);
+      setSubStep(0);
+    } else {
+      setShowOutput(true);
+    }
+  };
+
+  const handleBack = () => {
+    if (subStep > 0) {
+      setSubStep(subStep - 1);
+    } else if (section > 0) {
+      const maxSubSteps = [4, 5, 4, 3, 3, 2];
+      setSection(section - 1);
+      setSubStep(maxSubSteps[section - 1] - 1);
+    }
+  };
+
+  const totalSteps = 21;
+  const currentStep = [0, 4, 9, 13, 16, 19][section] + subStep;
+
+  if (showOutput) {
+    return <SetupOutputView profile={profile as COSProfile} onComplete={onComplete} />;
+  }
 
   return (
     <div style={{
       minHeight: '100vh',
       background: tokens.colors.bgPrimary,
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: tokens.spacing.md,
+      flexDirection: 'column',
     }}>
-      <div style={{ maxWidth: '400px', width: '100%' }}>
-        {/* Progress */}
-        <div style={{ display: 'flex', gap: '4px', marginBottom: tokens.spacing.xl }}>
-          {questions.map((_, i) => (
-            <div
-              key={i}
-              style={{
-                height: '2px',
-                flex: 1,
-                background: i <= step ? tokens.colors.teal : tokens.colors.border,
-                transition: 'background 0.3s',
-              }}
+      {/* Header */}
+      <div style={{
+        padding: tokens.spacing.md,
+        borderBottom: `1px solid ${tokens.colors.border}`,
+        display: 'flex',
+        alignItems: 'center',
+        gap: tokens.spacing.md,
+      }}>
+        {(section > 0 || subStep > 0) && (
+          <button
+            onClick={handleBack}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: tokens.colors.textMuted,
+              cursor: 'pointer',
+              fontSize: '14px',
+            }}
+          >
+            ← Back
+          </button>
+        )}
+        <div style={{ flex: 1 }}>
+          <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em' }}>
+            CHIEF OF STAFF GENERATOR
+          </p>
+          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary }}>
+            {SETUP_SECTIONS[section].title}
+          </p>
+        </div>
+        <p style={{ fontSize: '12px', color: tokens.colors.textMuted }}>
+          {currentStep + 1} of {totalSteps}
+        </p>
+      </div>
+
+      {/* Progress */}
+      <div style={{ display: 'flex', gap: '2px', padding: `0 ${tokens.spacing.md}`, marginTop: tokens.spacing.sm }}>
+        {SETUP_SECTIONS.map((s, i) => (
+          <div
+            key={s.id}
+            style={{
+              height: '3px',
+              flex: 1,
+              background: i < section ? tokens.colors.teal : i === section ? tokens.colors.bgNavy : tokens.colors.border,
+              borderRadius: '2px',
+              transition: 'background 0.3s',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Content */}
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: tokens.spacing.lg,
+      }}>
+        <div style={{ maxWidth: '520px', width: '100%' }}>
+          {/* Section 0: Stance & Style */}
+          {section === 0 && subStep === 0 && (
+            <SetupQuestion
+              title="What stance should your Chief of Staff take?"
+              subtitle="This defines how they challenge and support you."
+              type="choice"
+              options={[
+                { value: 'challenging', label: 'Challenging', desc: 'Push back, surface blind spots' },
+                { value: 'supporting', label: 'Supporting', desc: 'Steady, clarify, encourage' },
+                { value: 'balanced', label: 'Balanced', desc: 'Support first, challenge when needed' },
+              ]}
+              selected={profile.stance}
+              onSelect={(v) => { updateProfile('stance', v); advanceStep(); }}
             />
-          ))}
+          )}
+          {section === 0 && subStep === 1 && (
+            <SetupQuestion
+              title="Choose 3 words for your COS tone"
+              subtitle="How should your Chief of Staff sound?"
+              type="multi"
+              options={TONE_OPTIONS.map(t => ({ value: t, label: t }))}
+              selected={profile.toneWords}
+              onToggle={(v) => toggleArrayItem('toneWords', v)}
+              onNext={(profile.toneWords?.length || 0) >= 3 ? advanceStep : undefined}
+              nextLabel="Continue"
+            />
+          )}
+          {section === 0 && subStep === 2 && (
+            <SetupQuestion
+              title="How should responses be formatted?"
+              type="choice"
+              options={[
+                { value: 'bullets', label: 'Bullets', desc: 'Concise, scannable' },
+                { value: 'paragraphs', label: 'Short paragraphs', desc: 'More context, flowing' },
+              ]}
+              selected={profile.formatPreference}
+              onSelect={(v) => { updateProfile('formatPreference', v); advanceStep(); }}
+            />
+          )}
+          {section === 0 && subStep === 3 && (
+            <SetupQuestion
+              title="When analyzing a problem..."
+              type="choice"
+              options={[
+                { value: 'plan-first', label: 'Plan first', desc: 'Start with structure and next steps' },
+                { value: 'analysis-first', label: 'Analysis first', desc: 'Understand before prescribing' },
+              ]}
+              selected={profile.planningStyle}
+              onSelect={(v) => { updateProfile('planningStyle', v); advanceStep(); }}
+            />
+          )}
+
+          {/* Section 1: Context Capture */}
+          {section === 1 && subStep === 0 && (
+            <SetupQuestion
+              title="What is your current role?"
+              subtitle="Include multiple roles if relevant."
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="e.g., VP of Product at a Series B startup, also a parent of two"
+              onNext={handleNext}
+            />
+          )}
+          {section === 1 && subStep === 1 && (
+            <SetupQuestion
+              title="What are your top 3 outcomes for the next 90 days?"
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="e.g., Launch v2, hire 2 senior engineers, establish exec team rhythm"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+          {section === 1 && subStep === 2 && (
+            <SetupQuestion
+              title="What are the 3 recurring decisions you make that have the biggest impact?"
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="e.g., Resource allocation, roadmap prioritization, hiring calls"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+          {section === 1 && subStep === 3 && (
+            <SetupQuestion
+              title="Where does uncertainty show up most right now?"
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="What keeps you uncertain or anxious?"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+          {section === 1 && subStep === 4 && (
+            <SetupQuestion
+              title="What do you consistently avoid or delay, even though it matters?"
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="Be honest—this helps your COS know where to push"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+
+          {/* Section 2: Operating Constraints */}
+          {section === 2 && subStep === 0 && (
+            <SetupQuestion
+              title="What constraints are real right now?"
+              subtitle="Time, energy, money, family, attention, health, etc."
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="e.g., Limited bandwidth, young kids, recovering from burnout"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+          {section === 2 && subStep === 1 && (
+            <SetupQuestion
+              title="What does a good day look like?"
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="Describe the texture—energy, accomplishment, presence"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+          {section === 2 && subStep === 2 && (
+            <SetupQuestion
+              title="What does a bad day look like?"
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="What patterns show up when things go wrong?"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+          {section === 2 && subStep === 3 && (
+            <SetupQuestion
+              title="What are your most common failure modes?"
+              subtitle="Select all that apply"
+              type="multi"
+              options={FAILURE_MODES.map(f => ({ value: f, label: f }))}
+              selected={profile.failureModes}
+              onToggle={(v) => toggleArrayItem('failureModes', v)}
+              onNext={advanceStep}
+              nextLabel="Continue"
+            />
+          )}
+
+          {/* Section 3: Values & Guardrails */}
+          {section === 3 && subStep === 0 && (
+            <SetupQuestion
+              title="What values should your Chief of Staff protect at all costs?"
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="e.g., Integrity, family time, creative freedom, health"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+          {section === 3 && subStep === 1 && (
+            <SetupQuestion
+              title="What boundaries should your COS never cross?"
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="e.g., Never encourage overwork, don't schedule during family dinner"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+          {section === 3 && subStep === 2 && (
+            <SetupQuestion
+              title="What kind of accountability actually works for you?"
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="e.g., Gentle reminders, direct callouts, progress tracking"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+
+          {/* Section 4: AI Relationship */}
+          {section === 4 && subStep === 0 && (
+            <SetupQuestion
+              title="How are you currently using AI, and what frustrates you?"
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="Be specific about pain points"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+          {section === 4 && subStep === 1 && (
+            <SetupQuestion
+              title="What would make AI feel like a true partner?"
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="What's missing from your current experience?"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+          {section === 4 && subStep === 2 && (
+            <SetupQuestion
+              title="What tools or systems are already part of your daily life?"
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="e.g., Notion, Linear, Apple Notes, calendar blocking"
+              onNext={handleNext}
+              multiline
+            />
+          )}
+
+          {/* Section 5: Output Preferences */}
+          {section === 5 && subStep === 0 && (
+            <SetupQuestion
+              title="Which LLM are you primarily using?"
+              type="choice"
+              options={[
+                { value: 'chatgpt', label: 'ChatGPT', desc: 'OpenAI' },
+                { value: 'claude', label: 'Claude', desc: 'Anthropic' },
+                { value: 'gemini', label: 'Gemini', desc: 'Google' },
+                { value: 'other', label: 'Other / Multiple', desc: 'Various platforms' },
+              ]}
+              selected={profile.primaryLLM}
+              onSelect={(v) => { updateProfile('primaryLLM', v); advanceStep(); }}
+            />
+          )}
+          {section === 5 && subStep === 1 && (
+            <SetupQuestion
+              title="What should your COS optimize for?"
+              type="choice"
+              options={[
+                { value: 'planning', label: 'Daily Planning', desc: 'Structure, priorities, execution' },
+                { value: 'leadership', label: 'Leadership & Decisions', desc: 'Strategy, stakeholders, judgment' },
+                { value: 'creative', label: 'Writing & Creativity', desc: 'Expression, ideas, craft' },
+                { value: 'balanced', label: 'Balanced', desc: 'All of the above' },
+              ]}
+              selected={profile.optimizationFocus}
+              onSelect={(v) => { updateProfile('optimizationFocus', v); advanceStep(); }}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Question Component for Setup
+const SetupQuestion = ({
+  title,
+  subtitle,
+  type,
+  options,
+  selected,
+  onSelect,
+  onToggle,
+  onNext,
+  nextLabel = 'Continue',
+  value,
+  onChange,
+  placeholder,
+  multiline,
+}: {
+  title: string;
+  subtitle?: string;
+  type: 'choice' | 'multi' | 'text';
+  options?: { value: string; label: string; desc?: string }[];
+  selected?: string | string[];
+  onSelect?: (value: string) => void;
+  onToggle?: (value: string) => void;
+  onNext?: () => void;
+  nextLabel?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  placeholder?: string;
+  multiline?: boolean;
+}) => (
+  <div>
+    <h2 style={{
+      fontSize: '24px',
+      fontWeight: 400,
+      color: tokens.colors.textPrimary,
+      marginBottom: tokens.spacing.xs,
+      lineHeight: 1.3,
+    }}>
+      {title}
+    </h2>
+    {subtitle && (
+      <p style={{
+        fontSize: '14px',
+        color: tokens.colors.textSecondary,
+        marginBottom: tokens.spacing.lg,
+      }}>
+        {subtitle}
+      </p>
+    )}
+
+    {type === 'choice' && options && (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: tokens.spacing.xs }}>
+        {options.map(opt => (
+          <button
+            key={opt.value}
+            onClick={() => onSelect?.(opt.value)}
+            style={{
+              padding: tokens.spacing.sm,
+              background: selected === opt.value ? tokens.colors.bgNavy : tokens.colors.bgCard,
+              border: `1px solid ${selected === opt.value ? tokens.colors.bgNavy : tokens.colors.border}`,
+              borderRadius: tokens.radius.md,
+              cursor: 'pointer',
+              textAlign: 'left',
+              transition: 'all 0.2s',
+            }}
+          >
+            <p style={{
+              fontSize: '16px',
+              fontWeight: 500,
+              color: selected === opt.value ? tokens.colors.textInverse : tokens.colors.textPrimary,
+            }}>
+              {opt.label}
+            </p>
+            {opt.desc && (
+              <p style={{
+                fontSize: '13px',
+                color: selected === opt.value ? 'rgba(255,255,255,0.7)' : tokens.colors.textMuted,
+                marginTop: '2px',
+              }}>
+                {opt.desc}
+              </p>
+            )}
+          </button>
+        ))}
+      </div>
+    )}
+
+    {type === 'multi' && options && (
+      <>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: tokens.spacing.xs }}>
+          {options.map(opt => {
+            const isSelected = Array.isArray(selected) && selected.includes(opt.value);
+            return (
+              <button
+                key={opt.value}
+                onClick={() => onToggle?.(opt.value)}
+                style={{
+                  padding: `${tokens.spacing.xs} ${tokens.spacing.sm}`,
+                  background: isSelected ? tokens.colors.teal : tokens.colors.bgCard,
+                  border: `1px solid ${isSelected ? tokens.colors.teal : tokens.colors.border}`,
+                  borderRadius: tokens.radius.lg,
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  color: isSelected ? tokens.colors.textInverse : tokens.colors.textPrimary,
+                  transition: 'all 0.2s',
+                }}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
+        {onNext && (
+          <button
+            onClick={onNext}
+            style={{
+              marginTop: tokens.spacing.lg,
+              padding: '12px 24px',
+              background: tokens.colors.bgNavy,
+              color: tokens.colors.textInverse,
+              border: 'none',
+              borderRadius: tokens.radius.md,
+              fontSize: '14px',
+              fontWeight: 500,
+              cursor: 'pointer',
+            }}
+          >
+            {nextLabel}
+          </button>
+        )}
+      </>
+    )}
+
+    {type === 'text' && (
+      <>
+        {multiline ? (
+          <textarea
+            value={value}
+            onChange={(e) => onChange?.(e.target.value)}
+            placeholder={placeholder}
+            style={{
+              width: '100%',
+              minHeight: '120px',
+              padding: tokens.spacing.sm,
+              border: `1px solid ${tokens.colors.border}`,
+              borderRadius: tokens.radius.md,
+              fontSize: '16px',
+              lineHeight: 1.5,
+              resize: 'vertical',
+              outline: 'none',
+              fontFamily: 'inherit',
+            }}
+          />
+        ) : (
+          <input
+            type="text"
+            value={value}
+            onChange={(e) => onChange?.(e.target.value)}
+            placeholder={placeholder}
+            style={{
+              width: '100%',
+              padding: tokens.spacing.sm,
+              border: `1px solid ${tokens.colors.border}`,
+              borderRadius: tokens.radius.md,
+              fontSize: '16px',
+              outline: 'none',
+            }}
+          />
+        )}
+        <button
+          onClick={onNext}
+          disabled={!value?.trim()}
+          style={{
+            marginTop: tokens.spacing.md,
+            padding: '12px 24px',
+            background: value?.trim() ? tokens.colors.bgNavy : tokens.colors.border,
+            color: value?.trim() ? tokens.colors.textInverse : tokens.colors.textMuted,
+            border: 'none',
+            borderRadius: tokens.radius.md,
+            fontSize: '14px',
+            fontWeight: 500,
+            cursor: value?.trim() ? 'pointer' : 'not-allowed',
+          }}
+        >
+          Continue
+        </button>
+      </>
+    )}
+  </div>
+);
+
+// Output View for Generated COS
+const SetupOutputView = ({ profile, onComplete }: { profile: COSProfile; onComplete: () => void }) => {
+  const [copied, setCopied] = useState(false);
+
+  const generateSystemPrompt = () => {
+    const stanceDesc = {
+      challenging: 'Push back on weak reasoning, surface blind spots, and challenge assumptions',
+      supporting: 'Provide steady support, help clarify thinking, and encourage progress',
+      balanced: 'Support first, then challenge when patterns warrant it',
+    }[profile.stance] || '';
+
+    return `# Personal Chief of Staff
+
+## Who You Are
+You are my Chief of Staff—a thinking partner who helps me maintain direction and make better decisions. You operate with a ${profile.stance} stance: ${stanceDesc}.
+
+## Tone & Style
+- Voice: ${profile.toneWords?.join(', ') || 'direct, calm, thoughtful'}
+- Format: ${profile.formatPreference === 'bullets' ? 'Use bullets and short statements' : 'Use flowing short paragraphs'}
+- Approach: ${profile.planningStyle === 'plan-first' ? 'Lead with structure and next steps' : 'Understand context before prescribing'}
+
+## My Context
+- Role: ${profile.role || 'Not specified'}
+- 90-day outcomes: ${profile.outcomes || 'Not specified'}
+- Key decisions: ${profile.decisions || 'Not specified'}
+- Current uncertainty: ${profile.uncertainty || 'Not specified'}
+- Avoidance patterns: ${profile.avoidance || 'Not specified'}
+
+## Operating Constraints
+- Real constraints: ${profile.constraints || 'Not specified'}
+- Good day looks like: ${profile.goodDay || 'Not specified'}
+- Bad day looks like: ${profile.badDay || 'Not specified'}
+- Failure modes to watch: ${profile.failureModes?.join(', ') || 'None specified'}
+
+## Values & Guardrails
+- Protect these values: ${profile.protectedValues || 'Not specified'}
+- Never cross these boundaries: ${profile.boundaries || 'Not specified'}
+- Accountability that works: ${profile.accountability || 'Not specified'}
+
+## Operating Principles
+1. Begin each day with Synthesis—clarity before productivity
+2. Ask questions before giving advice
+3. ${profile.stance === 'challenging' ? 'Challenge comfortable answers' : 'Support forward momentum'}
+4. Track patterns across conversations
+5. Connect daily actions to longer-term direction
+6. Name what I might be avoiding
+7. Keep responses focused and actionable
+
+## SWEATS Integration
+Support my daily practice across six domains:
+- **Synthesis**: Morning orientation and planning (this is where we start)
+- **Work**: Professional progress and output
+- **Energy**: Physical health and vitality
+- **Art**: Creative expression and craft
+- **Ties**: Relationships and connection
+- **Service**: Contribution beyond self
+
+When I check in, help me distribute attention across what matters.`;
+  };
+
+  const systemPrompt = generateSystemPrompt();
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(systemPrompt);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: tokens.colors.bgPrimary,
+      padding: tokens.spacing.lg,
+    }}>
+      <div style={{ maxWidth: '720px', margin: '0 auto' }}>
+        <div style={{ marginBottom: tokens.spacing.xl }}>
+          <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em', marginBottom: tokens.spacing.xs }}>
+            CHIEF OF STAFF GENERATOR
+          </p>
+          <h1 style={{ fontSize: '32px', fontWeight: 400, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.sm }}>
+            Your COS is ready
+          </h1>
+          <p style={{ fontSize: '16px', color: tokens.colors.textSecondary }}>
+            Copy this system prompt into your preferred LLM's custom instructions.
+          </p>
         </div>
 
-        <p style={{
-          fontSize: '12px',
-          color: tokens.colors.textMuted,
-          letterSpacing: '0.1em',
-          marginBottom: tokens.spacing.sm
+        <div style={{
+          background: tokens.colors.bgNavy,
+          borderRadius: tokens.radius.lg,
+          padding: tokens.spacing.md,
+          marginBottom: tokens.spacing.lg,
         }}>
-          CHIEF OF STAFF · {step + 1}/{questions.length}
-        </p>
-
-        <h2 style={{
-          fontSize: '24px',
-          fontWeight: 400,
-          color: tokens.colors.textPrimary,
-          marginBottom: tokens.spacing.lg
-        }}>
-          {questions[step].question}
-        </h2>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: tokens.spacing.xs }}>
-          {questions[step].options.map((opt, i) => (
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: tokens.spacing.sm,
+          }}>
+            <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.05em' }}>
+              SYSTEM PROMPT
+            </p>
             <button
-              key={i}
-              onClick={handleSelect}
+              onClick={handleCopy}
               style={{
-                padding: tokens.spacing.sm,
-                background: tokens.colors.bgCard,
-                border: `1px solid ${tokens.colors.border}`,
-                borderRadius: tokens.radius.md,
-                fontSize: '16px',
-                color: tokens.colors.textPrimary,
+                background: copied ? tokens.colors.teal : 'rgba(255,255,255,0.1)',
+                color: tokens.colors.textInverse,
+                border: 'none',
+                borderRadius: tokens.radius.sm,
+                padding: '6px 12px',
+                fontSize: '12px',
+                fontWeight: 500,
                 cursor: 'pointer',
-                textAlign: 'left',
-                transition: 'all 0.2s',
               }}
             >
-              {opt}
+              {copied ? 'Copied!' : 'Copy'}
             </button>
-          ))}
+          </div>
+          <pre style={{
+            fontSize: '13px',
+            color: tokens.colors.textInverse,
+            whiteSpace: 'pre-wrap',
+            lineHeight: 1.6,
+            maxHeight: '400px',
+            overflowY: 'auto',
+            fontFamily: 'monospace',
+            opacity: 0.9,
+          }}>
+            {systemPrompt}
+          </pre>
+        </div>
+
+        <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
+          <Button variant="primary" onClick={onComplete}>
+            Start using RUMO
+          </Button>
+          <Button variant="secondary" onClick={handleCopy}>
+            {copied ? 'Copied!' : 'Copy prompt'}
+          </Button>
         </div>
       </div>
     </div>
