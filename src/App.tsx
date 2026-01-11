@@ -16,7 +16,6 @@ interface Task {
   wave: string;
 }
 
-// WAVES: The five dimensions of fulfillment
 const WAVES = [
   { id: 'whole', name: 'Whole', desc: 'Integration of all parts of life' },
   { id: 'accomplished', name: 'Accomplished', desc: 'Meaningful achievement and progress' },
@@ -25,7 +24,6 @@ const WAVES = [
   { id: 'satisfied', name: 'Satisfied', desc: 'Contentment and inner alignment' },
 ];
 
-// SWEATS: Daily actions that create movement
 const SWEATS = [
   { id: 'synthesis', code: 'S', name: 'Synthesis', desc: 'Morning orientation with your Chief of Staff' },
   { id: 'work', code: 'W', name: 'Work', desc: 'Professional contribution and advancement' },
@@ -39,12 +37,8 @@ const App = () => {
   const [view, setView] = useState<View>('landing');
   const [cosProfile, setCosProfile] = useState<COSProfile | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [waveScores, setWaveScores] = useState<Record<string, number>>({
-    whole: 65,
-    accomplished: 72,
-    vital: 58,
-    expressive: 45,
-    satisfied: 70,
+  const [waveScores] = useState<Record<string, number>>({
+    whole: 65, accomplished: 72, vital: 58, expressive: 45, satisfied: 70,
   });
 
   const handleSetupComplete = (profile: COSProfile) => {
@@ -52,7 +46,6 @@ const App = () => {
     setView('dashboard');
   };
 
-  // Landing - first visit
   if (view === 'landing') {
     return <LandingView
       onSetup={() => setView('setup')}
@@ -61,55 +54,34 @@ const App = () => {
     />;
   }
 
-  // COS Setup
   if (view === 'setup') {
     return <SetupView onComplete={handleSetupComplete} />;
   }
 
-  // Main app with sidebar
   return (
-    <div className="flex h-screen bg-neutral-50">
-      {/* Sidebar */}
-      <aside className="w-56 bg-neutral-900 text-white flex flex-col">
-        <div className="p-6">
-          <p className="text-lg font-light tracking-wide">RUMO</p>
-          <p className="text-xs text-neutral-500 mt-1">direction</p>
+    <div className="flex h-screen bg-stone-50">
+      <aside className="w-52 bg-stone-900 text-white flex flex-col">
+        <div className="p-6 border-b border-stone-800">
+          <p className="text-base font-medium tracking-widest text-stone-300">RUMO</p>
         </div>
 
-        <nav className="flex-1 px-3 space-y-1">
-          <NavItem
-            active={view === 'dashboard'}
-            onClick={() => setView('dashboard')}
-            label="Overview"
-          />
-          <NavItem
-            active={view === 'synthesis'}
-            onClick={() => setView('synthesis')}
-            label="Synthesis"
-          />
-          <NavItem
-            active={view === 'waves'}
-            onClick={() => setView('waves')}
-            label="WAVES"
-          />
-          <NavItem
-            active={view === 'sweats'}
-            onClick={() => setView('sweats')}
-            label="SWEATS"
-          />
+        <nav className="flex-1 py-4">
+          <NavItem active={view === 'dashboard'} onClick={() => setView('dashboard')} label="Overview" />
+          <NavItem active={view === 'synthesis'} onClick={() => setView('synthesis')} label="Synthesis" />
+          <NavItem active={view === 'waves'} onClick={() => setView('waves')} label="WAVES" />
+          <NavItem active={view === 'sweats'} onClick={() => setView('sweats')} label="SWEATS" />
         </nav>
 
-        <div className="p-4 border-t border-neutral-800">
+        <div className="p-4 border-t border-stone-800">
           <button
             onClick={() => setView('settings')}
-            className="text-sm text-neutral-500 hover:text-white transition-colors"
+            className="text-xs text-stone-500 hover:text-stone-300 transition-colors"
           >
             Settings
           </button>
         </div>
       </aside>
 
-      {/* Main content */}
       <main className="flex-1 overflow-y-auto">
         {view === 'dashboard' && (
           <DashboardView
@@ -120,33 +92,22 @@ const App = () => {
             onSetup={() => setView('setup')}
           />
         )}
-        {view === 'synthesis' && (
-          <SynthesisView profile={cosProfile} />
-        )}
-        {view === 'waves' && (
-          <WavesView scores={waveScores} />
-        )}
-        {view === 'sweats' && (
-          <SweatsView tasks={tasks} setTasks={setTasks} />
-        )}
-        {view === 'settings' && (
-          <SettingsView onReconfigure={() => setView('setup')} />
-        )}
+        {view === 'synthesis' && <SynthesisView profile={cosProfile} />}
+        {view === 'waves' && <WavesView scores={waveScores} />}
+        {view === 'sweats' && <SweatsView tasks={tasks} setTasks={setTasks} />}
+        {view === 'settings' && <SettingsView onReconfigure={() => setView('setup')} />}
       </main>
     </div>
   );
 };
 
-// ============================================
-// NAVIGATION
-// ============================================
 const NavItem = ({ active, onClick, label }: { active: boolean; onClick: () => void; label: string }) => (
   <button
     onClick={onClick}
-    className={`w-full text-left px-4 py-3 text-sm transition-colors ${
+    className={`w-full text-left px-6 py-3 text-sm transition-all duration-200 ${
       active
-        ? 'text-white bg-neutral-800'
-        : 'text-neutral-400 hover:text-white hover:bg-neutral-800/50'
+        ? 'text-white bg-stone-800 border-l-2 border-amber-500'
+        : 'text-stone-400 hover:text-white hover:bg-stone-800/50 border-l-2 border-transparent'
     }`}
   >
     {label}
@@ -154,75 +115,141 @@ const NavItem = ({ active, onClick, label }: { active: boolean; onClick: () => v
 );
 
 // ============================================
-// LANDING
+// LANDING - StoryBrand Structure
 // ============================================
 const LandingView = ({ onSetup, onContinue, hasProfile }: {
   onSetup: () => void;
   onContinue: () => void;
   hasProfile: boolean;
 }) => (
-  <div className="min-h-screen bg-neutral-900 text-white">
-    <div className="max-w-4xl mx-auto px-8 py-20">
+  <div className="min-h-screen bg-stone-900 text-white">
+    {/* Hero - The Problem */}
+    <div className="min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24 relative">
+      {/* Subtle gradient accent */}
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-amber-900/10 to-transparent" />
 
-      <p className="text-sm text-neutral-500 tracking-wide mb-16">RUMO</p>
+      <div className="max-w-3xl relative">
+        <p className="text-amber-500 text-sm tracking-widest mb-8">RUMO</p>
 
-      <h1 className="text-4xl md:text-5xl font-light leading-tight mb-8">
-        Direction before motion.
-      </h1>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-light leading-[1.1] mb-8 text-stone-100">
+          You're moving fast.<br />
+          <span className="text-stone-500">But toward what?</span>
+        </h1>
 
-      <div className="max-w-2xl space-y-6 text-lg text-neutral-400 leading-relaxed mb-16">
-        <p>
-          Most people move fast without knowing where they're headed.
-          They optimise without orientation.
+        <p className="text-xl text-stone-400 leading-relaxed max-w-xl mb-12">
+          Without direction, motion becomes noise. RUMO helps you find your heading—then gives you a system to stay on course.
         </p>
-        <p>
-          RUMO helps you find your direction first. Then it helps you move—through
-          the <span className="text-white">WAVES</span> of fulfillment you're working toward,
-          and the daily <span className="text-white">SWEATS</span> that get you there.
-        </p>
-        <p>
-          It starts with your Chief of Staff—an AI configured to how you think,
-          available each morning to help you orient your day.
-        </p>
-      </div>
 
-      <div className="space-y-4">
-        <button
-          onClick={onSetup}
-          className="block text-lg text-white border-b border-neutral-700 pb-2 hover:border-white transition-colors"
-        >
-          {hasProfile ? 'Reconfigure Chief of Staff' : 'Set up your Chief of Staff'}
-        </button>
-
-        {hasProfile && (
+        <div className="flex flex-col sm:flex-row gap-4">
           <button
-            onClick={onContinue}
-            className="block text-lg text-neutral-500 hover:text-white transition-colors"
+            onClick={onSetup}
+            className="px-8 py-4 bg-amber-600 hover:bg-amber-500 text-white font-medium transition-colors duration-200"
           >
-            Continue to dashboard
+            {hasProfile ? 'Reconfigure' : 'Get oriented'}
           </button>
-        )}
+
+          {hasProfile && (
+            <button
+              onClick={onContinue}
+              className="px-8 py-4 text-stone-400 hover:text-white transition-colors duration-200"
+            >
+              Continue
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Brief framework intro */}
-      <div className="mt-32 pt-16 border-t border-neutral-800">
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <div className="w-px h-16 bg-gradient-to-b from-transparent via-stone-700 to-transparent" />
+      </div>
+    </div>
+
+    {/* The Guide - RUMO as helper */}
+    <div className="px-8 md:px-16 lg:px-24 py-24 border-t border-stone-800">
+      <div className="max-w-4xl">
+        <p className="text-amber-500 text-sm tracking-widest mb-6">THE GUIDE</p>
+        <h2 className="text-3xl font-light text-stone-200 mb-8">
+          Your Chief of Staff
+        </h2>
+        <p className="text-lg text-stone-400 leading-relaxed max-w-2xl mb-8">
+          An AI configured to how you think. Available each morning to help you cut through noise, see what matters, and orient your day. Not an assistant—a thinking partner.
+        </p>
+      </div>
+    </div>
+
+    {/* The Plan */}
+    <div className="px-8 md:px-16 lg:px-24 py-24 bg-stone-950">
+      <div className="max-w-5xl">
+        <p className="text-amber-500 text-sm tracking-widest mb-6">THE PLAN</p>
+        <h2 className="text-3xl font-light text-stone-200 mb-16">
+          Two frameworks. One direction.
+        </h2>
+
         <div className="grid md:grid-cols-2 gap-16">
           <div>
-            <p className="text-sm text-neutral-500 mb-4">WAVES</p>
-            <p className="text-neutral-400 leading-relaxed">
-              Five dimensions of fulfillment: Whole, Accomplished, Vital, Expressive, Satisfied.
-              These are the outcomes you're moving toward—not goals to achieve, but states to inhabit.
+            <div className="flex items-baseline gap-4 mb-4">
+              <span className="text-5xl font-light text-stone-700">W</span>
+              <h3 className="text-xl text-stone-200">WAVES</h3>
+            </div>
+            <p className="text-stone-500 leading-relaxed mb-6">
+              Five dimensions of fulfillment you're moving toward. Not goals—states to inhabit.
             </p>
+            <div className="space-y-2 text-sm text-stone-600">
+              <p>Whole · Accomplished · Vital · Expressive · Satisfied</p>
+            </div>
           </div>
+
           <div>
-            <p className="text-sm text-neutral-500 mb-4">SWEATS</p>
-            <p className="text-neutral-400 leading-relaxed">
-              Six daily practices: Synthesis, Work, Energy, Art, Ties, Service.
-              These are the actions that create movement. Synthesis comes first—your morning orientation.
+            <div className="flex items-baseline gap-4 mb-4">
+              <span className="text-5xl font-light text-stone-700">S</span>
+              <h3 className="text-xl text-stone-200">SWEATS</h3>
+            </div>
+            <p className="text-stone-500 leading-relaxed mb-6">
+              Six daily practices that create movement. Small actions, compounded.
             </p>
+            <div className="space-y-2 text-sm text-stone-600">
+              <p>Synthesis · Work · Energy · Art · Ties · Service</p>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+
+    {/* Stakes - What's at risk */}
+    <div className="px-8 md:px-16 lg:px-24 py-24 border-t border-stone-800">
+      <div className="max-w-3xl">
+        <p className="text-amber-500 text-sm tracking-widest mb-6">THE STAKES</p>
+        <h2 className="text-2xl font-light text-stone-300 leading-relaxed mb-8">
+          The word <em>disease</em> has roots meaning "against the flow."
+        </h2>
+        <p className="text-lg text-stone-500 leading-relaxed">
+          When you're misaligned—moving without direction—everything feels harder. RUMO helps you find the current and move with it.
+        </p>
+      </div>
+    </div>
+
+    {/* Call to Action */}
+    <div className="px-8 md:px-16 lg:px-24 py-24 bg-gradient-to-b from-stone-900 to-stone-950">
+      <div className="max-w-xl text-center mx-auto">
+        <h2 className="text-3xl font-light text-stone-200 mb-6">
+          Start with your Chief of Staff
+        </h2>
+        <p className="text-stone-500 mb-10">
+          Three questions. Two minutes. Then you're ready for your first Synthesis.
+        </p>
+        <button
+          onClick={onSetup}
+          className="px-10 py-4 bg-amber-600 hover:bg-amber-500 text-white font-medium transition-colors duration-200"
+        >
+          Set up now
+        </button>
+      </div>
+    </div>
+
+    {/* Footer */}
+    <div className="px-8 md:px-16 lg:px-24 py-8 border-t border-stone-800">
+      <p className="text-xs text-stone-700">RUMO — direction</p>
     </div>
   </div>
 );
@@ -236,16 +263,16 @@ const SetupView = ({ onComplete }: { onComplete: (profile: COSProfile) => void }
 
   const questions = [
     {
-      question: "How do you prefer to work through problems?",
+      question: "How do you work through problems?",
       options: [
         { label: "Talking them through", value: "verbal" },
         { label: "Writing them down", value: "written" },
-        { label: "Seeing the full picture first", value: "visual" },
+        { label: "Seeing the full picture", value: "visual" },
         { label: "Breaking into steps", value: "sequential" }
       ]
     },
     {
-      question: "What's most useful when you're stuck?",
+      question: "What helps when you're stuck?",
       options: [
         { label: "Good questions", value: "questions" },
         { label: "Direct feedback", value: "direct" },
@@ -271,31 +298,39 @@ const SetupView = ({ onComplete }: { onComplete: (profile: COSProfile) => void }
     if (step < questions.length - 1) {
       setStep(step + 1);
     } else {
-      onComplete({
-        style: newAnswers[0],
-        focus: newAnswers[1],
-        tone: newAnswers[2]
-      });
+      onComplete({ style: newAnswers[0], focus: newAnswers[1], tone: newAnswers[2] });
     }
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center px-8">
-      <div className="max-w-lg w-full">
-        <p className="text-sm text-neutral-400 mb-16">
-          Chief of Staff — {step + 1} / {questions.length}
+    <div className="min-h-screen bg-stone-50 flex items-center px-8">
+      <div className="max-w-md w-full mx-auto">
+        {/* Progress */}
+        <div className="flex gap-2 mb-16">
+          {questions.map((_, i) => (
+            <div
+              key={i}
+              className={`h-0.5 flex-1 transition-colors duration-300 ${
+                i <= step ? 'bg-amber-500' : 'bg-stone-200'
+              }`}
+            />
+          ))}
+        </div>
+
+        <p className="text-xs text-stone-400 tracking-widest mb-8">
+          CHIEF OF STAFF · {step + 1} OF {questions.length}
         </p>
 
-        <h2 className="text-2xl font-light text-neutral-900 mb-12">
+        <h2 className="text-2xl font-light text-stone-900 mb-12">
           {questions[step].question}
         </h2>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           {questions[step].options.map((option, i) => (
             <button
               key={i}
               onClick={() => handleSelect(option.value)}
-              className="w-full py-4 px-5 text-left text-neutral-700 border border-neutral-200 transition-all duration-200 hover:border-neutral-400"
+              className="w-full py-4 px-5 text-left text-stone-700 border border-stone-200 hover:border-amber-500 hover:bg-amber-50 transition-all duration-200"
             >
               {option.label}
             </button>
@@ -310,108 +345,104 @@ const SetupView = ({ onComplete }: { onComplete: (profile: COSProfile) => void }
 // DASHBOARD
 // ============================================
 const DashboardView = ({
-  waveScores,
-  tasks,
-  onStartSynthesis,
-  hasProfile,
-  onSetup
+  waveScores, tasks, onStartSynthesis, hasProfile, onSetup
 }: {
   waveScores: Record<string, number>;
   tasks: Task[];
   onStartSynthesis: () => void;
   hasProfile: boolean;
   onSetup: () => void;
-}) => {
-  const completedToday = tasks.filter(t => t.completed).length;
-  const totalToday = tasks.length;
+}) => (
+  <div className="p-8 lg:p-12 max-w-5xl">
+    <div className="mb-12">
+      <p className="text-xs text-stone-400 tracking-widest mb-2">OVERVIEW</p>
+      <h1 className="text-2xl font-light text-stone-900">
+        {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+      </h1>
+    </div>
 
-  return (
-    <div className="p-8 max-w-5xl">
-      <div className="mb-12">
-        <p className="text-sm text-neutral-400 mb-2">Overview</p>
-        <h1 className="text-2xl font-light text-neutral-900">
-          {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-        </h1>
+    {/* COS Setup Prompt */}
+    {!hasProfile && (
+      <div className="mb-12 p-8 bg-stone-100 border-l-2 border-amber-500">
+        <p className="text-stone-700 mb-4">Set up your Chief of Staff to begin.</p>
+        <button
+          onClick={onSetup}
+          className="text-amber-600 hover:text-amber-700 font-medium transition-colors"
+        >
+          Get started →
+        </button>
+      </div>
+    )}
+
+    {/* Synthesis Card */}
+    {hasProfile && (
+      <div className="mb-12 p-8 bg-stone-900 text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-600/10 rounded-full blur-3xl" />
+        <p className="text-xs text-amber-500 tracking-widest mb-3">SYNTHESIS</p>
+        <p className="text-xl font-light mb-6">Begin your morning orientation.</p>
+        <button
+          onClick={onStartSynthesis}
+          className="px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white font-medium transition-colors"
+        >
+          Start
+        </button>
+      </div>
+    )}
+
+    {/* WAVES Summary */}
+    <div className="mb-12">
+      <p className="text-xs text-stone-400 tracking-widest mb-6">WAVES</p>
+      <div className="grid grid-cols-5 gap-6">
+        {WAVES.map(wave => (
+          <div key={wave.id} className="text-center">
+            <div className="text-3xl font-light text-stone-800 mb-2">{waveScores[wave.id]}</div>
+            <div className="text-xs text-stone-500">{wave.name}</div>
+            <div className="mt-3 h-1 bg-stone-100 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-amber-500 transition-all duration-500"
+                style={{ width: `${waveScores[wave.id]}%` }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Today's Tasks */}
+    <div>
+      <div className="flex justify-between items-baseline mb-6">
+        <p className="text-xs text-stone-400 tracking-widest">TODAY'S SWEATS</p>
+        <p className="text-xs text-stone-400">
+          {tasks.filter(t => t.completed).length} / {tasks.length || '—'}
+        </p>
       </div>
 
-      {/* COS prompt if not configured */}
-      {!hasProfile && (
-        <div className="mb-12 p-6 bg-neutral-100 border border-neutral-200">
-          <p className="text-neutral-700 mb-4">
-            Set up your Chief of Staff to begin daily Synthesis.
-          </p>
-          <button
-            onClick={onSetup}
-            className="text-neutral-900 border-b border-neutral-400 pb-1 hover:border-neutral-900 transition-colors"
-          >
-            Set up
-          </button>
-        </div>
-      )}
-
-      {/* Synthesis prompt */}
-      {hasProfile && (
-        <div className="mb-12 p-6 bg-neutral-900 text-white">
-          <p className="text-sm text-neutral-400 mb-2">Synthesis</p>
-          <p className="text-lg mb-4">Begin your morning orientation.</p>
-          <button
-            onClick={onStartSynthesis}
-            className="text-white border-b border-neutral-600 pb-1 hover:border-white transition-colors"
-          >
-            Start
-          </button>
-        </div>
-      )}
-
-      {/* WAVES summary */}
-      <div className="mb-12">
-        <p className="text-sm text-neutral-400 mb-6">WAVES</p>
-        <div className="grid grid-cols-5 gap-4">
-          {WAVES.map(wave => (
-            <div key={wave.id} className="text-center">
-              <p className="text-2xl font-light text-neutral-900 mb-1">
-                {waveScores[wave.id]}
-              </p>
-              <p className="text-xs text-neutral-500">{wave.name}</p>
+      {tasks.length === 0 ? (
+        <p className="text-stone-400 py-8 text-center border border-dashed border-stone-200">
+          Run Synthesis to plan your day.
+        </p>
+      ) : (
+        <div className="space-y-2">
+          {tasks.map(task => (
+            <div
+              key={task.id}
+              className={`p-4 border transition-colors ${
+                task.completed ? 'border-stone-100 bg-stone-50' : 'border-stone-200'
+              }`}
+            >
+              <div className="flex justify-between">
+                <span className={task.completed ? 'text-stone-400 line-through' : 'text-stone-900'}>
+                  {task.text}
+                </span>
+                <span className="text-xs text-stone-400 uppercase">{task.category}</span>
+              </div>
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Today's SWEATS */}
-      <div>
-        <div className="flex justify-between items-baseline mb-6">
-          <p className="text-sm text-neutral-400">Today's SWEATS</p>
-          <p className="text-sm text-neutral-400">
-            {completedToday} / {totalToday || '—'}
-          </p>
-        </div>
-
-        {tasks.length === 0 ? (
-          <p className="text-neutral-400 py-8">
-            No actions set. Run Synthesis to plan your day.
-          </p>
-        ) : (
-          <div className="space-y-2">
-            {tasks.map(task => (
-              <div
-                key={task.id}
-                className={`p-4 border ${task.completed ? 'border-neutral-200 bg-neutral-50' : 'border-neutral-200'}`}
-              >
-                <div className="flex justify-between">
-                  <span className={task.completed ? 'text-neutral-400 line-through' : 'text-neutral-900'}>
-                    {task.text}
-                  </span>
-                  <span className="text-xs text-neutral-400 uppercase">{task.category}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      )}
     </div>
-  );
-};
+  </div>
+);
 
 // ============================================
 // SYNTHESIS
@@ -424,14 +455,11 @@ const SynthesisView = ({ profile }: { profile: COSProfile | null }) => {
   const [input, setInput] = useState('');
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages]);
 
   const handleSend = () => {
     if (!input.trim()) return;
-
     setMessages(prev => [...prev, { role: 'user', text: input }]);
     setInput('');
 
@@ -451,18 +479,18 @@ const SynthesisView = ({ profile }: { profile: COSProfile | null }) => {
   };
 
   return (
-    <div className="h-full flex flex-col">
-      <div className="p-8 border-b border-neutral-200">
-        <p className="text-sm text-neutral-400 mb-2">Synthesis</p>
-        <p className="text-lg text-neutral-900">Morning orientation</p>
+    <div className="h-full flex flex-col bg-white">
+      <div className="p-8 border-b border-stone-100">
+        <p className="text-xs text-amber-500 tracking-widest mb-2">SYNTHESIS</p>
+        <p className="text-lg text-stone-900">Morning orientation</p>
       </div>
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-8">
-        <div className="max-w-2xl space-y-6">
+        <div className="max-w-2xl space-y-8">
           {messages.map((msg, i) => (
-            <div key={i}>
+            <div key={i} className={msg.role === 'user' ? 'pl-12' : ''}>
               <p className={`text-lg leading-relaxed ${
-                msg.role === 'user' ? 'text-neutral-900' : 'text-neutral-500'
+                msg.role === 'user' ? 'text-stone-900' : 'text-stone-500'
               }`}>
                 {msg.text}
               </p>
@@ -471,18 +499,19 @@ const SynthesisView = ({ profile }: { profile: COSProfile | null }) => {
         </div>
       </div>
 
-      <div className="p-8 border-t border-neutral-200">
+      <div className="p-8 border-t border-stone-100 bg-stone-50">
         <div className="max-w-2xl flex gap-4">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            className="flex-1 text-lg bg-transparent text-neutral-900 outline-none border-b border-neutral-200 pb-2 focus:border-neutral-900 transition-colors"
+            placeholder="Type here..."
+            className="flex-1 text-lg bg-transparent text-stone-900 placeholder-stone-300 outline-none border-b-2 border-stone-200 pb-2 focus:border-amber-500 transition-colors"
           />
           <button
             onClick={handleSend}
-            className="text-neutral-400 hover:text-neutral-900 transition-colors"
+            className="px-6 py-2 bg-stone-900 text-white text-sm hover:bg-stone-800 transition-colors"
           >
             Send
           </button>
@@ -496,25 +525,25 @@ const SynthesisView = ({ profile }: { profile: COSProfile | null }) => {
 // WAVES
 // ============================================
 const WavesView = ({ scores }: { scores: Record<string, number> }) => (
-  <div className="p-8 max-w-3xl">
+  <div className="p-8 lg:p-12 max-w-3xl">
     <div className="mb-12">
-      <p className="text-sm text-neutral-400 mb-2">WAVES</p>
-      <p className="text-lg text-neutral-600 leading-relaxed">
-        Five dimensions of fulfillment. These aren't goals to achieve—they're states to move toward and inhabit.
+      <p className="text-xs text-amber-500 tracking-widest mb-2">WAVES</p>
+      <p className="text-lg text-stone-600 leading-relaxed">
+        Five dimensions of fulfillment. Not goals—states to inhabit.
       </p>
     </div>
 
-    <div className="space-y-8">
+    <div className="space-y-10">
       {WAVES.map(wave => (
-        <div key={wave.id} className="border-b border-neutral-100 pb-8">
-          <div className="flex justify-between items-baseline mb-2">
-            <h3 className="text-xl font-light text-neutral-900">{wave.name}</h3>
-            <span className="text-2xl font-light text-neutral-400">{scores[wave.id]}</span>
+        <div key={wave.id} className="border-b border-stone-100 pb-10">
+          <div className="flex justify-between items-baseline mb-3">
+            <h3 className="text-xl font-light text-stone-900">{wave.name}</h3>
+            <span className="text-3xl font-light text-stone-300">{scores[wave.id]}</span>
           </div>
-          <p className="text-neutral-500 mb-4">{wave.desc}</p>
-          <div className="h-1 bg-neutral-100">
+          <p className="text-stone-500 mb-4">{wave.desc}</p>
+          <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-neutral-400 transition-all duration-500"
+              className="h-full bg-gradient-to-r from-amber-400 to-amber-500 rounded-full transition-all duration-700"
               style={{ width: `${scores[wave.id]}%` }}
             />
           </div>
@@ -537,24 +566,24 @@ const SweatsView = ({ tasks, setTasks }: { tasks: Task[]; setTasks: (tasks: Task
   const categoryTasks = tasks.filter(t => t.category === activeCategory);
 
   return (
-    <div className="p-8 max-w-4xl">
+    <div className="p-8 lg:p-12 max-w-4xl">
       <div className="mb-12">
-        <p className="text-sm text-neutral-400 mb-2">SWEATS</p>
-        <p className="text-lg text-neutral-600 leading-relaxed">
-          Six daily practices that create movement. Synthesis comes first—your morning orientation.
+        <p className="text-xs text-amber-500 tracking-widest mb-2">SWEATS</p>
+        <p className="text-lg text-stone-600 leading-relaxed">
+          Six daily practices. Synthesis first.
         </p>
       </div>
 
-      {/* Category selector */}
-      <div className="flex gap-1 mb-8 border-b border-neutral-200">
+      {/* Tabs */}
+      <div className="flex gap-1 mb-10 overflow-x-auto pb-2">
         {SWEATS.map(cat => (
           <button
             key={cat.id}
             onClick={() => setActiveCategory(cat.id)}
-            className={`px-4 py-3 text-sm transition-colors ${
+            className={`px-4 py-2 text-sm whitespace-nowrap transition-all duration-200 ${
               activeCategory === cat.id
-                ? 'text-neutral-900 border-b-2 border-neutral-900 -mb-px'
-                : 'text-neutral-400 hover:text-neutral-600'
+                ? 'text-white bg-stone-900'
+                : 'text-stone-500 hover:text-stone-900 hover:bg-stone-100'
             }`}
           >
             {cat.name}
@@ -562,16 +591,14 @@ const SweatsView = ({ tasks, setTasks }: { tasks: Task[]; setTasks: (tasks: Task
         ))}
       </div>
 
-      {/* Category description */}
-      <div className="mb-8">
-        <p className="text-neutral-500">
-          {SWEATS.find(c => c.id === activeCategory)?.desc}
-        </p>
-      </div>
+      {/* Description */}
+      <p className="text-stone-500 mb-8">
+        {SWEATS.find(c => c.id === activeCategory)?.desc}
+      </p>
 
-      {/* Tasks for category */}
+      {/* Tasks */}
       {categoryTasks.length === 0 ? (
-        <p className="text-neutral-400 py-8">
+        <p className="text-stone-400 py-12 text-center border border-dashed border-stone-200">
           No {activeCategory} actions today.
         </p>
       ) : (
@@ -580,15 +607,13 @@ const SweatsView = ({ tasks, setTasks }: { tasks: Task[]; setTasks: (tasks: Task
             <button
               key={task.id}
               onClick={() => toggleTask(task.id)}
-              className={`w-full text-left p-4 border transition-colors ${
+              className={`w-full text-left p-4 border transition-all duration-200 ${
                 task.completed
-                  ? 'border-neutral-200 bg-neutral-50 text-neutral-400'
-                  : 'border-neutral-200 hover:border-neutral-400'
+                  ? 'border-stone-100 bg-stone-50 text-stone-400'
+                  : 'border-stone-200 hover:border-amber-500'
               }`}
             >
-              <span className={task.completed ? 'line-through' : ''}>
-                {task.text}
-              </span>
+              <span className={task.completed ? 'line-through' : ''}>{task.text}</span>
             </button>
           ))}
         </div>
@@ -601,17 +626,18 @@ const SweatsView = ({ tasks, setTasks }: { tasks: Task[]; setTasks: (tasks: Task
 // SETTINGS
 // ============================================
 const SettingsView = ({ onReconfigure }: { onReconfigure: () => void }) => (
-  <div className="p-8 max-w-xl">
-    <p className="text-sm text-neutral-400 mb-12">Settings</p>
+  <div className="p-8 lg:p-12 max-w-xl">
+    <p className="text-xs text-stone-400 tracking-widest mb-12">SETTINGS</p>
 
     <div className="space-y-8">
-      <div>
-        <p className="text-neutral-900 mb-2">Chief of Staff</p>
+      <div className="pb-8 border-b border-stone-100">
+        <p className="text-stone-900 mb-3">Chief of Staff</p>
+        <p className="text-sm text-stone-500 mb-4">Adjust how your COS communicates.</p>
         <button
           onClick={onReconfigure}
-          className="text-neutral-500 border-b border-neutral-300 pb-1 hover:text-neutral-900 hover:border-neutral-900 transition-colors"
+          className="text-amber-600 hover:text-amber-700 font-medium transition-colors"
         >
-          Reconfigure
+          Reconfigure →
         </button>
       </div>
     </div>
