@@ -1,30 +1,43 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 // ============================================
-// DESIGN TOKENS
+// DESIGN TOKENS - Claude-inspired palette
 // ============================================
 const tokens = {
   colors: {
     // Backgrounds
-    bgPrimary: '#FAFAF8',      // off-white
+    bgPrimary: '#F8F9FA',
     bgCard: '#FFFFFF',
-    bgNavy: '#0C2340',         // ink navy
-    bgNavyLight: '#1A3A5C',
+    bgNavy: '#1A2B3C',
+    bgNavyLight: '#2A3F54',
+    bgSubtle: '#F3F4F6',
 
     // Text
-    textPrimary: '#0C2340',
-    textSecondary: '#5A6B7D',
-    textMuted: '#8E99A4',
+    textPrimary: '#1A2B3C',
+    textSecondary: '#4A5568',
+    textMuted: '#9CA3AF',
     textInverse: '#FFFFFF',
 
-    // Accents
+    // Accent colors
     teal: '#0D9488',
     tealLight: '#14B8A6',
-    coral: '#E07A5F',
+    tealSubtle: 'rgba(13, 148, 136, 0.1)',
 
-    // UI
+    // Coral (transparent warm accent)
+    coral: '#E07A5F',
+    coralSubtle: 'rgba(224, 122, 95, 0.15)',
+
+    // Purple (transparent cool accent)
+    purple: '#7C3AED',
+    purpleSubtle: 'rgba(124, 58, 237, 0.1)',
+
+    // Borders
     border: '#E5E7EB',
     borderLight: '#F3F4F6',
+
+    // Shadows
+    shadowSm: 'rgba(0, 0, 0, 0.05)',
+    shadowMd: 'rgba(0, 0, 0, 0.08)',
   },
   spacing: {
     xs: '8px',
@@ -39,748 +52,20 @@ const tokens = {
     md: '8px',
     lg: '12px',
     xl: '16px',
+    full: '9999px',
   },
 };
 
 // ============================================
 // TYPES
 // ============================================
-type View = 'home' | 'setup' | 'synthesis' | 'waves' | 'sweats';
+type View = 'landing' | 'setup' | 'dashboard' | 'synthesis';
 
-interface WaveData {
-  id: string;
-  name: string;
-  value: number;
-  trend: 'up' | 'down' | 'stable';
-}
-
-interface SweatsLog {
-  id: string;
-  category: string;
-  text: string;
-  timestamp: Date;
-}
-
-// ============================================
-// MOCK DATA
-// ============================================
-const mockWaves: WaveData[] = [
-  { id: 'whole', name: 'Whole', value: 72, trend: 'up' },
-  { id: 'accomplished', name: 'Accomplished', value: 65, trend: 'stable' },
-  { id: 'vital', name: 'Vital', value: 58, trend: 'down' },
-  { id: 'expressive', name: 'Expressive', value: 45, trend: 'up' },
-  { id: 'satisfied', name: 'Satisfied', value: 78, trend: 'stable' },
-];
-
-const mockSweatsLog: SweatsLog[] = [
-  { id: '1', category: 'work', text: 'Completed project review', timestamp: new Date() },
-  { id: '2', category: 'energy', text: '30 min morning run', timestamp: new Date() },
-];
-
-const SWEATS_CATEGORIES = [
-  { id: 'synthesis', name: 'Synthesis', letter: 'S' },
-  { id: 'work', name: 'Work', letter: 'W' },
-  { id: 'energy', name: 'Energy', letter: 'E' },
-  { id: 'art', name: 'Art', letter: 'A' },
-  { id: 'ties', name: 'Ties', letter: 'T' },
-  { id: 'service', name: 'Service', letter: 'S' },
-];
-
-// ============================================
-// APP
-// ============================================
-const App = () => {
-  const [view, setView] = useState<View>('home');
-  const [hasProfile, setHasProfile] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [waves, setWaves] = useState<WaveData[]>([]);
-  const [sweatsLog, setSweatsLog] = useState<SweatsLog[]>([]);
-
-  // Simulate loading
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setWaves(mockWaves);
-      setSweatsLog(mockSweatsLog);
-      setIsLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (view === 'setup') {
-    return <SetupView onComplete={() => { setHasProfile(true); setView('home'); }} />;
-  }
-
-  if (view === 'synthesis') {
-    return <SynthesisView onBack={() => setView('home')} />;
-  }
-
-  return (
-    <div style={{ background: tokens.colors.bgPrimary, minHeight: '100vh' }}>
-      {/* Navigation */}
-      <Nav
-        onNavigate={setView}
-        currentView={view}
-      />
-
-      {/* Main Content */}
-      <main style={{ maxWidth: '1200px', margin: '0 auto', padding: `${tokens.spacing.xl} ${tokens.spacing.md}` }}>
-
-        {/* Hero Section */}
-        <section style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(12, 1fr)',
-          gap: tokens.spacing.lg,
-          marginBottom: tokens.spacing.xl
-        }}>
-          {/* Value Prop */}
-          <div style={{ gridColumn: 'span 7' }}>
-            <p style={{
-              color: tokens.colors.teal,
-              fontSize: '13px',
-              fontWeight: 600,
-              letterSpacing: '0.1em',
-              marginBottom: tokens.spacing.sm
-            }}>
-              PERSONAL NAVIGATION SYSTEM
-            </p>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: 400,
-              color: tokens.colors.textPrimary,
-              lineHeight: 1.1,
-              marginBottom: tokens.spacing.sm
-            }}>
-              Find your heading.<br />
-              <span style={{ color: tokens.colors.textSecondary }}>Stay on course.</span>
-            </h1>
-            <p style={{
-              fontSize: '18px',
-              color: tokens.colors.textSecondary,
-              marginBottom: tokens.spacing.lg,
-              maxWidth: '480px'
-            }}>
-              RUMO turns daily reflection into clear direction—and a system you'll actually follow.
-            </p>
-            <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
-              <Button variant="primary" onClick={() => setView('synthesis')}>
-                Start today's Synthesis
-              </Button>
-              {!hasProfile && (
-                <Button variant="secondary" onClick={() => setView('setup')}>
-                  Set your heading
-                </Button>
-              )}
-            </div>
-          </div>
-
-          {/* Compass Card */}
-          <div style={{ gridColumn: 'span 5' }}>
-            <CompassCard waves={waves} isLoading={isLoading} />
-          </div>
-        </section>
-
-        {/* Primary Actions */}
-        <section style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: tokens.spacing.md,
-          marginBottom: tokens.spacing.xl
-        }}>
-          <ActionCard
-            title="Daily Synthesis"
-            description="Morning check-in with your Chief of Staff"
-            action="Begin"
-            onClick={() => setView('synthesis')}
-            accent={tokens.colors.teal}
-          />
-          <ActionCard
-            title="Check your WAVES"
-            description="Review your five dimensions"
-            action="View"
-            onClick={() => setView('waves')}
-            accent={tokens.colors.bgNavy}
-          />
-          <ActionCard
-            title="Run SWEATS"
-            description="Log today's actions"
-            action="Log"
-            onClick={() => setView('sweats')}
-            accent={tokens.colors.coral}
-          />
-        </section>
-
-        {/* WAVES Panel */}
-        <section style={{ marginBottom: tokens.spacing.xl }}>
-          <WavesPanel waves={waves} isLoading={isLoading} />
-        </section>
-
-        {/* SWEATS Panel */}
-        <section style={{ marginBottom: tokens.spacing.xl }}>
-          <SweatsPanel logs={sweatsLog} isLoading={isLoading} />
-        </section>
-
-        {/* Streak Card */}
-        <section style={{ marginBottom: tokens.spacing.xl }}>
-          <StreakCard />
-        </section>
-      </main>
-
-      {/* Footer */}
-      <Footer />
-    </div>
-  );
-};
-
-// ============================================
-// COMPONENTS: Layout
-// ============================================
-const Nav = ({ onNavigate, currentView }: { onNavigate: (v: View) => void; currentView: View }) => (
-  <nav style={{
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: `${tokens.spacing.sm} ${tokens.spacing.md}`,
-    maxWidth: '1200px',
-    margin: '0 auto',
-  }}>
-    <div style={{ display: 'flex', alignItems: 'center', gap: tokens.spacing.xs }}>
-      <RumoLogo />
-      <span style={{
-        fontSize: '18px',
-        fontWeight: 600,
-        color: tokens.colors.textPrimary,
-        letterSpacing: '0.05em'
-      }}>
-        RUMO
-      </span>
-    </div>
-    <div style={{ display: 'flex', gap: tokens.spacing.lg }}>
-      {['WAVES', 'SWEATS'].map(item => (
-        <button
-          key={item}
-          onClick={() => onNavigate(item.toLowerCase() as View)}
-          style={{
-            background: 'none',
-            border: 'none',
-            fontSize: '14px',
-            fontWeight: 500,
-            color: tokens.colors.textSecondary,
-            cursor: 'pointer',
-            padding: `${tokens.spacing.xs} 0`,
-            borderBottom: currentView === item.toLowerCase() ? `2px solid ${tokens.colors.teal}` : '2px solid transparent',
-          }}
-        >
-          {item}
-        </button>
-      ))}
-    </div>
-  </nav>
-);
-
-const Footer = () => (
-  <footer style={{
-    borderTop: `1px solid ${tokens.colors.border}`,
-    padding: `${tokens.spacing.md} ${tokens.spacing.md}`,
-    maxWidth: '1200px',
-    margin: '0 auto',
-  }}>
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <p style={{ fontSize: '12px', color: tokens.colors.textMuted }}>
-        RUMO · direction
-      </p>
-      <p style={{ fontSize: '12px', color: tokens.colors.textMuted }}>
-        v0.1.0
-      </p>
-    </div>
-  </footer>
-);
-
-// ============================================
-// COMPONENTS: Buttons
-// ============================================
-const Button = ({
-  children,
-  variant = 'primary',
-  onClick
-}: {
-  children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'tertiary';
-  onClick?: () => void;
-}) => {
-  const styles: Record<string, React.CSSProperties> = {
-    primary: {
-      background: tokens.colors.bgNavy,
-      color: tokens.colors.textInverse,
-      border: 'none',
-    },
-    secondary: {
-      background: 'transparent',
-      color: tokens.colors.textPrimary,
-      border: `1px solid ${tokens.colors.border}`,
-    },
-    tertiary: {
-      background: 'transparent',
-      color: tokens.colors.teal,
-      border: 'none',
-    },
-  };
-
-  return (
-    <button
-      onClick={onClick}
-      style={{
-        ...styles[variant],
-        padding: '12px 24px',
-        fontSize: '14px',
-        fontWeight: 500,
-        borderRadius: tokens.radius.md,
-        cursor: 'pointer',
-        transition: 'all 0.2s',
-        minHeight: '44px',
-      }}
-    >
-      {children}
-    </button>
-  );
-};
-
-// ============================================
-// COMPONENTS: Cards
-// ============================================
-const Card = ({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) => (
-  <div style={{
-    background: tokens.colors.bgCard,
-    borderRadius: tokens.radius.lg,
-    border: `1px solid ${tokens.colors.border}`,
-    padding: tokens.spacing.md,
-    ...style,
-  }}>
-    {children}
-  </div>
-);
-
-const ActionCard = ({
-  title,
-  description,
-  action,
-  onClick,
-  accent
-}: {
-  title: string;
-  description: string;
-  action: string;
-  onClick: () => void;
-  accent: string;
-}) => (
-  <Card style={{ position: 'relative', overflow: 'hidden' }}>
-    <div style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      height: '3px',
-      background: accent,
-    }} />
-    <h3 style={{
-      fontSize: '16px',
-      fontWeight: 600,
-      color: tokens.colors.textPrimary,
-      marginBottom: tokens.spacing.xs
-    }}>
-      {title}
-    </h3>
-    <p style={{
-      fontSize: '14px',
-      color: tokens.colors.textSecondary,
-      marginBottom: tokens.spacing.sm
-    }}>
-      {description}
-    </p>
-    <button
-      onClick={onClick}
-      style={{
-        background: 'none',
-        border: 'none',
-        color: tokens.colors.teal,
-        fontSize: '14px',
-        fontWeight: 500,
-        cursor: 'pointer',
-        padding: 0,
-      }}
-    >
-      {action} →
-    </button>
-  </Card>
-);
-
-// ============================================
-// COMPONENTS: Compass (Signature Interaction)
-// ============================================
-const CompassCard = ({ waves, isLoading }: { waves: WaveData[]; isLoading: boolean }) => {
-  const [rotation, setRotation] = useState(0);
-  const [hoveredWave, setHoveredWave] = useState<string | null>(null);
-
-  // Calculate bearing from wave values
-  const avgValue = waves.length > 0 ? waves.reduce((a, b) => a + b.value, 0) / waves.length : 0;
-  const bearing = Math.round((avgValue / 100) * 360);
-
-  useEffect(() => {
-    setRotation(bearing);
-  }, [bearing]);
-
-  if (isLoading) {
-    return (
-      <Card style={{ height: '280px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: tokens.colors.borderLight }} />
-      </Card>
-    );
-  }
-
-  return (
-    <Card style={{
-      background: tokens.colors.bgNavy,
-      position: 'relative',
-      overflow: 'hidden',
-    }}>
-      {/* Subtle contour lines background */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        opacity: 0.04,
-        backgroundImage: `repeating-radial-gradient(circle at center, transparent 0, transparent 20px, ${tokens.colors.textInverse} 20px, ${tokens.colors.textInverse} 21px)`,
-      }} />
-
-      <div style={{ position: 'relative', padding: tokens.spacing.sm }}>
-        <p style={{
-          fontSize: '12px',
-          color: tokens.colors.teal,
-          letterSpacing: '0.1em',
-          marginBottom: tokens.spacing.sm
-        }}>
-          CURRENT HEADING
-        </p>
-
-        {/* Compass */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginBottom: tokens.spacing.md
-        }}>
-          <div style={{ position: 'relative', width: '160px', height: '160px' }}>
-            {/* Compass ring */}
-            <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%' }}>
-              <circle cx="50" cy="50" r="45" fill="none" stroke={tokens.colors.textInverse} strokeWidth="0.5" opacity="0.2" />
-              {/* Tick marks */}
-              {[0, 45, 90, 135, 180, 225, 270, 315].map(deg => (
-                <line
-                  key={deg}
-                  x1="50"
-                  y1="8"
-                  x2="50"
-                  y2={deg % 90 === 0 ? "14" : "11"}
-                  stroke={tokens.colors.textInverse}
-                  strokeWidth={deg % 90 === 0 ? "1" : "0.5"}
-                  opacity="0.4"
-                  transform={`rotate(${deg} 50 50)`}
-                />
-              ))}
-              {/* Cardinal labels */}
-              <text x="50" y="22" fill={tokens.colors.textInverse} fontSize="6" textAnchor="middle" opacity="0.6">N</text>
-              <text x="83" y="52" fill={tokens.colors.textInverse} fontSize="6" textAnchor="middle" opacity="0.6">E</text>
-              <text x="50" y="83" fill={tokens.colors.textInverse} fontSize="6" textAnchor="middle" opacity="0.6">S</text>
-              <text x="17" y="52" fill={tokens.colors.textInverse} fontSize="6" textAnchor="middle" opacity="0.6">W</text>
-              {/* Needle */}
-              <g transform={`rotate(${rotation} 50 50)`} style={{ transition: 'transform 0.8s ease-out' }}>
-                <polygon points="50,20 47,50 50,55 53,50" fill={tokens.colors.teal} />
-                <polygon points="50,80 47,50 50,45 53,50" fill={tokens.colors.textInverse} opacity="0.3" />
-              </g>
-              {/* Center dot */}
-              <circle cx="50" cy="50" r="3" fill={tokens.colors.bgNavy} stroke={tokens.colors.textInverse} strokeWidth="1" />
-            </svg>
-          </div>
-        </div>
-
-        {/* Bearing readout */}
-        <div style={{ textAlign: 'center' }}>
-          <p style={{
-            fontSize: '32px',
-            fontWeight: 300,
-            color: tokens.colors.textInverse,
-            fontFamily: 'monospace',
-          }}>
-            {bearing}°
-          </p>
-          <p style={{ fontSize: '12px', color: tokens.colors.textMuted }}>
-            Bearing · {avgValue.toFixed(0)}% aligned
-          </p>
-        </div>
-
-        {/* Wave indicators */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: tokens.spacing.xs,
-          marginTop: tokens.spacing.sm
-        }}>
-          {waves.map(wave => (
-            <div
-              key={wave.id}
-              onMouseEnter={() => {
-                setHoveredWave(wave.id);
-                setRotation((wave.value / 100) * 360);
-              }}
-              onMouseLeave={() => {
-                setHoveredWave(null);
-                setRotation(bearing);
-              }}
-              style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                background: hoveredWave === wave.id ? tokens.colors.teal : tokens.colors.textInverse,
-                opacity: hoveredWave === wave.id ? 1 : 0.3,
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-              }}
-              title={`${wave.name}: ${wave.value}%`}
-            />
-          ))}
-        </div>
-      </div>
-    </Card>
-  );
-};
-
-// ============================================
-// COMPONENTS: WAVES Panel
-// ============================================
-const WavesPanel = ({ waves, isLoading }: { waves: WaveData[]; isLoading: boolean }) => (
-  <Card>
-    <div style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: tokens.spacing.md
-    }}>
-      <div>
-        <h2 style={{ fontSize: '18px', fontWeight: 600, color: tokens.colors.textPrimary }}>
-          WAVES
-        </h2>
-        <p style={{ fontSize: '13px', color: tokens.colors.textMuted }}>
-          Five dimensions of fulfillment
-        </p>
-      </div>
-      <p style={{ fontSize: '12px', color: tokens.colors.textMuted }}>
-        Updated today
-      </p>
-    </div>
-
-    <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
-      {isLoading ? (
-        Array(5).fill(0).map((_, i) => (
-          <div key={i} style={{ flex: 1, height: '80px', background: tokens.colors.borderLight, borderRadius: tokens.radius.md }} />
-        ))
-      ) : (
-        waves.map(wave => (
-          <WaveChip key={wave.id} wave={wave} />
-        ))
-      )}
-    </div>
-  </Card>
-);
-
-const WaveChip = ({ wave }: { wave: WaveData }) => {
-  const trendIcon = wave.trend === 'up' ? '↑' : wave.trend === 'down' ? '↓' : '→';
-  const trendColor = wave.trend === 'up' ? tokens.colors.teal : wave.trend === 'down' ? tokens.colors.coral : tokens.colors.textMuted;
-
-  return (
-    <div style={{
-      flex: 1,
-      padding: tokens.spacing.sm,
-      background: tokens.colors.bgPrimary,
-      borderRadius: tokens.radius.md,
-      textAlign: 'center',
-      cursor: 'pointer',
-      transition: 'all 0.2s',
-      border: `1px solid transparent`,
-    }}
-    onMouseEnter={e => e.currentTarget.style.borderColor = tokens.colors.teal}
-    onMouseLeave={e => e.currentTarget.style.borderColor = 'transparent'}
-    >
-      <p style={{ fontSize: '24px', fontWeight: 300, color: tokens.colors.textPrimary }}>
-        {wave.value}
-      </p>
-      <p style={{ fontSize: '12px', color: tokens.colors.textSecondary, marginBottom: '4px' }}>
-        {wave.name}
-      </p>
-      <span style={{ fontSize: '11px', color: trendColor }}>
-        {trendIcon}
-      </span>
-    </div>
-  );
-};
-
-// ============================================
-// COMPONENTS: SWEATS Panel
-// ============================================
-const SweatsPanel = ({ logs, isLoading }: { logs: SweatsLog[]; isLoading: boolean }) => (
-  <Card>
-    <div style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: tokens.spacing.md
-    }}>
-      <div>
-        <h2 style={{ fontSize: '18px', fontWeight: 600, color: tokens.colors.textPrimary }}>
-          SWEATS
-        </h2>
-        <p style={{ fontSize: '13px', color: tokens.colors.textMuted }}>
-          Six daily practices
-        </p>
-      </div>
-      <Button variant="tertiary">+ Log action</Button>
-    </div>
-
-    {/* Category chips */}
-    <div style={{ display: 'flex', gap: tokens.spacing.xs, marginBottom: tokens.spacing.md }}>
-      {SWEATS_CATEGORIES.map(cat => (
-        <div
-          key={cat.id}
-          style={{
-            padding: `${tokens.spacing.xs} ${tokens.spacing.sm}`,
-            background: tokens.colors.bgPrimary,
-            borderRadius: tokens.radius.sm,
-            fontSize: '12px',
-            color: tokens.colors.textSecondary,
-            cursor: 'pointer',
-            transition: 'all 0.2s',
-            border: `1px solid ${tokens.colors.borderLight}`,
-          }}
-        >
-          <span style={{ fontWeight: 600, marginRight: '4px' }}>{cat.letter}</span>
-          {cat.name}
-        </div>
-      ))}
-    </div>
-
-    {/* Recent logs */}
-    {isLoading ? (
-      <div style={{ height: '60px', background: tokens.colors.borderLight, borderRadius: tokens.radius.md }} />
-    ) : logs.length === 0 ? (
-      <div style={{
-        padding: tokens.spacing.lg,
-        textAlign: 'center',
-        border: `1px dashed ${tokens.colors.border}`,
-        borderRadius: tokens.radius.md,
-      }}>
-        <p style={{ color: tokens.colors.textMuted, fontSize: '14px' }}>
-          No check-in yet today
-        </p>
-      </div>
-    ) : (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: tokens.spacing.xs }}>
-        {logs.slice(0, 3).map(log => (
-          <div key={log.id} style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: tokens.spacing.xs,
-            background: tokens.colors.bgPrimary,
-            borderRadius: tokens.radius.sm,
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: tokens.spacing.xs }}>
-              <span style={{
-                fontSize: '10px',
-                fontWeight: 600,
-                color: tokens.colors.teal,
-                textTransform: 'uppercase',
-                background: `${tokens.colors.teal}15`,
-                padding: '2px 6px',
-                borderRadius: tokens.radius.sm,
-              }}>
-                {log.category}
-              </span>
-              <span style={{ fontSize: '14px', color: tokens.colors.textPrimary }}>
-                {log.text}
-              </span>
-            </div>
-            <span style={{ fontSize: '12px', color: tokens.colors.textMuted }}>
-              Today
-            </span>
-          </div>
-        ))}
-      </div>
-    )}
-  </Card>
-);
-
-// ============================================
-// COMPONENTS: Streak Card
-// ============================================
-const StreakCard = () => {
-  const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-  const streak = [true, true, true, true, false, false, false]; // Mock data
-
-  return (
-    <Card style={{ background: tokens.colors.bgNavy }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em', marginBottom: '4px' }}>
-            THIS WEEK
-          </p>
-          <p style={{ fontSize: '18px', fontWeight: 600, color: tokens.colors.textInverse }}>
-            4 day streak
-          </p>
-        </div>
-        <div style={{ display: 'flex', gap: tokens.spacing.xs }}>
-          {days.map((day, i) => (
-            <div
-              key={i}
-              style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: tokens.radius.sm,
-                background: streak[i] ? tokens.colors.teal : 'rgba(255,255,255,0.1)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '11px',
-                fontWeight: 500,
-                color: streak[i] ? tokens.colors.textInverse : tokens.colors.textMuted,
-              }}
-            >
-              {day}
-            </div>
-          ))}
-        </div>
-      </div>
-    </Card>
-  );
-};
-
-// ============================================
-// COMPONENTS: Logo
-// ============================================
-const RumoLogo = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    {/* Compass circle */}
-    <circle cx="16" cy="16" r="14" stroke={tokens.colors.bgNavy} strokeWidth="1.5" fill="none" />
-    {/* Direction triangle */}
-    <path d="M16 6L20 16L16 26L12 16L16 6Z" fill={tokens.colors.teal} />
-    {/* Center */}
-    <circle cx="16" cy="16" r="2" fill={tokens.colors.bgNavy} />
-  </svg>
-);
-
-// ============================================
-// VIEWS: Setup - COS Generator Interview
-// ============================================
 interface COSProfile {
   stance: string;
   toneWords: string[];
   formatPreference: string;
   planningStyle: string;
-  questionStyle: string;
   role: string;
   outcomes: string;
   decisions: string;
@@ -800,16 +85,334 @@ interface COSProfile {
   optimizationFocus: string;
 }
 
+// ============================================
+// APP
+// ============================================
+const App = () => {
+  const [view, setView] = useState<View>('landing');
+  const [cosProfile, setCosProfile] = useState<COSProfile | null>(null);
+
+  if (view === 'landing') {
+    return (
+      <LandingView
+        onSetup={() => setView('setup')}
+        onDashboard={() => setView('dashboard')}
+        hasProfile={!!cosProfile}
+      />
+    );
+  }
+
+  if (view === 'setup') {
+    return (
+      <SetupView
+        onComplete={(profile) => {
+          setCosProfile(profile);
+          setView('dashboard');
+        }}
+        onBack={() => setView('landing')}
+      />
+    );
+  }
+
+  if (view === 'synthesis') {
+    return <SynthesisView onBack={() => setView('dashboard')} />;
+  }
+
+  // Dashboard view
+  return (
+    <DashboardView
+      onSynthesis={() => setView('synthesis')}
+      onLanding={() => setView('landing')}
+      onReconfigure={() => setView('setup')}
+    />
+  );
+};
+
+// ============================================
+// LANDING VIEW - Story-focused
+// ============================================
+const LandingView = ({
+  onSetup,
+  onDashboard,
+  hasProfile,
+}: {
+  onSetup: () => void;
+  onDashboard: () => void;
+  hasProfile: boolean;
+}) => (
+  <div style={{ background: tokens.colors.bgNavy, minHeight: '100vh', color: tokens.colors.textInverse }}>
+    {/* Header */}
+    <header style={{
+      padding: `${tokens.spacing.md} ${tokens.spacing.lg}`,
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      maxWidth: '1200px',
+      margin: '0 auto',
+    }}>
+      <span style={{ fontSize: '14px', letterSpacing: '0.15em', fontWeight: 500 }}>RUMO</span>
+      {hasProfile && (
+        <button
+          onClick={onDashboard}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: tokens.colors.textMuted,
+            fontSize: '14px',
+            cursor: 'pointer',
+          }}
+        >
+          Continue →
+        </button>
+      )}
+    </header>
+
+    {/* Hero */}
+    <section style={{
+      maxWidth: '800px',
+      margin: '0 auto',
+      padding: `${tokens.spacing.xxl} ${tokens.spacing.lg}`,
+      minHeight: '70vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+    }}>
+      <p style={{
+        color: tokens.colors.teal,
+        fontSize: '13px',
+        letterSpacing: '0.1em',
+        marginBottom: tokens.spacing.md,
+      }}>
+        PERSONAL NAVIGATION SYSTEM
+      </p>
+
+      <h1 style={{
+        fontSize: 'clamp(36px, 5vw, 56px)',
+        fontWeight: 300,
+        lineHeight: 1.15,
+        marginBottom: tokens.spacing.lg,
+      }}>
+        You're moving fast.<br />
+        <span style={{ color: tokens.colors.textMuted }}>But toward what?</span>
+      </h1>
+
+      <p style={{
+        fontSize: '18px',
+        lineHeight: 1.7,
+        color: 'rgba(255,255,255,0.7)',
+        maxWidth: '540px',
+        marginBottom: tokens.spacing.xl,
+      }}>
+        Without direction, motion becomes noise. RUMO gives you a system for daily orientation—so you can find your heading and stay on course.
+      </p>
+
+      <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
+        <button
+          onClick={onSetup}
+          style={{
+            padding: '14px 28px',
+            background: tokens.colors.teal,
+            color: tokens.colors.textInverse,
+            border: 'none',
+            borderRadius: tokens.radius.md,
+            fontSize: '15px',
+            fontWeight: 500,
+            cursor: 'pointer',
+          }}
+        >
+          Set up your Chief of Staff
+        </button>
+      </div>
+    </section>
+
+    {/* The Guide */}
+    <section style={{
+      borderTop: `1px solid rgba(255,255,255,0.1)`,
+      padding: `${tokens.spacing.xxl} ${tokens.spacing.lg}`,
+    }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <p style={{
+          color: tokens.colors.teal,
+          fontSize: '12px',
+          letterSpacing: '0.1em',
+          marginBottom: tokens.spacing.sm,
+        }}>
+          THE GUIDE
+        </p>
+        <h2 style={{
+          fontSize: '28px',
+          fontWeight: 300,
+          marginBottom: tokens.spacing.md,
+        }}>
+          Your Chief of Staff
+        </h2>
+        <p style={{
+          fontSize: '17px',
+          lineHeight: 1.7,
+          color: 'rgba(255,255,255,0.6)',
+          maxWidth: '560px',
+        }}>
+          An AI configured to how you think. Each morning, it helps you see what matters, cut through noise, and orient your day. Not an assistant. A thinking partner.
+        </p>
+      </div>
+    </section>
+
+    {/* The Plan */}
+    <section style={{
+      background: 'rgba(0,0,0,0.2)',
+      padding: `${tokens.spacing.xxl} ${tokens.spacing.lg}`,
+    }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <p style={{
+          color: tokens.colors.teal,
+          fontSize: '12px',
+          letterSpacing: '0.1em',
+          marginBottom: tokens.spacing.sm,
+        }}>
+          THE PLAN
+        </p>
+        <h2 style={{
+          fontSize: '28px',
+          fontWeight: 300,
+          marginBottom: tokens.spacing.xl,
+        }}>
+          Two frameworks. One direction.
+        </h2>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: tokens.spacing.xl }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: tokens.spacing.sm, marginBottom: tokens.spacing.sm }}>
+              <span style={{ fontSize: '48px', fontWeight: 200, color: 'rgba(255,255,255,0.2)' }}>W</span>
+              <h3 style={{ fontSize: '18px', fontWeight: 400 }}>WAVES</h3>
+            </div>
+            <p style={{ fontSize: '15px', lineHeight: 1.6, color: 'rgba(255,255,255,0.5)', marginBottom: tokens.spacing.sm }}>
+              Five dimensions of fulfillment you're moving toward. Not goals—states to inhabit.
+            </p>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>
+              Whole · Accomplished · Vital · Expressive · Satisfied
+            </p>
+          </div>
+
+          <div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: tokens.spacing.sm, marginBottom: tokens.spacing.sm }}>
+              <span style={{ fontSize: '48px', fontWeight: 200, color: 'rgba(255,255,255,0.2)' }}>S</span>
+              <h3 style={{ fontSize: '18px', fontWeight: 400 }}>SWEATS</h3>
+            </div>
+            <p style={{ fontSize: '15px', lineHeight: 1.6, color: 'rgba(255,255,255,0.5)', marginBottom: tokens.spacing.sm }}>
+              Six daily practices that create movement. Small actions, compounded.
+            </p>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>
+              Synthesis · Work · Energy · Art · Ties · Service
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* The Stakes */}
+    <section style={{
+      borderTop: `1px solid rgba(255,255,255,0.1)`,
+      padding: `${tokens.spacing.xxl} ${tokens.spacing.lg}`,
+    }}>
+      <div style={{ maxWidth: '640px', margin: '0 auto' }}>
+        <p style={{
+          color: tokens.colors.teal,
+          fontSize: '12px',
+          letterSpacing: '0.1em',
+          marginBottom: tokens.spacing.md,
+        }}>
+          THE STAKES
+        </p>
+        <p style={{
+          fontSize: '22px',
+          fontWeight: 300,
+          lineHeight: 1.5,
+          color: 'rgba(255,255,255,0.8)',
+          marginBottom: tokens.spacing.md,
+        }}>
+          The word <em>disease</em> has roots meaning "against the flow."
+        </p>
+        <p style={{
+          fontSize: '16px',
+          lineHeight: 1.7,
+          color: 'rgba(255,255,255,0.5)',
+        }}>
+          When you're misaligned—moving without direction—everything feels harder. RUMO helps you find the current and move with it.
+        </p>
+      </div>
+    </section>
+
+    {/* CTA */}
+    <section style={{
+      padding: `${tokens.spacing.xxl} ${tokens.spacing.lg}`,
+      textAlign: 'center',
+    }}>
+      <div style={{ maxWidth: '480px', margin: '0 auto' }}>
+        <h2 style={{
+          fontSize: '26px',
+          fontWeight: 300,
+          marginBottom: tokens.spacing.sm,
+        }}>
+          Start with your Chief of Staff
+        </h2>
+        <p style={{
+          fontSize: '15px',
+          color: 'rgba(255,255,255,0.5)',
+          marginBottom: tokens.spacing.lg,
+        }}>
+          A few questions to configure how it thinks with you.
+        </p>
+        <button
+          onClick={onSetup}
+          style={{
+            padding: '16px 32px',
+            background: tokens.colors.teal,
+            color: tokens.colors.textInverse,
+            border: 'none',
+            borderRadius: tokens.radius.md,
+            fontSize: '15px',
+            fontWeight: 500,
+            cursor: 'pointer',
+          }}
+        >
+          Begin setup
+        </button>
+      </div>
+    </section>
+
+    {/* Footer */}
+    <footer style={{
+      borderTop: `1px solid rgba(255,255,255,0.1)`,
+      padding: `${tokens.spacing.md} ${tokens.spacing.lg}`,
+    }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>
+          RUMO — direction
+        </p>
+      </div>
+    </footer>
+  </div>
+);
+
+// ============================================
+// SETUP VIEW - COS Generator
+// ============================================
 const SETUP_SECTIONS = [
-  { id: 'stance', title: 'Stance & Style', subtitle: 'How your Chief of Staff should work with you' },
-  { id: 'context', title: 'Context Capture', subtitle: 'Your current situation and priorities' },
-  { id: 'constraints', title: 'Operating Constraints', subtitle: 'What shapes your available capacity' },
-  { id: 'values', title: 'Values & Guardrails', subtitle: 'What your COS should protect' },
-  { id: 'relationship', title: 'AI Relationship', subtitle: 'How you work with AI today' },
-  { id: 'output', title: 'Output Preferences', subtitle: 'How to configure your COS' },
+  { id: 'stance', title: 'Stance & Style' },
+  { id: 'context', title: 'Context Capture' },
+  { id: 'constraints', title: 'Operating Constraints' },
+  { id: 'values', title: 'Values & Guardrails' },
+  { id: 'relationship', title: 'AI Relationship' },
+  { id: 'output', title: 'Output Preferences' },
 ];
 
-const SetupView = ({ onComplete }: { onComplete: () => void }) => {
+const SetupView = ({
+  onComplete,
+  onBack,
+}: {
+  onComplete: (profile: COSProfile) => void;
+  onBack: () => void;
+}) => {
   const [section, setSection] = useState(0);
   const [subStep, setSubStep] = useState(0);
   const [profile, setProfile] = useState<Partial<COSProfile>>({
@@ -838,22 +441,11 @@ const SetupView = ({ onComplete }: { onComplete: () => void }) => {
 
   const handleNext = () => {
     if (textInput.trim()) {
-      // Save current text input based on section/substep
       const textFields: Record<string, keyof COSProfile> = {
-        '1-0': 'role',
-        '1-1': 'outcomes',
-        '1-2': 'decisions',
-        '1-3': 'uncertainty',
-        '1-4': 'avoidance',
-        '2-0': 'constraints',
-        '2-1': 'goodDay',
-        '2-2': 'badDay',
-        '3-0': 'protectedValues',
-        '3-1': 'boundaries',
-        '3-2': 'accountability',
-        '4-0': 'currentAIUse',
-        '4-1': 'idealPartner',
-        '4-2': 'existingTools',
+        '1-0': 'role', '1-1': 'outcomes', '1-2': 'decisions', '1-3': 'uncertainty', '1-4': 'avoidance',
+        '2-0': 'constraints', '2-1': 'goodDay', '2-2': 'badDay',
+        '3-0': 'protectedValues', '3-1': 'boundaries', '3-2': 'accountability',
+        '4-0': 'currentAIUse', '4-1': 'idealPartner', '4-2': 'existingTools',
       };
       const fieldKey = `${section}-${subStep}`;
       if (textFields[fieldKey]) {
@@ -865,7 +457,7 @@ const SetupView = ({ onComplete }: { onComplete: () => void }) => {
   };
 
   const advanceStep = () => {
-    const maxSubSteps = [4, 5, 4, 3, 3, 2]; // substeps per section
+    const maxSubSteps = [4, 5, 4, 3, 3, 2];
     if (subStep < maxSubSteps[section] - 1) {
       setSubStep(subStep + 1);
     } else if (section < SETUP_SECTIONS.length - 1) {
@@ -883,6 +475,8 @@ const SetupView = ({ onComplete }: { onComplete: () => void }) => {
       const maxSubSteps = [4, 5, 4, 3, 3, 2];
       setSection(section - 1);
       setSubStep(maxSubSteps[section - 1] - 1);
+    } else {
+      onBack();
     }
   };
 
@@ -890,7 +484,7 @@ const SetupView = ({ onComplete }: { onComplete: () => void }) => {
   const currentStep = [0, 4, 9, 13, 16, 19][section] + subStep;
 
   if (showOutput) {
-    return <SetupOutputView profile={profile as COSProfile} onComplete={onComplete} />;
+    return <SetupOutputView profile={profile as COSProfile} onComplete={() => onComplete(profile as COSProfile)} />;
   }
 
   return (
@@ -908,20 +502,18 @@ const SetupView = ({ onComplete }: { onComplete: () => void }) => {
         alignItems: 'center',
         gap: tokens.spacing.md,
       }}>
-        {(section > 0 || subStep > 0) && (
-          <button
-            onClick={handleBack}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: tokens.colors.textMuted,
-              cursor: 'pointer',
-              fontSize: '14px',
-            }}
-          >
-            ← Back
-          </button>
-        )}
+        <button
+          onClick={handleBack}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: tokens.colors.textMuted,
+            cursor: 'pointer',
+            fontSize: '14px',
+          }}
+        >
+          ← Back
+        </button>
         <div style={{ flex: 1 }}>
           <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em' }}>
             CHIEF OF STAFF GENERATOR
@@ -945,7 +537,6 @@ const SetupView = ({ onComplete }: { onComplete: () => void }) => {
               flex: 1,
               background: i < section ? tokens.colors.teal : i === section ? tokens.colors.bgNavy : tokens.colors.border,
               borderRadius: '2px',
-              transition: 'background 0.3s',
             }}
           />
         ))}
@@ -984,7 +575,6 @@ const SetupView = ({ onComplete }: { onComplete: () => void }) => {
               selected={profile.toneWords}
               onToggle={(v) => toggleArrayItem('toneWords', v)}
               onNext={(profile.toneWords?.length || 0) >= 3 ? advanceStep : undefined}
-              nextLabel="Continue"
             />
           )}
           {section === 0 && subStep === 2 && (
@@ -1014,177 +604,55 @@ const SetupView = ({ onComplete }: { onComplete: () => void }) => {
 
           {/* Section 1: Context Capture */}
           {section === 1 && subStep === 0 && (
-            <SetupQuestion
-              title="What is your current role?"
-              subtitle="Include multiple roles if relevant."
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="e.g., VP of Product at a Series B startup, also a parent of two"
-              onNext={handleNext}
-            />
+            <SetupQuestion title="What is your current role?" subtitle="Include multiple roles if relevant." type="text" value={textInput} onChange={setTextInput} placeholder="e.g., VP of Product at a Series B startup, also a parent of two" onNext={handleNext} />
           )}
           {section === 1 && subStep === 1 && (
-            <SetupQuestion
-              title="What are your top 3 outcomes for the next 90 days?"
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="e.g., Launch v2, hire 2 senior engineers, establish exec team rhythm"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="What are your top 3 outcomes for the next 90 days?" type="text" value={textInput} onChange={setTextInput} placeholder="e.g., Launch v2, hire 2 senior engineers, establish exec team rhythm" onNext={handleNext} multiline />
           )}
           {section === 1 && subStep === 2 && (
-            <SetupQuestion
-              title="What are the 3 recurring decisions you make that have the biggest impact?"
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="e.g., Resource allocation, roadmap prioritization, hiring calls"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="What are the 3 recurring decisions you make that have the biggest impact?" type="text" value={textInput} onChange={setTextInput} placeholder="e.g., Resource allocation, roadmap prioritization, hiring calls" onNext={handleNext} multiline />
           )}
           {section === 1 && subStep === 3 && (
-            <SetupQuestion
-              title="Where does uncertainty show up most right now?"
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="What keeps you uncertain or anxious?"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="Where does uncertainty show up most right now?" type="text" value={textInput} onChange={setTextInput} placeholder="What keeps you uncertain or anxious?" onNext={handleNext} multiline />
           )}
           {section === 1 && subStep === 4 && (
-            <SetupQuestion
-              title="What do you consistently avoid or delay, even though it matters?"
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="Be honest—this helps your COS know where to push"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="What do you consistently avoid or delay, even though it matters?" type="text" value={textInput} onChange={setTextInput} placeholder="Be honest—this helps your COS know where to push" onNext={handleNext} multiline />
           )}
 
           {/* Section 2: Operating Constraints */}
           {section === 2 && subStep === 0 && (
-            <SetupQuestion
-              title="What constraints are real right now?"
-              subtitle="Time, energy, money, family, attention, health, etc."
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="e.g., Limited bandwidth, young kids, recovering from burnout"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="What constraints are real right now?" subtitle="Time, energy, money, family, attention, health, etc." type="text" value={textInput} onChange={setTextInput} placeholder="e.g., Limited bandwidth, young kids, recovering from burnout" onNext={handleNext} multiline />
           )}
           {section === 2 && subStep === 1 && (
-            <SetupQuestion
-              title="What does a good day look like?"
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="Describe the texture—energy, accomplishment, presence"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="What does a good day look like?" type="text" value={textInput} onChange={setTextInput} placeholder="Describe the texture—energy, accomplishment, presence" onNext={handleNext} multiline />
           )}
           {section === 2 && subStep === 2 && (
-            <SetupQuestion
-              title="What does a bad day look like?"
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="What patterns show up when things go wrong?"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="What does a bad day look like?" type="text" value={textInput} onChange={setTextInput} placeholder="What patterns show up when things go wrong?" onNext={handleNext} multiline />
           )}
           {section === 2 && subStep === 3 && (
-            <SetupQuestion
-              title="What are your most common failure modes?"
-              subtitle="Select all that apply"
-              type="multi"
-              options={FAILURE_MODES.map(f => ({ value: f, label: f }))}
-              selected={profile.failureModes}
-              onToggle={(v) => toggleArrayItem('failureModes', v)}
-              onNext={advanceStep}
-              nextLabel="Continue"
-            />
+            <SetupQuestion title="What are your most common failure modes?" subtitle="Select all that apply" type="multi" options={FAILURE_MODES.map(f => ({ value: f, label: f }))} selected={profile.failureModes} onToggle={(v) => toggleArrayItem('failureModes', v)} onNext={advanceStep} />
           )}
 
           {/* Section 3: Values & Guardrails */}
           {section === 3 && subStep === 0 && (
-            <SetupQuestion
-              title="What values should your Chief of Staff protect at all costs?"
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="e.g., Integrity, family time, creative freedom, health"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="What values should your Chief of Staff protect at all costs?" type="text" value={textInput} onChange={setTextInput} placeholder="e.g., Integrity, family time, creative freedom, health" onNext={handleNext} multiline />
           )}
           {section === 3 && subStep === 1 && (
-            <SetupQuestion
-              title="What boundaries should your COS never cross?"
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="e.g., Never encourage overwork, don't schedule during family dinner"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="What boundaries should your COS never cross?" type="text" value={textInput} onChange={setTextInput} placeholder="e.g., Never encourage overwork, don't schedule during family dinner" onNext={handleNext} multiline />
           )}
           {section === 3 && subStep === 2 && (
-            <SetupQuestion
-              title="What kind of accountability actually works for you?"
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="e.g., Gentle reminders, direct callouts, progress tracking"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="What kind of accountability actually works for you?" type="text" value={textInput} onChange={setTextInput} placeholder="e.g., Gentle reminders, direct callouts, progress tracking" onNext={handleNext} multiline />
           )}
 
           {/* Section 4: AI Relationship */}
           {section === 4 && subStep === 0 && (
-            <SetupQuestion
-              title="How are you currently using AI, and what frustrates you?"
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="Be specific about pain points"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="How are you currently using AI, and what frustrates you?" type="text" value={textInput} onChange={setTextInput} placeholder="Be specific about pain points" onNext={handleNext} multiline />
           )}
           {section === 4 && subStep === 1 && (
-            <SetupQuestion
-              title="What would make AI feel like a true partner?"
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="What's missing from your current experience?"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="What would make AI feel like a true partner?" type="text" value={textInput} onChange={setTextInput} placeholder="What's missing from your current experience?" onNext={handleNext} multiline />
           )}
           {section === 4 && subStep === 2 && (
-            <SetupQuestion
-              title="What tools or systems are already part of your daily life?"
-              type="text"
-              value={textInput}
-              onChange={setTextInput}
-              placeholder="e.g., Notion, Linear, Apple Notes, calendar blocking"
-              onNext={handleNext}
-              multiline
-            />
+            <SetupQuestion title="What tools or systems are already part of your daily life?" type="text" value={textInput} onChange={setTextInput} placeholder="e.g., Notion, Linear, Apple Notes, calendar blocking" onNext={handleNext} multiline />
           )}
 
           {/* Section 5: Output Preferences */}
@@ -1222,7 +690,9 @@ const SetupView = ({ onComplete }: { onComplete: () => void }) => {
   );
 };
 
-// Question Component for Setup
+// ============================================
+// SETUP QUESTION COMPONENT
+// ============================================
 const SetupQuestion = ({
   title,
   subtitle,
@@ -1232,7 +702,6 @@ const SetupQuestion = ({
   onSelect,
   onToggle,
   onNext,
-  nextLabel = 'Continue',
   value,
   onChange,
   placeholder,
@@ -1246,30 +715,17 @@ const SetupQuestion = ({
   onSelect?: (value: string) => void;
   onToggle?: (value: string) => void;
   onNext?: () => void;
-  nextLabel?: string;
   value?: string;
   onChange?: (value: string) => void;
   placeholder?: string;
   multiline?: boolean;
 }) => (
   <div>
-    <h2 style={{
-      fontSize: '24px',
-      fontWeight: 400,
-      color: tokens.colors.textPrimary,
-      marginBottom: tokens.spacing.xs,
-      lineHeight: 1.3,
-    }}>
+    <h2 style={{ fontSize: '24px', fontWeight: 400, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs, lineHeight: 1.3 }}>
       {title}
     </h2>
     {subtitle && (
-      <p style={{
-        fontSize: '14px',
-        color: tokens.colors.textSecondary,
-        marginBottom: tokens.spacing.lg,
-      }}>
-        {subtitle}
-      </p>
+      <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.lg }}>{subtitle}</p>
     )}
 
     {type === 'choice' && options && (
@@ -1285,25 +741,10 @@ const SetupQuestion = ({
               borderRadius: tokens.radius.md,
               cursor: 'pointer',
               textAlign: 'left',
-              transition: 'all 0.2s',
             }}
           >
-            <p style={{
-              fontSize: '16px',
-              fontWeight: 500,
-              color: selected === opt.value ? tokens.colors.textInverse : tokens.colors.textPrimary,
-            }}>
-              {opt.label}
-            </p>
-            {opt.desc && (
-              <p style={{
-                fontSize: '13px',
-                color: selected === opt.value ? 'rgba(255,255,255,0.7)' : tokens.colors.textMuted,
-                marginTop: '2px',
-              }}>
-                {opt.desc}
-              </p>
-            )}
+            <p style={{ fontSize: '16px', fontWeight: 500, color: selected === opt.value ? tokens.colors.textInverse : tokens.colors.textPrimary }}>{opt.label}</p>
+            {opt.desc && <p style={{ fontSize: '13px', color: selected === opt.value ? 'rgba(255,255,255,0.7)' : tokens.colors.textMuted, marginTop: '2px' }}>{opt.desc}</p>}
           </button>
         ))}
       </div>
@@ -1327,7 +768,6 @@ const SetupQuestion = ({
                   fontSize: '14px',
                   fontWeight: 500,
                   color: isSelected ? tokens.colors.textInverse : tokens.colors.textPrimary,
-                  transition: 'all 0.2s',
                 }}
               >
                 {opt.label}
@@ -1336,21 +776,8 @@ const SetupQuestion = ({
           })}
         </div>
         {onNext && (
-          <button
-            onClick={onNext}
-            style={{
-              marginTop: tokens.spacing.lg,
-              padding: '12px 24px',
-              background: tokens.colors.bgNavy,
-              color: tokens.colors.textInverse,
-              border: 'none',
-              borderRadius: tokens.radius.md,
-              fontSize: '14px',
-              fontWeight: 500,
-              cursor: 'pointer',
-            }}
-          >
-            {nextLabel}
+          <button onClick={onNext} style={{ marginTop: tokens.spacing.lg, padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.md, fontSize: '14px', fontWeight: 500, cursor: 'pointer' }}>
+            Continue
           </button>
         )}
       </>
@@ -1359,54 +786,11 @@ const SetupQuestion = ({
     {type === 'text' && (
       <>
         {multiline ? (
-          <textarea
-            value={value}
-            onChange={(e) => onChange?.(e.target.value)}
-            placeholder={placeholder}
-            style={{
-              width: '100%',
-              minHeight: '120px',
-              padding: tokens.spacing.sm,
-              border: `1px solid ${tokens.colors.border}`,
-              borderRadius: tokens.radius.md,
-              fontSize: '16px',
-              lineHeight: 1.5,
-              resize: 'vertical',
-              outline: 'none',
-              fontFamily: 'inherit',
-            }}
-          />
+          <textarea value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', minHeight: '120px', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', lineHeight: 1.5, resize: 'vertical', outline: 'none', fontFamily: 'inherit' }} />
         ) : (
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => onChange?.(e.target.value)}
-            placeholder={placeholder}
-            style={{
-              width: '100%',
-              padding: tokens.spacing.sm,
-              border: `1px solid ${tokens.colors.border}`,
-              borderRadius: tokens.radius.md,
-              fontSize: '16px',
-              outline: 'none',
-            }}
-          />
+          <input type="text" value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none' }} />
         )}
-        <button
-          onClick={onNext}
-          disabled={!value?.trim()}
-          style={{
-            marginTop: tokens.spacing.md,
-            padding: '12px 24px',
-            background: value?.trim() ? tokens.colors.bgNavy : tokens.colors.border,
-            color: value?.trim() ? tokens.colors.textInverse : tokens.colors.textMuted,
-            border: 'none',
-            borderRadius: tokens.radius.md,
-            fontSize: '14px',
-            fontWeight: 500,
-            cursor: value?.trim() ? 'pointer' : 'not-allowed',
-          }}
-        >
+        <button onClick={onNext} disabled={!value?.trim()} style={{ marginTop: tokens.spacing.md, padding: '12px 24px', background: value?.trim() ? tokens.colors.bgNavy : tokens.colors.border, color: value?.trim() ? tokens.colors.textInverse : tokens.colors.textMuted, border: 'none', borderRadius: tokens.radius.md, fontSize: '14px', fontWeight: 500, cursor: value?.trim() ? 'pointer' : 'not-allowed' }}>
           Continue
         </button>
       </>
@@ -1414,7 +798,9 @@ const SetupQuestion = ({
   </div>
 );
 
-// Output View for Generated COS
+// ============================================
+// SETUP OUTPUT VIEW
+// ============================================
 const SetupOutputView = ({ profile, onComplete }: { profile: COSProfile; onComplete: () => void }) => {
   const [copied, setCopied] = useState(false);
 
@@ -1483,76 +869,33 @@ When I check in, help me distribute attention across what matters.`;
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: tokens.colors.bgPrimary,
-      padding: tokens.spacing.lg,
-    }}>
+    <div style={{ minHeight: '100vh', background: tokens.colors.bgPrimary, padding: tokens.spacing.lg }}>
       <div style={{ maxWidth: '720px', margin: '0 auto' }}>
         <div style={{ marginBottom: tokens.spacing.xl }}>
-          <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em', marginBottom: tokens.spacing.xs }}>
-            CHIEF OF STAFF GENERATOR
-          </p>
-          <h1 style={{ fontSize: '32px', fontWeight: 400, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.sm }}>
-            Your COS is ready
-          </h1>
-          <p style={{ fontSize: '16px', color: tokens.colors.textSecondary }}>
-            Copy this system prompt into your preferred LLM's custom instructions.
-          </p>
+          <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em', marginBottom: tokens.spacing.xs }}>CHIEF OF STAFF GENERATOR</p>
+          <h1 style={{ fontSize: '32px', fontWeight: 400, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.sm }}>Your COS is ready</h1>
+          <p style={{ fontSize: '16px', color: tokens.colors.textSecondary }}>Copy this system prompt into your preferred LLM's custom instructions.</p>
         </div>
 
-        <div style={{
-          background: tokens.colors.bgNavy,
-          borderRadius: tokens.radius.lg,
-          padding: tokens.spacing.md,
-          marginBottom: tokens.spacing.lg,
-        }}>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: tokens.spacing.sm,
-          }}>
-            <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.05em' }}>
-              SYSTEM PROMPT
-            </p>
-            <button
-              onClick={handleCopy}
-              style={{
-                background: copied ? tokens.colors.teal : 'rgba(255,255,255,0.1)',
-                color: tokens.colors.textInverse,
-                border: 'none',
-                borderRadius: tokens.radius.sm,
-                padding: '6px 12px',
-                fontSize: '12px',
-                fontWeight: 500,
-                cursor: 'pointer',
-              }}
-            >
+        <div style={{ background: tokens.colors.bgNavy, borderRadius: tokens.radius.lg, padding: tokens.spacing.md, marginBottom: tokens.spacing.lg }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: tokens.spacing.sm }}>
+            <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.05em' }}>SYSTEM PROMPT</p>
+            <button onClick={handleCopy} style={{ background: copied ? tokens.colors.teal : 'rgba(255,255,255,0.1)', color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.sm, padding: '6px 12px', fontSize: '12px', fontWeight: 500, cursor: 'pointer' }}>
               {copied ? 'Copied!' : 'Copy'}
             </button>
           </div>
-          <pre style={{
-            fontSize: '13px',
-            color: tokens.colors.textInverse,
-            whiteSpace: 'pre-wrap',
-            lineHeight: 1.6,
-            maxHeight: '400px',
-            overflowY: 'auto',
-            fontFamily: 'monospace',
-            opacity: 0.9,
-          }}>
+          <pre style={{ fontSize: '13px', color: tokens.colors.textInverse, whiteSpace: 'pre-wrap', lineHeight: 1.6, maxHeight: '400px', overflowY: 'auto', fontFamily: 'monospace', opacity: 0.9 }}>
             {systemPrompt}
           </pre>
         </div>
 
         <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
-          <Button variant="primary" onClick={onComplete}>
-            Start using RUMO
-          </Button>
-          <Button variant="secondary" onClick={handleCopy}>
+          <button onClick={onComplete} style={{ padding: '14px 28px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.md, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
+            Continue to RUMO
+          </button>
+          <button onClick={handleCopy} style={{ padding: '14px 28px', background: 'transparent', color: tokens.colors.textPrimary, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
             {copied ? 'Copied!' : 'Copy prompt'}
-          </Button>
+          </button>
         </div>
       </div>
     </div>
@@ -1560,17 +903,358 @@ When I check in, help me distribute attention across what matters.`;
 };
 
 // ============================================
-// VIEWS: Synthesis
+// COMPASS COMPONENT
+// ============================================
+const CompassVisual = ({ heading = 160 }: { heading?: number }) => {
+  const size = 200;
+  const center = size / 2;
+  const outerRadius = 85;
+  const innerRadius = 60;
+
+  // Convert heading to radians (0° = North, clockwise)
+  const rad = (heading - 90) * (Math.PI / 180);
+  const pointerX = center + Math.cos(rad) * (outerRadius - 15);
+  const pointerY = center + Math.sin(rad) * (outerRadius - 15);
+
+  return (
+    <div style={{ position: 'relative', width: size, height: size }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        {/* Outer circle */}
+        <circle cx={center} cy={center} r={outerRadius} fill="none" stroke="#E5E7EB" strokeWidth="2" />
+
+        {/* Inner circle */}
+        <circle cx={center} cy={center} r={innerRadius} fill="#F9FAFB" stroke="#E5E7EB" strokeWidth="1" />
+
+        {/* Wave decoration inside */}
+        <path
+          d={`M ${center - 40} ${center + 10} Q ${center - 20} ${center - 5} ${center} ${center + 10} T ${center + 40} ${center + 10}`}
+          fill="none" stroke="#D1D5DB" strokeWidth="1.5"
+        />
+        <path
+          d={`M ${center - 35} ${center + 20} Q ${center - 15} ${center + 5} ${center + 5} ${center + 20} T ${center + 35} ${center + 20}`}
+          fill="none" stroke="#E5E7EB" strokeWidth="1"
+        />
+
+        {/* Cardinal directions */}
+        <text x={center} y="25" textAnchor="middle" fontSize="14" fontWeight="500" fill="#5A6B7D">N</text>
+        <text x={size - 15} y={center + 5} textAnchor="middle" fontSize="14" fontWeight="500" fill="#5A6B7D">E</text>
+        <text x={center} y={size - 12} textAnchor="middle" fontSize="14" fontWeight="500" fill="#5A6B7D">S</text>
+        <text x="15" y={center + 5} textAnchor="middle" fontSize="14" fontWeight="500" fill="#5A6B7D">W</text>
+
+        {/* Heading number */}
+        <text x={center} y={center + 8} textAnchor="middle" fontSize="36" fontWeight="300" fill="#0C2340">{heading}°</text>
+
+        {/* Direction pointer */}
+        <circle cx={pointerX} cy={pointerY} r="6" fill="#5A6B7D" />
+        <polygon
+          points={`${pointerX + 8},${pointerY} ${pointerX + 16},${pointerY - 4} ${pointerX + 16},${pointerY + 4}`}
+          fill="#5A6B7D"
+        />
+      </svg>
+    </div>
+  );
+};
+
+// ============================================
+// PROGRESS CHART COMPONENT
+// ============================================
+const WeeklyProgressChart = () => {
+  const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  const values = [45, 60, 75, 85, 70, 55, 40]; // Example values
+  const maxHeight = 80;
+  const today = new Date().getDay();
+
+  return (
+    <div>
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '12px', height: maxHeight + 30, marginBottom: tokens.spacing.sm }}>
+        {days.map((day, i) => {
+          const height = (values[i] / 100) * maxHeight;
+          const isToday = i === today;
+          return (
+            <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div
+                style={{
+                  width: '100%',
+                  maxWidth: '32px',
+                  height: height,
+                  background: isToday ? tokens.colors.textSecondary : '#CBD5E1',
+                  borderRadius: '4px 4px 0 0',
+                  position: 'relative',
+                }}
+              >
+                {isToday && (
+                  <div style={{
+                    position: 'absolute',
+                    bottom: -20,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '6px',
+                    height: '6px',
+                    background: tokens.colors.textSecondary,
+                    borderRadius: '50%',
+                  }} />
+                )}
+              </div>
+              <span style={{ fontSize: '12px', color: tokens.colors.textMuted, marginTop: '8px' }}>{day}</span>
+            </div>
+          );
+        })}
+      </div>
+      <p style={{ fontSize: '13px', color: tokens.colors.textMuted, textAlign: 'center' }}>
+        5-Day Streak • Last updated {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+      </p>
+    </div>
+  );
+};
+
+// ============================================
+// DASHBOARD VIEW (Post-Setup / Returning User)
+// ============================================
+const DashboardView = ({
+  onSynthesis,
+  onLanding,
+  onReconfigure,
+}: {
+  onSynthesis: () => void;
+  onLanding: () => void;
+  onReconfigure: () => void;
+}) => (
+  <div style={{ background: tokens.colors.bgPrimary, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    {/* Header */}
+    <header style={{
+      padding: `${tokens.spacing.sm} ${tokens.spacing.lg}`,
+      borderBottom: `1px solid ${tokens.colors.border}`,
+    }}>
+      <div style={{
+        maxWidth: '900px',
+        margin: '0 auto',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: tokens.spacing.xs }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L15 8L22 9L17 14L18 21L12 18L6 21L7 14L2 9L9 8L12 2Z" stroke="#0C2340" strokeWidth="1.5" fill="none"/>
+          </svg>
+          <button onClick={onLanding} style={{ background: 'none', border: 'none', fontSize: '15px', letterSpacing: '0.1em', fontWeight: 600, color: tokens.colors.textPrimary, cursor: 'pointer' }}>RUMO</button>
+        </div>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: tokens.spacing.lg }}>
+          <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>How It Works</button>
+          <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>WAVES</button>
+          <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>SWEATS</button>
+          <button onClick={onReconfigure} style={{ background: 'none', border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, padding: '8px 16px', fontSize: '14px', color: tokens.colors.textPrimary, cursor: 'pointer' }}>Sign In</button>
+        </nav>
+      </div>
+    </header>
+
+    {/* Hero Section */}
+    <section style={{
+      padding: `${tokens.spacing.xl} ${tokens.spacing.lg}`,
+      borderBottom: `1px solid ${tokens.colors.border}`,
+      background: tokens.colors.bgCard,
+    }}>
+      <div style={{
+        maxWidth: '900px',
+        margin: '0 auto',
+        display: 'grid',
+        gridTemplateColumns: '1fr auto',
+        gap: tokens.spacing.xl,
+        alignItems: 'center',
+      }}>
+        <div>
+          <h1 style={{ fontSize: '36px', fontWeight: 400, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs }}>
+            Find Your Direction
+          </h1>
+          <p style={{ fontSize: '16px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.lg }}>
+            Reflect. Choose. Act with clarity, every day.
+          </p>
+          <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
+            <button onClick={onSynthesis} style={{
+              padding: '12px 24px',
+              background: tokens.colors.teal,
+              color: tokens.colors.textInverse,
+              border: 'none',
+              borderRadius: tokens.radius.md,
+              fontSize: '14px',
+              fontWeight: 500,
+              cursor: 'pointer'
+            }}>
+              Start Today's Synthesis
+            </button>
+            <button onClick={onReconfigure} style={{
+              padding: '12px 24px',
+              background: 'transparent',
+              color: tokens.colors.textPrimary,
+              border: `1px solid ${tokens.colors.border}`,
+              borderRadius: tokens.radius.md,
+              fontSize: '14px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}>
+              Set Up Chief of Staff
+              <span style={{ color: tokens.colors.textMuted }}>›</span>
+            </button>
+          </div>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.sm }}>Your Heading</p>
+          <CompassVisual heading={160} />
+        </div>
+      </div>
+    </section>
+
+    {/* Action Cards */}
+    <section style={{ padding: `${tokens.spacing.xl} ${tokens.spacing.lg}` }}>
+      <div style={{
+        maxWidth: '900px',
+        margin: '0 auto',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: tokens.spacing.md,
+      }}>
+        {/* Daily Synthesis Card - teal accent */}
+        <div style={{
+          background: `linear-gradient(135deg, ${tokens.colors.bgCard} 0%, ${tokens.colors.tealSubtle} 100%)`,
+          border: `1px solid ${tokens.colors.border}`,
+          borderRadius: tokens.radius.lg,
+          padding: tokens.spacing.lg,
+          boxShadow: `0 1px 3px ${tokens.colors.shadowSm}`,
+        }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 500, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs }}>Daily Synthesis</h3>
+          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.md }}>Review & reflect.</p>
+          <button onClick={onSynthesis} style={{
+            padding: '10px 20px',
+            background: tokens.colors.teal,
+            color: tokens.colors.textInverse,
+            border: 'none',
+            borderRadius: tokens.radius.md,
+            fontSize: '14px',
+            fontWeight: 500,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+          }}>
+            Begin
+            <span>›</span>
+          </button>
+        </div>
+
+        {/* Track WAVES Card - coral accent */}
+        <div style={{
+          background: `linear-gradient(135deg, ${tokens.colors.bgCard} 0%, ${tokens.colors.coralSubtle} 100%)`,
+          border: `1px solid ${tokens.colors.border}`,
+          borderRadius: tokens.radius.lg,
+          padding: tokens.spacing.lg,
+          boxShadow: `0 1px 3px ${tokens.colors.shadowSm}`,
+        }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 500, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs }}>Track Your WAVES</h3>
+          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.md }}>Check-In to Balance.</p>
+          <button style={{
+            padding: '10px 20px',
+            background: 'transparent',
+            color: tokens.colors.textPrimary,
+            border: `1px solid ${tokens.colors.border}`,
+            borderRadius: tokens.radius.md,
+            fontSize: '14px',
+            fontWeight: 500,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+          }}>
+            View
+            <span style={{ color: tokens.colors.textMuted }}>›</span>
+          </button>
+        </div>
+
+        {/* Run SWEATS Card - purple accent */}
+        <div style={{
+          background: `linear-gradient(135deg, ${tokens.colors.bgCard} 0%, ${tokens.colors.purpleSubtle} 100%)`,
+          border: `1px solid ${tokens.colors.border}`,
+          borderRadius: tokens.radius.lg,
+          padding: tokens.spacing.lg,
+          boxShadow: `0 1px 3px ${tokens.colors.shadowSm}`,
+        }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 500, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs }}>Run Your SWEATS</h3>
+          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.md }}>Log Intentions.</p>
+          <button style={{
+            padding: '10px 20px',
+            background: 'transparent',
+            color: tokens.colors.textPrimary,
+            border: `1px solid ${tokens.colors.border}`,
+            borderRadius: tokens.radius.md,
+            fontSize: '14px',
+            fontWeight: 500,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+          }}>
+            Start
+            <span style={{ color: tokens.colors.textMuted }}>›</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    {/* Weekly Progress */}
+    <section style={{ padding: `0 ${tokens.spacing.lg} ${tokens.spacing.xl}` }}>
+      <div style={{
+        maxWidth: '900px',
+        margin: '0 auto',
+        background: tokens.colors.bgCard,
+        border: `1px solid ${tokens.colors.border}`,
+        borderRadius: tokens.radius.lg,
+        padding: tokens.spacing.lg,
+        boxShadow: `0 1px 3px ${tokens.colors.shadowSm}`,
+      }}>
+        <h3 style={{ fontSize: '18px', fontWeight: 500, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.lg }}>Your Progress This Week</h3>
+        <WeeklyProgressChart />
+      </div>
+    </section>
+
+    {/* Footer */}
+    <footer style={{
+      marginTop: 'auto',
+      padding: `${tokens.spacing.md} ${tokens.spacing.lg}`,
+      borderTop: `1px solid ${tokens.colors.border}`,
+    }}>
+      <div style={{
+        maxWidth: '900px',
+        margin: '0 auto',
+        display: 'flex',
+        justifyContent: 'center',
+        gap: tokens.spacing.lg,
+        alignItems: 'center',
+      }}>
+        <button style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>Privacy</button>
+        <span style={{ color: tokens.colors.border }}>|</span>
+        <button style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>Contact</button>
+        <span style={{ color: tokens.colors.border }}>|</span>
+        <button style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>About</button>
+        <span style={{ color: tokens.colors.border }}>|</span>
+        <span style={{ fontSize: '13px', color: tokens.colors.textMuted }}>© RUMO</span>
+      </div>
+    </footer>
+  </div>
+);
+
+// ============================================
+// SYNTHESIS VIEW
 // ============================================
 const SynthesisView = ({ onBack }: { onBack: () => void }) => {
-  const [messages, setMessages] = useState<{role: 'cos' | 'user'; text: string}[]>([
+  const [messages, setMessages] = useState<{ role: 'cos' | 'user'; text: string }[]>([
     { role: 'cos', text: "What would be useful to think through this morning?" }
   ]);
   const [input, setInput] = useState('');
 
   const handleSend = () => {
     if (!input.trim()) return;
-    setMessages(prev => [...prev, { role: 'user' as const, text: input }]);
+    setMessages(prev => [...prev, { role: 'user', text: input }]);
     setInput('');
 
     setTimeout(() => {
@@ -1578,67 +1262,34 @@ const SynthesisView = ({ onBack }: { onBack: () => void }) => {
         "What's the core tension there?",
         "What would clarity look like?",
         "What's actually at stake?",
+        "Where's the misalignment?",
+        "What's one thing that would make today useful?",
       ];
-      setMessages(prev => [...prev, {
-        role: 'cos' as const,
-        text: responses[Math.floor(Math.random() * responses.length)]
-      }]);
+      setMessages(prev => [...prev, { role: 'cos', text: responses[Math.floor(Math.random() * responses.length)] }]);
     }, 600);
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: tokens.colors.bgPrimary,
-      display: 'flex',
-      flexDirection: 'column',
-    }}>
-      <div style={{
-        padding: tokens.spacing.md,
-        borderBottom: `1px solid ${tokens.colors.border}`,
-        display: 'flex',
-        alignItems: 'center',
-        gap: tokens.spacing.md,
-      }}>
-        <button
-          onClick={onBack}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: tokens.colors.textMuted,
-            cursor: 'pointer',
-            fontSize: '14px',
-          }}
-        >
-          ← Back
-        </button>
+    <div style={{ minHeight: '100vh', background: tokens.colors.bgPrimary, display: 'flex', flexDirection: 'column' }}>
+      <header style={{ padding: tokens.spacing.md, borderBottom: `1px solid ${tokens.colors.border}`, display: 'flex', alignItems: 'center', gap: tokens.spacing.md }}>
+        <button onClick={onBack} style={{ background: 'none', border: 'none', color: tokens.colors.textMuted, cursor: 'pointer', fontSize: '14px' }}>← Back</button>
         <div>
           <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em' }}>SYNTHESIS</p>
-          <p style={{ fontSize: '16px', color: tokens.colors.textPrimary }}>Morning orientation</p>
+          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary }}>Morning orientation</p>
         </div>
-      </div>
+      </header>
 
       <div style={{ flex: 1, padding: tokens.spacing.lg, maxWidth: '640px', margin: '0 auto', width: '100%' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: tokens.spacing.md }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: tokens.spacing.lg }}>
           {messages.map((msg, i) => (
             <div key={i} style={{ paddingLeft: msg.role === 'user' ? tokens.spacing.lg : 0 }}>
-              <p style={{
-                fontSize: '18px',
-                lineHeight: 1.6,
-                color: msg.role === 'user' ? tokens.colors.textPrimary : tokens.colors.textSecondary
-              }}>
-                {msg.text}
-              </p>
+              <p style={{ fontSize: '18px', lineHeight: 1.6, color: msg.role === 'user' ? tokens.colors.textPrimary : tokens.colors.textSecondary }}>{msg.text}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div style={{
-        padding: tokens.spacing.md,
-        borderTop: `1px solid ${tokens.colors.border}`,
-        background: tokens.colors.bgCard,
-      }}>
+      <div style={{ padding: tokens.spacing.md, borderTop: `1px solid ${tokens.colors.border}`, background: tokens.colors.bgCard }}>
         <div style={{ maxWidth: '640px', margin: '0 auto', display: 'flex', gap: tokens.spacing.sm }}>
           <input
             type="text"
@@ -1646,16 +1297,9 @@ const SynthesisView = ({ onBack }: { onBack: () => void }) => {
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSend()}
             placeholder="Type here..."
-            style={{
-              flex: 1,
-              padding: tokens.spacing.sm,
-              border: `1px solid ${tokens.colors.border}`,
-              borderRadius: tokens.radius.md,
-              fontSize: '16px',
-              outline: 'none',
-            }}
+            style={{ flex: 1, padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none' }}
           />
-          <Button variant="primary" onClick={handleSend}>Send</Button>
+          <button onClick={handleSend} style={{ padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.md, fontSize: '14px', fontWeight: 500, cursor: 'pointer' }}>Send</button>
         </div>
       </div>
     </div>
