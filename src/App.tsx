@@ -555,7 +555,7 @@ const LandingView = ({
             style={{
               background: 'none',
               border: 'none',
-              color: tokens.colors.navyFaded,
+              color: tokens.colors.navy,
               fontSize: '14px',
               cursor: 'pointer',
               fontFamily: tokens.font.sans,
@@ -1033,9 +1033,10 @@ const LandingView = ({
             </div>
             <p style={{
               fontSize: '13px',
-              color: tokens.colors.navyFaded,
+              color: tokens.colors.navy,
               marginTop: tokens.space[5],
               fontStyle: 'italic',
+              opacity: 0.7,
             }}>
               Whole · Accomplished · Vital · Expressive · Satisfied
             </p>
@@ -1085,9 +1086,10 @@ const LandingView = ({
             </div>
             <p style={{
               fontSize: '13px',
-              color: tokens.colors.navyFaded,
+              color: tokens.colors.navy,
               marginTop: tokens.space[5],
               fontStyle: 'italic',
+              opacity: 0.7,
             }}>
               Synthesis · Work · Energy · Art · Ties · Service
             </p>
@@ -1112,7 +1114,7 @@ const LandingView = ({
           </p>
           <p style={{
             fontSize: '16px',
-            color: tokens.colors.navyLight,
+            color: tokens.colors.navy,
             fontStyle: 'italic',
           }}>
             Your Chief of Staff brings them together, day by day, so direction and momentum stay aligned.
@@ -1170,7 +1172,7 @@ const LandingView = ({
     }}>
       <p style={{
         fontSize: '13px',
-        color: tokens.colors.navyFaded,
+        color: tokens.colors.navy,
         fontFamily: tokens.font.display,
         fontWeight: 600,
         letterSpacing: '0.1em',
@@ -1314,7 +1316,7 @@ const SetupView = ({
             {SETUP_SECTIONS[section].title}
           </p>
         </div>
-        <p style={{ fontSize: '14px', color: tokens.colors.navyLight, fontWeight: 500 }}>
+        <p style={{ fontSize: '14px', color: tokens.colors.navy, fontWeight: 500 }}>
           {currentStep + 1} of {totalSteps}
         </p>
       </div>
@@ -1544,7 +1546,7 @@ const SetupQuestion = ({
       {title}
     </h2>
     {subtitle && (
-      <p style={{ fontSize: '16px', color: tokens.colors.navyLight, marginBottom: tokens.spacing.lg, lineHeight: 1.5 }}>{subtitle}</p>
+      <p style={{ fontSize: '16px', color: tokens.colors.navy, marginBottom: tokens.spacing.lg, lineHeight: 1.5, opacity: 0.8 }}>{subtitle}</p>
     )}
 
     {type === 'choice' && options && (
@@ -1565,7 +1567,7 @@ const SetupQuestion = ({
             }}
           >
             <p style={{ fontSize: '17px', fontWeight: 600, color: selected === opt.value ? tokens.colors.textInverse : tokens.colors.navy }}>{opt.label}</p>
-            {opt.desc && <p style={{ fontSize: '15px', color: selected === opt.value ? 'rgba(255,255,255,0.85)' : tokens.colors.navyLight, marginTop: '4px', lineHeight: 1.4 }}>{opt.desc}</p>}
+            {opt.desc && <p style={{ fontSize: '15px', color: selected === opt.value ? 'rgba(255,255,255,0.85)' : tokens.colors.navy, marginTop: '4px', lineHeight: 1.4, opacity: selected === opt.value ? 1 : 0.75 }}>{opt.desc}</p>}
           </button>
         ))}
       </div>
@@ -1617,7 +1619,7 @@ const SetupQuestion = ({
             CONTINUE
           </button>
           {optional && onSkip && (
-            <button onClick={onSkip} className="btn-ghost" style={{ padding: '14px 28px', background: 'transparent', color: tokens.colors.navyLight, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
+            <button onClick={onSkip} className="btn-ghost" style={{ padding: '14px 28px', background: 'transparent', color: tokens.colors.navy, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
               SKIP FOR NOW
             </button>
           )}
