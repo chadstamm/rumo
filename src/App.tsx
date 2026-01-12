@@ -140,51 +140,44 @@ const CalcadaPattern = () => (
       width: '100%',
       height: '100%',
       pointerEvents: 'none',
-      opacity: 0.04,
+      opacity: 0.06,
     }}
     preserveAspectRatio="xMidYMid slice"
   >
     <defs>
-      <pattern id="calcada-wave" x="0" y="0" width="200" height="100" patternUnits="userSpaceOnUse">
-        {/* Wave pattern inspired by Rossio/Copacabana calçada */}
+      <pattern id="calcada-wave" x="0" y="0" width="120" height="60" patternUnits="userSpaceOnUse">
+        {/* Dark wave band - filled shape */}
         <path
-          d="M0 50 Q25 20, 50 50 T100 50 T150 50 T200 50"
-          fill="none"
-          stroke="white"
-          strokeWidth="12"
+          d="M0 15
+             Q30 0, 60 15
+             Q90 30, 120 15
+             L120 30
+             Q90 45, 60 30
+             Q30 15, 0 30
+             Z"
+          fill="white"
         />
+        {/* Second dark wave band */}
         <path
-          d="M0 50 Q25 80, 50 50 T100 50 T150 50 T200 50"
-          fill="none"
-          stroke="white"
-          strokeWidth="12"
+          d="M0 45
+             Q30 30, 60 45
+             Q90 60, 120 45
+             L120 60
+             Q90 75, 60 60
+             Q30 45, 0 60
+             Z"
+          fill="white"
         />
+        {/* Top continuation */}
         <path
-          d="M-50 50 Q-25 20, 0 50"
-          fill="none"
-          stroke="white"
-          strokeWidth="12"
-        />
-        <path
-          d="M200 50 Q225 80, 250 50"
-          fill="none"
-          stroke="white"
-          strokeWidth="12"
-        />
-        {/* Secondary wave offset */}
-        <path
-          d="M0 0 Q25 -30, 50 0 T100 0 T150 0 T200 0"
-          fill="none"
-          stroke="white"
-          strokeWidth="8"
-          transform="translate(0, 25)"
-        />
-        <path
-          d="M0 100 Q25 130, 50 100 T100 100 T150 100 T200 100"
-          fill="none"
-          stroke="white"
-          strokeWidth="8"
-          transform="translate(0, -25)"
+          d="M0 -15
+             Q30 -30, 60 -15
+             Q90 0, 120 -15
+             L120 0
+             Q90 15, 60 0
+             Q30 -15, 0 0
+             Z"
+          fill="white"
         />
       </pattern>
     </defs>
@@ -200,20 +193,26 @@ const CalcadaFrame = () => (
       position: 'fixed',
       left: 0,
       top: 0,
-      width: '60px',
+      width: '80px',
       height: '100%',
-      background: `linear-gradient(to right, rgba(255,255,255,0.03), transparent)`,
+      background: `linear-gradient(to right, rgba(255,255,255,0.04), transparent)`,
       pointerEvents: 'none',
       zIndex: 1,
     }}>
-      <svg width="100%" height="100%" style={{ opacity: 0.08 }}>
+      <svg width="100%" height="100%" style={{ opacity: 0.1 }}>
         <defs>
-          <pattern id="wave-left" x="0" y="0" width="60" height="120" patternUnits="userSpaceOnUse">
-            <path d="M30 0 Q60 30, 30 60 Q0 90, 30 120" fill="none" stroke="white" strokeWidth="2" />
-            <path d="M30 0 Q0 30, 30 60 Q60 90, 30 120" fill="none" stroke="white" strokeWidth="2" />
+          <pattern id="wave-border-left" x="0" y="0" width="80" height="40" patternUnits="userSpaceOnUse">
+            <path
+              d="M0 10 Q20 0, 40 10 Q60 20, 80 10 L80 20 Q60 30, 40 20 Q20 10, 0 20 Z"
+              fill="white"
+            />
+            <path
+              d="M0 30 Q20 20, 40 30 Q60 40, 80 30 L80 40 Q60 50, 40 40 Q20 30, 0 40 Z"
+              fill="white"
+            />
           </pattern>
         </defs>
-        <rect width="100%" height="100%" fill="url(#wave-left)" />
+        <rect width="100%" height="100%" fill="url(#wave-border-left)" />
       </svg>
     </div>
     {/* Right border */}
@@ -221,20 +220,26 @@ const CalcadaFrame = () => (
       position: 'fixed',
       right: 0,
       top: 0,
-      width: '60px',
+      width: '80px',
       height: '100%',
-      background: `linear-gradient(to left, rgba(255,255,255,0.03), transparent)`,
+      background: `linear-gradient(to left, rgba(255,255,255,0.04), transparent)`,
       pointerEvents: 'none',
       zIndex: 1,
     }}>
-      <svg width="100%" height="100%" style={{ opacity: 0.08 }}>
+      <svg width="100%" height="100%" style={{ opacity: 0.1 }}>
         <defs>
-          <pattern id="wave-right" x="0" y="0" width="60" height="120" patternUnits="userSpaceOnUse">
-            <path d="M30 0 Q60 30, 30 60 Q0 90, 30 120" fill="none" stroke="white" strokeWidth="2" />
-            <path d="M30 0 Q0 30, 30 60 Q60 90, 30 120" fill="none" stroke="white" strokeWidth="2" />
+          <pattern id="wave-border-right" x="0" y="0" width="80" height="40" patternUnits="userSpaceOnUse">
+            <path
+              d="M0 10 Q20 0, 40 10 Q60 20, 80 10 L80 20 Q60 30, 40 20 Q20 10, 0 20 Z"
+              fill="white"
+            />
+            <path
+              d="M0 30 Q20 20, 40 30 Q60 40, 80 30 L80 40 Q60 50, 40 40 Q20 30, 0 40 Z"
+              fill="white"
+            />
           </pattern>
         </defs>
-        <rect width="100%" height="100%" fill="url(#wave-right)" />
+        <rect width="100%" height="100%" fill="url(#wave-border-right)" />
       </svg>
     </div>
   </>
