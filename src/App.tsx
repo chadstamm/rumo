@@ -399,7 +399,7 @@ const LandingView = ({
       <p style={{
         fontSize: 'clamp(18px, 2vw, 22px)',
         color: tokens.colors.navyFaded,
-        maxWidth: '600px',
+        maxWidth: '720px',
         lineHeight: 1.6,
         marginBottom: tokens.space[8],
         position: 'relative',
@@ -442,24 +442,112 @@ const LandingView = ({
 
     </section>
 
-    {/* Problem - One idea */}
+    {/* Problem - Expanded */}
     <section style={{
       padding: `${tokens.space[10]} ${tokens.space[5]}`,
-      display: 'flex',
-      justifyContent: 'center',
     }}>
-      <div style={{ maxWidth: '640px', textAlign: 'center' }}>
-        <p style={{
-          fontSize: 'clamp(24px, 4vw, 36px)',
-          fontWeight: 700,
-          lineHeight: 1.4,
-          color: tokens.colors.navy,
-          fontFamily: tokens.font.display,
+      <div style={{
+        maxWidth: '1000px',
+        margin: '0 auto',
+        display: 'grid',
+        gridTemplateColumns: '1fr 320px',
+        gap: tokens.space[8],
+        alignItems: 'start',
+      }}>
+        {/* Left column - Text */}
+        <div style={{ textAlign: 'left' }}>
+          <p style={{
+            fontSize: 'clamp(24px, 4vw, 36px)',
+            fontWeight: 700,
+            lineHeight: 1.4,
+            color: tokens.colors.navy,
+            fontFamily: tokens.font.display,
+            marginBottom: tokens.space[6],
+          }}>
+            You're moving fast.
+            <br />
+            <span style={{ color: tokens.colors.navyFaded }}>But toward what?</span>
+          </p>
+
+          <div style={{
+            fontSize: '17px',
+            lineHeight: 1.7,
+            color: tokens.colors.navyLight,
+          }}>
+            <p style={{ marginBottom: tokens.space[5] }}>
+              Sometimes there's plenty of momentum, but no clear heading.
+              <br />
+              Other times the destination is clear, but there's no wind to carry you there.
+            </p>
+            <p style={{ marginBottom: tokens.space[5], fontWeight: 500, color: tokens.colors.navy }}>
+              We know what that feels like.
+              <br />
+              It's not confusion. It's misalignment.
+            </p>
+            <p>
+              That's why we created RUMO: to help you set a direction, harness your momentum, and move with intention.
+            </p>
+          </div>
+        </div>
+
+        {/* Right column - Nautical callout */}
+        <div style={{
+          background: `linear-gradient(135deg, ${tokens.colors.creamDark} 0%, rgba(61, 90, 128, 0.08) 100%)`,
+          border: `2px solid ${tokens.colors.navyFaded}`,
+          borderRadius: tokens.radius.lg,
+          padding: tokens.space[6],
+          position: 'relative',
+          overflow: 'hidden',
         }}>
-          You're moving fast.
-          <br />
-          <span style={{ color: tokens.colors.navyFaded }}>But toward what?</span>
-        </p>
+          {/* Compass rose decoration */}
+          <div style={{
+            position: 'absolute',
+            top: '-20px',
+            right: '-20px',
+            width: '80px',
+            height: '80px',
+            opacity: 0.1,
+          }}>
+            <svg viewBox="0 0 100 100" fill={tokens.colors.navy}>
+              <circle cx="50" cy="50" r="45" stroke={tokens.colors.navy} strokeWidth="2" fill="none" />
+              <path d="M50 10 L55 50 L50 90 L45 50 Z" fill={tokens.colors.navy} />
+              <path d="M10 50 L50 45 L90 50 L50 55 Z" fill={tokens.colors.navy} />
+            </svg>
+          </div>
+
+          {/* Wave decoration at bottom */}
+          <div style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '30px',
+            opacity: 0.15,
+          }}>
+            <svg width="100%" height="30" preserveAspectRatio="none" viewBox="0 0 200 30">
+              <path
+                d="M0 15 Q 25 5, 50 15 T 100 15 T 150 15 T 200 15 L200 30 L0 30 Z"
+                fill={tokens.colors.navy}
+              />
+            </svg>
+          </div>
+
+          <p style={{
+            fontSize: '18px',
+            fontWeight: 600,
+            lineHeight: 1.5,
+            color: tokens.colors.navy,
+            fontFamily: tokens.font.display,
+            fontStyle: 'italic',
+            position: 'relative',
+            zIndex: 1,
+          }}>
+            "Momentum without direction drifts.
+            <br />
+            <br />
+            Direction without momentum stalls."
+          </p>
+        </div>
       </div>
     </section>
 
