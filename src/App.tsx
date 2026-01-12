@@ -399,7 +399,7 @@ const LandingView = ({
       <p style={{
         fontSize: 'clamp(18px, 2vw, 22px)',
         color: tokens.colors.navyFaded,
-        maxWidth: '600px',
+        maxWidth: '720px',
         lineHeight: 1.6,
         marginBottom: tokens.space[8],
         position: 'relative',
