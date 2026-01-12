@@ -445,19 +445,19 @@ const RumoLogo = ({ size = 'md', color = '#1A2B3C', accentColor }: { size?: 'sm'
       />
       {/* O as Compass - sized to match letter height */}
       <g transform="translate(124, 4)">
-        {/* Outer circle */}
-        <circle cx="24" cy="24" r="20" stroke={compassColor} strokeWidth="3" fill="none" />
-        {/* Cardinal tick marks */}
+        {/* Outer circle - matches letter color */}
+        <circle cx="24" cy="24" r="20" stroke={color} strokeWidth="3" fill="none" />
+        {/* Cardinal tick marks - accent color */}
         <line x1="24" y1="6" x2="24" y2="10" stroke={compassColor} strokeWidth="2" />
         <line x1="24" y1="38" x2="24" y2="42" stroke={compassColor} strokeWidth="2" />
         <line x1="6" y1="24" x2="10" y2="24" stroke={compassColor} strokeWidth="2" />
         <line x1="38" y1="24" x2="42" y2="24" stroke={compassColor} strokeWidth="2" />
-        {/* Intercardinal tick marks */}
+        {/* Intercardinal tick marks - accent color */}
         <line x1="36" y1="12" x2="33" y2="15" stroke={compassColor} strokeWidth="1.5" />
         <line x1="36" y1="36" x2="33" y2="33" stroke={compassColor} strokeWidth="1.5" />
         <line x1="12" y1="12" x2="15" y2="15" stroke={compassColor} strokeWidth="1.5" />
         <line x1="12" y1="36" x2="15" y2="33" stroke={compassColor} strokeWidth="1.5" />
-        {/* Compass needle - North half (solid) */}
+        {/* Compass needle - North half (solid ochre) */}
         <path
           d="M24 8 L27 24 L21 24 Z"
           fill={compassColor}
@@ -614,7 +614,7 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        We know the feeling, but we also know there's a&nbsp;solution.
+        We know the feeling. We've been there&nbsp;too.
       </p>
 
       <p className="animate-fade-in-up stagger-3" style={{
@@ -640,7 +640,7 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        The truth is, AI can be so much more. It can help you accelerate in the direction you want to head, and that's what the RUMO System was designed to&nbsp;do.
+        The truth is, AI can be so much more. It can help you accelerate in the direction you want to head—and that's exactly what RUMO helps you&nbsp;do.
       </p>
 
       <p className="animate-fade-in-up stagger-5" style={{
@@ -653,12 +653,23 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
+        Finally move with direction.
+      </p>
+
+      <p className="animate-fade-in-up stagger-6" style={{
+        fontSize: '17px',
+        color: tokens.colors.navy,
+        marginBottom: tokens.space[5],
+        position: 'relative',
+        zIndex: 1,
+        opacity: 0,
+      }}>
         Start by building your Chief of&nbsp;Staff...
       </p>
 
       <button
         onClick={onSetup}
-        className="btn-primary animate-fade-in-up stagger-6"
+        className="btn-primary animate-fade-in-up stagger-7"
         style={{
           background: tokens.colors.ochre,
           color: tokens.colors.white,
@@ -1212,7 +1223,7 @@ const LandingView = ({
         maxWidth: '600px',
         margin: `0 auto ${tokens.space[7]}`,
       }}>
-        In five minutes, you'll have a thinking partner that knows your direction—and helps you stay on&nbsp;course.
+        In five minutes, you'll have a thinking partner that knows your direction—so you can stop drifting and start building the life you actually&nbsp;want.
       </p>
       <button
         onClick={onSetup}
