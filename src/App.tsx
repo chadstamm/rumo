@@ -192,23 +192,24 @@ const RumoLogo = ({ size = 'md', color = '#1A2B3C' }: { size?: 'sm' | 'md' | 'lg
       <g transform="translate(124, 0)">
         {/* Outer circle */}
         <circle cx="24" cy="24" r="22" stroke={color} strokeWidth="3" fill="none" />
-        {/* Tick marks */}
-        <line x1="24" y1="4" x2="24" y2="8" stroke={color} strokeWidth="2" />
-        <line x1="24" y1="40" x2="24" y2="44" stroke={color} strokeWidth="2" />
-        <line x1="4" y1="24" x2="8" y2="24" stroke={color} strokeWidth="2" />
-        <line x1="40" y1="24" x2="44" y2="24" stroke={color} strokeWidth="2" />
-        {/* Small tick marks */}
-        <line x1="38" y1="10" x2="36" y2="12" stroke={color} strokeWidth="1.5" />
-        <line x1="38" y1="38" x2="36" y2="36" stroke={color} strokeWidth="1.5" />
-        <line x1="10" y1="10" x2="12" y2="12" stroke={color} strokeWidth="1.5" />
-        <line x1="10" y1="38" x2="12" y2="36" stroke={color} strokeWidth="1.5" />
-        {/* Compass needle - diamond shape pointing NE */}
+        {/* Cardinal tick marks */}
+        <line x1="24" y1="4" x2="24" y2="9" stroke={color} strokeWidth="2" />
+        <line x1="24" y1="39" x2="24" y2="44" stroke={color} strokeWidth="2" />
+        <line x1="4" y1="24" x2="9" y2="24" stroke={color} strokeWidth="2" />
+        <line x1="39" y1="24" x2="44" y2="24" stroke={color} strokeWidth="2" />
+        {/* Intercardinal tick marks */}
+        <line x1="38" y1="10" x2="35" y2="13" stroke={color} strokeWidth="1.5" />
+        <line x1="38" y1="38" x2="35" y2="35" stroke={color} strokeWidth="1.5" />
+        <line x1="10" y1="10" x2="13" y2="13" stroke={color} strokeWidth="1.5" />
+        <line x1="10" y1="38" x2="13" y2="35" stroke={color} strokeWidth="1.5" />
+        {/* Compass needle - North half (solid) */}
         <path
-          d="M24 24 L32 10 L24 16 L16 10 Z"
+          d="M24 6 L28 24 L20 24 Z"
           fill={color}
         />
+        {/* Compass needle - South half (faded) */}
         <path
-          d="M24 24 L32 38 L24 32 L16 38 Z"
+          d="M24 42 L28 24 L20 24 Z"
           fill={color}
           fillOpacity="0.3"
         />
@@ -308,13 +309,7 @@ const LandingView = ({
     minHeight: '100vh',
     fontFamily: tokens.font.sans,
     color: tokens.colors.navy,
-    position: 'relative',
   }}>
-    {/* Calçada wave texture */}
-    <div style={{ color: tokens.colors.navyFaded }}>
-      <CalcadaTexture opacity={0.06} />
-    </div>
-
     {/* Navigation - Minimal */}
     <nav style={{
       position: 'fixed',
@@ -343,14 +338,14 @@ const LandingView = ({
               fontFamily: tokens.font.sans,
             }}
           >
-            Dashboard
+            DASHBOARD
           </button>
         )}
         <button
           onClick={onSetup}
           style={{
-            background: tokens.colors.navy,
-            color: tokens.colors.cream,
+            background: tokens.colors.ochre,
+            color: tokens.colors.white,
             border: 'none',
             padding: '10px 20px',
             borderRadius: tokens.radius.full,
@@ -360,7 +355,7 @@ const LandingView = ({
             fontFamily: tokens.font.display,
           }}
         >
-          Get Started
+          GET STARTED
         </button>
       </div>
     </nav>
@@ -375,20 +370,28 @@ const LandingView = ({
       textAlign: 'center',
       padding: `${tokens.space[10]} ${tokens.space[5]}`,
       position: 'relative',
+      overflow: 'hidden',
     }}>
-      <div style={{ marginBottom: tokens.space[7] }}>
+      {/* Calçada wave texture - hero only */}
+      <div style={{ color: tokens.colors.navyFaded, position: 'absolute', inset: 0 }}>
+        <CalcadaTexture opacity={0.06} />
+      </div>
+
+      <div style={{ marginBottom: tokens.space[7], position: 'relative', zIndex: 1 }}>
         <RumoLogo size="lg" color={tokens.colors.navy} />
       </div>
 
       <h1 style={{
         fontSize: 'clamp(48px, 8vw, 96px)',
-        fontWeight: 800,
+        fontWeight: 700,
         lineHeight: 1.05,
         letterSpacing: '-0.02em',
         marginBottom: tokens.space[6],
         maxWidth: '900px',
         fontFamily: tokens.font.display,
         color: tokens.colors.navy,
+        position: 'relative',
+        zIndex: 1,
       }}>
         Find your direction.
       </h1>
@@ -399,17 +402,21 @@ const LandingView = ({
         maxWidth: '600px',
         lineHeight: 1.6,
         marginBottom: tokens.space[8],
+        position: 'relative',
+        zIndex: 1,
       }}>
         RUMO is an AI-powered personal navigation system that helps you clarify where you're going—and act with intention.
       </p>
 
       <p style={{
-        fontSize: '14px',
+        fontSize: '16px',
         color: tokens.colors.ochre,
         marginBottom: tokens.space[4],
         fontFamily: tokens.font.display,
-        fontWeight: 600,
-        letterSpacing: '0.05em',
+        fontWeight: 700,
+        letterSpacing: '0.03em',
+        position: 'relative',
+        zIndex: 1,
       }}>
         Begin by creating your personal Chief of Staff.
       </p>
@@ -417,8 +424,8 @@ const LandingView = ({
       <button
         onClick={onSetup}
         style={{
-          background: tokens.colors.navy,
-          color: tokens.colors.cream,
+          background: tokens.colors.ochre,
+          color: tokens.colors.white,
           border: 'none',
           padding: '16px 32px',
           borderRadius: tokens.radius.full,
@@ -426,9 +433,11 @@ const LandingView = ({
           fontWeight: 700,
           cursor: 'pointer',
           fontFamily: tokens.font.display,
+          position: 'relative',
+          zIndex: 1,
         }}
       >
-        Set Your Course
+        SET YOUR COURSE
       </button>
 
     </section>
@@ -579,13 +588,13 @@ const LandingView = ({
         color: tokens.colors.navyFaded,
         marginBottom: tokens.space[7],
       }}>
-        Set up your Chief of Staff in 5 minutes.
+        Set up your Chief of Staff in five minutes.
       </p>
       <button
         onClick={onSetup}
         style={{
-          background: tokens.colors.navy,
-          color: tokens.colors.cream,
+          background: tokens.colors.ochre,
+          color: tokens.colors.white,
           border: 'none',
           padding: '16px 40px',
           borderRadius: tokens.radius.full,
@@ -595,7 +604,7 @@ const LandingView = ({
           fontFamily: tokens.font.display,
         }}
       >
-        Begin Setup
+        BEGIN SETUP
       </button>
     </section>
 
@@ -612,7 +621,7 @@ const LandingView = ({
         fontWeight: 600,
         letterSpacing: '0.1em',
       }}>
-        RUMO
+        © 2026 RUMO
       </p>
     </footer>
   </div>
@@ -736,7 +745,7 @@ const SetupView = ({
             fontSize: '14px',
           }}
         >
-          ← Back
+          ← BACK
         </button>
         <div style={{ flex: 1 }}>
           <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em' }}>
@@ -849,10 +858,10 @@ const SetupView = ({
             <SetupQuestion title="What is your current role?" subtitle="Include multiple roles if relevant." type="text" value={textInput} onChange={setTextInput} placeholder="e.g., VP of Product at a Series B startup, also a parent of two" onNext={handleNext} />
           )}
           {section === 1 && subStep === 1 && (
-            <SetupQuestion title="What are your top 3 outcomes for the next 90 days?" type="text" value={textInput} onChange={setTextInput} placeholder="e.g., Launch v2, hire 2 senior engineers, establish exec team rhythm" onNext={handleNext} multiline />
+            <SetupQuestion title="What are your top three outcomes for the next 90 days?" type="text" value={textInput} onChange={setTextInput} placeholder="e.g., Launch v2, hire two senior engineers, establish exec team rhythm" onNext={handleNext} multiline />
           )}
           {section === 1 && subStep === 2 && (
-            <SetupQuestion title="What are the 3 recurring decisions you make that have the biggest impact?" type="text" value={textInput} onChange={setTextInput} placeholder="e.g., Resource allocation, roadmap prioritization, hiring calls" onNext={handleNext} multiline />
+            <SetupQuestion title="What are the three recurring decisions you make that have the biggest impact?" type="text" value={textInput} onChange={setTextInput} placeholder="e.g., Resource allocation, roadmap prioritization, hiring calls" onNext={handleNext} multiline />
           )}
           {section === 1 && subStep === 3 && (
             <SetupQuestion title="Where does uncertainty show up most right now?" type="text" value={textInput} onChange={setTextInput} placeholder="What keeps you uncertain or anxious?" onNext={handleNext} multiline />
@@ -1019,7 +1028,7 @@ const SetupQuestion = ({
         </div>
         {onNext && (
           <button onClick={onNext} style={{ marginTop: tokens.spacing.lg, padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '14px', fontWeight: 500, cursor: 'pointer' }}>
-            Continue
+            CONTINUE
           </button>
         )}
       </>
@@ -1134,7 +1143,7 @@ When I check in, help me distribute attention across what matters.`;
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: tokens.spacing.sm }}>
             <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.05em' }}>SYSTEM PROMPT</p>
             <button onClick={handleCopy} style={{ background: copied ? tokens.colors.teal : 'rgba(255,255,255,0.1)', color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, padding: '6px 12px', fontSize: '12px', fontWeight: 500, cursor: 'pointer' }}>
-              {copied ? 'Copied!' : 'Copy'}
+              {copied ? 'COPIED!' : 'COPY'}
             </button>
           </div>
           <pre style={{ fontSize: '13px', color: tokens.colors.textInverse, whiteSpace: 'pre-wrap', lineHeight: 1.6, maxHeight: '400px', overflowY: 'auto', fontFamily: 'monospace', opacity: 0.9 }}>
@@ -1144,10 +1153,10 @@ When I check in, help me distribute attention across what matters.`;
 
         <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
           <button onClick={onComplete} style={{ padding: '14px 28px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
-            Continue to RUMO
+            CONTINUE TO RUMO
           </button>
           <button onClick={handleCopy} style={{ padding: '14px 28px', background: 'transparent', color: tokens.colors.textPrimary, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
-            {copied ? 'Copied!' : 'Copy prompt'}
+            {copied ? 'COPIED!' : 'COPY PROMPT'}
           </button>
         </div>
       </div>
@@ -1254,7 +1263,7 @@ const WeeklyProgressChart = () => {
         })}
       </div>
       <p style={{ fontSize: '13px', color: tokens.colors.textMuted, textAlign: 'center' }}>
-        5-Day Streak • Last updated {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+        Five-Day Streak • Last updated {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
       </p>
     </div>
   );
@@ -1289,10 +1298,10 @@ const DashboardView = ({
           <RumoLogo size="sm" color={tokens.colors.textPrimary} />
         </button>
         <nav style={{ display: 'flex', alignItems: 'center', gap: tokens.spacing.lg }}>
-          <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>How It Works</button>
+          <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>HOW IT WORKS</button>
           <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>WAVES</button>
           <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>SWEATS</button>
-          <button onClick={onReconfigure} style={{ background: 'none', border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, padding: '8px 16px', fontSize: '14px', color: tokens.colors.textPrimary, cursor: 'pointer' }}>Sign In</button>
+          <button onClick={onReconfigure} style={{ background: 'none', border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, padding: '8px 16px', fontSize: '14px', color: tokens.colors.textPrimary, cursor: 'pointer' }}>SIGN IN</button>
         </nav>
       </div>
     </header>
@@ -1329,7 +1338,7 @@ const DashboardView = ({
               fontWeight: 500,
               cursor: 'pointer'
             }}>
-              Start Today's Synthesis
+              START TODAY'S SYNTHESIS
             </button>
             <button onClick={onReconfigure} style={{
               padding: '12px 24px',
@@ -1344,7 +1353,7 @@ const DashboardView = ({
               alignItems: 'center',
               gap: '8px',
             }}>
-              Set Up Chief of Staff
+              SET UP CHIEF OF STAFF
               <span style={{ color: tokens.colors.textMuted }}>›</span>
             </button>
           </div>
@@ -1388,7 +1397,7 @@ const DashboardView = ({
             alignItems: 'center',
             gap: '8px',
           }}>
-            Begin
+            BEGIN
             <span>›</span>
           </button>
         </div>
@@ -1416,7 +1425,7 @@ const DashboardView = ({
             alignItems: 'center',
             gap: '8px',
           }}>
-            View
+            VIEW
             <span style={{ color: tokens.colors.textMuted }}>›</span>
           </button>
         </div>
@@ -1444,7 +1453,7 @@ const DashboardView = ({
             alignItems: 'center',
             gap: '8px',
           }}>
-            Start
+            START
             <span style={{ color: tokens.colors.textMuted }}>›</span>
           </button>
         </div>
@@ -1481,11 +1490,11 @@ const DashboardView = ({
         gap: tokens.spacing.lg,
         alignItems: 'center',
       }}>
-        <button style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>Privacy</button>
+        <button style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>PRIVACY</button>
         <span style={{ color: tokens.colors.border }}>|</span>
-        <button style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>Contact</button>
+        <button style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>CONTACT</button>
         <span style={{ color: tokens.colors.border }}>|</span>
-        <button style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>About</button>
+        <button style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>ABOUT</button>
         <span style={{ color: tokens.colors.border }}>|</span>
         <span style={{ fontSize: '13px', color: tokens.colors.textMuted }}>© RUMO</span>
       </div>
@@ -1522,7 +1531,7 @@ const SynthesisView = ({ onBack }: { onBack: () => void }) => {
   return (
     <div style={{ minHeight: '100vh', background: tokens.colors.bgPrimary, display: 'flex', flexDirection: 'column' }}>
       <header style={{ padding: tokens.spacing.md, borderBottom: `1px solid ${tokens.colors.border}`, display: 'flex', alignItems: 'center', gap: tokens.spacing.md }}>
-        <button onClick={onBack} style={{ background: 'none', border: 'none', color: tokens.colors.textMuted, cursor: 'pointer', fontSize: '14px' }}>← Back</button>
+        <button onClick={onBack} style={{ background: 'none', border: 'none', color: tokens.colors.textMuted, cursor: 'pointer', fontSize: '14px' }}>← BACK</button>
         <div>
           <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em' }}>SYNTHESIS</p>
           <p style={{ fontSize: '14px', color: tokens.colors.textSecondary }}>Morning orientation</p>
@@ -1549,7 +1558,7 @@ const SynthesisView = ({ onBack }: { onBack: () => void }) => {
             placeholder="Type here..."
             style={{ flex: 1, padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none' }}
           />
-          <button onClick={handleSend} style={{ padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '14px', fontWeight: 500, cursor: 'pointer' }}>Send</button>
+          <button onClick={handleSend} style={{ padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '14px', fontWeight: 500, cursor: 'pointer' }}>SEND</button>
         </div>
       </div>
     </div>
