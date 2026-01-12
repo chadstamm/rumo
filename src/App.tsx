@@ -566,63 +566,6 @@ const LandingView = ({
   }}>
     <GlobalStyles />
 
-    {/* Navigation - Minimal */}
-    <nav style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      padding: `${tokens.space[5]} ${tokens.space[7]}`,
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      zIndex: 100,
-      background: 'rgba(255, 255, 255, 0.9)',
-      backdropFilter: 'blur(20px)',
-      borderBottom: '1px solid rgba(61, 90, 128, 0.1)',
-    }}>
-      <div className="logo-hover" style={{ cursor: 'pointer' }}>
-        <RumoLogo size="sm" color={tokens.colors.navy} />
-      </div>
-      <div style={{ display: 'flex', gap: tokens.space[6], alignItems: 'center' }}>
-        {hasProfile && (
-          <button
-            onClick={onDashboard}
-            className="btn-ghost"
-            style={{
-              background: 'none',
-              border: 'none',
-              color: tokens.colors.navy,
-              fontSize: '14px',
-              cursor: 'pointer',
-              fontFamily: tokens.font.sans,
-              padding: '8px 16px',
-              borderRadius: tokens.radius.full,
-            }}
-          >
-            DASHBOARD
-          </button>
-        )}
-        <button
-          onClick={onSetup}
-          className="btn-primary"
-          style={{
-            background: tokens.colors.ochre,
-            color: tokens.colors.white,
-            border: 'none',
-            padding: '10px 20px',
-            borderRadius: tokens.radius.full,
-            fontSize: '14px',
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontFamily: tokens.font.display,
-          }}
-        >
-          SET YOUR COURSE
-        </button>
-      </div>
-    </nav>
-
     {/* Hero - Single powerful statement */}
     <section style={{
       minHeight: '100vh',
