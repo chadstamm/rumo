@@ -16,6 +16,11 @@ const tokens = {
     navyLight: '#34495E',
     navyFaded: '#5D6D7E',
 
+    // Alentejo yellow/ochre - Portuguese building accent
+    ochre: '#D4A55A',
+    ochreLight: '#E5B86D',
+    ochreFaded: 'rgba(212, 165, 90, 0.15)',
+
     // Grays
     gray100: '#F5F5F5',
     gray200: '#E5E5E5',
@@ -24,11 +29,9 @@ const tokens = {
     gray500: '#737373',
     gray600: '#525252',
 
-    // Accent - teal (keeping for buttons)
-    accent: '#0D9488',
-    accentLight: '#14B8A6',
-
     // Backward compatibility
+    accent: '#D4A55A',
+    accentLight: '#E5B86D',
     gray50: '#FAF8F5',
     gray700: '#404040',
     gray800: '#2C3E50',
@@ -41,9 +44,9 @@ const tokens = {
     textSecondary: '#5D6D7E',
     textMuted: '#A3A3A3',
     textInverse: '#FFFFFF',
-    teal: '#0D9488',
-    tealLight: '#14B8A6',
-    tealSubtle: 'rgba(13, 148, 136, 0.1)',
+    teal: '#D4A55A',
+    tealLight: '#E5B86D',
+    tealSubtle: 'rgba(212, 165, 90, 0.1)',
     coral: '#E07A5F',
     coralSubtle: 'rgba(224, 122, 95, 0.15)',
     purple: '#7C3AED',
@@ -382,19 +385,28 @@ const LandingView = ({
         fontFamily: tokens.font.display,
         color: tokens.colors.navy,
       }}>
-        Find your
-        <br />
-        <span style={{ color: tokens.colors.navyFaded }}>direction.</span>
+        Find your direction.
       </h1>
 
       <p style={{
         fontSize: 'clamp(18px, 2vw, 22px)',
         color: tokens.colors.navyFaded,
-        maxWidth: '480px',
-        lineHeight: 1.5,
+        maxWidth: '600px',
+        lineHeight: 1.6,
         marginBottom: tokens.space[8],
       }}>
-        A personal navigation system for people who want to move with purpose.
+        RUMO is an AI-powered personal navigation system that helps you clarify where you're going—and act with intention.
+      </p>
+
+      <p style={{
+        fontSize: '14px',
+        color: tokens.colors.ochre,
+        marginBottom: tokens.space[4],
+        fontFamily: tokens.font.display,
+        fontWeight: 600,
+        letterSpacing: '0.05em',
+      }}>
+        Begin by creating your personal Chief of Staff.
       </p>
 
       <button
@@ -411,7 +423,7 @@ const LandingView = ({
           fontFamily: tokens.font.display,
         }}
       >
-        Begin
+        Set Your Course
       </button>
 
       {/* Scroll indicator */}
