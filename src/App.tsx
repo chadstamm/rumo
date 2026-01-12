@@ -738,24 +738,27 @@ const SetupView = ({
         <button
           onClick={handleBack}
           style={{
-            background: 'none',
-            border: 'none',
-            color: tokens.colors.textMuted,
+            background: tokens.colors.gray100,
+            border: `1px solid ${tokens.colors.border}`,
+            color: tokens.colors.navy,
             cursor: 'pointer',
             fontSize: '14px',
+            fontWeight: 500,
+            padding: '8px 16px',
+            borderRadius: tokens.radius.full,
           }}
         >
           ← BACK
         </button>
         <div style={{ flex: 1 }}>
-          <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em' }}>
+          <p style={{ fontSize: '12px', color: tokens.colors.ochre, letterSpacing: '0.1em', fontWeight: 600 }}>
             CHIEF OF STAFF GENERATOR
           </p>
-          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary }}>
+          <p style={{ fontSize: '15px', color: tokens.colors.navy, fontWeight: 500 }}>
             {SETUP_SECTIONS[section].title}
           </p>
         </div>
-        <p style={{ fontSize: '12px', color: tokens.colors.textMuted }}>
+        <p style={{ fontSize: '14px', color: tokens.colors.navyLight, fontWeight: 500 }}>
           {currentStep + 1} of {totalSteps}
         </p>
       </div>
@@ -972,11 +975,11 @@ const SetupQuestion = ({
   multiline?: boolean;
 }) => (
   <div>
-    <h2 style={{ fontSize: '24px', fontWeight: 700, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs, lineHeight: 1.3, fontFamily: tokens.font.display }}>
+    <h2 style={{ fontSize: '28px', fontWeight: 700, color: tokens.colors.navy, marginBottom: tokens.spacing.xs, lineHeight: 1.3, fontFamily: tokens.font.display }}>
       {title}
     </h2>
     {subtitle && (
-      <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.lg }}>{subtitle}</p>
+      <p style={{ fontSize: '16px', color: tokens.colors.navyLight, marginBottom: tokens.spacing.lg, lineHeight: 1.5 }}>{subtitle}</p>
     )}
 
     {type === 'choice' && options && (
@@ -994,8 +997,8 @@ const SetupQuestion = ({
               textAlign: 'left',
             }}
           >
-            <p style={{ fontSize: '16px', fontWeight: 500, color: selected === opt.value ? tokens.colors.textInverse : tokens.colors.textPrimary }}>{opt.label}</p>
-            {opt.desc && <p style={{ fontSize: '13px', color: selected === opt.value ? 'rgba(255,255,255,0.7)' : tokens.colors.textMuted, marginTop: '2px' }}>{opt.desc}</p>}
+            <p style={{ fontSize: '17px', fontWeight: 600, color: selected === opt.value ? tokens.colors.textInverse : tokens.colors.navy }}>{opt.label}</p>
+            {opt.desc && <p style={{ fontSize: '15px', color: selected === opt.value ? 'rgba(255,255,255,0.85)' : tokens.colors.navyLight, marginTop: '4px', lineHeight: 1.4 }}>{opt.desc}</p>}
           </button>
         ))}
       </div>
@@ -1016,9 +1019,9 @@ const SetupQuestion = ({
                   border: `1px solid ${isSelected ? tokens.colors.teal : tokens.colors.border}`,
                   borderRadius: tokens.radius.full,
                   cursor: 'pointer',
-                  fontSize: '14px',
+                  fontSize: '15px',
                   fontWeight: 500,
-                  color: isSelected ? tokens.colors.textInverse : tokens.colors.textPrimary,
+                  color: isSelected ? tokens.colors.textInverse : tokens.colors.navy,
                 }}
               >
                 {opt.label}
@@ -1027,7 +1030,7 @@ const SetupQuestion = ({
           })}
         </div>
         {onNext && (
-          <button onClick={onNext} style={{ marginTop: tokens.spacing.lg, padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '14px', fontWeight: 500, cursor: 'pointer' }}>
+          <button onClick={onNext} style={{ marginTop: tokens.spacing.lg, padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}>
             CONTINUE
           </button>
         )}
@@ -1037,12 +1040,12 @@ const SetupQuestion = ({
     {type === 'text' && (
       <>
         {multiline ? (
-          <textarea value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', minHeight: '120px', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', lineHeight: 1.5, resize: 'vertical', outline: 'none', fontFamily: 'inherit' }} />
+          <textarea value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', minHeight: '120px', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', lineHeight: 1.6, resize: 'vertical', outline: 'none', fontFamily: 'inherit', color: tokens.colors.navy }} />
         ) : (
-          <input type="text" value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none' }} />
+          <input type="text" value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none', color: tokens.colors.navy }} />
         )}
-        <button onClick={onNext} disabled={!value?.trim()} style={{ marginTop: tokens.spacing.md, padding: '12px 24px', background: value?.trim() ? tokens.colors.bgNavy : tokens.colors.border, color: value?.trim() ? tokens.colors.textInverse : tokens.colors.textMuted, border: 'none', borderRadius: tokens.radius.full, fontSize: '14px', fontWeight: 500, cursor: value?.trim() ? 'pointer' : 'not-allowed' }}>
-          Continue
+        <button onClick={onNext} disabled={!value?.trim()} style={{ marginTop: tokens.spacing.md, padding: '12px 24px', background: value?.trim() ? tokens.colors.bgNavy : tokens.colors.border, color: value?.trim() ? tokens.colors.textInverse : tokens.colors.textMuted, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 600, cursor: value?.trim() ? 'pointer' : 'not-allowed' }}>
+          CONTINUE
         </button>
       </>
     )}
