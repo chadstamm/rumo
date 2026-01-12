@@ -645,11 +645,11 @@ const LandingView = ({
       </div>
 
       <h1 className="animate-fade-in-up stagger-1" style={{
-        fontSize: 'clamp(48px, 8vw, 96px)',
+        fontSize: 'clamp(40px, 6vw, 72px)',
         fontWeight: 700,
-        lineHeight: 1.05,
+        lineHeight: 1.15,
         letterSpacing: '-0.02em',
-        marginBottom: tokens.space[6],
+        marginBottom: tokens.space[5],
         maxWidth: '900px',
         fontFamily: tokens.font.display,
         color: tokens.colors.navy,
@@ -657,46 +657,47 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        Find your direction.
+        Ever feel like you're moving fast but going&nbsp;nowhere?
       </h1>
 
       <p className="animate-fade-in-up stagger-2" style={{
+        fontSize: 'clamp(17px, 2vw, 20px)',
+        color: tokens.colors.navy,
+        maxWidth: '720px',
+        lineHeight: 1.7,
+        marginBottom: tokens.space[5],
+        position: 'relative',
+        zIndex: 1,
+        opacity: 0,
+      }}>
+        <strong>We know the feeling.</strong> You're using AI every day—for emails, summaries, quick answers. But every conversation starts from scratch. No memory of your goals, your values, or what you're actually&nbsp;building.
+      </p>
+
+      <p className="animate-fade-in-up stagger-3" style={{
         fontSize: 'clamp(18px, 2vw, 22px)',
         color: tokens.colors.navy,
         maxWidth: '720px',
         lineHeight: 1.6,
-        marginBottom: tokens.space[8],
+        marginBottom: tokens.space[4],
         position: 'relative',
         zIndex: 1,
         opacity: 0,
+        fontWeight: 600,
       }}>
-        You're already using AI—but every conversation starts from scratch. No memory of your goals, your values, or where you're headed. RUMO helps you clarify your direction, then gives your AI the context to help you stay on&nbsp;course.
-      </p>
-
-      <p className="animate-fade-in-up stagger-3" style={{
-        fontSize: '16px',
-        color: tokens.colors.navy,
-        marginBottom: tokens.space[6],
-        fontStyle: 'italic',
-        position: 'relative',
-        zIndex: 1,
-        opacity: 0,
-      }}>
-        RUMO is Portuguese for "direction" or "course"—the heading you set when you know where you're&nbsp;going.
+        RUMO gives your AI the full picture of your&nbsp;life.
       </p>
 
       <p className="animate-fade-in-up stagger-4" style={{
-        fontSize: '20px',
-        color: tokens.colors.navy,
-        marginBottom: tokens.space[4],
+        fontSize: '18px',
+        color: tokens.colors.ochre,
+        marginBottom: tokens.space[6],
         fontFamily: tokens.font.display,
         fontWeight: 700,
-        letterSpacing: '0.02em',
         position: 'relative',
         zIndex: 1,
         opacity: 0,
       }}>
-        Configure your personal Chief of Staff prompt in&nbsp;minutes.
+        Finally move with direction—and wake up knowing exactly where you're&nbsp;headed.
       </p>
 
       <button
@@ -717,8 +718,20 @@ const LandingView = ({
           opacity: 0,
         }}
       >
-        START HERE
+        FIND YOUR DIRECTION
       </button>
+
+      <p className="animate-fade-in-up stagger-6" style={{
+        fontSize: '14px',
+        color: tokens.colors.navy,
+        marginTop: tokens.space[5],
+        fontStyle: 'italic',
+        position: 'relative',
+        zIndex: 1,
+        opacity: 0,
+      }}>
+        RUMO is Portuguese for "direction"—the heading you set when you know where you're&nbsp;going.
+      </p>
 
     </section>
 
@@ -756,13 +769,13 @@ const LandingView = ({
             color: tokens.colors.navy,
           }}>
             <p style={{ marginBottom: tokens.space[5] }}>
-              You're already using AI—for emails, summaries, quick answers. But every conversation starts from zero. No memory of your goals, your values, or where you're actually trying to&nbsp;go.
+              You're already using AI. But it doesn't know you—your goals, your values, or where you're actually trying to&nbsp;go.
             </p>
             <p style={{ marginBottom: tokens.space[5] }}>
-              Meanwhile, the most important areas of your life—your career trajectory, your family, your health, your creative ambitions, your desire to serve—remain untouched by the most powerful thinking tool ever&nbsp;created.
+              Meanwhile, the most important areas of your life—your career, your family, your health, your creative work, your desire to serve—remain untouched by the most powerful thinking tool ever&nbsp;created.
             </p>
-            <p style={{ fontWeight: 600 }}>
-              RUMO changes that. It helps you clarify your direction, then configures your AI to keep you on&nbsp;course.
+            <p style={{ fontWeight: 600, color: tokens.colors.ochre }}>
+              That's the drift. Busy but not building. Productive but not&nbsp;progressing.
             </p>
           </div>
         </div>
@@ -888,8 +901,20 @@ const LandingView = ({
             position: 'relative',
             zIndex: 1,
             textShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            marginBottom: tokens.space[4],
           }}>
             Direction without momentum&nbsp;stalls.
+          </p>
+          <p style={{
+            fontSize: '20px',
+            fontWeight: 700,
+            lineHeight: 1.4,
+            color: tokens.colors.white,
+            fontFamily: tokens.font.display,
+            position: 'relative',
+            zIndex: 1,
+          }}>
+            You need both.
           </p>
 
           {/* Decorative line - ANIMATED GRADIENT */}
@@ -930,7 +955,7 @@ const LandingView = ({
           fontFamily: tokens.font.display,
           textAlign: 'center',
         }}>
-          Your guide for the journey.
+          Meet your guide.
         </h2>
 
         {/* Primary paragraph */}
@@ -941,14 +966,14 @@ const LandingView = ({
           marginBottom: tokens.space[7],
         }}>
           <p style={{ marginBottom: tokens.space[5] }}>
-            Your Chief of Staff is an AI thinking partner configured specifically for you. Through the setup process, you'll clarify what matters most—your values, your priorities, and the life you're trying to build across work, family, health, creativity, and&nbsp;service.
+            Your Chief of Staff is an AI thinking partner configured specifically for you. It knows where you're headed—and what you stand&nbsp;for.
           </p>
           <p>
-            Once configured, your COS carries that context into every conversation. Ask it anything—about a career decision, a family conflict, a creative block—and it responds knowing where you're headed and what you stand&nbsp;for.
+            Ask it anything—a career decision, a family conflict, a creative block—and it responds with your whole life in&nbsp;view.
           </p>
         </div>
 
-        {/* Secondary paragraph - use cases */}
+        {/* Empathy bridge */}
         <div style={{
           fontSize: '16px',
           lineHeight: 1.8,
@@ -957,11 +982,8 @@ const LandingView = ({
           paddingLeft: tokens.space[5],
           borderLeft: `2px solid ${tokens.colors.ochre}`,
         }}>
-          <p style={{ marginBottom: tokens.space[4] }}>
-            Use it to think through whether a new opportunity fits your direction. To plan a week that honors all your priorities, not just work. To reconnect with a part of your life you've been&nbsp;neglecting.
-          </p>
           <p>
-            This isn't productivity advice. It's a thinking partner that helps you discover your true direction—then stay aligned with it day after&nbsp;day.
+            We built this because we were tired of starting every AI conversation from zero. We wanted a thinking partner that actually knew us—our goals, our values, our&nbsp;direction.
           </p>
         </div>
 
@@ -993,7 +1015,7 @@ const LandingView = ({
             marginBottom: tokens.space[5],
             letterSpacing: '0.02em',
           }}>
-            Everything begins by setting your&nbsp;course.
+            See where you're&nbsp;headed.
           </p>
 
           <button
@@ -1019,7 +1041,7 @@ const LandingView = ({
             fontSize: '13px',
             color: 'rgba(255, 255, 255, 0.5)',
           }}>
-            Generate a custom prompt for your preferred LLM.
+            Takes about 5 minutes.
           </p>
         </div>
       </div>
@@ -1238,7 +1260,7 @@ const LandingView = ({
         fontFamily: tokens.font.display,
         color: tokens.colors.navy,
       }}>
-        Ready to set your&nbsp;course?
+        Ready to stop&nbsp;drifting?
       </h2>
       <p style={{
         fontSize: '18px',
@@ -1246,7 +1268,7 @@ const LandingView = ({
         maxWidth: '600px',
         margin: `0 auto ${tokens.space[7]}`,
       }}>
-        Configure your Chief of Staff prompt in five minutes. Then start having conversations that actually help you navigate your&nbsp;life.
+        In five minutes, you'll have a thinking partner that knows your direction—and helps you stay on&nbsp;course.
       </p>
       <button
         onClick={onSetup}
@@ -1263,7 +1285,7 @@ const LandingView = ({
           fontFamily: tokens.font.display,
         }}
       >
-        BEGIN SETUP
+        FIND YOUR DIRECTION
       </button>
     </section>
 
