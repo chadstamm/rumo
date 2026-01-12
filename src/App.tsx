@@ -657,7 +657,7 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        Find your direction.
+        AI that knows your&nbsp;life.
       </h1>
 
       <p className="animate-fade-in-up stagger-2" style={{
@@ -670,7 +670,7 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        RUMO is an AI-powered personal navigation system that helps you clarify where you're going—and act with intention to&nbsp;get&nbsp;there.
+        Most people use AI like a search engine—asking random questions, getting random answers. RUMO is different. It gives your AI context about who you are, what you're building, and what matters most—so every conversation moves your&nbsp;life&nbsp;forward.
       </p>
 
       <p className="animate-fade-in-up stagger-3" style={{
@@ -684,7 +684,7 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        Configure your AI-powered Chief of Staff in minutes.
+        Configure your personal Chief of Staff in&nbsp;minutes.
       </p>
 
       <button
@@ -732,9 +732,9 @@ const LandingView = ({
             fontFamily: tokens.font.display,
             marginBottom: tokens.space[6],
           }}>
-            You're moving fast.
+            You're already using AI.
             <br />
-            <span style={{ color: tokens.colors.ochre }}>But toward what?</span>
+            <span style={{ color: tokens.colors.ochre }}>But is it using you?</span>
           </p>
 
           <div style={{
@@ -743,17 +743,13 @@ const LandingView = ({
             color: tokens.colors.navy,
           }}>
             <p style={{ marginBottom: tokens.space[5] }}>
-              Sometimes there's plenty of momentum, but no clear heading.
-              <br />
-              Other times the destination is clear, but there's no wind to carry you&nbsp;there.
+              You ask it to write emails. Summarize articles. Maybe help with a spreadsheet. But every conversation starts from zero—no memory of your goals, your values, or what you're actually trying to&nbsp;build.
             </p>
-            <p style={{ marginBottom: tokens.space[5], fontWeight: 600 }}>
-              We know what that feels like.
-              <br />
-              It's not confusion. It's misalignment.
+            <p style={{ marginBottom: tokens.space[5] }}>
+              Meanwhile, the most important areas of your life—your career trajectory, your family priorities, your health, your creative ambitions, your desire to contribute—remain untouched by the most powerful thinking tool ever&nbsp;created.
             </p>
-            <p>
-              That's why we created RUMO: to help you set a direction, harness your momentum, and move with&nbsp;intention.
+            <p style={{ fontWeight: 600 }}>
+              It doesn't have to be this way. AI can be more than a utility. It can be a partner that understands the full picture of your life and helps you navigate all of&nbsp;it.
             </p>
           </div>
         </div>
@@ -867,7 +863,7 @@ const LandingView = ({
             marginBottom: tokens.space[4],
             textShadow: '0 2px 4px rgba(0,0,0,0.2)',
           }}>
-            Momentum without direction&nbsp;drifts.
+            An AI that doesn't know you can only give you generic&nbsp;answers.
           </p>
           <p style={{
             fontSize: '26px',
@@ -880,7 +876,7 @@ const LandingView = ({
             zIndex: 1,
             textShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}>
-            Direction without momentum&nbsp;stalls.
+            An AI that knows you can change your&nbsp;life.
           </p>
 
           {/* Decorative line - ANIMATED GRADIENT */}
@@ -921,7 +917,7 @@ const LandingView = ({
           fontFamily: tokens.font.display,
           textAlign: 'center',
         }}>
-          A guide for navigating what&nbsp;matters.
+          Meet your Chief of&nbsp;Staff.
         </h2>
 
         {/* Primary paragraph */}
@@ -932,15 +928,14 @@ const LandingView = ({
           marginBottom: tokens.space[7],
         }}>
           <p style={{ marginBottom: tokens.space[5] }}>
-            RUMO is designed to help you navigate complexity without adding noise.
-            It works by pairing clear frameworks with an AI-powered Chief of Staff that supports how you think, decide, and&nbsp;act.
+            Your COS is an AI thinking partner configured specifically for you. It knows your professional goals, your personal values, your family commitments, and your long-term vision. It understands how you like to think through problems and what kind of support actually helps&nbsp;you.
           </p>
           <p>
-            Instead of reacting to everything at once, RUMO helps you pause, orient, and move forward with&nbsp;intention.
+            When you bring any question to your COS—about work, relationships, health, creativity, or service—it responds with the full context of who you are and what you're building. No more starting from&nbsp;scratch.
           </p>
         </div>
 
-        {/* Secondary paragraph - trust */}
+        {/* Secondary paragraph - use cases */}
         <div style={{
           fontSize: '16px',
           lineHeight: 1.8,
@@ -950,12 +945,10 @@ const LandingView = ({
           borderLeft: `2px solid ${tokens.colors.ochre}`,
         }}>
           <p style={{ marginBottom: tokens.space[4] }}>
-            This isn't about outsourcing judgment or automating your life.
-            Your Chief of Staff exists to help you see patterns, surface tradeoffs, and stay aligned with what you've already decided&nbsp;matters.
+            Use it to think through a difficult conversation with a colleague. To plan a meaningful week with your family. To reconnect with a creative project you've been avoiding. To decide what actually deserves your energy&nbsp;today.
           </p>
           <p>
-            You remain in control.
-            RUMO provides structure, continuity, and perspective when momentum alone isn't&nbsp;enough.
+            This isn't about productivity hacks or life optimization. It's about having a thought partner who helps you stay true to what matters across every domain of your&nbsp;life.
           </p>
         </div>
 
@@ -968,10 +961,11 @@ const LandingView = ({
           marginBottom: tokens.space[7],
           fontFamily: tokens.font.display,
           lineHeight: 1.5,
+          textAlign: 'center',
         }}>
-          A system for thinking clearly.
+          Work. Family. Health. Creativity.&nbsp;Service.
           <br />
-          A guide for acting deliberately.
+          One AI that holds it&nbsp;all.
         </p>
 
         {/* Bridge + CTA */}
@@ -1048,7 +1042,7 @@ const LandingView = ({
             fontFamily: tokens.font.display,
             marginBottom: tokens.space[5],
           }}>
-            Two instruments for staying&nbsp;aligned.
+            A language for your whole&nbsp;life.
           </h2>
           <div style={{
             fontSize: '17px',
@@ -1058,13 +1052,10 @@ const LandingView = ({
             margin: '0 auto',
           }}>
             <p style={{ marginBottom: tokens.space[4] }}>
-              RUMO is built around two complementary frameworks.
-              Together, they help you stay oriented by connecting how your life feels with where you place your&nbsp;effort.
+              Your COS uses two simple frameworks to understand the full picture of your life—not just your to-do list, but your wellbeing, relationships, creative aspirations, and sense of&nbsp;purpose.
             </p>
             <p style={{ fontWeight: 500 }}>
-              This is not about doing more.
-              <br />
-              It's about aligning direction and energy over time.
+              This gives your AI the context it needs to provide advice that actually fits your&nbsp;life.
             </p>
           </div>
         </div>
@@ -1119,12 +1110,10 @@ const LandingView = ({
               color: tokens.colors.navy,
             }}>
               <p style={{ marginBottom: tokens.space[4] }}>
-                WAVES help you check in across the dimensions that shape a well-lived life.
-                Not to judge. Not to optimize.
-                Simply to notice patterns and changes over&nbsp;time.
+                A simple check-in across five dimensions of a life well-lived. Are you feeling whole? Accomplished? Vital? Expressive?&nbsp;Satisfied?
               </p>
               <p>
-                When you understand how things feel, you can make clearer decisions about what deserves attention&nbsp;next.
+                Your COS uses this to understand what's working and what needs attention—before you even have to&nbsp;explain.
               </p>
             </div>
             <p style={{
@@ -1134,8 +1123,7 @@ const LandingView = ({
               fontStyle: 'italic',
               opacity: 0.7,
             }}>
-              Whole · Accomplished · Vital · Expressive · Satisfied
-            </p>
+              Wholeness · Accomplishment · Vitality · Expression · Satisfaction</p>
           </div>
 
           {/* SWEATS Panel */}
@@ -1181,11 +1169,10 @@ const LandingView = ({
               color: tokens.colors.navy,
             }}>
               <p style={{ marginBottom: tokens.space[4] }}>
-                SWEATS give structure to your attention.
-                They help you decide where to invest energy today, and what can&nbsp;wait.
+                Six life domains where you invest your energy: deep thinking, career, physical health, creative expression, relationships, and giving&nbsp;back.
               </p>
               <p>
-                Instead of reacting to everything, you choose deliberately.
+                Your COS knows where you're focused and helps you protect what matters when everything feels&nbsp;urgent.
               </p>
             </div>
             <p style={{
@@ -1212,16 +1199,14 @@ const LandingView = ({
             color: tokens.colors.navy,
             marginBottom: tokens.space[5],
           }}>
-            WAVES help you understand your state.
-            <br />
-            SWEATS help you decide your focus.
+            Together, these frameworks give your AI the vocabulary to understand your whole life—not just the task in front of&nbsp;you.
           </p>
           <p style={{
             fontSize: '16px',
             color: tokens.colors.navy,
             fontStyle: 'italic',
           }}>
-            Your Chief of Staff brings them together, day by day, so direction and momentum stay aligned.
+            Every conversation becomes more relevant. Every suggestion more&nbsp;useful.
           </p>
         </div>
       </div>
@@ -1240,14 +1225,15 @@ const LandingView = ({
         fontFamily: tokens.font.display,
         color: tokens.colors.navy,
       }}>
-        Ready?
+        Stop treating AI like a search&nbsp;engine.
       </h2>
       <p style={{
         fontSize: '18px',
         color: tokens.colors.navy,
-        marginBottom: tokens.space[7],
+        maxWidth: '600px',
+        margin: `0 auto ${tokens.space[7]}`,
       }}>
-        Configure your Chief of Staff prompt in five&nbsp;minutes.
+        Configure your Chief of Staff in five minutes. Then start having conversations that actually move your life&nbsp;forward.
       </p>
       <button
         onClick={onSetup}
