@@ -445,31 +445,32 @@ const RumoLogo = ({ size = 'md', color = '#1A2B3C', accentColor }: { size?: 'sm'
       />
       {/* O as Compass - sized to match letter height */}
       <g transform="translate(124, 4)">
-        {/* Outer circle - matches letter color */}
-        <circle cx="24" cy="24" r="20" stroke={color} strokeWidth="3" fill="none" />
-        {/* Cardinal tick marks - accent color */}
-        <line x1="24" y1="6" x2="24" y2="10" stroke={compassColor} strokeWidth="2" />
-        <line x1="24" y1="38" x2="24" y2="42" stroke={compassColor} strokeWidth="2" />
-        <line x1="6" y1="24" x2="10" y2="24" stroke={compassColor} strokeWidth="2" />
-        <line x1="38" y1="24" x2="42" y2="24" stroke={compassColor} strokeWidth="2" />
-        {/* Intercardinal tick marks - accent color */}
-        <line x1="36" y1="12" x2="33" y2="15" stroke={compassColor} strokeWidth="1.5" />
-        <line x1="36" y1="36" x2="33" y2="33" stroke={compassColor} strokeWidth="1.5" />
-        <line x1="12" y1="12" x2="15" y2="15" stroke={compassColor} strokeWidth="1.5" />
-        <line x1="12" y1="36" x2="15" y2="33" stroke={compassColor} strokeWidth="1.5" />
-        {/* Compass needle - North half (solid ochre) */}
+        {/* Outer circle - bolder stroke */}
+        <circle cx="24" cy="24" r="20" stroke={color} strokeWidth="4.5" fill="none" />
+        {/* Compass needle - North half (solid ochre, prominent) */}
         <path
-          d="M24 8 L27 24 L21 24 Z"
+          d="M24 6 L28 24 L20 24 Z"
           fill={compassColor}
         />
         {/* Compass needle - South half (faded) */}
         <path
-          d="M24 40 L27 24 L21 24 Z"
+          d="M24 42 L28 24 L20 24 Z"
           fill={compassColor}
-          fillOpacity="0.3"
+          fillOpacity="0.25"
+        />
+        {/* East-West needle (subtle, shorter) */}
+        <path
+          d="M42 24 L24 20 L24 28 Z"
+          fill={compassColor}
+          fillOpacity="0.5"
+        />
+        <path
+          d="M6 24 L24 20 L24 28 Z"
+          fill={compassColor}
+          fillOpacity="0.2"
         />
         {/* Center dot */}
-        <circle cx="24" cy="24" r="2.5" fill={compassColor} />
+        <circle cx="24" cy="24" r="3" fill={compassColor} />
       </g>
     </svg>
   );
