@@ -96,7 +96,6 @@ type View = 'landing' | 'setup' | 'dashboard' | 'synthesis';
 
 interface COSProfile {
   stance: string;
-  voice: string;
   toneWords: string[];
   formatPreference: string;
   planningStyle: string;
@@ -690,7 +689,7 @@ const SetupView = ({
   };
 
   const advanceStep = () => {
-    const maxSubSteps = [5, 5, 4, 3, 3, 2];
+    const maxSubSteps = [4, 5, 4, 3, 3, 2];
     if (subStep < maxSubSteps[section] - 1) {
       setSubStep(subStep + 1);
     } else if (section < SETUP_SECTIONS.length - 1) {
@@ -705,7 +704,7 @@ const SetupView = ({
     if (subStep > 0) {
       setSubStep(subStep - 1);
     } else if (section > 0) {
-      const maxSubSteps = [5, 5, 4, 3, 3, 2];
+      const maxSubSteps = [4, 5, 4, 3, 3, 2];
       setSection(section - 1);
       setSubStep(maxSubSteps[section - 1] - 1);
     } else {
@@ -713,8 +712,8 @@ const SetupView = ({
     }
   };
 
-  const totalSteps = 22;
-  const currentStep = [0, 5, 10, 14, 17, 20][section] + subStep;
+  const totalSteps = 21;
+  const currentStep = [0, 4, 9, 13, 16, 19][section] + subStep;
 
   if (showOutput) {
     return <SetupOutputView profile={profile as COSProfile} onComplete={() => onComplete(profile as COSProfile)} />;
@@ -807,21 +806,6 @@ const SetupView = ({
           )}
           {section === 0 && subStep === 1 && (
             <SetupQuestion
-              title="How should your Chief of Staff present?"
-              subtitle="Choose a voice and persona."
-              type="choice"
-              options={[
-                { value: 'masculine', label: 'Masculine', desc: 'He/him, more assertive tone' },
-                { value: 'feminine', label: 'Feminine', desc: 'She/her, more nurturing tone' },
-                { value: 'neutral', label: 'Neutral', desc: 'They/them, balanced and non-gendered' },
-                { value: 'abstract', label: 'Abstract', desc: 'No persona, pure function' },
-              ]}
-              selected={profile.voice}
-              onSelect={(v) => { updateProfile('voice', v); advanceStep(); }}
-            />
-          )}
-          {section === 0 && subStep === 2 && (
-            <SetupQuestion
               title="Choose the characteristics you want your Chief of Staff to have."
               subtitle="Select three."
               type="multi"
@@ -831,7 +815,7 @@ const SetupView = ({
               onNext={(profile.toneWords?.length || 0) >= 3 ? advanceStep : undefined}
             />
           )}
-          {section === 0 && subStep === 3 && (
+          {section === 0 && subStep === 2 && (
             <SetupQuestion
               title="How should responses be formatted?"
               type="choice"
@@ -843,7 +827,7 @@ const SetupView = ({
               onSelect={(v) => { updateProfile('formatPreference', v); advanceStep(); }}
             />
           )}
-          {section === 0 && subStep === 4 && (
+          {section === 0 && subStep === 3 && (
             <SetupQuestion
               title="When analyzing a problem..."
               type="choice"
@@ -1068,19 +1052,11 @@ const SetupOutputView = ({ profile, onComplete }: { profile: COSProfile; onCompl
       anchor: 'The Anchor—you ground me, provide calm, and steady the ship',
     };
 
-    const voiceDesc: Record<string, string> = {
-      masculine: 'Use he/him pronouns if referring to yourself. Take a more assertive, direct tone.',
-      feminine: 'Use she/her pronouns if referring to yourself. Take a more nurturing, empathetic tone.',
-      neutral: 'Use they/them pronouns if referring to yourself. Maintain a balanced, non-gendered presence.',
-      abstract: 'Do not refer to yourself with pronouns. You are pure function, not persona.',
-    };
-
     return `# Personal Chief of Staff
 
 ## Who You Are
 You are my Chief of Staff—a thinking partner who helps me maintain direction and make better decisions. You embody ${archetypeDesc[profile.stance] || 'a supportive partner'}.
 
-${profile.voice && profile.voice !== 'abstract' ? `## Persona\n${voiceDesc[profile.voice] || ''}\n` : ''}
 ## Tone & Style
 - Characteristics: ${profile.toneWords?.join(', ') || 'direct, calm, thoughtful'}
 - Format: ${profile.formatPreference === 'bullets' ? 'Use bullets and short statements' : 'Use flowing short paragraphs'}
