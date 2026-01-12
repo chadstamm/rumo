@@ -555,7 +555,7 @@ const LandingView = ({
             style={{
               background: 'none',
               border: 'none',
-              color: tokens.colors.navyFaded,
+              color: tokens.colors.navy,
               fontSize: '14px',
               cursor: 'pointer',
               fontFamily: tokens.font.sans,
@@ -582,6 +582,10 @@ const LandingView = ({
           }}
         >
           SET YOUR COURSE
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '6px' }}>
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
         </button>
       </div>
     </nav>
@@ -633,7 +637,7 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        RUMO is an AI-powered personal navigation system that helps you clarify where you're going—and act with intention to get there.
+        RUMO is an AI-powered personal navigation system that helps you clarify where you're going—and act with intention to&nbsp;get&nbsp;there.
       </p>
 
       <p className="animate-fade-in-up stagger-3" style={{
@@ -669,6 +673,10 @@ const LandingView = ({
         }}
       >
         START HERE
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
       </button>
 
     </section>
@@ -708,7 +716,7 @@ const LandingView = ({
             <p style={{ marginBottom: tokens.space[5] }}>
               Sometimes there's plenty of momentum, but no clear heading.
               <br />
-              Other times the destination is clear, but there's no wind to carry you there.
+              Other times the destination is clear, but there's no wind to carry you&nbsp;there.
             </p>
             <p style={{ marginBottom: tokens.space[5], fontWeight: 600 }}>
               We know what that feels like.
@@ -716,7 +724,7 @@ const LandingView = ({
               It's not confusion. It's misalignment.
             </p>
             <p>
-              That's why we created RUMO: to help you set a direction, harness your momentum, and move with intention.
+              That's why we created RUMO: to help you set a direction, harness your momentum, and move with&nbsp;intention.
             </p>
           </div>
         </div>
@@ -725,12 +733,13 @@ const LandingView = ({
         <div
           className="callout-box"
           style={{
-            background: `linear-gradient(145deg, rgba(212, 165, 90, 0.08) 0%, rgba(212, 165, 90, 0.15) 100%)`,
+            background: `linear-gradient(145deg, ${tokens.colors.ochre}15 0%, ${tokens.colors.ochre}25 100%)`,
             border: `3px solid ${tokens.colors.ochre}`,
             borderRadius: tokens.radius.xl,
             padding: tokens.space[7],
             position: 'relative',
             overflow: 'hidden',
+            boxShadow: `0 8px 32px ${tokens.colors.ochre}20`,
           }}
         >
           {/* Compass rose decoration - top right */}
@@ -738,32 +747,32 @@ const LandingView = ({
             className="animate-float"
             style={{
               position: 'absolute',
-              top: '-15px',
-              right: '-15px',
-              width: '90px',
-              height: '90px',
-              opacity: 0.2,
+              top: '-10px',
+              right: '-10px',
+              width: '100px',
+              height: '100px',
+              opacity: 0.35,
             }}
           >
             <svg viewBox="0 0 100 100">
               <circle cx="50" cy="50" r="45" stroke={tokens.colors.ochre} strokeWidth="2" fill="none" />
-              <circle cx="50" cy="50" r="35" stroke={tokens.colors.ochre} strokeWidth="1" fill="none" opacity="0.5" />
+              <circle cx="50" cy="50" r="35" stroke={tokens.colors.ochre} strokeWidth="1" fill="none" opacity="0.6" />
               <path d="M50 8 L54 50 L50 92 L46 50 Z" fill={tokens.colors.ochre} />
-              <path d="M8 50 L50 46 L92 50 L50 54 Z" fill={tokens.colors.ochre} opacity="0.6" />
-              <circle cx="50" cy="50" r="4" fill={tokens.colors.ochre} />
+              <path d="M8 50 L50 46 L92 50 L50 54 Z" fill={tokens.colors.ochre} opacity="0.7" />
+              <circle cx="50" cy="50" r="5" fill={tokens.colors.ochre} />
             </svg>
           </div>
 
           {/* Anchor decoration - bottom left */}
           <div style={{
             position: 'absolute',
-            bottom: '10px',
-            left: '15px',
-            width: '40px',
-            height: '40px',
-            opacity: 0.15,
+            bottom: '12px',
+            left: '16px',
+            width: '44px',
+            height: '44px',
+            opacity: 0.25,
           }}>
-            <svg viewBox="0 0 24 24" fill={tokens.colors.navy}>
+            <svg viewBox="0 0 24 24" fill={tokens.colors.ochre}>
               <path d="M12 2C10.9 2 10 2.9 10 4C10 4.74 10.4 5.39 11 5.73V7H6V9H11V17.27C9.17 16.7 8 15 8 13H6C6 15.76 7.81 18.05 10.26 18.77L10 19H8V21H16V19H14L13.74 18.77C16.19 18.05 18 15.76 18 13H16C16 15 14.83 16.7 13 17.27V9H18V7H13V5.73C13.6 5.39 14 4.74 14 4C14 2.9 13.1 2 12 2Z"/>
             </svg>
           </div>
@@ -776,58 +785,67 @@ const LandingView = ({
               bottom: 0,
               left: 0,
               right: 0,
-              height: '35px',
-              opacity: 0.2,
+              height: '40px',
+              opacity: 0.35,
             }}
           >
-            <svg width="100%" height="35" preserveAspectRatio="none" viewBox="0 0 200 35">
+            <svg width="100%" height="40" preserveAspectRatio="none" viewBox="0 0 200 40">
               <path
-                d="M0 18 Q 25 8, 50 18 T 100 18 T 150 18 T 200 18 L200 35 L0 35 Z"
+                d="M0 20 Q 25 8, 50 20 T 100 20 T 150 20 T 200 20 L200 40 L0 40 Z"
                 fill={tokens.colors.ochre}
               />
               <path
-                d="M0 25 Q 30 18, 60 25 T 120 25 T 180 25 T 220 25"
+                d="M0 28 Q 30 18, 60 28 T 120 28 T 180 28 T 220 28"
                 stroke={tokens.colors.ochre}
-                strokeWidth="1.5"
+                strokeWidth="2"
                 fill="none"
-                opacity="0.5"
+                opacity="0.6"
               />
             </svg>
           </div>
 
           {/* Quote icon */}
           <div style={{
-            marginBottom: tokens.space[4],
+            marginBottom: tokens.space[3],
             color: tokens.colors.ochre,
-            opacity: 0.6,
           }}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
               <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
             </svg>
           </div>
 
           <p style={{
-            fontSize: '19px',
-            fontWeight: 600,
-            lineHeight: 1.6,
+            fontSize: '22px',
+            fontWeight: 700,
+            lineHeight: 1.5,
             color: tokens.colors.navy,
             fontFamily: tokens.font.display,
             fontStyle: 'italic',
             position: 'relative',
             zIndex: 1,
+            marginBottom: tokens.space[2],
           }}>
             Momentum without direction drifts.
-            <br />
-            <br />
+          </p>
+          <p style={{
+            fontSize: '22px',
+            fontWeight: 700,
+            lineHeight: 1.5,
+            color: tokens.colors.ochre,
+            fontFamily: tokens.font.display,
+            fontStyle: 'italic',
+            position: 'relative',
+            zIndex: 1,
+          }}>
             Direction without momentum stalls.
           </p>
 
           {/* Decorative line */}
           <div style={{
             marginTop: tokens.space[5],
-            height: '3px',
-            width: '60px',
-            background: `linear-gradient(90deg, ${tokens.colors.ochre}, transparent)`,
+            height: '4px',
+            width: '80px',
+            background: `linear-gradient(90deg, ${tokens.colors.ochre}, ${tokens.colors.ochre}40)`,
             borderRadius: '2px',
           }} />
         </div>
@@ -841,6 +859,13 @@ const LandingView = ({
       padding: `${tokens.space[10]} ${tokens.space[5]}`,
     }}>
       <div style={{ maxWidth: '640px', margin: '0 auto' }}>
+        {/* Compass icon */}
+        <div style={{ marginBottom: tokens.space[4], color: tokens.colors.ochre }}>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="currentColor" stroke="none" />
+          </svg>
+        </div>
         <h2 style={{
           fontSize: 'clamp(28px, 4vw, 40px)',
           fontWeight: 700,
@@ -860,10 +885,10 @@ const LandingView = ({
         }}>
           <p style={{ marginBottom: tokens.space[5] }}>
             RUMO is designed to help you navigate complexity without adding noise.
-            It works by pairing clear frameworks with an AI-powered Chief of Staff that supports how you think, decide, and act.
+            It works by pairing clear frameworks with an AI-powered Chief of Staff that supports how you think, decide, and&nbsp;act.
           </p>
           <p>
-            Instead of reacting to everything at once, RUMO helps you pause, orient, and move forward with intention.
+            Instead of reacting to everything at once, RUMO helps you pause, orient, and move forward with&nbsp;intention.
           </p>
         </div>
 
@@ -878,11 +903,11 @@ const LandingView = ({
         }}>
           <p style={{ marginBottom: tokens.space[4] }}>
             This isn't about outsourcing judgment or automating your life.
-            Your Chief of Staff exists to help you see patterns, surface tradeoffs, and stay aligned with what you've already decided matters.
+            Your Chief of Staff exists to help you see patterns, surface tradeoffs, and stay aligned with what you've already decided&nbsp;matters.
           </p>
           <p>
             You remain in control.
-            RUMO provides structure, continuity, and perspective when momentum alone isn't enough.
+            RUMO provides structure, continuity, and perspective when momentum alone isn't&nbsp;enough.
           </p>
         </div>
 
@@ -932,6 +957,10 @@ const LandingView = ({
             }}
           >
             GET ORIENTED
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
           </button>
 
           <p style={{
@@ -952,6 +981,20 @@ const LandingView = ({
       <div style={{ maxWidth: '720px', margin: '0 auto' }}>
         {/* Section Header */}
         <div style={{ marginBottom: tokens.space[8], textAlign: 'center' }}>
+          {/* Sliders/Balance icon */}
+          <div style={{ marginBottom: tokens.space[4], color: tokens.colors.ochre }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="4" y1="21" x2="4" y2="14" />
+              <line x1="4" y1="10" x2="4" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12" y2="3" />
+              <line x1="20" y1="21" x2="20" y2="16" />
+              <line x1="20" y1="12" x2="20" y2="3" />
+              <circle cx="4" cy="12" r="2" fill="currentColor" />
+              <circle cx="12" cy="10" r="2" fill="currentColor" />
+              <circle cx="20" cy="14" r="2" fill="currentColor" />
+            </svg>
+          </div>
           <h2 style={{
             fontSize: 'clamp(28px, 4vw, 36px)',
             fontWeight: 700,
@@ -971,7 +1014,7 @@ const LandingView = ({
           }}>
             <p style={{ marginBottom: tokens.space[4] }}>
               RUMO is built around two complementary frameworks.
-              Together, they help you stay oriented by connecting how your life feels with where you place your effort.
+              Together, they help you stay oriented by connecting how your life feels with where you place your&nbsp;effort.
             </p>
             <p style={{ fontWeight: 500 }}>
               This is not about doing more.
@@ -998,6 +1041,14 @@ const LandingView = ({
               borderTop: `4px solid ${tokens.colors.ochre}`,
             }}
           >
+            {/* Wave icon */}
+            <div style={{ marginBottom: tokens.space[3], color: tokens.colors.ochre }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+              </svg>
+            </div>
             <p style={{
               fontSize: '12px',
               fontWeight: 700,
@@ -1025,17 +1076,18 @@ const LandingView = ({
               <p style={{ marginBottom: tokens.space[4] }}>
                 WAVES help you check in across the dimensions that shape a well-lived life.
                 Not to judge. Not to optimize.
-                Simply to notice patterns and changes over time.
+                Simply to notice patterns and changes over&nbsp;time.
               </p>
               <p>
-                When you understand how things feel, you can make clearer decisions about what deserves attention next.
+                When you understand how things feel, you can make clearer decisions about what deserves attention&nbsp;next.
               </p>
             </div>
             <p style={{
               fontSize: '13px',
-              color: tokens.colors.navyFaded,
+              color: tokens.colors.navy,
               marginTop: tokens.space[5],
               fontStyle: 'italic',
+              opacity: 0.7,
             }}>
               Whole · Accomplished · Vital · Expressive · Satisfied
             </p>
@@ -1051,6 +1103,14 @@ const LandingView = ({
               borderTop: `4px solid ${tokens.colors.navy}`,
             }}
           >
+            {/* Target/Focus icon */}
+            <div style={{ marginBottom: tokens.space[3], color: tokens.colors.navy }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <circle cx="12" cy="12" r="6" />
+                <circle cx="12" cy="12" r="2" />
+              </svg>
+            </div>
             <p style={{
               fontSize: '12px',
               fontWeight: 700,
@@ -1077,7 +1137,7 @@ const LandingView = ({
             }}>
               <p style={{ marginBottom: tokens.space[4] }}>
                 SWEATS give structure to your attention.
-                They help you decide where to invest energy today, and what can wait.
+                They help you decide where to invest energy today, and what can&nbsp;wait.
               </p>
               <p>
                 Instead of reacting to everything, you choose deliberately.
@@ -1085,9 +1145,10 @@ const LandingView = ({
             </div>
             <p style={{
               fontSize: '13px',
-              color: tokens.colors.navyFaded,
+              color: tokens.colors.navy,
               marginTop: tokens.space[5],
               fontStyle: 'italic',
+              opacity: 0.7,
             }}>
               Synthesis · Work · Energy · Art · Ties · Service
             </p>
@@ -1112,7 +1173,7 @@ const LandingView = ({
           </p>
           <p style={{
             fontSize: '16px',
-            color: tokens.colors.navyLight,
+            color: tokens.colors.navy,
             fontStyle: 'italic',
           }}>
             Your Chief of Staff brings them together, day by day, so direction and momentum stay aligned.
@@ -1159,6 +1220,10 @@ const LandingView = ({
         }}
       >
         BEGIN SETUP
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
       </button>
     </section>
 
@@ -1170,7 +1235,7 @@ const LandingView = ({
     }}>
       <p style={{
         fontSize: '13px',
-        color: tokens.colors.navyFaded,
+        color: tokens.colors.navy,
         fontFamily: tokens.font.display,
         fontWeight: 600,
         letterSpacing: '0.1em',
@@ -1314,7 +1379,7 @@ const SetupView = ({
             {SETUP_SECTIONS[section].title}
           </p>
         </div>
-        <p style={{ fontSize: '14px', color: tokens.colors.navyLight, fontWeight: 500 }}>
+        <p style={{ fontSize: '14px', color: tokens.colors.navy, fontWeight: 500 }}>
           {currentStep + 1} of {totalSteps}
         </p>
       </div>
@@ -1544,7 +1609,7 @@ const SetupQuestion = ({
       {title}
     </h2>
     {subtitle && (
-      <p style={{ fontSize: '16px', color: tokens.colors.navyLight, marginBottom: tokens.spacing.lg, lineHeight: 1.5 }}>{subtitle}</p>
+      <p style={{ fontSize: '16px', color: tokens.colors.navy, marginBottom: tokens.spacing.lg, lineHeight: 1.5, opacity: 0.8 }}>{subtitle}</p>
     )}
 
     {type === 'choice' && options && (
@@ -1565,7 +1630,7 @@ const SetupQuestion = ({
             }}
           >
             <p style={{ fontSize: '17px', fontWeight: 600, color: selected === opt.value ? tokens.colors.textInverse : tokens.colors.navy }}>{opt.label}</p>
-            {opt.desc && <p style={{ fontSize: '15px', color: selected === opt.value ? 'rgba(255,255,255,0.85)' : tokens.colors.navyLight, marginTop: '4px', lineHeight: 1.4 }}>{opt.desc}</p>}
+            {opt.desc && <p style={{ fontSize: '15px', color: selected === opt.value ? 'rgba(255,255,255,0.85)' : tokens.colors.navy, marginTop: '4px', lineHeight: 1.4, opacity: selected === opt.value ? 1 : 0.75 }}>{opt.desc}</p>}
           </button>
         ))}
       </div>
@@ -1617,7 +1682,7 @@ const SetupQuestion = ({
             CONTINUE
           </button>
           {optional && onSkip && (
-            <button onClick={onSkip} className="btn-ghost" style={{ padding: '14px 28px', background: 'transparent', color: tokens.colors.navyLight, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
+            <button onClick={onSkip} className="btn-ghost" style={{ padding: '14px 28px', background: 'transparent', color: tokens.colors.navy, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
               SKIP FOR NOW
             </button>
           )}
