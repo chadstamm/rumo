@@ -422,55 +422,51 @@ const App = () => {
 const RumoLogo = ({ size = 'md', color = '#1A2B3C', accentColor }: { size?: 'sm' | 'md' | 'lg'; color?: string; accentColor?: string }) => {
   const scales = { sm: 0.6, md: 0.75, lg: 1 };
   const scale = scales[size];
-  const width = 180 * scale;
-  const height = 48 * scale;
+  const width = 186 * scale;
+  const height = 52 * scale;
   const compassColor = accentColor || color;
 
   return (
-    <svg width={width} height={height} viewBox="0 0 180 48" fill="none">
+    <svg width={width} height={height} viewBox="0 0 186 52" fill="none">
       {/* R */}
       <path
-        d="M0 8h14c8 0 14 5 14 13 0 6-4 10-9 12l10 15h-9l-9-14h-4v14H0V8zm7 6v13h6c5 0 8-3 8-7 0-4-3-6-8-6H7z"
+        d="M0 10h14c8 0 14 5 14 13 0 6-4 10-9 12l10 15h-9l-9-14h-4v14H0V10zm7 6v13h6c5 0 8-3 8-7 0-4-3-6-8-6H7z"
         fill={color}
       />
       {/* U */}
       <path
-        d="M36 8h7v26c0 5 3 8 8 8s8-3 8-8V8h7v26c0 9-6 14-15 14s-15-5-15-14V8z"
+        d="M36 10h7v26c0 5 3 8 8 8s8-3 8-8V10h7v26c0 9-6 14-15 14s-15-5-15-14V10z"
         fill={color}
       />
       {/* M */}
       <path
-        d="M76 8h9l11 24 11-24h9v40h-7V18l-10 22h-6L83 18v30h-7V8z"
+        d="M76 10h9l11 24 11-24h9v40h-7V20l-10 22h-6L83 20v30h-7V10z"
         fill={color}
       />
-      {/* O as Compass - sized to match letter height */}
-      <g transform="translate(124, 4)">
-        {/* Outer circle - bolder stroke */}
-        <circle cx="24" cy="24" r="20" stroke={color} strokeWidth="4.5" fill="none" />
-        {/* Compass needle - North half (solid ochre, prominent) */}
+      {/* O as Compass - bezel style */}
+      <g transform="translate(126, 5)">
+        {/* Outer circle - bold bezel */}
+        <circle cx="21" cy="21" r="19" stroke={color} strokeWidth="5" fill="none" />
+        {/* Tick marks around bezel */}
+        <line x1="21" y1="2" x2="21" y2="5" stroke={color} strokeWidth="2" />
+        <line x1="21" y1="37" x2="21" y2="40" stroke={color} strokeWidth="2" />
+        <line x1="2" y1="21" x2="5" y2="21" stroke={color} strokeWidth="2" />
+        <line x1="37" y1="21" x2="40" y2="21" stroke={color} strokeWidth="2" />
+        {/* Inner circle */}
+        <circle cx="21" cy="21" r="12" stroke={color} strokeWidth="1.5" fill="none" />
+        {/* Diamond compass needle - NE to SW diagonal */}
         <path
-          d="M24 6 L28 24 L20 24 Z"
+          d="M21 21 L13 13 L21 17 L29 13 Z"
           fill={compassColor}
         />
-        {/* Compass needle - South half (faded) */}
         <path
-          d="M24 42 L28 24 L20 24 Z"
-          fill={compassColor}
-          fillOpacity="0.25"
+          d="M21 21 L29 29 L21 25 L13 29 Z"
+          fill={color}
+          fillOpacity="0.4"
         />
-        {/* East-West needle (subtle, shorter) */}
-        <path
-          d="M42 24 L24 20 L24 28 Z"
-          fill={compassColor}
-          fillOpacity="0.5"
-        />
-        <path
-          d="M6 24 L24 20 L24 28 Z"
-          fill={compassColor}
-          fillOpacity="0.2"
-        />
-        {/* Center dot */}
-        <circle cx="24" cy="24" r="3" fill={compassColor} />
+        {/* Center dot with highlight */}
+        <circle cx="21" cy="21" r="3.5" fill={color} />
+        <circle cx="20" cy="20" r="1" fill="white" fillOpacity="0.6" />
       </g>
     </svg>
   );
