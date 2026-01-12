@@ -1,44 +1,67 @@
 import { useState } from 'react';
 
 // ============================================
-// DESIGN TOKENS - Claude-inspired palette
+// DESIGN SYSTEM - Inspired by Apple/Stripe/Linear
 // ============================================
 const tokens = {
   colors: {
-    // Backgrounds
-    bgPrimary: '#F8F9FA',
+    // Monochromatic foundation
+    white: '#FFFFFF',
+    black: '#000000',
+
+    // Grays - carefully calibrated
+    gray50: '#FAFAFA',
+    gray100: '#F5F5F5',
+    gray200: '#E5E5E5',
+    gray300: '#D4D4D4',
+    gray400: '#A3A3A3',
+    gray500: '#737373',
+    gray600: '#525252',
+    gray700: '#404040',
+    gray800: '#262626',
+    gray900: '#171717',
+
+    // Single accent - teal
+    accent: '#0D9488',
+    accentLight: '#14B8A6',
+
+    // Backward compatibility aliases
+    bgPrimary: '#FAFAFA',
     bgCard: '#FFFFFF',
-    bgNavy: '#1A2B3C',
-    bgNavyLight: '#2A3F54',
-    bgSubtle: '#F3F4F6',
-
-    // Text
-    textPrimary: '#1A2B3C',
-    textSecondary: '#4A5568',
-    textMuted: '#9CA3AF',
+    bgNavy: '#171717',
+    bgNavyLight: '#262626',
+    textPrimary: '#171717',
+    textSecondary: '#525252',
+    textMuted: '#A3A3A3',
     textInverse: '#FFFFFF',
-
-    // Accent colors
     teal: '#0D9488',
     tealLight: '#14B8A6',
     tealSubtle: 'rgba(13, 148, 136, 0.1)',
-
-    // Coral (transparent warm accent)
     coral: '#E07A5F',
     coralSubtle: 'rgba(224, 122, 95, 0.15)',
-
-    // Purple (transparent cool accent)
     purple: '#7C3AED',
     purpleSubtle: 'rgba(124, 58, 237, 0.1)',
-
-    // Borders
-    border: '#E5E7EB',
-    borderLight: '#F3F4F6',
-
-    // Shadows
+    border: '#E5E5E5',
+    borderLight: '#F5F5F5',
     shadowSm: 'rgba(0, 0, 0, 0.05)',
     shadowMd: 'rgba(0, 0, 0, 0.08)',
   },
+  font: {
+    sans: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  },
+  space: {
+    1: '4px',
+    2: '8px',
+    3: '12px',
+    4: '16px',
+    5: '24px',
+    6: '32px',
+    7: '48px',
+    8: '64px',
+    9: '96px',
+    10: '128px',
+  },
+  // Backward compatibility
   spacing: {
     xs: '8px',
     sm: '16px',
@@ -186,9 +209,9 @@ const RumoLogo = ({ size = 'md', color = '#1A2B3C' }: { size?: 'sm' | 'md' | 'lg
 };
 
 // ============================================
-// CALÇADA WAVE PATTERN (Portuguese pavement)
+// CALÇADA PATTERN - Subtle, almost imperceptible
 // ============================================
-const CalcadaPattern = () => (
+const CalcadaTexture = ({ opacity = 0.03 }: { opacity?: number }) => (
   <svg
     style={{
       position: 'absolute',
@@ -197,113 +220,28 @@ const CalcadaPattern = () => (
       width: '100%',
       height: '100%',
       pointerEvents: 'none',
-      opacity: 0.06,
+      opacity,
     }}
     preserveAspectRatio="xMidYMid slice"
   >
     <defs>
-      <pattern id="calcada-wave" x="0" y="0" width="120" height="60" patternUnits="userSpaceOnUse">
-        {/* Dark wave band - filled shape */}
+      <pattern id="calcada" x="0" y="0" width="100" height="50" patternUnits="userSpaceOnUse">
         <path
-          d="M0 15
-             Q30 0, 60 15
-             Q90 30, 120 15
-             L120 30
-             Q90 45, 60 30
-             Q30 15, 0 30
-             Z"
-          fill="white"
+          d="M0 12.5 Q25 0, 50 12.5 Q75 25, 100 12.5 L100 25 Q75 37.5, 50 25 Q25 12.5, 0 25 Z"
+          fill="currentColor"
         />
-        {/* Second dark wave band */}
         <path
-          d="M0 45
-             Q30 30, 60 45
-             Q90 60, 120 45
-             L120 60
-             Q90 75, 60 60
-             Q30 45, 0 60
-             Z"
-          fill="white"
-        />
-        {/* Top continuation */}
-        <path
-          d="M0 -15
-             Q30 -30, 60 -15
-             Q90 0, 120 -15
-             L120 0
-             Q90 15, 60 0
-             Q30 -15, 0 0
-             Z"
-          fill="white"
+          d="M0 37.5 Q25 25, 50 37.5 Q75 50, 100 37.5 L100 50 Q75 62.5, 50 50 Q25 37.5, 0 50 Z"
+          fill="currentColor"
         />
       </pattern>
     </defs>
-    <rect width="100%" height="100%" fill="url(#calcada-wave)" />
+    <rect width="100%" height="100%" fill="url(#calcada)" />
   </svg>
 );
 
-// Frame borders with calçada pattern
-const CalcadaFrame = () => (
-  <>
-    {/* Left border */}
-    <div style={{
-      position: 'fixed',
-      left: 0,
-      top: 0,
-      width: '80px',
-      height: '100%',
-      background: `linear-gradient(to right, rgba(255,255,255,0.04), transparent)`,
-      pointerEvents: 'none',
-      zIndex: 1,
-    }}>
-      <svg width="100%" height="100%" style={{ opacity: 0.1 }}>
-        <defs>
-          <pattern id="wave-border-left" x="0" y="0" width="80" height="40" patternUnits="userSpaceOnUse">
-            <path
-              d="M0 10 Q20 0, 40 10 Q60 20, 80 10 L80 20 Q60 30, 40 20 Q20 10, 0 20 Z"
-              fill="white"
-            />
-            <path
-              d="M0 30 Q20 20, 40 30 Q60 40, 80 30 L80 40 Q60 50, 40 40 Q20 30, 0 40 Z"
-              fill="white"
-            />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#wave-border-left)" />
-      </svg>
-    </div>
-    {/* Right border */}
-    <div style={{
-      position: 'fixed',
-      right: 0,
-      top: 0,
-      width: '80px',
-      height: '100%',
-      background: `linear-gradient(to left, rgba(255,255,255,0.04), transparent)`,
-      pointerEvents: 'none',
-      zIndex: 1,
-    }}>
-      <svg width="100%" height="100%" style={{ opacity: 0.1 }}>
-        <defs>
-          <pattern id="wave-border-right" x="0" y="0" width="80" height="40" patternUnits="userSpaceOnUse">
-            <path
-              d="M0 10 Q20 0, 40 10 Q60 20, 80 10 L80 20 Q60 30, 40 20 Q20 10, 0 20 Z"
-              fill="white"
-            />
-            <path
-              d="M0 30 Q20 20, 40 30 Q60 40, 80 30 L80 40 Q60 50, 40 40 Q20 30, 0 40 Z"
-              fill="white"
-            />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#wave-border-right)" />
-      </svg>
-    </div>
-  </>
-);
-
 // ============================================
-// LANDING VIEW - Story-focused
+// LANDING VIEW - Radical simplicity
 // ============================================
 const LandingView = ({
   onSetup,
@@ -314,174 +252,245 @@ const LandingView = ({
   onDashboard: () => void;
   hasProfile: boolean;
 }) => (
-  <div style={{ background: tokens.colors.bgNavy, minHeight: '100vh', color: tokens.colors.textInverse, position: 'relative', overflow: 'hidden' }}>
-    {/* Calçada wave pattern background */}
-    <CalcadaPattern />
-    {/* Frame borders */}
-    <CalcadaFrame />
-    {/* Header */}
-    <header style={{
-      padding: `${tokens.spacing.md} ${tokens.spacing.lg}`,
+  <div style={{
+    background: tokens.colors.white,
+    minHeight: '100vh',
+    fontFamily: tokens.font.sans,
+    color: tokens.colors.gray900,
+    position: 'relative',
+  }}>
+    {/* Subtle calçada texture */}
+    <div style={{ color: tokens.colors.gray200 }}>
+      <CalcadaTexture opacity={0.4} />
+    </div>
+
+    {/* Navigation - Minimal */}
+    <nav style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      padding: `${tokens.space[5]} ${tokens.space[7]}`,
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      maxWidth: '1200px',
-      margin: '0 auto',
-      position: 'relative',
-      zIndex: 2,
+      zIndex: 100,
+      background: 'rgba(255,255,255,0.8)',
+      backdropFilter: 'blur(20px)',
     }}>
-      <RumoLogo size="sm" color="#FFFFFF" />
-      {hasProfile && (
-        <button
-          onClick={onDashboard}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: tokens.colors.textMuted,
-            fontSize: '14px',
-            cursor: 'pointer',
-          }}
-        >
-          Continue →
-        </button>
-      )}
-    </header>
-
-    {/* Hero */}
-    <section style={{
-      maxWidth: '800px',
-      margin: '0 auto',
-      padding: `${tokens.spacing.xxl} ${tokens.spacing.lg}`,
-      minHeight: '70vh',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-    }}>
-      <p style={{
-        color: tokens.colors.teal,
-        fontSize: '13px',
-        letterSpacing: '0.1em',
-        marginBottom: tokens.spacing.md,
-      }}>
-        PERSONAL NAVIGATION SYSTEM
-      </p>
-
-      <h1 style={{
-        fontSize: 'clamp(36px, 5vw, 56px)',
-        fontWeight: 300,
-        lineHeight: 1.15,
-        marginBottom: tokens.spacing.lg,
-      }}>
-        You're moving fast.<br />
-        <span style={{ color: tokens.colors.textMuted }}>But toward what?</span>
-      </h1>
-
-      <p style={{
-        fontSize: '18px',
-        lineHeight: 1.7,
-        color: 'rgba(255,255,255,0.7)',
-        maxWidth: '540px',
-        marginBottom: tokens.spacing.xl,
-      }}>
-        Without direction, motion becomes noise. RUMO gives you a system for daily orientation—so you can find your heading and stay on course.
-      </p>
-
-      <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
+      <RumoLogo size="sm" color={tokens.colors.gray900} />
+      <div style={{ display: 'flex', gap: tokens.space[6], alignItems: 'center' }}>
+        {hasProfile && (
+          <button
+            onClick={onDashboard}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: tokens.colors.gray500,
+              fontSize: '14px',
+              cursor: 'pointer',
+              fontFamily: tokens.font.sans,
+            }}
+          >
+            Dashboard
+          </button>
+        )}
         <button
           onClick={onSetup}
           style={{
-            padding: '14px 28px',
-            background: tokens.colors.teal,
-            color: tokens.colors.textInverse,
+            background: tokens.colors.gray900,
+            color: tokens.colors.white,
             border: 'none',
-            borderRadius: tokens.radius.md,
-            fontSize: '15px',
+            padding: '10px 20px',
+            borderRadius: '6px',
+            fontSize: '14px',
             fontWeight: 500,
             cursor: 'pointer',
+            fontFamily: tokens.font.sans,
           }}
         >
-          Set up your Chief of Staff
+          Get Started
         </button>
+      </div>
+    </nav>
+
+    {/* Hero - Single powerful statement */}
+    <section style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+      padding: `${tokens.space[10]} ${tokens.space[5]}`,
+      position: 'relative',
+    }}>
+      <h1 style={{
+        fontSize: 'clamp(48px, 8vw, 96px)',
+        fontWeight: 600,
+        lineHeight: 1.05,
+        letterSpacing: '-0.03em',
+        marginBottom: tokens.space[6],
+        maxWidth: '900px',
+      }}>
+        Find your
+        <br />
+        <span style={{ color: tokens.colors.gray400 }}>direction.</span>
+      </h1>
+
+      <p style={{
+        fontSize: 'clamp(18px, 2vw, 22px)',
+        color: tokens.colors.gray500,
+        maxWidth: '480px',
+        lineHeight: 1.5,
+        marginBottom: tokens.space[8],
+      }}>
+        A personal navigation system for people who want to move with purpose.
+      </p>
+
+      <button
+        onClick={onSetup}
+        style={{
+          background: tokens.colors.accent,
+          color: tokens.colors.white,
+          border: 'none',
+          padding: '16px 32px',
+          borderRadius: '8px',
+          fontSize: '16px',
+          fontWeight: 500,
+          cursor: 'pointer',
+          fontFamily: tokens.font.sans,
+        }}
+      >
+        Begin
+      </button>
+
+      {/* Scroll indicator */}
+      <div style={{
+        position: 'absolute',
+        bottom: tokens.space[8],
+        left: '50%',
+        transform: 'translateX(-50%)',
+        color: tokens.colors.gray300,
+        fontSize: '12px',
+        letterSpacing: '0.1em',
+      }}>
+        SCROLL
       </div>
     </section>
 
-    {/* The Guide */}
+    {/* Problem - One idea */}
     <section style={{
-      borderTop: `1px solid rgba(255,255,255,0.1)`,
-      padding: `${tokens.spacing.xxl} ${tokens.spacing.lg}`,
+      padding: `${tokens.space[10]} ${tokens.space[5]}`,
+      display: 'flex',
+      justifyContent: 'center',
+    }}>
+      <div style={{ maxWidth: '640px', textAlign: 'center' }}>
+        <p style={{
+          fontSize: 'clamp(24px, 4vw, 36px)',
+          fontWeight: 500,
+          lineHeight: 1.4,
+          color: tokens.colors.gray900,
+        }}>
+          You're moving fast.
+          <br />
+          <span style={{ color: tokens.colors.gray400 }}>But toward what?</span>
+        </p>
+      </div>
+    </section>
+
+    {/* Solution - Chief of Staff */}
+    <section style={{
+      background: tokens.colors.gray900,
+      color: tokens.colors.white,
+      padding: `${tokens.space[10]} ${tokens.space[5]}`,
     }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         <p style={{
-          color: tokens.colors.teal,
           fontSize: '12px',
-          letterSpacing: '0.1em',
-          marginBottom: tokens.spacing.sm,
+          letterSpacing: '0.15em',
+          color: tokens.colors.gray500,
+          marginBottom: tokens.space[5],
         }}>
-          THE GUIDE
+          THE SOLUTION
         </p>
         <h2 style={{
-          fontSize: '28px',
-          fontWeight: 300,
-          marginBottom: tokens.spacing.md,
+          fontSize: 'clamp(32px, 5vw, 48px)',
+          fontWeight: 600,
+          lineHeight: 1.2,
+          marginBottom: tokens.space[6],
         }}>
           Your Chief of Staff
         </h2>
         <p style={{
-          fontSize: '17px',
+          fontSize: '18px',
           lineHeight: 1.7,
-          color: 'rgba(255,255,255,0.6)',
+          color: tokens.colors.gray400,
           maxWidth: '560px',
         }}>
-          An AI configured to how you think. Each morning, it helps you see what matters, cut through noise, and orient your day. Not an assistant. A thinking partner.
+          An AI thinking partner configured to how you work. Each morning, it helps you see what matters, cut through noise, and orient your day.
         </p>
       </div>
     </section>
 
-    {/* The Plan */}
+    {/* Frameworks - Minimal grid */}
     <section style={{
-      background: 'rgba(0,0,0,0.2)',
-      padding: `${tokens.spacing.xxl} ${tokens.spacing.lg}`,
+      padding: `${tokens.space[10]} ${tokens.space[5]}`,
     }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-        <p style={{
-          color: tokens.colors.teal,
-          fontSize: '12px',
-          letterSpacing: '0.1em',
-          marginBottom: tokens.spacing.sm,
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: tokens.space[8],
         }}>
-          THE PLAN
-        </p>
-        <h2 style={{
-          fontSize: '28px',
-          fontWeight: 300,
-          marginBottom: tokens.spacing.xl,
-        }}>
-          Two frameworks. One direction.
-        </h2>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: tokens.spacing.xl }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: tokens.spacing.sm, marginBottom: tokens.spacing.sm }}>
-              <span style={{ fontSize: '48px', fontWeight: 200, color: 'rgba(255,255,255,0.2)' }}>W</span>
-              <h3 style={{ fontSize: '18px', fontWeight: 400 }}>WAVES</h3>
-            </div>
-            <p style={{ fontSize: '15px', lineHeight: 1.6, color: 'rgba(255,255,255,0.5)', marginBottom: tokens.spacing.sm }}>
-              Five dimensions of fulfillment you're moving toward. Not goals—states to inhabit.
+            <h3 style={{
+              fontSize: '14px',
+              fontWeight: 600,
+              letterSpacing: '0.1em',
+              color: tokens.colors.gray400,
+              marginBottom: tokens.space[4],
+            }}>
+              WAVES
+            </h3>
+            <p style={{
+              fontSize: '16px',
+              lineHeight: 1.6,
+              color: tokens.colors.gray600,
+              marginBottom: tokens.space[3],
+            }}>
+              Five dimensions of fulfillment. Not goals—states to inhabit.
             </p>
-            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>
+            <p style={{
+              fontSize: '14px',
+              color: tokens.colors.gray400,
+            }}>
               Whole · Accomplished · Vital · Expressive · Satisfied
             </p>
           </div>
 
           <div>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: tokens.spacing.sm, marginBottom: tokens.spacing.sm }}>
-              <span style={{ fontSize: '48px', fontWeight: 200, color: 'rgba(255,255,255,0.2)' }}>S</span>
-              <h3 style={{ fontSize: '18px', fontWeight: 400 }}>SWEATS</h3>
-            </div>
-            <p style={{ fontSize: '15px', lineHeight: 1.6, color: 'rgba(255,255,255,0.5)', marginBottom: tokens.spacing.sm }}>
+            <h3 style={{
+              fontSize: '14px',
+              fontWeight: 600,
+              letterSpacing: '0.1em',
+              color: tokens.colors.gray400,
+              marginBottom: tokens.space[4],
+            }}>
+              SWEATS
+            </h3>
+            <p style={{
+              fontSize: '16px',
+              lineHeight: 1.6,
+              color: tokens.colors.gray600,
+              marginBottom: tokens.space[3],
+            }}>
               Six daily practices that create movement. Small actions, compounded.
             </p>
-            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>
+            <p style={{
+              fontSize: '14px',
+              color: tokens.colors.gray400,
+            }}>
               Synthesis · Work · Energy · Art · Ties · Service
             </p>
           </div>
@@ -489,87 +498,56 @@ const LandingView = ({
       </div>
     </section>
 
-    {/* The Stakes */}
+    {/* Final CTA */}
     <section style={{
-      borderTop: `1px solid rgba(255,255,255,0.1)`,
-      padding: `${tokens.spacing.xxl} ${tokens.spacing.lg}`,
+      padding: `${tokens.space[10]} ${tokens.space[5]}`,
+      textAlign: 'center',
+      borderTop: `1px solid ${tokens.colors.gray200}`,
     }}>
-      <div style={{ maxWidth: '640px', margin: '0 auto' }}>
-        <p style={{
-          color: tokens.colors.teal,
-          fontSize: '12px',
-          letterSpacing: '0.1em',
-          marginBottom: tokens.spacing.md,
-        }}>
-          THE STAKES
-        </p>
-        <p style={{
-          fontSize: '22px',
-          fontWeight: 300,
-          lineHeight: 1.5,
-          color: 'rgba(255,255,255,0.8)',
-          marginBottom: tokens.spacing.md,
-        }}>
-          The word <em>disease</em> has roots meaning "against the flow."
-        </p>
-        <p style={{
+      <h2 style={{
+        fontSize: 'clamp(28px, 4vw, 40px)',
+        fontWeight: 600,
+        marginBottom: tokens.space[4],
+      }}>
+        Ready?
+      </h2>
+      <p style={{
+        fontSize: '18px',
+        color: tokens.colors.gray500,
+        marginBottom: tokens.space[7],
+      }}>
+        Set up your Chief of Staff in 5 minutes.
+      </p>
+      <button
+        onClick={onSetup}
+        style={{
+          background: tokens.colors.gray900,
+          color: tokens.colors.white,
+          border: 'none',
+          padding: '16px 40px',
+          borderRadius: '8px',
           fontSize: '16px',
-          lineHeight: 1.7,
-          color: 'rgba(255,255,255,0.5)',
-        }}>
-          When you're misaligned—moving without direction—everything feels harder. RUMO helps you find the current and move with it.
-        </p>
-      </div>
+          fontWeight: 500,
+          cursor: 'pointer',
+          fontFamily: tokens.font.sans,
+        }}
+      >
+        Begin Setup
+      </button>
     </section>
 
-    {/* CTA */}
-    <section style={{
-      padding: `${tokens.spacing.xxl} ${tokens.spacing.lg}`,
+    {/* Footer - Minimal */}
+    <footer style={{
+      padding: `${tokens.space[6]} ${tokens.space[5]}`,
+      borderTop: `1px solid ${tokens.colors.gray100}`,
       textAlign: 'center',
     }}>
-      <div style={{ maxWidth: '480px', margin: '0 auto' }}>
-        <h2 style={{
-          fontSize: '26px',
-          fontWeight: 300,
-          marginBottom: tokens.spacing.sm,
-        }}>
-          Start with your Chief of Staff
-        </h2>
-        <p style={{
-          fontSize: '15px',
-          color: 'rgba(255,255,255,0.5)',
-          marginBottom: tokens.spacing.lg,
-        }}>
-          A few questions to configure how it thinks with you.
-        </p>
-        <button
-          onClick={onSetup}
-          style={{
-            padding: '16px 32px',
-            background: tokens.colors.teal,
-            color: tokens.colors.textInverse,
-            border: 'none',
-            borderRadius: tokens.radius.md,
-            fontSize: '15px',
-            fontWeight: 500,
-            cursor: 'pointer',
-          }}
-        >
-          Begin setup
-        </button>
-      </div>
-    </section>
-
-    {/* Footer */}
-    <footer style={{
-      borderTop: `1px solid rgba(255,255,255,0.1)`,
-      padding: `${tokens.spacing.md} ${tokens.spacing.lg}`,
-    }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>
-          RUMO — direction
-        </p>
-      </div>
+      <p style={{
+        fontSize: '13px',
+        color: tokens.colors.gray400,
+      }}>
+        RUMO
+      </p>
     </footer>
   </div>
 );
