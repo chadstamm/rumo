@@ -96,7 +96,6 @@ type View = 'landing' | 'setup' | 'dashboard' | 'synthesis';
 
 interface COSProfile {
   stance: string;
-  voice: string;
   toneWords: string[];
   formatPreference: string;
   planningStyle: string;
@@ -117,6 +116,7 @@ interface COSProfile {
   existingTools: string;
   primaryLLM: string;
   optimizationFocus: string;
+  cosName: string;
 }
 
 // ============================================
@@ -355,7 +355,7 @@ const LandingView = ({
             fontFamily: tokens.font.display,
           }}
         >
-          GET STARTED
+          SET YOUR COURSE
         </button>
       </div>
     </nav>
@@ -405,16 +405,16 @@ const LandingView = ({
         position: 'relative',
         zIndex: 1,
       }}>
-        RUMO is an AI-powered personal navigation system that helps you clarify where you're going—and act with intention.
+        RUMO is an AI-powered personal navigation system that helps you clarify where you're going—and act with intention to get there.
       </p>
 
       <p style={{
-        fontSize: '16px',
-        color: tokens.colors.ochre,
+        fontSize: '20px',
+        color: tokens.colors.navy,
         marginBottom: tokens.space[4],
         fontFamily: tokens.font.display,
         fontWeight: 700,
-        letterSpacing: '0.03em',
+        letterSpacing: '0.02em',
         position: 'relative',
         zIndex: 1,
       }}>
@@ -437,7 +437,7 @@ const LandingView = ({
           zIndex: 1,
         }}
       >
-        SET YOUR COURSE
+        START HERE
       </button>
 
     </section>
@@ -690,7 +690,7 @@ const SetupView = ({
   };
 
   const advanceStep = () => {
-    const maxSubSteps = [5, 5, 4, 3, 3, 2];
+    const maxSubSteps = [4, 5, 4, 3, 3, 3];
     if (subStep < maxSubSteps[section] - 1) {
       setSubStep(subStep + 1);
     } else if (section < SETUP_SECTIONS.length - 1) {
@@ -705,7 +705,7 @@ const SetupView = ({
     if (subStep > 0) {
       setSubStep(subStep - 1);
     } else if (section > 0) {
-      const maxSubSteps = [5, 5, 4, 3, 3, 2];
+      const maxSubSteps = [4, 5, 4, 3, 3, 3];
       setSection(section - 1);
       setSubStep(maxSubSteps[section - 1] - 1);
     } else {
@@ -714,7 +714,7 @@ const SetupView = ({
   };
 
   const totalSteps = 22;
-  const currentStep = [0, 5, 10, 14, 17, 20][section] + subStep;
+  const currentStep = [0, 4, 9, 13, 16, 19][section] + subStep;
 
   if (showOutput) {
     return <SetupOutputView profile={profile as COSProfile} onComplete={() => onComplete(profile as COSProfile)} />;
@@ -738,24 +738,27 @@ const SetupView = ({
         <button
           onClick={handleBack}
           style={{
-            background: 'none',
-            border: 'none',
-            color: tokens.colors.textMuted,
+            background: tokens.colors.gray100,
+            border: `1px solid ${tokens.colors.border}`,
+            color: tokens.colors.navy,
             cursor: 'pointer',
             fontSize: '14px',
+            fontWeight: 500,
+            padding: '8px 16px',
+            borderRadius: tokens.radius.full,
           }}
         >
           ← BACK
         </button>
         <div style={{ flex: 1 }}>
-          <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em' }}>
+          <p style={{ fontSize: '12px', color: tokens.colors.ochre, letterSpacing: '0.1em', fontWeight: 600 }}>
             CHIEF OF STAFF GENERATOR
           </p>
-          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary }}>
+          <p style={{ fontSize: '15px', color: tokens.colors.navy, fontWeight: 500 }}>
             {SETUP_SECTIONS[section].title}
           </p>
         </div>
-        <p style={{ fontSize: '12px', color: tokens.colors.textMuted }}>
+        <p style={{ fontSize: '14px', color: tokens.colors.navyLight, fontWeight: 500 }}>
           {currentStep + 1} of {totalSteps}
         </p>
       </div>
@@ -804,21 +807,6 @@ const SetupView = ({
           )}
           {section === 0 && subStep === 1 && (
             <SetupQuestion
-              title="How should your Chief of Staff present?"
-              subtitle="Choose a voice and persona."
-              type="choice"
-              options={[
-                { value: 'masculine', label: 'Masculine', desc: 'He/him, more assertive tone' },
-                { value: 'feminine', label: 'Feminine', desc: 'She/her, more nurturing tone' },
-                { value: 'neutral', label: 'Neutral', desc: 'They/them, balanced and non-gendered' },
-                { value: 'abstract', label: 'Abstract', desc: 'No persona, pure function' },
-              ]}
-              selected={profile.voice}
-              onSelect={(v) => { updateProfile('voice', v); advanceStep(); }}
-            />
-          )}
-          {section === 0 && subStep === 2 && (
-            <SetupQuestion
               title="Choose the characteristics you want your Chief of Staff to have."
               subtitle="Select three."
               type="multi"
@@ -828,7 +816,7 @@ const SetupView = ({
               onNext={(profile.toneWords?.length || 0) >= 3 ? advanceStep : undefined}
             />
           )}
-          {section === 0 && subStep === 3 && (
+          {section === 0 && subStep === 2 && (
             <SetupQuestion
               title="How should responses be formatted?"
               type="choice"
@@ -840,7 +828,7 @@ const SetupView = ({
               onSelect={(v) => { updateProfile('formatPreference', v); advanceStep(); }}
             />
           )}
-          {section === 0 && subStep === 4 && (
+          {section === 0 && subStep === 3 && (
             <SetupQuestion
               title="When analyzing a problem..."
               type="choice"
@@ -935,6 +923,25 @@ const SetupView = ({
               onSelect={(v) => { updateProfile('optimizationFocus', v); advanceStep(); }}
             />
           )}
+          {section === 5 && subStep === 2 && (
+            <SetupQuestion
+              title="Would you like to give your Chief of Staff a name?"
+              subtitle="Some people find that naming the role makes it easier to think with consistently."
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="e.g., Atlas, Compass, Sage..."
+              optional
+              onNext={() => {
+                if (textInput.trim()) {
+                  updateProfile('cosName', textInput);
+                }
+                setTextInput('');
+                advanceStep();
+              }}
+              onSkip={advanceStep}
+            />
+          )}
         </div>
       </div>
     </div>
@@ -953,10 +960,12 @@ const SetupQuestion = ({
   onSelect,
   onToggle,
   onNext,
+  onSkip,
   value,
   onChange,
   placeholder,
   multiline,
+  optional,
 }: {
   title: string;
   subtitle?: string;
@@ -964,6 +973,8 @@ const SetupQuestion = ({
   options?: { value: string; label: string; desc?: string }[];
   selected?: string | string[];
   onSelect?: (value: string) => void;
+  onSkip?: () => void;
+  optional?: boolean;
   onToggle?: (value: string) => void;
   onNext?: () => void;
   value?: string;
@@ -972,11 +983,11 @@ const SetupQuestion = ({
   multiline?: boolean;
 }) => (
   <div>
-    <h2 style={{ fontSize: '24px', fontWeight: 700, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs, lineHeight: 1.3, fontFamily: tokens.font.display }}>
+    <h2 style={{ fontSize: '28px', fontWeight: 700, color: tokens.colors.navy, marginBottom: tokens.spacing.xs, lineHeight: 1.3, fontFamily: tokens.font.display }}>
       {title}
     </h2>
     {subtitle && (
-      <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.lg }}>{subtitle}</p>
+      <p style={{ fontSize: '16px', color: tokens.colors.navyLight, marginBottom: tokens.spacing.lg, lineHeight: 1.5 }}>{subtitle}</p>
     )}
 
     {type === 'choice' && options && (
@@ -994,8 +1005,8 @@ const SetupQuestion = ({
               textAlign: 'left',
             }}
           >
-            <p style={{ fontSize: '16px', fontWeight: 500, color: selected === opt.value ? tokens.colors.textInverse : tokens.colors.textPrimary }}>{opt.label}</p>
-            {opt.desc && <p style={{ fontSize: '13px', color: selected === opt.value ? 'rgba(255,255,255,0.7)' : tokens.colors.textMuted, marginTop: '2px' }}>{opt.desc}</p>}
+            <p style={{ fontSize: '17px', fontWeight: 600, color: selected === opt.value ? tokens.colors.textInverse : tokens.colors.navy }}>{opt.label}</p>
+            {opt.desc && <p style={{ fontSize: '15px', color: selected === opt.value ? 'rgba(255,255,255,0.85)' : tokens.colors.navyLight, marginTop: '4px', lineHeight: 1.4 }}>{opt.desc}</p>}
           </button>
         ))}
       </div>
@@ -1016,9 +1027,9 @@ const SetupQuestion = ({
                   border: `1px solid ${isSelected ? tokens.colors.teal : tokens.colors.border}`,
                   borderRadius: tokens.radius.full,
                   cursor: 'pointer',
-                  fontSize: '14px',
+                  fontSize: '15px',
                   fontWeight: 500,
-                  color: isSelected ? tokens.colors.textInverse : tokens.colors.textPrimary,
+                  color: isSelected ? tokens.colors.textInverse : tokens.colors.navy,
                 }}
               >
                 {opt.label}
@@ -1027,7 +1038,7 @@ const SetupQuestion = ({
           })}
         </div>
         {onNext && (
-          <button onClick={onNext} style={{ marginTop: tokens.spacing.lg, padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '14px', fontWeight: 500, cursor: 'pointer' }}>
+          <button onClick={onNext} style={{ marginTop: tokens.spacing.lg, padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}>
             CONTINUE
           </button>
         )}
@@ -1037,13 +1048,20 @@ const SetupQuestion = ({
     {type === 'text' && (
       <>
         {multiline ? (
-          <textarea value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', minHeight: '120px', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', lineHeight: 1.5, resize: 'vertical', outline: 'none', fontFamily: 'inherit' }} />
+          <textarea value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', minHeight: '120px', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', lineHeight: 1.6, resize: 'vertical', outline: 'none', fontFamily: 'inherit', color: tokens.colors.navy }} />
         ) : (
-          <input type="text" value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none' }} />
+          <input type="text" value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none', color: tokens.colors.navy }} />
         )}
-        <button onClick={onNext} disabled={!value?.trim()} style={{ marginTop: tokens.spacing.md, padding: '12px 24px', background: value?.trim() ? tokens.colors.bgNavy : tokens.colors.border, color: value?.trim() ? tokens.colors.textInverse : tokens.colors.textMuted, border: 'none', borderRadius: tokens.radius.full, fontSize: '14px', fontWeight: 500, cursor: value?.trim() ? 'pointer' : 'not-allowed' }}>
-          Continue
-        </button>
+        <div style={{ display: 'flex', gap: tokens.spacing.sm, marginTop: tokens.spacing.md }}>
+          <button onClick={onNext} disabled={!optional && !value?.trim()} style={{ padding: '12px 24px', background: (optional || value?.trim()) ? tokens.colors.bgNavy : tokens.colors.border, color: (optional || value?.trim()) ? tokens.colors.textInverse : tokens.colors.textMuted, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 600, cursor: (optional || value?.trim()) ? 'pointer' : 'not-allowed' }}>
+            CONTINUE
+          </button>
+          {optional && onSkip && (
+            <button onClick={onSkip} style={{ padding: '12px 24px', background: 'transparent', color: tokens.colors.navyLight, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
+              SKIP FOR NOW
+            </button>
+          )}
+        </div>
       </>
     )}
   </div>
@@ -1065,19 +1083,11 @@ const SetupOutputView = ({ profile, onComplete }: { profile: COSProfile; onCompl
       anchor: 'The Anchor—you ground me, provide calm, and steady the ship',
     };
 
-    const voiceDesc: Record<string, string> = {
-      masculine: 'Use he/him pronouns if referring to yourself. Take a more assertive, direct tone.',
-      feminine: 'Use she/her pronouns if referring to yourself. Take a more nurturing, empathetic tone.',
-      neutral: 'Use they/them pronouns if referring to yourself. Maintain a balanced, non-gendered presence.',
-      abstract: 'Do not refer to yourself with pronouns. You are pure function, not persona.',
-    };
-
-    return `# Personal Chief of Staff
+    return `# Personal Chief of Staff${profile.cosName ? ` — ${profile.cosName}` : ''}
 
 ## Who You Are
-You are my Chief of Staff—a thinking partner who helps me maintain direction and make better decisions. You embody ${archetypeDesc[profile.stance] || 'a supportive partner'}.
+You are ${profile.cosName ? `${profile.cosName}, ` : ''}my Chief of Staff—a thinking partner who helps me maintain direction and make better decisions. You embody ${archetypeDesc[profile.stance] || 'a supportive partner'}.
 
-${profile.voice && profile.voice !== 'abstract' ? `## Persona\n${voiceDesc[profile.voice] || ''}\n` : ''}
 ## Tone & Style
 - Characteristics: ${profile.toneWords?.join(', ') || 'direct, calm, thoughtful'}
 - Format: ${profile.formatPreference === 'bullets' ? 'Use bullets and short statements' : 'Use flowing short paragraphs'}
