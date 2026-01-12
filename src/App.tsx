@@ -5,16 +5,16 @@ import { useState } from 'react';
 // ============================================
 const tokens = {
   colors: {
-    // Cream foundation
-    cream: '#FAF8F5',
-    creamDark: '#F5F0E8',
+    // Clean white foundation for breathability
+    cream: '#FFFFFF',
+    creamDark: '#F8F9FA',
     white: '#FFFFFF',
     black: '#000000',
 
-    // Navy - not too dark
-    navy: '#2C3E50',
-    navyLight: '#34495E',
-    navyFaded: '#5D6D7E',
+    // Royal blue family
+    navy: '#3D5A80',
+    navyLight: '#4A6FA5',
+    navyFaded: '#7B9ABF',
 
     // Alentejo yellow/ochre - Portuguese building accent
     ochre: '#D4A55A',
@@ -22,39 +22,39 @@ const tokens = {
     ochreFaded: 'rgba(212, 165, 90, 0.15)',
 
     // Grays
-    gray100: '#F5F5F5',
-    gray200: '#E5E5E5',
-    gray300: '#D4D4D4',
-    gray400: '#A3A3A3',
-    gray500: '#737373',
-    gray600: '#525252',
+    gray100: '#F8F9FA',
+    gray200: '#E9ECEF',
+    gray300: '#DEE2E6',
+    gray400: '#ADB5BD',
+    gray500: '#6C757D',
+    gray600: '#495057',
 
     // Backward compatibility
     accent: '#D4A55A',
     accentLight: '#E5B86D',
-    gray50: '#FAF8F5',
-    gray700: '#404040',
-    gray800: '#2C3E50',
-    gray900: '#2C3E50',
-    bgPrimary: '#FAF8F5',
+    gray50: '#FFFFFF',
+    gray700: '#495057',
+    gray800: '#3D5A80',
+    gray900: '#3D5A80',
+    bgPrimary: '#FFFFFF',
     bgCard: '#FFFFFF',
-    bgNavy: '#2C3E50',
-    bgNavyLight: '#34495E',
-    textPrimary: '#2C3E50',
-    textSecondary: '#5D6D7E',
-    textMuted: '#A3A3A3',
+    bgNavy: '#3D5A80',
+    bgNavyLight: '#4A6FA5',
+    textPrimary: '#3D5A80',
+    textSecondary: '#6C757D',
+    textMuted: '#ADB5BD',
     textInverse: '#FFFFFF',
     teal: '#D4A55A',
     tealLight: '#E5B86D',
-    tealSubtle: 'rgba(212, 165, 90, 0.1)',
+    tealSubtle: 'rgba(212, 165, 90, 0.08)',
     coral: '#E07A5F',
-    coralSubtle: 'rgba(224, 122, 95, 0.15)',
+    coralSubtle: 'rgba(224, 122, 95, 0.1)',
     purple: '#7C3AED',
-    purpleSubtle: 'rgba(124, 58, 237, 0.1)',
-    border: '#E5E5E5',
-    borderLight: '#F5F5F5',
-    shadowSm: 'rgba(0, 0, 0, 0.05)',
-    shadowMd: 'rgba(0, 0, 0, 0.08)',
+    purpleSubtle: 'rgba(124, 58, 237, 0.08)',
+    border: '#E9ECEF',
+    borderLight: '#F8F9FA',
+    shadowSm: 'rgba(0, 0, 0, 0.04)',
+    shadowMd: 'rgba(0, 0, 0, 0.06)',
   },
   font: {
     sans: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -96,6 +96,7 @@ type View = 'landing' | 'setup' | 'dashboard' | 'synthesis';
 
 interface COSProfile {
   stance: string;
+  voice: string;
   toneWords: string[];
   formatPreference: string;
   planningStyle: string;
@@ -165,7 +166,7 @@ const App = () => {
 // RUMO LOGO COMPONENT
 // ============================================
 const RumoLogo = ({ size = 'md', color = '#1A2B3C' }: { size?: 'sm' | 'md' | 'lg'; color?: string }) => {
-  const scales = { sm: 0.5, md: 0.75, lg: 1 };
+  const scales = { sm: 0.6, md: 0.75, lg: 1 };
   const scale = scales[size];
   const width = 180 * scale;
   const height = 48 * scale;
@@ -352,7 +353,7 @@ const LandingView = ({
             color: tokens.colors.cream,
             border: 'none',
             padding: '10px 20px',
-            borderRadius: '6px',
+            borderRadius: tokens.radius.full,
             fontSize: '14px',
             fontWeight: 600,
             cursor: 'pointer',
@@ -375,6 +376,10 @@ const LandingView = ({
       padding: `${tokens.space[10]} ${tokens.space[5]}`,
       position: 'relative',
     }}>
+      <div style={{ marginBottom: tokens.space[7] }}>
+        <RumoLogo size="lg" color={tokens.colors.navy} />
+      </div>
+
       <h1 style={{
         fontSize: 'clamp(48px, 8vw, 96px)',
         fontWeight: 800,
@@ -416,7 +421,7 @@ const LandingView = ({
           color: tokens.colors.cream,
           border: 'none',
           padding: '16px 32px',
-          borderRadius: '8px',
+          borderRadius: tokens.radius.full,
           fontSize: '16px',
           fontWeight: 700,
           cursor: 'pointer',
@@ -426,20 +431,6 @@ const LandingView = ({
         Set Your Course
       </button>
 
-      {/* Scroll indicator */}
-      <div style={{
-        position: 'absolute',
-        bottom: tokens.space[8],
-        left: '50%',
-        transform: 'translateX(-50%)',
-        color: tokens.colors.navyFaded,
-        fontSize: '12px',
-        letterSpacing: '0.15em',
-        fontFamily: tokens.font.display,
-        fontWeight: 600,
-      }}>
-        SCROLL
-      </div>
     </section>
 
     {/* Problem - One idea */}
@@ -597,7 +588,7 @@ const LandingView = ({
           color: tokens.colors.cream,
           border: 'none',
           padding: '16px 40px',
-          borderRadius: '8px',
+          borderRadius: tokens.radius.full,
           fontSize: '16px',
           fontWeight: 700,
           cursor: 'pointer',
@@ -690,7 +681,7 @@ const SetupView = ({
   };
 
   const advanceStep = () => {
-    const maxSubSteps = [4, 5, 4, 3, 3, 2];
+    const maxSubSteps = [5, 5, 4, 3, 3, 2];
     if (subStep < maxSubSteps[section] - 1) {
       setSubStep(subStep + 1);
     } else if (section < SETUP_SECTIONS.length - 1) {
@@ -705,7 +696,7 @@ const SetupView = ({
     if (subStep > 0) {
       setSubStep(subStep - 1);
     } else if (section > 0) {
-      const maxSubSteps = [4, 5, 4, 3, 3, 2];
+      const maxSubSteps = [5, 5, 4, 3, 3, 2];
       setSection(section - 1);
       setSubStep(maxSubSteps[section - 1] - 1);
     } else {
@@ -713,8 +704,8 @@ const SetupView = ({
     }
   };
 
-  const totalSteps = 21;
-  const currentStep = [0, 4, 9, 13, 16, 19][section] + subStep;
+  const totalSteps = 22;
+  const currentStep = [0, 5, 10, 14, 17, 20][section] + subStep;
 
   if (showOutput) {
     return <SetupOutputView profile={profile as COSProfile} onComplete={() => onComplete(profile as COSProfile)} />;
@@ -787,13 +778,16 @@ const SetupView = ({
           {/* Section 0: Stance & Style */}
           {section === 0 && subStep === 0 && (
             <SetupQuestion
-              title="What stance should your Chief of Staff take?"
-              subtitle="This defines how they challenge and support you."
+              title="I want my Chief of Staff to be..."
+              subtitle="Choose the archetype that resonates with how you want to be supported."
               type="choice"
               options={[
-                { value: 'challenging', label: 'Challenging', desc: 'Push back, surface blind spots' },
-                { value: 'supporting', label: 'Supporting', desc: 'Steady, clarify, encourage' },
-                { value: 'balanced', label: 'Balanced', desc: 'Support first, challenge when needed' },
+                { value: 'challenger', label: 'The Challenger', desc: 'Pushes back, surfaces blind spots, won\'t let you off easy' },
+                { value: 'muse', label: 'The Muse', desc: 'Sparks ideas, connects dots, inspires new thinking' },
+                { value: 'scientist', label: 'The Scientist', desc: 'Analyzes data, tests assumptions, seeks evidence' },
+                { value: 'coach', label: 'The Coach', desc: 'Encourages growth, builds confidence, celebrates wins' },
+                { value: 'strategist', label: 'The Strategist', desc: 'Plans ahead, sees the big picture, anticipates obstacles' },
+                { value: 'anchor', label: 'The Anchor', desc: 'Grounds you, provides calm, steadies the ship' },
               ]}
               selected={profile.stance}
               onSelect={(v) => { updateProfile('stance', v); advanceStep(); }}
@@ -801,8 +795,23 @@ const SetupView = ({
           )}
           {section === 0 && subStep === 1 && (
             <SetupQuestion
-              title="Choose 3 words for your COS tone"
-              subtitle="How should your Chief of Staff sound?"
+              title="How should your Chief of Staff present?"
+              subtitle="Choose a voice and persona."
+              type="choice"
+              options={[
+                { value: 'masculine', label: 'Masculine', desc: 'He/him, more assertive tone' },
+                { value: 'feminine', label: 'Feminine', desc: 'She/her, more nurturing tone' },
+                { value: 'neutral', label: 'Neutral', desc: 'They/them, balanced and non-gendered' },
+                { value: 'abstract', label: 'Abstract', desc: 'No persona, pure function' },
+              ]}
+              selected={profile.voice}
+              onSelect={(v) => { updateProfile('voice', v); advanceStep(); }}
+            />
+          )}
+          {section === 0 && subStep === 2 && (
+            <SetupQuestion
+              title="Choose the characteristics you want your Chief of Staff to have."
+              subtitle="Select three."
               type="multi"
               options={TONE_OPTIONS.map(t => ({ value: t, label: t }))}
               selected={profile.toneWords}
@@ -810,7 +819,7 @@ const SetupView = ({
               onNext={(profile.toneWords?.length || 0) >= 3 ? advanceStep : undefined}
             />
           )}
-          {section === 0 && subStep === 2 && (
+          {section === 0 && subStep === 3 && (
             <SetupQuestion
               title="How should responses be formatted?"
               type="choice"
@@ -822,7 +831,7 @@ const SetupView = ({
               onSelect={(v) => { updateProfile('formatPreference', v); advanceStep(); }}
             />
           )}
-          {section === 0 && subStep === 3 && (
+          {section === 0 && subStep === 4 && (
             <SetupQuestion
               title="When analyzing a problem..."
               type="choice"
@@ -954,7 +963,7 @@ const SetupQuestion = ({
   multiline?: boolean;
 }) => (
   <div>
-    <h2 style={{ fontSize: '24px', fontWeight: 400, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs, lineHeight: 1.3 }}>
+    <h2 style={{ fontSize: '24px', fontWeight: 700, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs, lineHeight: 1.3, fontFamily: tokens.font.display }}>
       {title}
     </h2>
     {subtitle && (
@@ -971,7 +980,7 @@ const SetupQuestion = ({
               padding: tokens.spacing.sm,
               background: selected === opt.value ? tokens.colors.bgNavy : tokens.colors.bgCard,
               border: `1px solid ${selected === opt.value ? tokens.colors.bgNavy : tokens.colors.border}`,
-              borderRadius: tokens.radius.md,
+              borderRadius: tokens.radius.full,
               cursor: 'pointer',
               textAlign: 'left',
             }}
@@ -996,7 +1005,7 @@ const SetupQuestion = ({
                   padding: `${tokens.spacing.xs} ${tokens.spacing.sm}`,
                   background: isSelected ? tokens.colors.teal : tokens.colors.bgCard,
                   border: `1px solid ${isSelected ? tokens.colors.teal : tokens.colors.border}`,
-                  borderRadius: tokens.radius.lg,
+                  borderRadius: tokens.radius.full,
                   cursor: 'pointer',
                   fontSize: '14px',
                   fontWeight: 500,
@@ -1009,7 +1018,7 @@ const SetupQuestion = ({
           })}
         </div>
         {onNext && (
-          <button onClick={onNext} style={{ marginTop: tokens.spacing.lg, padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.md, fontSize: '14px', fontWeight: 500, cursor: 'pointer' }}>
+          <button onClick={onNext} style={{ marginTop: tokens.spacing.lg, padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '14px', fontWeight: 500, cursor: 'pointer' }}>
             Continue
           </button>
         )}
@@ -1023,7 +1032,7 @@ const SetupQuestion = ({
         ) : (
           <input type="text" value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none' }} />
         )}
-        <button onClick={onNext} disabled={!value?.trim()} style={{ marginTop: tokens.spacing.md, padding: '12px 24px', background: value?.trim() ? tokens.colors.bgNavy : tokens.colors.border, color: value?.trim() ? tokens.colors.textInverse : tokens.colors.textMuted, border: 'none', borderRadius: tokens.radius.md, fontSize: '14px', fontWeight: 500, cursor: value?.trim() ? 'pointer' : 'not-allowed' }}>
+        <button onClick={onNext} disabled={!value?.trim()} style={{ marginTop: tokens.spacing.md, padding: '12px 24px', background: value?.trim() ? tokens.colors.bgNavy : tokens.colors.border, color: value?.trim() ? tokens.colors.textInverse : tokens.colors.textMuted, border: 'none', borderRadius: tokens.radius.full, fontSize: '14px', fontWeight: 500, cursor: value?.trim() ? 'pointer' : 'not-allowed' }}>
           Continue
         </button>
       </>
@@ -1038,19 +1047,30 @@ const SetupOutputView = ({ profile, onComplete }: { profile: COSProfile; onCompl
   const [copied, setCopied] = useState(false);
 
   const generateSystemPrompt = () => {
-    const stanceDesc = {
-      challenging: 'Push back on weak reasoning, surface blind spots, and challenge assumptions',
-      supporting: 'Provide steady support, help clarify thinking, and encourage progress',
-      balanced: 'Support first, then challenge when patterns warrant it',
-    }[profile.stance] || '';
+    const archetypeDesc: Record<string, string> = {
+      challenger: 'The Challenger—you push back, surface blind spots, and won\'t let me off easy',
+      muse: 'The Muse—you spark ideas, connect dots, and inspire new thinking',
+      scientist: 'The Scientist—you analyze data, test assumptions, and seek evidence',
+      coach: 'The Coach—you encourage growth, build confidence, and celebrate wins',
+      strategist: 'The Strategist—you plan ahead, see the big picture, and anticipate obstacles',
+      anchor: 'The Anchor—you ground me, provide calm, and steady the ship',
+    };
+
+    const voiceDesc: Record<string, string> = {
+      masculine: 'Use he/him pronouns if referring to yourself. Take a more assertive, direct tone.',
+      feminine: 'Use she/her pronouns if referring to yourself. Take a more nurturing, empathetic tone.',
+      neutral: 'Use they/them pronouns if referring to yourself. Maintain a balanced, non-gendered presence.',
+      abstract: 'Do not refer to yourself with pronouns. You are pure function, not persona.',
+    };
 
     return `# Personal Chief of Staff
 
 ## Who You Are
-You are my Chief of Staff—a thinking partner who helps me maintain direction and make better decisions. You operate with a ${profile.stance} stance: ${stanceDesc}.
+You are my Chief of Staff—a thinking partner who helps me maintain direction and make better decisions. You embody ${archetypeDesc[profile.stance] || 'a supportive partner'}.
 
+${profile.voice && profile.voice !== 'abstract' ? `## Persona\n${voiceDesc[profile.voice] || ''}\n` : ''}
 ## Tone & Style
-- Voice: ${profile.toneWords?.join(', ') || 'direct, calm, thoughtful'}
+- Characteristics: ${profile.toneWords?.join(', ') || 'direct, calm, thoughtful'}
 - Format: ${profile.formatPreference === 'bullets' ? 'Use bullets and short statements' : 'Use flowing short paragraphs'}
 - Approach: ${profile.planningStyle === 'plan-first' ? 'Lead with structure and next steps' : 'Understand context before prescribing'}
 
@@ -1075,7 +1095,7 @@ You are my Chief of Staff—a thinking partner who helps me maintain direction a
 ## Operating Principles
 1. Begin each day with Synthesis—clarity before productivity
 2. Ask questions before giving advice
-3. ${profile.stance === 'challenging' ? 'Challenge comfortable answers' : 'Support forward momentum'}
+3. ${profile.stance === 'challenger' ? 'Challenge comfortable answers' : 'Support forward momentum'}
 4. Track patterns across conversations
 5. Connect daily actions to longer-term direction
 6. Name what I might be avoiding
@@ -1113,7 +1133,7 @@ When I check in, help me distribute attention across what matters.`;
         <div style={{ background: tokens.colors.bgNavy, borderRadius: tokens.radius.lg, padding: tokens.spacing.md, marginBottom: tokens.spacing.lg }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: tokens.spacing.sm }}>
             <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.05em' }}>SYSTEM PROMPT</p>
-            <button onClick={handleCopy} style={{ background: copied ? tokens.colors.teal : 'rgba(255,255,255,0.1)', color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.sm, padding: '6px 12px', fontSize: '12px', fontWeight: 500, cursor: 'pointer' }}>
+            <button onClick={handleCopy} style={{ background: copied ? tokens.colors.teal : 'rgba(255,255,255,0.1)', color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, padding: '6px 12px', fontSize: '12px', fontWeight: 500, cursor: 'pointer' }}>
               {copied ? 'Copied!' : 'Copy'}
             </button>
           </div>
@@ -1123,10 +1143,10 @@ When I check in, help me distribute attention across what matters.`;
         </div>
 
         <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
-          <button onClick={onComplete} style={{ padding: '14px 28px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.md, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
+          <button onClick={onComplete} style={{ padding: '14px 28px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
             Continue to RUMO
           </button>
-          <button onClick={handleCopy} style={{ padding: '14px 28px', background: 'transparent', color: tokens.colors.textPrimary, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
+          <button onClick={handleCopy} style={{ padding: '14px 28px', background: 'transparent', color: tokens.colors.textPrimary, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
             {copied ? 'Copied!' : 'Copy prompt'}
           </button>
         </div>
@@ -1272,7 +1292,7 @@ const DashboardView = ({
           <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>How It Works</button>
           <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>WAVES</button>
           <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>SWEATS</button>
-          <button onClick={onReconfigure} style={{ background: 'none', border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, padding: '8px 16px', fontSize: '14px', color: tokens.colors.textPrimary, cursor: 'pointer' }}>Sign In</button>
+          <button onClick={onReconfigure} style={{ background: 'none', border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, padding: '8px 16px', fontSize: '14px', color: tokens.colors.textPrimary, cursor: 'pointer' }}>Sign In</button>
         </nav>
       </div>
     </header>
@@ -1304,7 +1324,7 @@ const DashboardView = ({
               background: tokens.colors.teal,
               color: tokens.colors.textInverse,
               border: 'none',
-              borderRadius: tokens.radius.md,
+              borderRadius: tokens.radius.full,
               fontSize: '14px',
               fontWeight: 500,
               cursor: 'pointer'
@@ -1316,7 +1336,7 @@ const DashboardView = ({
               background: 'transparent',
               color: tokens.colors.textPrimary,
               border: `1px solid ${tokens.colors.border}`,
-              borderRadius: tokens.radius.md,
+              borderRadius: tokens.radius.full,
               fontSize: '14px',
               fontWeight: 500,
               cursor: 'pointer',
@@ -1360,7 +1380,7 @@ const DashboardView = ({
             background: tokens.colors.teal,
             color: tokens.colors.textInverse,
             border: 'none',
-            borderRadius: tokens.radius.md,
+            borderRadius: tokens.radius.full,
             fontSize: '14px',
             fontWeight: 500,
             cursor: 'pointer',
@@ -1388,7 +1408,7 @@ const DashboardView = ({
             background: 'transparent',
             color: tokens.colors.textPrimary,
             border: `1px solid ${tokens.colors.border}`,
-            borderRadius: tokens.radius.md,
+            borderRadius: tokens.radius.full,
             fontSize: '14px',
             fontWeight: 500,
             cursor: 'pointer',
@@ -1416,7 +1436,7 @@ const DashboardView = ({
             background: 'transparent',
             color: tokens.colors.textPrimary,
             border: `1px solid ${tokens.colors.border}`,
-            borderRadius: tokens.radius.md,
+            borderRadius: tokens.radius.full,
             fontSize: '14px',
             fontWeight: 500,
             cursor: 'pointer',
@@ -1529,7 +1549,7 @@ const SynthesisView = ({ onBack }: { onBack: () => void }) => {
             placeholder="Type here..."
             style={{ flex: 1, padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none' }}
           />
-          <button onClick={handleSend} style={{ padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.md, fontSize: '14px', fontWeight: 500, cursor: 'pointer' }}>Send</button>
+          <button onClick={handleSend} style={{ padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '14px', fontWeight: 500, cursor: 'pointer' }}>Send</button>
         </div>
       </div>
     </div>
