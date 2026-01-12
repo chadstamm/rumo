@@ -657,7 +657,7 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        AI that knows your&nbsp;life.
+        Find your direction.
       </h1>
 
       <p className="animate-fade-in-up stagger-2" style={{
@@ -670,7 +670,7 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        Most people use AI like a search engine—asking random questions, getting random answers. RUMO is different. It gives your AI context about who you are, what you're building, and what matters most—so every conversation moves your&nbsp;life&nbsp;forward.
+        Most people use AI like a search engine—random questions, random answers, no continuity. RUMO gives your AI the full context of your life, so every conversation helps you navigate toward what actually&nbsp;matters.
       </p>
 
       <p className="animate-fade-in-up stagger-3" style={{
@@ -710,6 +710,32 @@ const LandingView = ({
 
     </section>
 
+    {/* Section Divider - Rope */}
+    <div style={{
+      maxWidth: '600px',
+      margin: '0 auto',
+      padding: `${tokens.space[2]} 0`,
+      opacity: 0.3,
+    }}>
+      <svg width="100%" height="12" viewBox="0 0 600 12" preserveAspectRatio="none">
+        <path
+          d="M0 6 Q 15 2, 30 6 T 60 6 T 90 6 T 120 6 T 150 6 T 180 6 T 210 6 T 240 6 T 270 6 T 300 6 T 330 6 T 360 6 T 390 6 T 420 6 T 450 6 T 480 6 T 510 6 T 540 6 T 570 6 T 600 6"
+          stroke={tokens.colors.ochre}
+          strokeWidth="3"
+          fill="none"
+          strokeLinecap="round"
+        />
+        <path
+          d="M0 6 Q 15 10, 30 6 T 60 6 T 90 6 T 120 6 T 150 6 T 180 6 T 210 6 T 240 6 T 270 6 T 300 6 T 330 6 T 360 6 T 390 6 T 420 6 T 450 6 T 480 6 T 510 6 T 540 6 T 570 6 T 600 6"
+          stroke={tokens.colors.navy}
+          strokeWidth="2"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.5"
+        />
+      </svg>
+    </div>
+
     {/* Problem - Expanded */}
     <section style={{
       padding: `${tokens.space[10]} ${tokens.space[5]}`,
@@ -732,9 +758,9 @@ const LandingView = ({
             fontFamily: tokens.font.display,
             marginBottom: tokens.space[6],
           }}>
-            You're already using AI.
+            You're moving fast.
             <br />
-            <span style={{ color: tokens.colors.ochre }}>But is it using you?</span>
+            <span style={{ color: tokens.colors.ochre }}>But toward what?</span>
           </p>
 
           <div style={{
@@ -743,13 +769,13 @@ const LandingView = ({
             color: tokens.colors.navy,
           }}>
             <p style={{ marginBottom: tokens.space[5] }}>
-              You ask it to write emails. Summarize articles. Maybe help with a spreadsheet. But every conversation starts from zero—no memory of your goals, your values, or what you're actually trying to&nbsp;build.
+              You're already using AI—for emails, summaries, quick answers. But every conversation starts from zero. No memory of your goals, your values, or where you're actually trying to&nbsp;go.
             </p>
             <p style={{ marginBottom: tokens.space[5] }}>
-              Meanwhile, the most important areas of your life—your career trajectory, your family priorities, your health, your creative ambitions, your desire to contribute—remain untouched by the most powerful thinking tool ever&nbsp;created.
+              Meanwhile, the most important areas of your life—your career trajectory, your family priorities, your health, your creative ambitions, your desire to serve—remain untouched by the most powerful thinking tool ever&nbsp;created.
             </p>
             <p style={{ fontWeight: 600 }}>
-              It doesn't have to be this way. AI can be more than a utility. It can be a partner that understands the full picture of your life and helps you navigate all of&nbsp;it.
+              AI can be more than a utility. It can be a thinking partner that helps you set a course and stay on&nbsp;it.
             </p>
           </div>
         </div>
@@ -863,7 +889,7 @@ const LandingView = ({
             marginBottom: tokens.space[4],
             textShadow: '0 2px 4px rgba(0,0,0,0.2)',
           }}>
-            An AI that doesn't know you can only give you generic&nbsp;answers.
+            Momentum without direction&nbsp;drifts.
           </p>
           <p style={{
             fontSize: '26px',
@@ -876,7 +902,7 @@ const LandingView = ({
             zIndex: 1,
             textShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}>
-            An AI that knows you can change your&nbsp;life.
+            Direction without momentum&nbsp;stalls.
           </p>
 
           {/* Decorative line - ANIMATED GRADIENT */}
@@ -917,7 +943,7 @@ const LandingView = ({
           fontFamily: tokens.font.display,
           textAlign: 'center',
         }}>
-          Meet your Chief of&nbsp;Staff.
+          Your guide for the journey.
         </h2>
 
         {/* Primary paragraph */}
@@ -928,10 +954,10 @@ const LandingView = ({
           marginBottom: tokens.space[7],
         }}>
           <p style={{ marginBottom: tokens.space[5] }}>
-            Your COS is an AI thinking partner configured specifically for you. It knows your professional goals, your personal values, your family commitments, and your long-term vision. It understands how you like to think through problems and what kind of support actually helps&nbsp;you.
+            Your Chief of Staff is an AI thinking partner configured specifically for you. It knows where you're headed—professionally and personally. It understands your values, your commitments, and the kind of life you're trying to&nbsp;build.
           </p>
           <p>
-            When you bring any question to your COS—about work, relationships, health, creativity, or service—it responds with the full context of who you are and what you're building. No more starting from&nbsp;scratch.
+            When you bring any question to your COS—about work, relationships, health, creativity, or service—it responds with the full context of your direction. Every conversation builds on the&nbsp;last.
           </p>
         </div>
 
@@ -945,10 +971,10 @@ const LandingView = ({
           borderLeft: `2px solid ${tokens.colors.ochre}`,
         }}>
           <p style={{ marginBottom: tokens.space[4] }}>
-            Use it to think through a difficult conversation with a colleague. To plan a meaningful week with your family. To reconnect with a creative project you've been avoiding. To decide what actually deserves your energy&nbsp;today.
+            Navigate a difficult conversation with a colleague. Chart out a meaningful week with your family. Find your way back to a creative project you've been avoiding. Decide what actually deserves your heading&nbsp;today.
           </p>
           <p>
-            This isn't about productivity hacks or life optimization. It's about having a thought partner who helps you stay true to what matters across every domain of your&nbsp;life.
+            This isn't about productivity hacks. It's about having a thought partner who helps you stay on course across every domain of your&nbsp;life.
           </p>
         </div>
 
@@ -965,7 +991,7 @@ const LandingView = ({
         }}>
           Work. Family. Health. Creativity.&nbsp;Service.
           <br />
-          One AI that holds it&nbsp;all.
+          One compass for the whole&nbsp;journey.
         </p>
 
         {/* Bridge + CTA */}
@@ -980,7 +1006,7 @@ const LandingView = ({
             marginBottom: tokens.space[5],
             letterSpacing: '0.02em',
           }}>
-            Everything begins by defining how you want to be guided.
+            Everything begins by setting your&nbsp;course.
           </p>
 
           <button
@@ -1225,7 +1251,7 @@ const LandingView = ({
         fontFamily: tokens.font.display,
         color: tokens.colors.navy,
       }}>
-        Stop treating AI like a search&nbsp;engine.
+        Ready to set your&nbsp;course?
       </h2>
       <p style={{
         fontSize: '18px',
@@ -1233,7 +1259,7 @@ const LandingView = ({
         maxWidth: '600px',
         margin: `0 auto ${tokens.space[7]}`,
       }}>
-        Configure your Chief of Staff in five minutes. Then start having conversations that actually move your life&nbsp;forward.
+        Configure your Chief of Staff in five minutes. Then start having conversations that actually help you navigate your&nbsp;life.
       </p>
       <button
         onClick={onSetup}
