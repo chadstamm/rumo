@@ -46,6 +46,43 @@ const GlobalStyles = () => (
       100% { transform: rotate(360deg); }
     }
 
+    @keyframes glow-pulse {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(212, 165, 90, 0.3), 0 8px 32px rgba(212, 165, 90, 0.2);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(212, 165, 90, 0.5), 0 12px 48px rgba(212, 165, 90, 0.3);
+      }
+    }
+
+    @keyframes gentle-bounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-3px) rotate(1deg); }
+      75% { transform: translateY(-3px) rotate(-1deg); }
+    }
+
+    @keyframes slow-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes wave-flow {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .animate-glow {
+      animation: glow-pulse 3s ease-in-out infinite;
+    }
+
+    .animate-gentle-bounce {
+      animation: gentle-bounce 4s ease-in-out infinite;
+    }
+
+    .animate-slow-spin {
+      animation: slow-spin 20s linear infinite;
+    }
+
     .animate-fade-in-up {
       animation: fadeInUp 0.6s ease-out forwards;
     }
@@ -721,73 +758,83 @@ const LandingView = ({
           </div>
         </div>
 
-        {/* Right column - Nautical callout */}
+        {/* Right column - Nautical callout - BOLD VERSION */}
         <div
-          className="callout-box"
+          className="callout-box animate-glow animate-gentle-bounce"
           style={{
-            background: `linear-gradient(145deg, ${tokens.colors.ochre}15 0%, ${tokens.colors.ochre}25 100%)`,
-            border: `3px solid ${tokens.colors.ochre}`,
-            borderRadius: tokens.radius.xl,
-            padding: tokens.space[7],
+            background: `linear-gradient(135deg, ${tokens.colors.navy} 0%, #2D4A6A 100%)`,
+            border: `4px solid ${tokens.colors.ochre}`,
+            borderRadius: '20px',
+            padding: '40px 32px',
             position: 'relative',
             overflow: 'hidden',
-            boxShadow: `0 8px 32px ${tokens.colors.ochre}20`,
           }}
         >
-          {/* Compass rose decoration - top right */}
+          {/* Animated background gradient overlay */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: `radial-gradient(circle at 80% 20%, ${tokens.colors.ochre}30 0%, transparent 50%)`,
+            pointerEvents: 'none',
+          }} />
+
+          {/* Compass rose decoration - top right - SPINNING */}
           <div
-            className="animate-float"
+            className="animate-slow-spin"
             style={{
               position: 'absolute',
-              top: '-10px',
-              right: '-10px',
-              width: '100px',
-              height: '100px',
-              opacity: 0.35,
+              top: '15px',
+              right: '15px',
+              width: '80px',
+              height: '80px',
+              opacity: 0.5,
             }}
           >
             <svg viewBox="0 0 100 100">
               <circle cx="50" cy="50" r="45" stroke={tokens.colors.ochre} strokeWidth="2" fill="none" />
-              <circle cx="50" cy="50" r="35" stroke={tokens.colors.ochre} strokeWidth="1" fill="none" opacity="0.6" />
-              <path d="M50 8 L54 50 L50 92 L46 50 Z" fill={tokens.colors.ochre} />
-              <path d="M8 50 L50 46 L92 50 L50 54 Z" fill={tokens.colors.ochre} opacity="0.7" />
-              <circle cx="50" cy="50" r="5" fill={tokens.colors.ochre} />
+              <circle cx="50" cy="50" r="35" stroke={tokens.colors.ochre} strokeWidth="1.5" fill="none" />
+              <path d="M50 5 L55 50 L50 95 L45 50 Z" fill={tokens.colors.ochre} />
+              <path d="M5 50 L50 45 L95 50 L50 55 Z" fill={tokens.colors.ochre} opacity="0.7" />
+              <circle cx="50" cy="50" r="6" fill={tokens.colors.ochre} />
             </svg>
           </div>
 
-          {/* Anchor decoration - bottom left */}
-          <div style={{
-            position: 'absolute',
-            bottom: '12px',
-            left: '16px',
-            width: '44px',
-            height: '44px',
-            opacity: 0.25,
-          }}>
+          {/* Anchor decoration - bottom left - FLOATING */}
+          <div
+            className="animate-float"
+            style={{
+              position: 'absolute',
+              bottom: '20px',
+              left: '20px',
+              width: '50px',
+              height: '50px',
+              opacity: 0.4,
+            }}
+          >
             <svg viewBox="0 0 24 24" fill={tokens.colors.ochre}>
               <path d="M12 2C10.9 2 10 2.9 10 4C10 4.74 10.4 5.39 11 5.73V7H6V9H11V17.27C9.17 16.7 8 15 8 13H6C6 15.76 7.81 18.05 10.26 18.77L10 19H8V21H16V19H14L13.74 18.77C16.19 18.05 18 15.76 18 13H16C16 15 14.83 16.7 13 17.27V9H18V7H13V5.73C13.6 5.39 14 4.74 14 4C14 2.9 13.1 2 12 2Z"/>
             </svg>
           </div>
 
-          {/* Wave decoration at bottom */}
+          {/* Wave decoration at bottom - ANIMATED */}
           <div
-            className="animate-wave"
             style={{
               position: 'absolute',
               bottom: 0,
-              left: 0,
-              right: 0,
-              height: '40px',
-              opacity: 0.35,
+              left: '-100%',
+              width: '300%',
+              height: '60px',
+              opacity: 0.25,
+              animation: 'wave-flow 8s linear infinite',
             }}
           >
-            <svg width="100%" height="40" preserveAspectRatio="none" viewBox="0 0 200 40">
+            <svg width="100%" height="60" preserveAspectRatio="none" viewBox="0 0 600 60">
               <path
-                d="M0 20 Q 25 8, 50 20 T 100 20 T 150 20 T 200 20 L200 40 L0 40 Z"
+                d="M0 30 Q 50 10, 100 30 T 200 30 T 300 30 T 400 30 T 500 30 T 600 30 L600 60 L0 60 Z"
                 fill={tokens.colors.ochre}
               />
               <path
-                d="M0 28 Q 30 18, 60 28 T 120 28 T 180 28 T 220 28"
+                d="M0 45 Q 60 30, 120 45 T 240 45 T 360 45 T 480 45 T 600 45"
                 stroke={tokens.colors.ochre}
                 strokeWidth="2"
                 fill="none"
@@ -796,49 +843,57 @@ const LandingView = ({
             </svg>
           </div>
 
-          {/* Quote icon */}
+          {/* Quote icon - LARGER */}
           <div style={{
-            marginBottom: tokens.space[3],
+            marginBottom: tokens.space[4],
             color: tokens.colors.ochre,
+            position: 'relative',
+            zIndex: 1,
           }}>
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="currentColor">
               <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
             </svg>
           </div>
 
           <p style={{
-            fontSize: '22px',
-            fontWeight: 700,
-            lineHeight: 1.5,
-            color: tokens.colors.navy,
+            fontSize: '26px',
+            fontWeight: 800,
+            lineHeight: 1.4,
+            color: tokens.colors.white,
             fontFamily: tokens.font.display,
             fontStyle: 'italic',
             position: 'relative',
             zIndex: 1,
-            marginBottom: tokens.space[2],
+            marginBottom: tokens.space[4],
+            textShadow: '0 2px 4px rgba(0,0,0,0.2)',
           }}>
-            Momentum without direction drifts.
+            Momentum without direction&nbsp;drifts.
           </p>
           <p style={{
-            fontSize: '22px',
-            fontWeight: 700,
-            lineHeight: 1.5,
+            fontSize: '26px',
+            fontWeight: 800,
+            lineHeight: 1.4,
             color: tokens.colors.ochre,
             fontFamily: tokens.font.display,
             fontStyle: 'italic',
             position: 'relative',
             zIndex: 1,
+            textShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}>
-            Direction without momentum stalls.
+            Direction without momentum&nbsp;stalls.
           </p>
 
-          {/* Decorative line */}
+          {/* Decorative line - ANIMATED GRADIENT */}
           <div style={{
-            marginTop: tokens.space[5],
-            height: '4px',
-            width: '80px',
-            background: `linear-gradient(90deg, ${tokens.colors.ochre}, ${tokens.colors.ochre}40)`,
-            borderRadius: '2px',
+            marginTop: tokens.space[6],
+            height: '5px',
+            width: '100px',
+            background: `linear-gradient(90deg, ${tokens.colors.ochre}, ${tokens.colors.ochreLight}, ${tokens.colors.ochre})`,
+            backgroundSize: '200% 100%',
+            animation: 'shimmer 3s linear infinite',
+            borderRadius: '3px',
+            position: 'relative',
+            zIndex: 1,
           }} />
         </div>
       </div>
@@ -852,7 +907,7 @@ const LandingView = ({
     }}>
       <div style={{ maxWidth: '640px', margin: '0 auto' }}>
         {/* Compass icon */}
-        <div style={{ marginBottom: tokens.space[4], color: tokens.colors.ochre, textAlign: 'center' }}>
+        <div style={{ marginBottom: tokens.space[4], color: tokens.colors.ochre, display: 'flex', justifyContent: 'center' }}>
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />
             <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="currentColor" stroke="none" />
@@ -866,7 +921,7 @@ const LandingView = ({
           fontFamily: tokens.font.display,
           textAlign: 'center',
         }}>
-          A guide for navigating what matters.
+          A guide for navigating what&nbsp;matters.
         </h2>
 
         {/* Primary paragraph */}
@@ -972,7 +1027,7 @@ const LandingView = ({
         {/* Section Header */}
         <div style={{ marginBottom: tokens.space[8], textAlign: 'center' }}>
           {/* Sliders/Balance icon */}
-          <div style={{ marginBottom: tokens.space[4], color: tokens.colors.ochre }}>
+          <div style={{ marginBottom: tokens.space[4], color: tokens.colors.ochre, display: 'flex', justifyContent: 'center' }}>
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="4" y1="21" x2="4" y2="14" />
               <line x1="4" y1="10" x2="4" y2="3" />
@@ -993,7 +1048,7 @@ const LandingView = ({
             fontFamily: tokens.font.display,
             marginBottom: tokens.space[5],
           }}>
-            Two instruments for staying aligned.
+            Two instruments for staying&nbsp;aligned.
           </h2>
           <div style={{
             fontSize: '17px',
