@@ -1,6 +1,223 @@
 import { useState } from 'react';
 
 // ============================================
+// GLOBAL STYLES - Animations & Hover Effects
+// ============================================
+const GlobalStyles = () => (
+  <style>{`
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    @keyframes wave {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(-10px); }
+    }
+
+    @keyframes compass-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .animate-wave {
+      animation: wave 4s ease-in-out infinite;
+    }
+
+    .btn-primary {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(212, 165, 90, 0.35);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 15px rgba(212, 165, 90, 0.25);
+    }
+
+    .btn-secondary {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(61, 90, 128, 0.2);
+      background: #3D5A80 !important;
+      color: white !important;
+    }
+
+    .btn-secondary:active {
+      transform: translateY(0);
+    }
+
+    .btn-ghost {
+      transition: all 0.25s ease;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(61, 90, 128, 0.08) !important;
+      color: #3D5A80 !important;
+    }
+
+    .card-hover {
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .link-hover {
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .link-hover::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #D4A55A;
+      transition: width 0.3s ease;
+    }
+
+    .link-hover:hover::after {
+      width: 100%;
+    }
+
+    .option-btn {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .option-btn:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 15px rgba(61, 90, 128, 0.15);
+    }
+
+    .chip-btn {
+      transition: all 0.2s ease;
+    }
+
+    .chip-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .chip-btn:active {
+      transform: scale(0.98);
+    }
+
+    .callout-box {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .callout-box:hover {
+      transform: translateY(-4px) rotate(1deg);
+      box-shadow: 0 15px 40px rgba(212, 165, 90, 0.25);
+    }
+
+    .logo-hover {
+      transition: all 0.3s ease;
+    }
+
+    .logo-hover:hover {
+      transform: scale(1.05);
+    }
+
+    .progress-bar {
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .input-focus {
+      transition: all 0.25s ease;
+    }
+
+    .input-focus:focus {
+      border-color: #D4A55A !important;
+      box-shadow: 0 0 0 3px rgba(212, 165, 90, 0.15);
+    }
+
+    /* Staggered animations */
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    .stagger-5 { animation-delay: 0.5s; }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Selection color */
+    ::selection {
+      background: rgba(212, 165, 90, 0.3);
+      color: #3D5A80;
+    }
+  `}</style>
+);
+
+// ============================================
 // DESIGN SYSTEM - Cream & Navy
 // ============================================
 const tokens = {
@@ -310,6 +527,8 @@ const LandingView = ({
     fontFamily: tokens.font.sans,
     color: tokens.colors.navy,
   }}>
+    <GlobalStyles />
+
     {/* Navigation - Minimal */}
     <nav style={{
       position: 'fixed',
@@ -321,14 +540,18 @@ const LandingView = ({
       justifyContent: 'space-between',
       alignItems: 'center',
       zIndex: 100,
-      background: 'rgba(250, 248, 245, 0.85)',
+      background: 'rgba(255, 255, 255, 0.9)',
       backdropFilter: 'blur(20px)',
+      borderBottom: '1px solid rgba(61, 90, 128, 0.1)',
     }}>
-      <RumoLogo size="sm" color={tokens.colors.navy} />
+      <div className="logo-hover" style={{ cursor: 'pointer' }}>
+        <RumoLogo size="sm" color={tokens.colors.navy} />
+      </div>
       <div style={{ display: 'flex', gap: tokens.space[6], alignItems: 'center' }}>
         {hasProfile && (
           <button
             onClick={onDashboard}
+            className="btn-ghost"
             style={{
               background: 'none',
               border: 'none',
@@ -336,6 +559,8 @@ const LandingView = ({
               fontSize: '14px',
               cursor: 'pointer',
               fontFamily: tokens.font.sans,
+              padding: '8px 16px',
+              borderRadius: tokens.radius.full,
             }}
           >
             DASHBOARD
@@ -343,6 +568,7 @@ const LandingView = ({
         )}
         <button
           onClick={onSetup}
+          className="btn-primary"
           style={{
             background: tokens.colors.ochre,
             color: tokens.colors.white,
@@ -377,11 +603,11 @@ const LandingView = ({
         <CalcadaTexture opacity={0.06} />
       </div>
 
-      <div style={{ marginBottom: tokens.space[7], position: 'relative', zIndex: 1 }}>
+      <div className="animate-fade-in-up" style={{ marginBottom: tokens.space[7], position: 'relative', zIndex: 1 }}>
         <RumoLogo size="lg" color={tokens.colors.navy} />
       </div>
 
-      <h1 style={{
+      <h1 className="animate-fade-in-up stagger-1" style={{
         fontSize: 'clamp(48px, 8vw, 96px)',
         fontWeight: 700,
         lineHeight: 1.05,
@@ -392,23 +618,25 @@ const LandingView = ({
         color: tokens.colors.navy,
         position: 'relative',
         zIndex: 1,
+        opacity: 0,
       }}>
         Find your direction.
       </h1>
 
-      <p style={{
+      <p className="animate-fade-in-up stagger-2" style={{
         fontSize: 'clamp(18px, 2vw, 22px)',
-        color: tokens.colors.navyFaded,
+        color: tokens.colors.navy,
         maxWidth: '720px',
         lineHeight: 1.6,
         marginBottom: tokens.space[8],
         position: 'relative',
         zIndex: 1,
+        opacity: 0,
       }}>
         RUMO is an AI-powered personal navigation system that helps you clarify where you're going—and act with intention to get there.
       </p>
 
-      <p style={{
+      <p className="animate-fade-in-up stagger-3" style={{
         fontSize: '20px',
         color: tokens.colors.navy,
         marginBottom: tokens.space[4],
@@ -417,17 +645,19 @@ const LandingView = ({
         letterSpacing: '0.02em',
         position: 'relative',
         zIndex: 1,
+        opacity: 0,
       }}>
         Begin by creating your personal Chief of Staff.
       </p>
 
       <button
         onClick={onSetup}
+        className="btn-primary animate-fade-in-up stagger-4"
         style={{
           background: tokens.colors.ochre,
           color: tokens.colors.white,
           border: 'none',
-          padding: '16px 32px',
+          padding: '18px 36px',
           borderRadius: tokens.radius.full,
           fontSize: '16px',
           fontWeight: 700,
@@ -435,6 +665,7 @@ const LandingView = ({
           fontFamily: tokens.font.display,
           position: 'relative',
           zIndex: 1,
+          opacity: 0,
         }}
       >
         START HERE
@@ -450,36 +681,36 @@ const LandingView = ({
         maxWidth: '1000px',
         margin: '0 auto',
         display: 'grid',
-        gridTemplateColumns: '1fr 320px',
+        gridTemplateColumns: '1fr 340px',
         gap: tokens.space[8],
         alignItems: 'start',
       }}>
         {/* Left column - Text */}
         <div style={{ textAlign: 'left' }}>
           <p style={{
-            fontSize: 'clamp(24px, 4vw, 36px)',
+            fontSize: 'clamp(28px, 4vw, 40px)',
             fontWeight: 700,
-            lineHeight: 1.4,
+            lineHeight: 1.3,
             color: tokens.colors.navy,
             fontFamily: tokens.font.display,
             marginBottom: tokens.space[6],
           }}>
             You're moving fast.
             <br />
-            <span style={{ color: tokens.colors.navyFaded }}>But toward what?</span>
+            <span style={{ color: tokens.colors.ochre }}>But toward what?</span>
           </p>
 
           <div style={{
             fontSize: '17px',
-            lineHeight: 1.7,
-            color: tokens.colors.navyLight,
+            lineHeight: 1.8,
+            color: tokens.colors.navy,
           }}>
             <p style={{ marginBottom: tokens.space[5] }}>
               Sometimes there's plenty of momentum, but no clear heading.
               <br />
               Other times the destination is clear, but there's no wind to carry you there.
             </p>
-            <p style={{ marginBottom: tokens.space[5], fontWeight: 500, color: tokens.colors.navy }}>
+            <p style={{ marginBottom: tokens.space[5], fontWeight: 600 }}>
               We know what that feels like.
               <br />
               It's not confusion. It's misalignment.
@@ -491,167 +722,401 @@ const LandingView = ({
         </div>
 
         {/* Right column - Nautical callout */}
-        <div style={{
-          background: `linear-gradient(135deg, ${tokens.colors.creamDark} 0%, rgba(61, 90, 128, 0.08) 100%)`,
-          border: `2px solid ${tokens.colors.navyFaded}`,
-          borderRadius: tokens.radius.lg,
-          padding: tokens.space[6],
-          position: 'relative',
-          overflow: 'hidden',
-        }}>
-          {/* Compass rose decoration */}
+        <div
+          className="callout-box"
+          style={{
+            background: `linear-gradient(145deg, rgba(212, 165, 90, 0.08) 0%, rgba(212, 165, 90, 0.15) 100%)`,
+            border: `3px solid ${tokens.colors.ochre}`,
+            borderRadius: tokens.radius.xl,
+            padding: tokens.space[7],
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Compass rose decoration - top right */}
+          <div
+            className="animate-float"
+            style={{
+              position: 'absolute',
+              top: '-15px',
+              right: '-15px',
+              width: '90px',
+              height: '90px',
+              opacity: 0.2,
+            }}
+          >
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="45" stroke={tokens.colors.ochre} strokeWidth="2" fill="none" />
+              <circle cx="50" cy="50" r="35" stroke={tokens.colors.ochre} strokeWidth="1" fill="none" opacity="0.5" />
+              <path d="M50 8 L54 50 L50 92 L46 50 Z" fill={tokens.colors.ochre} />
+              <path d="M8 50 L50 46 L92 50 L50 54 Z" fill={tokens.colors.ochre} opacity="0.6" />
+              <circle cx="50" cy="50" r="4" fill={tokens.colors.ochre} />
+            </svg>
+          </div>
+
+          {/* Anchor decoration - bottom left */}
           <div style={{
             position: 'absolute',
-            top: '-20px',
-            right: '-20px',
-            width: '80px',
-            height: '80px',
-            opacity: 0.1,
+            bottom: '10px',
+            left: '15px',
+            width: '40px',
+            height: '40px',
+            opacity: 0.15,
           }}>
-            <svg viewBox="0 0 100 100" fill={tokens.colors.navy}>
-              <circle cx="50" cy="50" r="45" stroke={tokens.colors.navy} strokeWidth="2" fill="none" />
-              <path d="M50 10 L55 50 L50 90 L45 50 Z" fill={tokens.colors.navy} />
-              <path d="M10 50 L50 45 L90 50 L50 55 Z" fill={tokens.colors.navy} />
+            <svg viewBox="0 0 24 24" fill={tokens.colors.navy}>
+              <path d="M12 2C10.9 2 10 2.9 10 4C10 4.74 10.4 5.39 11 5.73V7H6V9H11V17.27C9.17 16.7 8 15 8 13H6C6 15.76 7.81 18.05 10.26 18.77L10 19H8V21H16V19H14L13.74 18.77C16.19 18.05 18 15.76 18 13H16C16 15 14.83 16.7 13 17.27V9H18V7H13V5.73C13.6 5.39 14 4.74 14 4C14 2.9 13.1 2 12 2Z"/>
             </svg>
           </div>
 
           {/* Wave decoration at bottom */}
-          <div style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: '30px',
-            opacity: 0.15,
-          }}>
-            <svg width="100%" height="30" preserveAspectRatio="none" viewBox="0 0 200 30">
+          <div
+            className="animate-wave"
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: '35px',
+              opacity: 0.2,
+            }}
+          >
+            <svg width="100%" height="35" preserveAspectRatio="none" viewBox="0 0 200 35">
               <path
-                d="M0 15 Q 25 5, 50 15 T 100 15 T 150 15 T 200 15 L200 30 L0 30 Z"
-                fill={tokens.colors.navy}
+                d="M0 18 Q 25 8, 50 18 T 100 18 T 150 18 T 200 18 L200 35 L0 35 Z"
+                fill={tokens.colors.ochre}
+              />
+              <path
+                d="M0 25 Q 30 18, 60 25 T 120 25 T 180 25 T 220 25"
+                stroke={tokens.colors.ochre}
+                strokeWidth="1.5"
+                fill="none"
+                opacity="0.5"
               />
             </svg>
           </div>
 
+          {/* Quote icon */}
+          <div style={{
+            marginBottom: tokens.space[4],
+            color: tokens.colors.ochre,
+            opacity: 0.6,
+          }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+            </svg>
+          </div>
+
           <p style={{
-            fontSize: '18px',
+            fontSize: '19px',
             fontWeight: 600,
-            lineHeight: 1.5,
+            lineHeight: 1.6,
             color: tokens.colors.navy,
             fontFamily: tokens.font.display,
             fontStyle: 'italic',
             position: 'relative',
             zIndex: 1,
           }}>
-            "Momentum without direction drifts.
+            Momentum without direction drifts.
             <br />
             <br />
-            Direction without momentum stalls."
+            Direction without momentum stalls.
           </p>
+
+          {/* Decorative line */}
+          <div style={{
+            marginTop: tokens.space[5],
+            height: '3px',
+            width: '60px',
+            background: `linear-gradient(90deg, ${tokens.colors.ochre}, transparent)`,
+            borderRadius: '2px',
+          }} />
         </div>
       </div>
     </section>
 
-    {/* Solution - Chief of Staff */}
+    {/* The Guide Appears */}
     <section style={{
       background: tokens.colors.navy,
       color: tokens.colors.cream,
       padding: `${tokens.space[10]} ${tokens.space[5]}`,
     }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-        <p style={{
-          fontSize: '12px',
-          letterSpacing: '0.15em',
-          color: tokens.colors.navyFaded,
-          marginBottom: tokens.space[5],
-          fontFamily: tokens.font.display,
-          fontWeight: 600,
-        }}>
-          THE SOLUTION
-        </p>
+      <div style={{ maxWidth: '640px', margin: '0 auto' }}>
         <h2 style={{
-          fontSize: 'clamp(32px, 5vw, 48px)',
-          fontWeight: 800,
-          lineHeight: 1.2,
-          marginBottom: tokens.space[6],
+          fontSize: 'clamp(28px, 4vw, 40px)',
+          fontWeight: 700,
+          lineHeight: 1.25,
+          marginBottom: tokens.space[7],
           fontFamily: tokens.font.display,
         }}>
-          Your Chief of Staff
+          A guide for navigating what matters.
         </h2>
+
+        {/* Primary paragraph */}
+        <div style={{
+          fontSize: '17px',
+          lineHeight: 1.8,
+          color: tokens.colors.creamDark,
+          marginBottom: tokens.space[7],
+        }}>
+          <p style={{ marginBottom: tokens.space[5] }}>
+            RUMO is designed to help you navigate complexity without adding noise.
+            It works by pairing clear frameworks with an AI-powered Chief of Staff that supports how you think, decide, and act.
+          </p>
+          <p>
+            Instead of reacting to everything at once, RUMO helps you pause, orient, and move forward with intention.
+          </p>
+        </div>
+
+        {/* Secondary paragraph - trust */}
+        <div style={{
+          fontSize: '16px',
+          lineHeight: 1.8,
+          color: 'rgba(255, 255, 255, 0.7)',
+          marginBottom: tokens.space[7],
+          paddingLeft: tokens.space[5],
+          borderLeft: `2px solid ${tokens.colors.ochre}`,
+        }}>
+          <p style={{ marginBottom: tokens.space[4] }}>
+            This isn't about outsourcing judgment or automating your life.
+            Your Chief of Staff exists to help you see patterns, surface tradeoffs, and stay aligned with what you've already decided matters.
+          </p>
+          <p>
+            You remain in control.
+            RUMO provides structure, continuity, and perspective when momentum alone isn't enough.
+          </p>
+        </div>
+
+        {/* Micro-soundbite */}
         <p style={{
           fontSize: '18px',
-          lineHeight: 1.7,
-          color: tokens.colors.creamDark,
-          maxWidth: '560px',
-          opacity: 0.8,
+          fontWeight: 600,
+          fontStyle: 'italic',
+          color: tokens.colors.ochre,
+          marginBottom: tokens.space[7],
+          fontFamily: tokens.font.display,
+          lineHeight: 1.5,
         }}>
-          An AI thinking partner configured to how you work. Each morning, it helps you see what matters, cut through noise, and orient your day.
+          A system for thinking clearly.
+          <br />
+          A guide for acting deliberately.
         </p>
+
+        {/* Bridge + CTA */}
+        <div style={{
+          paddingTop: tokens.space[6],
+          borderTop: `1px solid rgba(255, 255, 255, 0.15)`,
+        }}>
+          <p style={{
+            fontSize: '15px',
+            color: 'rgba(255, 255, 255, 0.6)',
+            marginBottom: tokens.space[5],
+            letterSpacing: '0.02em',
+          }}>
+            Everything begins by defining how you want to be guided.
+          </p>
+
+          <button
+            onClick={onSetup}
+            className="btn-primary"
+            style={{
+              background: tokens.colors.ochre,
+              color: tokens.colors.white,
+              border: 'none',
+              padding: '16px 36px',
+              borderRadius: tokens.radius.full,
+              fontSize: '16px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              fontFamily: tokens.font.display,
+              marginBottom: tokens.space[3],
+            }}
+          >
+            GET ORIENTED
+          </button>
+
+          <p style={{
+            fontSize: '13px',
+            color: 'rgba(255, 255, 255, 0.5)',
+          }}>
+            Begin by creating your personal Chief of Staff.
+          </p>
+        </div>
       </div>
     </section>
 
-    {/* Frameworks - Minimal grid */}
+    {/* The System - WAVES & SWEATS */}
     <section style={{
       padding: `${tokens.space[10]} ${tokens.space[5]}`,
+      background: tokens.colors.creamDark,
     }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '720px', margin: '0 auto' }}>
+        {/* Section Header */}
+        <div style={{ marginBottom: tokens.space[8], textAlign: 'center' }}>
+          <h2 style={{
+            fontSize: 'clamp(28px, 4vw, 36px)',
+            fontWeight: 700,
+            lineHeight: 1.3,
+            color: tokens.colors.navy,
+            fontFamily: tokens.font.display,
+            marginBottom: tokens.space[5],
+          }}>
+            Two instruments for staying aligned.
+          </h2>
+          <div style={{
+            fontSize: '17px',
+            lineHeight: 1.8,
+            color: tokens.colors.navy,
+            maxWidth: '600px',
+            margin: '0 auto',
+          }}>
+            <p style={{ marginBottom: tokens.space[4] }}>
+              RUMO is built around two complementary frameworks.
+              Together, they help you stay oriented by connecting how your life feels with where you place your effort.
+            </p>
+            <p style={{ fontWeight: 500 }}>
+              This is not about doing more.
+              <br />
+              It's about aligning direction and energy over time.
+            </p>
+          </div>
+        </div>
+
+        {/* Two Panels */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: tokens.space[8],
+          gap: tokens.space[6],
+          marginBottom: tokens.space[8],
         }}>
-          <div>
-            <h3 style={{
-              fontSize: '14px',
+          {/* WAVES Panel */}
+          <div
+            className="card-hover"
+            style={{
+              padding: tokens.space[6],
+              borderRadius: tokens.radius.lg,
+              background: tokens.colors.white,
+              borderTop: `4px solid ${tokens.colors.ochre}`,
+            }}
+          >
+            <p style={{
+              fontSize: '12px',
               fontWeight: 700,
-              letterSpacing: '0.1em',
-              color: tokens.colors.navy,
-              marginBottom: tokens.space[4],
+              letterSpacing: '0.15em',
+              color: tokens.colors.ochre,
+              marginBottom: tokens.space[2],
               fontFamily: tokens.font.display,
             }}>
               WAVES
-            </h3>
-            <p style={{
-              fontSize: '16px',
-              lineHeight: 1.6,
-              color: tokens.colors.navyLight,
-              marginBottom: tokens.space[3],
-            }}>
-              Five dimensions of fulfillment. Not goals—states to inhabit.
             </p>
             <p style={{
-              fontSize: '14px',
+              fontSize: '18px',
+              fontWeight: 600,
+              color: tokens.colors.navy,
+              fontFamily: tokens.font.display,
+              marginBottom: tokens.space[5],
+            }}>
+              How your life feels.
+            </p>
+            <div style={{
+              fontSize: '15px',
+              lineHeight: 1.7,
+              color: tokens.colors.navy,
+            }}>
+              <p style={{ marginBottom: tokens.space[4] }}>
+                WAVES help you check in across the dimensions that shape a well-lived life.
+                Not to judge. Not to optimize.
+                Simply to notice patterns and changes over time.
+              </p>
+              <p>
+                When you understand how things feel, you can make clearer decisions about what deserves attention next.
+              </p>
+            </div>
+            <p style={{
+              fontSize: '13px',
               color: tokens.colors.navyFaded,
+              marginTop: tokens.space[5],
+              fontStyle: 'italic',
             }}>
               Whole · Accomplished · Vital · Expressive · Satisfied
             </p>
           </div>
 
-          <div>
-            <h3 style={{
-              fontSize: '14px',
+          {/* SWEATS Panel */}
+          <div
+            className="card-hover"
+            style={{
+              padding: tokens.space[6],
+              borderRadius: tokens.radius.lg,
+              background: tokens.colors.white,
+              borderTop: `4px solid ${tokens.colors.navy}`,
+            }}
+          >
+            <p style={{
+              fontSize: '12px',
               fontWeight: 700,
-              letterSpacing: '0.1em',
+              letterSpacing: '0.15em',
               color: tokens.colors.navy,
-              marginBottom: tokens.space[4],
+              marginBottom: tokens.space[2],
               fontFamily: tokens.font.display,
             }}>
               SWEATS
-            </h3>
-            <p style={{
-              fontSize: '16px',
-              lineHeight: 1.6,
-              color: tokens.colors.navyLight,
-              marginBottom: tokens.space[3],
-            }}>
-              Six daily practices that create movement. Small actions, compounded.
             </p>
             <p style={{
-              fontSize: '14px',
+              fontSize: '18px',
+              fontWeight: 600,
+              color: tokens.colors.navy,
+              fontFamily: tokens.font.display,
+              marginBottom: tokens.space[5],
+            }}>
+              Where you place your effort.
+            </p>
+            <div style={{
+              fontSize: '15px',
+              lineHeight: 1.7,
+              color: tokens.colors.navy,
+            }}>
+              <p style={{ marginBottom: tokens.space[4] }}>
+                SWEATS give structure to your attention.
+                They help you decide where to invest energy today, and what can wait.
+              </p>
+              <p>
+                Instead of reacting to everything, you choose deliberately.
+              </p>
+            </div>
+            <p style={{
+              fontSize: '13px',
               color: tokens.colors.navyFaded,
+              marginTop: tokens.space[5],
+              fontStyle: 'italic',
             }}>
               Synthesis · Work · Energy · Art · Ties · Service
             </p>
           </div>
+        </div>
+
+        {/* Closing Bridge */}
+        <div style={{
+          textAlign: 'center',
+          paddingTop: tokens.space[6],
+          borderTop: `1px solid ${tokens.colors.border}`,
+        }}>
+          <p style={{
+            fontSize: '17px',
+            lineHeight: 1.7,
+            color: tokens.colors.navy,
+            marginBottom: tokens.space[5],
+          }}>
+            WAVES help you understand your state.
+            <br />
+            SWEATS help you decide your focus.
+          </p>
+          <p style={{
+            fontSize: '16px',
+            color: tokens.colors.navyLight,
+            fontStyle: 'italic',
+          }}>
+            Your Chief of Staff brings them together, day by day, so direction and momentum stay aligned.
+          </p>
         </div>
       </div>
     </section>
@@ -673,18 +1138,19 @@ const LandingView = ({
       </h2>
       <p style={{
         fontSize: '18px',
-        color: tokens.colors.navyFaded,
+        color: tokens.colors.navy,
         marginBottom: tokens.space[7],
       }}>
         Set up your Chief of Staff in five minutes.
       </p>
       <button
         onClick={onSetup}
+        className="btn-primary"
         style={{
           background: tokens.colors.ochre,
           color: tokens.colors.white,
           border: 'none',
-          padding: '16px 40px',
+          padding: '18px 44px',
           borderRadius: tokens.radius.full,
           fontSize: '16px',
           fontWeight: 700,
@@ -815,6 +1281,7 @@ const SetupView = ({
       display: 'flex',
       flexDirection: 'column',
     }}>
+      <GlobalStyles />
       {/* Header */}
       <div style={{
         padding: tokens.spacing.md,
@@ -825,6 +1292,7 @@ const SetupView = ({
       }}>
         <button
           onClick={handleBack}
+          className="btn-secondary"
           style={{
             background: tokens.colors.gray100,
             border: `1px solid ${tokens.colors.border}`,
@@ -852,14 +1320,15 @@ const SetupView = ({
       </div>
 
       {/* Progress */}
-      <div style={{ display: 'flex', gap: '2px', padding: `0 ${tokens.spacing.md}`, marginTop: tokens.spacing.sm }}>
+      <div style={{ display: 'flex', gap: '3px', padding: `0 ${tokens.spacing.md}`, marginTop: tokens.spacing.sm }}>
         {SETUP_SECTIONS.map((s, i) => (
           <div
             key={s.id}
+            className="progress-bar"
             style={{
-              height: '3px',
+              height: '4px',
               flex: 1,
-              background: i < section ? tokens.colors.teal : i === section ? tokens.colors.bgNavy : tokens.colors.border,
+              background: i < section ? tokens.colors.ochre : i === section ? tokens.colors.bgNavy : tokens.colors.border,
               borderRadius: '2px',
             }}
           />
@@ -1069,8 +1538,8 @@ const SetupQuestion = ({
   onChange?: (value: string) => void;
   placeholder?: string;
   multiline?: boolean;
-}) => (
-  <div>
+) => (
+  <div className="animate-fade-in">
     <h2 style={{ fontSize: '28px', fontWeight: 700, color: tokens.colors.navy, marginBottom: tokens.spacing.xs, lineHeight: 1.3, fontFamily: tokens.font.display }}>
       {title}
     </h2>
@@ -1080,17 +1549,19 @@ const SetupQuestion = ({
 
     {type === 'choice' && options && (
       <div style={{ display: 'flex', flexDirection: 'column', gap: tokens.spacing.xs }}>
-        {options.map(opt => (
+        {options.map((opt, index) => (
           <button
             key={opt.value}
             onClick={() => onSelect?.(opt.value)}
+            className="option-btn"
             style={{
               padding: tokens.spacing.sm,
               background: selected === opt.value ? tokens.colors.bgNavy : tokens.colors.bgCard,
-              border: `1px solid ${selected === opt.value ? tokens.colors.bgNavy : tokens.colors.border}`,
-              borderRadius: tokens.radius.full,
+              border: `2px solid ${selected === opt.value ? tokens.colors.bgNavy : tokens.colors.border}`,
+              borderRadius: tokens.radius.lg,
               cursor: 'pointer',
               textAlign: 'left',
+              animationDelay: `${index * 0.05}s`,
             }}
           >
             <p style={{ fontSize: '17px', fontWeight: 600, color: selected === opt.value ? tokens.colors.textInverse : tokens.colors.navy }}>{opt.label}</p>
@@ -1109,10 +1580,11 @@ const SetupQuestion = ({
               <button
                 key={opt.value}
                 onClick={() => onToggle?.(opt.value)}
+                className="chip-btn"
                 style={{
                   padding: `${tokens.spacing.xs} ${tokens.spacing.sm}`,
-                  background: isSelected ? tokens.colors.teal : tokens.colors.bgCard,
-                  border: `1px solid ${isSelected ? tokens.colors.teal : tokens.colors.border}`,
+                  background: isSelected ? tokens.colors.ochre : tokens.colors.bgCard,
+                  border: `2px solid ${isSelected ? tokens.colors.ochre : tokens.colors.border}`,
                   borderRadius: tokens.radius.full,
                   cursor: 'pointer',
                   fontSize: '15px',
@@ -1126,7 +1598,7 @@ const SetupQuestion = ({
           })}
         </div>
         {onNext && (
-          <button onClick={onNext} style={{ marginTop: tokens.spacing.lg, padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}>
+          <button onClick={onNext} className="btn-primary" style={{ marginTop: tokens.spacing.lg, padding: '14px 28px', background: tokens.colors.ochre, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}>
             CONTINUE
           </button>
         )}
@@ -1136,16 +1608,16 @@ const SetupQuestion = ({
     {type === 'text' && (
       <>
         {multiline ? (
-          <textarea value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', minHeight: '120px', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', lineHeight: 1.6, resize: 'vertical', outline: 'none', fontFamily: 'inherit', color: tokens.colors.navy }} />
+          <textarea value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} className="input-focus" style={{ width: '100%', minHeight: '120px', padding: tokens.spacing.sm, border: `2px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', lineHeight: 1.6, resize: 'vertical', outline: 'none', fontFamily: 'inherit', color: tokens.colors.navy }} />
         ) : (
-          <input type="text" value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none', color: tokens.colors.navy }} />
+          <input type="text" value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} className="input-focus" style={{ width: '100%', padding: tokens.spacing.sm, border: `2px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none', color: tokens.colors.navy }} />
         )}
         <div style={{ display: 'flex', gap: tokens.spacing.sm, marginTop: tokens.spacing.md }}>
-          <button onClick={onNext} disabled={!optional && !value?.trim()} style={{ padding: '12px 24px', background: (optional || value?.trim()) ? tokens.colors.bgNavy : tokens.colors.border, color: (optional || value?.trim()) ? tokens.colors.textInverse : tokens.colors.textMuted, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 600, cursor: (optional || value?.trim()) ? 'pointer' : 'not-allowed' }}>
+          <button onClick={onNext} disabled={!optional && !value?.trim()} className={(optional || value?.trim()) ? 'btn-primary' : ''} style={{ padding: '14px 28px', background: (optional || value?.trim()) ? tokens.colors.ochre : tokens.colors.border, color: (optional || value?.trim()) ? tokens.colors.textInverse : tokens.colors.textMuted, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 600, cursor: (optional || value?.trim()) ? 'pointer' : 'not-allowed' }}>
             CONTINUE
           </button>
           {optional && onSkip && (
-            <button onClick={onSkip} style={{ padding: '12px 24px', background: 'transparent', color: tokens.colors.navyLight, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
+            <button onClick={onSkip} className="btn-ghost" style={{ padding: '14px 28px', background: 'transparent', color: tokens.colors.navyLight, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
               SKIP FOR NOW
             </button>
           )}
