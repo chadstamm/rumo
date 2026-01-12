@@ -419,11 +419,12 @@ const App = () => {
 // ============================================
 // RUMO LOGO COMPONENT
 // ============================================
-const RumoLogo = ({ size = 'md', color = '#1A2B3C' }: { size?: 'sm' | 'md' | 'lg'; color?: string }) => {
+const RumoLogo = ({ size = 'md', color = '#1A2B3C', accentColor }: { size?: 'sm' | 'md' | 'lg'; color?: string; accentColor?: string }) => {
   const scales = { sm: 0.6, md: 0.75, lg: 1 };
   const scale = scales[size];
   const width = 180 * scale;
   const height = 48 * scale;
+  const compassColor = accentColor || color;
 
   return (
     <svg width={width} height={height} viewBox="0 0 180 48" fill="none">
@@ -442,33 +443,33 @@ const RumoLogo = ({ size = 'md', color = '#1A2B3C' }: { size?: 'sm' | 'md' | 'lg
         d="M76 8h9l11 24 11-24h9v40h-7V18l-10 22h-6L83 18v30h-7V8z"
         fill={color}
       />
-      {/* O as Compass */}
-      <g transform="translate(124, 0)">
+      {/* O as Compass - sized to match letter height */}
+      <g transform="translate(124, 4)">
         {/* Outer circle */}
-        <circle cx="24" cy="24" r="22" stroke={color} strokeWidth="3" fill="none" />
+        <circle cx="24" cy="24" r="20" stroke={compassColor} strokeWidth="3" fill="none" />
         {/* Cardinal tick marks */}
-        <line x1="24" y1="4" x2="24" y2="9" stroke={color} strokeWidth="2" />
-        <line x1="24" y1="39" x2="24" y2="44" stroke={color} strokeWidth="2" />
-        <line x1="4" y1="24" x2="9" y2="24" stroke={color} strokeWidth="2" />
-        <line x1="39" y1="24" x2="44" y2="24" stroke={color} strokeWidth="2" />
+        <line x1="24" y1="6" x2="24" y2="10" stroke={compassColor} strokeWidth="2" />
+        <line x1="24" y1="38" x2="24" y2="42" stroke={compassColor} strokeWidth="2" />
+        <line x1="6" y1="24" x2="10" y2="24" stroke={compassColor} strokeWidth="2" />
+        <line x1="38" y1="24" x2="42" y2="24" stroke={compassColor} strokeWidth="2" />
         {/* Intercardinal tick marks */}
-        <line x1="38" y1="10" x2="35" y2="13" stroke={color} strokeWidth="1.5" />
-        <line x1="38" y1="38" x2="35" y2="35" stroke={color} strokeWidth="1.5" />
-        <line x1="10" y1="10" x2="13" y2="13" stroke={color} strokeWidth="1.5" />
-        <line x1="10" y1="38" x2="13" y2="35" stroke={color} strokeWidth="1.5" />
+        <line x1="36" y1="12" x2="33" y2="15" stroke={compassColor} strokeWidth="1.5" />
+        <line x1="36" y1="36" x2="33" y2="33" stroke={compassColor} strokeWidth="1.5" />
+        <line x1="12" y1="12" x2="15" y2="15" stroke={compassColor} strokeWidth="1.5" />
+        <line x1="12" y1="36" x2="15" y2="33" stroke={compassColor} strokeWidth="1.5" />
         {/* Compass needle - North half (solid) */}
         <path
-          d="M24 6 L28 24 L20 24 Z"
-          fill={color}
+          d="M24 8 L27 24 L21 24 Z"
+          fill={compassColor}
         />
         {/* Compass needle - South half (faded) */}
         <path
-          d="M24 42 L28 24 L20 24 Z"
-          fill={color}
+          d="M24 40 L27 24 L21 24 Z"
+          fill={compassColor}
           fillOpacity="0.3"
         />
         {/* Center dot */}
-        <circle cx="24" cy="24" r="3" fill={color} />
+        <circle cx="24" cy="24" r="2.5" fill={compassColor} />
       </g>
     </svg>
   );
@@ -584,7 +585,7 @@ const LandingView = ({
       </div>
 
       <div className="animate-fade-in-up" style={{ marginBottom: tokens.space[7], position: 'relative', zIndex: 1 }}>
-        <RumoLogo size="lg" color={tokens.colors.navy} />
+        <RumoLogo size="lg" color={tokens.colors.navy} accentColor={tokens.colors.ochre} />
       </div>
 
       <h1 className="animate-fade-in-up stagger-1" style={{
@@ -718,7 +719,7 @@ const LandingView = ({
               Meanwhile, the most important areas of your life—your career, your family, your health, your creative work, your desire to serve—remain untouched by the most powerful thinking tool ever&nbsp;created.
             </p>
             <p style={{ fontWeight: 600, color: tokens.colors.ochre }}>
-              That's the drift. Busy but not building. Productive but not&nbsp;progressing.
+              That's the drift. That's the problem RUMO was designed to&nbsp;solve.
             </p>
           </div>
         </div>
