@@ -129,6 +129,118 @@ const App = () => {
 };
 
 // ============================================
+// CALÇADA WAVE PATTERN (Portuguese pavement)
+// ============================================
+const CalcadaPattern = () => (
+  <svg
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+      opacity: 0.04,
+    }}
+    preserveAspectRatio="xMidYMid slice"
+  >
+    <defs>
+      <pattern id="calcada-wave" x="0" y="0" width="200" height="100" patternUnits="userSpaceOnUse">
+        {/* Wave pattern inspired by Rossio/Copacabana calçada */}
+        <path
+          d="M0 50 Q25 20, 50 50 T100 50 T150 50 T200 50"
+          fill="none"
+          stroke="white"
+          strokeWidth="12"
+        />
+        <path
+          d="M0 50 Q25 80, 50 50 T100 50 T150 50 T200 50"
+          fill="none"
+          stroke="white"
+          strokeWidth="12"
+        />
+        <path
+          d="M-50 50 Q-25 20, 0 50"
+          fill="none"
+          stroke="white"
+          strokeWidth="12"
+        />
+        <path
+          d="M200 50 Q225 80, 250 50"
+          fill="none"
+          stroke="white"
+          strokeWidth="12"
+        />
+        {/* Secondary wave offset */}
+        <path
+          d="M0 0 Q25 -30, 50 0 T100 0 T150 0 T200 0"
+          fill="none"
+          stroke="white"
+          strokeWidth="8"
+          transform="translate(0, 25)"
+        />
+        <path
+          d="M0 100 Q25 130, 50 100 T100 100 T150 100 T200 100"
+          fill="none"
+          stroke="white"
+          strokeWidth="8"
+          transform="translate(0, -25)"
+        />
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#calcada-wave)" />
+  </svg>
+);
+
+// Frame borders with calçada pattern
+const CalcadaFrame = () => (
+  <>
+    {/* Left border */}
+    <div style={{
+      position: 'fixed',
+      left: 0,
+      top: 0,
+      width: '60px',
+      height: '100%',
+      background: `linear-gradient(to right, rgba(255,255,255,0.03), transparent)`,
+      pointerEvents: 'none',
+      zIndex: 1,
+    }}>
+      <svg width="100%" height="100%" style={{ opacity: 0.08 }}>
+        <defs>
+          <pattern id="wave-left" x="0" y="0" width="60" height="120" patternUnits="userSpaceOnUse">
+            <path d="M30 0 Q60 30, 30 60 Q0 90, 30 120" fill="none" stroke="white" strokeWidth="2" />
+            <path d="M30 0 Q0 30, 30 60 Q60 90, 30 120" fill="none" stroke="white" strokeWidth="2" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#wave-left)" />
+      </svg>
+    </div>
+    {/* Right border */}
+    <div style={{
+      position: 'fixed',
+      right: 0,
+      top: 0,
+      width: '60px',
+      height: '100%',
+      background: `linear-gradient(to left, rgba(255,255,255,0.03), transparent)`,
+      pointerEvents: 'none',
+      zIndex: 1,
+    }}>
+      <svg width="100%" height="100%" style={{ opacity: 0.08 }}>
+        <defs>
+          <pattern id="wave-right" x="0" y="0" width="60" height="120" patternUnits="userSpaceOnUse">
+            <path d="M30 0 Q60 30, 30 60 Q0 90, 30 120" fill="none" stroke="white" strokeWidth="2" />
+            <path d="M30 0 Q0 30, 30 60 Q60 90, 30 120" fill="none" stroke="white" strokeWidth="2" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#wave-right)" />
+      </svg>
+    </div>
+  </>
+);
+
+// ============================================
 // LANDING VIEW - Story-focused
 // ============================================
 const LandingView = ({
@@ -140,7 +252,11 @@ const LandingView = ({
   onDashboard: () => void;
   hasProfile: boolean;
 }) => (
-  <div style={{ background: tokens.colors.bgNavy, minHeight: '100vh', color: tokens.colors.textInverse }}>
+  <div style={{ background: tokens.colors.bgNavy, minHeight: '100vh', color: tokens.colors.textInverse, position: 'relative', overflow: 'hidden' }}>
+    {/* Calçada wave pattern background */}
+    <CalcadaPattern />
+    {/* Frame borders */}
+    <CalcadaFrame />
     {/* Header */}
     <header style={{
       padding: `${tokens.spacing.md} ${tokens.spacing.lg}`,
