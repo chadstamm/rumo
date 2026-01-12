@@ -355,7 +355,7 @@ const LandingView = ({
             fontFamily: tokens.font.display,
           }}
         >
-          GET STARTED
+          SET YOUR COURSE
         </button>
       </div>
     </nav>
@@ -405,16 +405,16 @@ const LandingView = ({
         position: 'relative',
         zIndex: 1,
       }}>
-        RUMO is an AI-powered personal navigation system that helps you clarify where you're going—and act with intention.
+        RUMO is an AI-powered personal navigation system that helps you clarify where you're going—and act with intention to get there.
       </p>
 
       <p style={{
-        fontSize: '16px',
-        color: tokens.colors.ochre,
+        fontSize: '20px',
+        color: tokens.colors.navy,
         marginBottom: tokens.space[4],
         fontFamily: tokens.font.display,
         fontWeight: 700,
-        letterSpacing: '0.03em',
+        letterSpacing: '0.02em',
         position: 'relative',
         zIndex: 1,
       }}>
@@ -437,7 +437,7 @@ const LandingView = ({
           zIndex: 1,
         }}
       >
-        SET YOUR COURSE
+        START HERE
       </button>
 
     </section>
