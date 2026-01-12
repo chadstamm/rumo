@@ -1316,7 +1316,7 @@ const SetupView = ({
   const [showOutput, setShowOutput] = useState(false);
 
   const TONE_OPTIONS = ['calm', 'direct', 'warm', 'witty', 'formal', 'concise', 'thoughtful', 'measured', 'sharp', 'patient', 'candid', 'encouraging', 'pragmatic', 'curious', 'structured', 'gentle', 'bold', 'analytical', 'empathetic', 'confident'];
-  const FAILURE_MODES = ['overthinking', 'impulsivity', 'perfectionism', 'distraction', 'people-pleasing', 'avoidance', 'scattered focus', 'overcommitting'];
+  const FAILURE_MODES = ['overthinking', 'impulsivity', 'perfectionism', 'distraction', 'people-pleasing', 'avoidance', 'overcommitting', 'procrastination', 'self-doubt', 'decision paralysis', 'rushing', 'isolation', 'burnout cycles', 'conflict avoidance', 'underestimating time'];
 
   const updateProfile = (key: keyof COSProfile, value: string | string[]) => {
     setProfile(prev => ({ ...prev, [key]: value }));
