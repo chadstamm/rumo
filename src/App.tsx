@@ -684,7 +684,7 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        Begin by creating your personal Chief of Staff.
+        Configure your AI-powered Chief of Staff in minutes.
       </p>
 
       <button
@@ -1012,7 +1012,7 @@ const LandingView = ({
             fontSize: '13px',
             color: 'rgba(255, 255, 255, 0.5)',
           }}>
-            Begin by creating your personal Chief of Staff.
+            Generate a custom prompt for your preferred LLM.
           </p>
         </div>
       </div>
@@ -1247,7 +1247,7 @@ const LandingView = ({
         color: tokens.colors.navy,
         marginBottom: tokens.space[7],
       }}>
-        Set up your Chief of Staff in five minutes.
+        Configure your Chief of Staff prompt in five&nbsp;minutes.
       </p>
       <button
         onClick={onSetup}
@@ -1560,13 +1560,13 @@ const SetupView = ({
           {/* Section 5: Output Preferences */}
           {section === 5 && subStep === 0 && (
             <SetupQuestion
-              title="Which LLM are you primarily using?"
+              title="Which LLM will you use this prompt with?"
               type="choice"
               options={[
                 { value: 'chatgpt', label: 'ChatGPT', desc: 'OpenAI' },
                 { value: 'claude', label: 'Claude', desc: 'Anthropic' },
                 { value: 'gemini', label: 'Gemini', desc: 'Google' },
-                { value: 'multiple', label: 'I use several', desc: 'Multiple LLMs depending on task' },
+                { value: 'multiple', label: 'I use several', desc: 'Generate a universal prompt' },
                 { value: 'other', label: 'Other', desc: 'Different platform' },
               ]}
               selected={profile.primaryLLM}
@@ -1812,8 +1812,8 @@ When I check in, help me distribute attention across what matters.`;
       <div style={{ maxWidth: '720px', margin: '0 auto' }}>
         <div style={{ marginBottom: tokens.spacing.xl }}>
           <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em', marginBottom: tokens.spacing.xs }}>CHIEF OF STAFF GENERATOR</p>
-          <h1 style={{ fontSize: '32px', fontWeight: 400, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.sm }}>Your COS is ready</h1>
-          <p style={{ fontSize: '16px', color: tokens.colors.textSecondary }}>Copy this system prompt into your preferred LLM's custom instructions.</p>
+          <h1 style={{ fontSize: '32px', fontWeight: 400, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.sm }}>Your COS prompt is&nbsp;ready</h1>
+          <p style={{ fontSize: '16px', color: tokens.colors.textSecondary }}>Copy this into your LLM's custom instructions or system prompt to activate your Chief of&nbsp;Staff.</p>
         </div>
 
         <div style={{ background: tokens.colors.bgNavy, borderRadius: tokens.radius.lg, padding: tokens.spacing.md, marginBottom: tokens.spacing.lg }}>
