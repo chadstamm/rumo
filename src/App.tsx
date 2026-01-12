@@ -670,10 +670,22 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        Most people use AI like a search engine—random questions, random answers, no continuity. RUMO gives your AI the full context of your life, so every conversation helps you navigate toward what actually&nbsp;matters.
+        You're already using AI—but every conversation starts from scratch. No memory of your goals, your values, or where you're headed. RUMO helps you clarify your direction, then gives your AI the context to help you stay on&nbsp;course.
       </p>
 
       <p className="animate-fade-in-up stagger-3" style={{
+        fontSize: '16px',
+        color: tokens.colors.navy,
+        marginBottom: tokens.space[6],
+        fontStyle: 'italic',
+        position: 'relative',
+        zIndex: 1,
+        opacity: 0,
+      }}>
+        RUMO is Portuguese for "direction" or "course"—the heading you set when you know where you're&nbsp;going.
+      </p>
+
+      <p className="animate-fade-in-up stagger-4" style={{
         fontSize: '20px',
         color: tokens.colors.navy,
         marginBottom: tokens.space[4],
@@ -684,12 +696,12 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        Configure your personal Chief of Staff in&nbsp;minutes.
+        Configure your personal Chief of Staff prompt in&nbsp;minutes.
       </p>
 
       <button
         onClick={onSetup}
-        className="btn-primary animate-fade-in-up stagger-4"
+        className="btn-primary animate-fade-in-up stagger-5"
         style={{
           background: tokens.colors.ochre,
           color: tokens.colors.white,
@@ -710,31 +722,6 @@ const LandingView = ({
 
     </section>
 
-    {/* Section Divider - Rope */}
-    <div style={{
-      maxWidth: '600px',
-      margin: '0 auto',
-      padding: `${tokens.space[2]} 0`,
-      opacity: 0.3,
-    }}>
-      <svg width="100%" height="12" viewBox="0 0 600 12" preserveAspectRatio="none">
-        <path
-          d="M0 6 Q 15 2, 30 6 T 60 6 T 90 6 T 120 6 T 150 6 T 180 6 T 210 6 T 240 6 T 270 6 T 300 6 T 330 6 T 360 6 T 390 6 T 420 6 T 450 6 T 480 6 T 510 6 T 540 6 T 570 6 T 600 6"
-          stroke={tokens.colors.ochre}
-          strokeWidth="3"
-          fill="none"
-          strokeLinecap="round"
-        />
-        <path
-          d="M0 6 Q 15 10, 30 6 T 60 6 T 90 6 T 120 6 T 150 6 T 180 6 T 210 6 T 240 6 T 270 6 T 300 6 T 330 6 T 360 6 T 390 6 T 420 6 T 450 6 T 480 6 T 510 6 T 540 6 T 570 6 T 600 6"
-          stroke={tokens.colors.navy}
-          strokeWidth="2"
-          fill="none"
-          strokeLinecap="round"
-          opacity="0.5"
-        />
-      </svg>
-    </div>
 
     {/* Problem - Expanded */}
     <section style={{
@@ -772,10 +759,10 @@ const LandingView = ({
               You're already using AI—for emails, summaries, quick answers. But every conversation starts from zero. No memory of your goals, your values, or where you're actually trying to&nbsp;go.
             </p>
             <p style={{ marginBottom: tokens.space[5] }}>
-              Meanwhile, the most important areas of your life—your career trajectory, your family priorities, your health, your creative ambitions, your desire to serve—remain untouched by the most powerful thinking tool ever&nbsp;created.
+              Meanwhile, the most important areas of your life—your career trajectory, your family, your health, your creative ambitions, your desire to serve—remain untouched by the most powerful thinking tool ever&nbsp;created.
             </p>
             <p style={{ fontWeight: 600 }}>
-              AI can be more than a utility. It can be a thinking partner that helps you set a course and stay on&nbsp;it.
+              RUMO changes that. It helps you clarify your direction, then configures your AI to keep you on&nbsp;course.
             </p>
           </div>
         </div>
@@ -954,10 +941,10 @@ const LandingView = ({
           marginBottom: tokens.space[7],
         }}>
           <p style={{ marginBottom: tokens.space[5] }}>
-            Your Chief of Staff is an AI thinking partner configured specifically for you. It knows where you're headed—professionally and personally. It understands your values, your commitments, and the kind of life you're trying to&nbsp;build.
+            Your Chief of Staff is an AI thinking partner configured specifically for you. Through the setup process, you'll clarify what matters most—your values, your priorities, and the life you're trying to build across work, family, health, creativity, and&nbsp;service.
           </p>
           <p>
-            When you bring any question to your COS—about work, relationships, health, creativity, or service—it responds with the full context of your direction. Every conversation builds on the&nbsp;last.
+            Once configured, your COS carries that context into every conversation. Ask it anything—about a career decision, a family conflict, a creative block—and it responds knowing where you're headed and what you stand&nbsp;for.
           </p>
         </div>
 
@@ -971,10 +958,10 @@ const LandingView = ({
           borderLeft: `2px solid ${tokens.colors.ochre}`,
         }}>
           <p style={{ marginBottom: tokens.space[4] }}>
-            Navigate a difficult conversation with a colleague. Chart out a meaningful week with your family. Find your way back to a creative project you've been avoiding. Decide what actually deserves your heading&nbsp;today.
+            Use it to think through whether a new opportunity fits your direction. To plan a week that honors all your priorities, not just work. To reconnect with a part of your life you've been&nbsp;neglecting.
           </p>
           <p>
-            This isn't about productivity hacks. It's about having a thought partner who helps you stay on course across every domain of your&nbsp;life.
+            This isn't productivity advice. It's a thinking partner that helps you discover your true direction—then stay aligned with it day after&nbsp;day.
           </p>
         </div>
 
@@ -1259,7 +1246,7 @@ const LandingView = ({
         maxWidth: '600px',
         margin: `0 auto ${tokens.space[7]}`,
       }}>
-        Configure your Chief of Staff in five minutes. Then start having conversations that actually help you navigate your&nbsp;life.
+        Configure your Chief of Staff prompt in five minutes. Then start having conversations that actually help you navigate your&nbsp;life.
       </p>
       <button
         onClick={onSetup}
@@ -1825,12 +1812,37 @@ When I check in, help me distribute attention across what matters.`;
         <div style={{ marginBottom: tokens.spacing.xl }}>
           <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em', marginBottom: tokens.spacing.xs }}>CHIEF OF STAFF GENERATOR</p>
           <h1 style={{ fontSize: '32px', fontWeight: 400, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.sm }}>Your COS prompt is&nbsp;ready</h1>
-          <p style={{ fontSize: '16px', color: tokens.colors.textSecondary }}>Copy this into your LLM's custom instructions or system prompt to activate your Chief of&nbsp;Staff.</p>
+          <p style={{ fontSize: '16px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.md }}>This prompt contains everything your AI needs to know about you. Copy it and paste it into your AI tool to transform it into your personal Chief of&nbsp;Staff.</p>
+        </div>
+
+        {/* How to use instructions */}
+        <div style={{ background: tokens.colors.creamDark, borderRadius: tokens.radius.lg, padding: tokens.spacing.md, marginBottom: tokens.spacing.lg, border: `1px solid ${tokens.colors.border}` }}>
+          <h3 style={{ fontSize: '16px', fontWeight: 600, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.sm }}>How to use this&nbsp;prompt</h3>
+          <ol style={{ fontSize: '14px', color: tokens.colors.textSecondary, lineHeight: 1.8, paddingLeft: '20px', margin: 0 }}>
+            <li style={{ marginBottom: '8px' }}><strong>Copy the prompt below</strong> using the COPY button</li>
+            <li style={{ marginBottom: '8px' }}><strong>Open your AI tool</strong> (ChatGPT, Claude, Gemini, etc.)</li>
+            <li style={{ marginBottom: '8px' }}><strong>Find "Custom Instructions" or "System Prompt"</strong>:
+              <ul style={{ marginTop: '4px', marginBottom: 0, paddingLeft: '16px' }}>
+                <li><em>ChatGPT:</em> Settings → Personalization → Custom&nbsp;Instructions</li>
+                <li><em>Claude:</em> Start a new chat and paste the prompt as your first&nbsp;message</li>
+                <li><em>Gemini:</em> Paste at the start of any conversation</li>
+              </ul>
+            </li>
+            <li style={{ marginBottom: '8px' }}><strong>Paste your prompt</strong> and save</li>
+            <li><strong>Start talking to your COS!</strong> Try: "Good morning, let's do my daily&nbsp;synthesis"</li>
+          </ol>
+        </div>
+
+        {/* Why this works */}
+        <div style={{ background: 'transparent', borderRadius: tokens.radius.lg, padding: `0 0 ${tokens.spacing.md} 0`, marginBottom: tokens.spacing.md }}>
+          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, fontStyle: 'italic' }}>
+            <strong style={{ fontStyle: 'normal' }}>Why this works:</strong> AI tools have no memory of who you are between conversations. This prompt gives your AI the context it needs—your values, priorities, and goals—so every conversation starts from understanding, not from&nbsp;scratch.
+          </p>
         </div>
 
         <div style={{ background: tokens.colors.bgNavy, borderRadius: tokens.radius.lg, padding: tokens.spacing.md, marginBottom: tokens.spacing.lg }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: tokens.spacing.sm }}>
-            <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.05em' }}>SYSTEM PROMPT</p>
+            <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.05em' }}>YOUR CHIEF OF STAFF PROMPT</p>
             <button onClick={handleCopy} style={{ background: copied ? tokens.colors.teal : 'rgba(255,255,255,0.1)', color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, padding: '6px 12px', fontSize: '12px', fontWeight: 500, cursor: 'pointer' }}>
               {copied ? 'COPIED!' : 'COPY'}
             </button>
@@ -1841,11 +1853,11 @@ When I check in, help me distribute attention across what matters.`;
         </div>
 
         <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
-          <button onClick={onComplete} style={{ padding: '14px 28px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
-            CONTINUE TO RUMO
-          </button>
-          <button onClick={handleCopy} style={{ padding: '14px 28px', background: 'transparent', color: tokens.colors.textPrimary, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
+          <button onClick={handleCopy} style={{ padding: '14px 28px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
             {copied ? 'COPIED!' : 'COPY PROMPT'}
+          </button>
+          <button onClick={onComplete} style={{ padding: '14px 28px', background: 'transparent', color: tokens.colors.textPrimary, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
+            CONTINUE TO RUMO
           </button>
         </div>
       </div>
