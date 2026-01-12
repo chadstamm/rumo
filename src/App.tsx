@@ -1538,7 +1538,7 @@ const SetupQuestion = ({
   onChange?: (value: string) => void;
   placeholder?: string;
   multiline?: boolean;
-) => (
+}) => (
   <div className="animate-fade-in">
     <h2 style={{ fontSize: '28px', fontWeight: 700, color: tokens.colors.navy, marginBottom: tokens.spacing.xs, lineHeight: 1.3, fontFamily: tokens.font.display }}>
       {title}
