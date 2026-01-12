@@ -419,12 +419,12 @@ const App = () => {
 // ============================================
 // RUMO LOGO COMPONENT
 // ============================================
-const RumoLogo = ({ size = 'md', color = '#1A2B3C', accentColor }: { size?: 'sm' | 'md' | 'lg'; color?: string; accentColor?: string }) => {
+const RumoLogo = ({ size = 'md', color = '#4A6785', accentColor }: { size?: 'sm' | 'md' | 'lg'; color?: string; accentColor?: string }) => {
   const scales = { sm: 0.6, md: 0.75, lg: 1 };
   const scale = scales[size];
   const width = 186 * scale;
   const height = 52 * scale;
-  const compassColor = accentColor || color;
+  const compassColor = accentColor || '#C9A227'; // Gold/ochre for compass needle
 
   return (
     <svg width={width} height={height} viewBox="0 0 186 52" fill="none">
@@ -443,30 +443,32 @@ const RumoLogo = ({ size = 'md', color = '#1A2B3C', accentColor }: { size?: 'sm'
         d="M76 10h9l11 24 11-24h9v40h-7V20l-10 22h-6L83 20v30h-7V10z"
         fill={color}
       />
-      {/* O as Compass - bezel style */}
+      {/* O as Compass - bezel style matching reference image */}
       <g transform="translate(126, 5)">
-        {/* Outer circle - bold bezel */}
-        <circle cx="21" cy="21" r="19" stroke={color} strokeWidth="5" fill="none" />
-        {/* Tick marks around bezel */}
-        <line x1="21" y1="2" x2="21" y2="5" stroke={color} strokeWidth="2" />
-        <line x1="21" y1="37" x2="21" y2="40" stroke={color} strokeWidth="2" />
-        <line x1="2" y1="21" x2="5" y2="21" stroke={color} strokeWidth="2" />
-        <line x1="37" y1="21" x2="40" y2="21" stroke={color} strokeWidth="2" />
-        {/* Inner circle */}
-        <circle cx="21" cy="21" r="12" stroke={color} strokeWidth="1.5" fill="none" />
-        {/* Diamond compass needle - NE to SW diagonal */}
+        {/* Outer navy ring */}
+        <circle cx="21" cy="21" r="20" fill={color} />
+        {/* White bezel ring */}
+        <circle cx="21" cy="21" r="16" fill="white" />
+        {/* Inner navy compass face */}
+        <circle cx="21" cy="21" r="13" fill={color} />
+        {/* Tick marks on white bezel */}
+        <line x1="21" y1="5" x2="21" y2="8" stroke={color} strokeWidth="1.5" />
+        <line x1="21" y1="34" x2="21" y2="37" stroke={color} strokeWidth="1.5" />
+        <line x1="5" y1="21" x2="8" y2="21" stroke={color} strokeWidth="1.5" />
+        <line x1="34" y1="21" x2="37" y2="21" stroke={color} strokeWidth="1.5" />
+        {/* Diamond compass needle pointing NE-SW */}
         <path
-          d="M21 21 L13 13 L21 17 L29 13 Z"
+          d="M21 21 L15 15 L21 18 L27 15 Z"
           fill={compassColor}
         />
         <path
-          d="M21 21 L29 29 L21 25 L13 29 Z"
-          fill={color}
-          fillOpacity="0.4"
+          d="M21 21 L27 27 L21 24 L15 27 Z"
+          fill={compassColor}
+          fillOpacity="0.5"
         />
-        {/* Center dot with highlight */}
-        <circle cx="21" cy="21" r="3.5" fill={color} />
-        <circle cx="20" cy="20" r="1" fill="white" fillOpacity="0.6" />
+        {/* Center dot */}
+        <circle cx="21" cy="21" r="2.5" fill={color} />
+        <circle cx="21" cy="21" r="1.5" fill="white" fillOpacity="0.4" />
       </g>
     </svg>
   );
