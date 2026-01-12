@@ -1315,7 +1315,7 @@ const SetupView = ({
   const [textInput, setTextInput] = useState('');
   const [showOutput, setShowOutput] = useState(false);
 
-  const TONE_OPTIONS = ['calm', 'direct', 'warm', 'witty', 'formal', 'concise', 'thoughtful', 'measured', 'sharp', 'patient'];
+  const TONE_OPTIONS = ['calm', 'direct', 'warm', 'witty', 'formal', 'concise', 'thoughtful', 'measured', 'sharp', 'patient', 'candid', 'encouraging', 'pragmatic', 'curious', 'structured', 'gentle', 'bold', 'analytical', 'empathetic', 'succinct'];
   const FAILURE_MODES = ['overthinking', 'impulsivity', 'perfectionism', 'distraction', 'people-pleasing', 'avoidance', 'scattered focus', 'overcommitting'];
 
   const updateProfile = (key: keyof COSProfile, value: string | string[]) => {
