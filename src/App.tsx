@@ -670,25 +670,51 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        We know the feeling. You're using AI every day—but mostly like a glorified search engine. Quick answers, random questions, no continuity. The truth is, AI can be so much more. It can be a thinking partner for your entire&nbsp;life.
+        We know the feeling, but we also know there's a&nbsp;solution.
       </p>
 
       <p className="animate-fade-in-up stagger-3" style={{
-        fontSize: '18px',
-        color: tokens.colors.ochre,
+        fontSize: 'clamp(17px, 2vw, 20px)',
+        color: tokens.colors.navy,
+        maxWidth: '720px',
+        lineHeight: 1.7,
+        marginBottom: tokens.space[5],
+        position: 'relative',
+        zIndex: 1,
+        opacity: 0,
+      }}>
+        You're using AI every day, but you're probably using it like a glorified search engine, right? Quick answers, random questions, no&nbsp;continuity.
+      </p>
+
+      <p className="animate-fade-in-up stagger-4" style={{
+        fontSize: 'clamp(17px, 2vw, 20px)',
+        color: tokens.colors.navy,
+        maxWidth: '720px',
+        lineHeight: 1.7,
         marginBottom: tokens.space[6],
+        position: 'relative',
+        zIndex: 1,
+        opacity: 0,
+      }}>
+        The truth is, AI can be so much more. It can help you accelerate in the direction you want to head, and that's what the RUMO System was designed to&nbsp;do.
+      </p>
+
+      <p className="animate-fade-in-up stagger-5" style={{
+        fontSize: '22px',
+        color: tokens.colors.ochre,
+        marginBottom: tokens.space[5],
         fontFamily: tokens.font.display,
         fontWeight: 700,
         position: 'relative',
         zIndex: 1,
         opacity: 0,
       }}>
-        Build your personal Chief of Staff in five&nbsp;minutes.
+        Start by building your Chief of&nbsp;Staff...
       </p>
 
       <button
         onClick={onSetup}
-        className="btn-primary animate-fade-in-up stagger-4"
+        className="btn-primary animate-fade-in-up stagger-6"
         style={{
           background: tokens.colors.ochre,
           color: tokens.colors.white,
