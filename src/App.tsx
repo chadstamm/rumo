@@ -582,10 +582,6 @@ const LandingView = ({
           }}
         >
           SET YOUR COURSE
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '6px' }}>
-            <path d="M5 12h14" />
-            <path d="m12 5 7 7-7 7" />
-          </svg>
         </button>
       </div>
     </nav>
@@ -673,10 +669,6 @@ const LandingView = ({
         }}
       >
         START HERE
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
-          <path d="M5 12h14" />
-          <path d="m12 5 7 7-7 7" />
-        </svg>
       </button>
 
     </section>
@@ -860,8 +852,8 @@ const LandingView = ({
     }}>
       <div style={{ maxWidth: '640px', margin: '0 auto' }}>
         {/* Compass icon */}
-        <div style={{ marginBottom: tokens.space[4], color: tokens.colors.ochre }}>
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <div style={{ marginBottom: tokens.space[4], color: tokens.colors.ochre, textAlign: 'center' }}>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />
             <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="currentColor" stroke="none" />
           </svg>
@@ -872,6 +864,7 @@ const LandingView = ({
           lineHeight: 1.25,
           marginBottom: tokens.space[7],
           fontFamily: tokens.font.display,
+          textAlign: 'center',
         }}>
           A guide for navigating what matters.
         </h2>
@@ -930,6 +923,7 @@ const LandingView = ({
         <div style={{
           paddingTop: tokens.space[6],
           borderTop: `1px solid rgba(255, 255, 255, 0.15)`,
+          textAlign: 'center',
         }}>
           <p style={{
             fontSize: '15px',
@@ -957,10 +951,6 @@ const LandingView = ({
             }}
           >
             GET ORIENTED
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
-            </svg>
           </button>
 
           <p style={{
@@ -983,7 +973,7 @@ const LandingView = ({
         <div style={{ marginBottom: tokens.space[8], textAlign: 'center' }}>
           {/* Sliders/Balance icon */}
           <div style={{ marginBottom: tokens.space[4], color: tokens.colors.ochre }}>
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="4" y1="21" x2="4" y2="14" />
               <line x1="4" y1="10" x2="4" y2="3" />
               <line x1="12" y1="21" x2="12" y2="12" />
@@ -1043,7 +1033,7 @@ const LandingView = ({
           >
             {/* Wave icon */}
             <div style={{ marginBottom: tokens.space[3], color: tokens.colors.ochre }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
                 <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
                 <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
@@ -1105,7 +1095,7 @@ const LandingView = ({
           >
             {/* Target/Focus icon */}
             <div style={{ marginBottom: tokens.space[3], color: tokens.colors.navy }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
                 <circle cx="12" cy="12" r="6" />
                 <circle cx="12" cy="12" r="2" />
@@ -1220,10 +1210,6 @@ const LandingView = ({
         }}
       >
         BEGIN SETUP
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
-          <path d="M5 12h14" />
-          <path d="m12 5 7 7-7 7" />
-        </svg>
       </button>
     </section>
 
