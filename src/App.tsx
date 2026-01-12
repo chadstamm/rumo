@@ -1,42 +1,52 @@
 import { useState } from 'react';
 
 // ============================================
-// DESIGN SYSTEM - Inspired by Apple/Stripe/Linear
+// DESIGN SYSTEM - Cream & Navy
 // ============================================
 const tokens = {
   colors: {
-    // Monochromatic foundation
+    // Cream foundation
+    cream: '#FAF8F5',
+    creamDark: '#F5F0E8',
     white: '#FFFFFF',
     black: '#000000',
 
-    // Grays - carefully calibrated
-    gray50: '#FAFAFA',
+    // Navy - not too dark
+    navy: '#2C3E50',
+    navyLight: '#34495E',
+    navyFaded: '#5D6D7E',
+
+    // Alentejo yellow/ochre - Portuguese building accent
+    ochre: '#D4A55A',
+    ochreLight: '#E5B86D',
+    ochreFaded: 'rgba(212, 165, 90, 0.15)',
+
+    // Grays
     gray100: '#F5F5F5',
     gray200: '#E5E5E5',
     gray300: '#D4D4D4',
     gray400: '#A3A3A3',
     gray500: '#737373',
     gray600: '#525252',
+
+    // Backward compatibility
+    accent: '#D4A55A',
+    accentLight: '#E5B86D',
+    gray50: '#FAF8F5',
     gray700: '#404040',
-    gray800: '#262626',
-    gray900: '#171717',
-
-    // Single accent - teal
-    accent: '#0D9488',
-    accentLight: '#14B8A6',
-
-    // Backward compatibility aliases
-    bgPrimary: '#FAFAFA',
+    gray800: '#2C3E50',
+    gray900: '#2C3E50',
+    bgPrimary: '#FAF8F5',
     bgCard: '#FFFFFF',
-    bgNavy: '#171717',
-    bgNavyLight: '#262626',
-    textPrimary: '#171717',
-    textSecondary: '#525252',
+    bgNavy: '#2C3E50',
+    bgNavyLight: '#34495E',
+    textPrimary: '#2C3E50',
+    textSecondary: '#5D6D7E',
     textMuted: '#A3A3A3',
     textInverse: '#FFFFFF',
-    teal: '#0D9488',
-    tealLight: '#14B8A6',
-    tealSubtle: 'rgba(13, 148, 136, 0.1)',
+    teal: '#D4A55A',
+    tealLight: '#E5B86D',
+    tealSubtle: 'rgba(212, 165, 90, 0.1)',
     coral: '#E07A5F',
     coralSubtle: 'rgba(224, 122, 95, 0.15)',
     purple: '#7C3AED',
@@ -48,6 +58,7 @@ const tokens = {
   },
   font: {
     sans: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    display: '"Avenir Next", "Avenir", "Montserrat", "Helvetica Neue", sans-serif',
   },
   space: {
     1: '4px',
@@ -61,7 +72,6 @@ const tokens = {
     9: '96px',
     10: '128px',
   },
-  // Backward compatibility
   spacing: {
     xs: '8px',
     sm: '16px',
@@ -209,9 +219,9 @@ const RumoLogo = ({ size = 'md', color = '#1A2B3C' }: { size?: 'sm' | 'md' | 'lg
 };
 
 // ============================================
-// CALÇADA PATTERN - Subtle, almost imperceptible
+// CALÇADA PATTERN - Authentic Rossio/Copacabana waves
 // ============================================
-const CalcadaTexture = ({ opacity = 0.03 }: { opacity?: number }) => (
+const CalcadaTexture = ({ opacity = 0.08 }: { opacity?: number }) => (
   <svg
     style={{
       position: 'absolute',
@@ -225,23 +235,63 @@ const CalcadaTexture = ({ opacity = 0.03 }: { opacity?: number }) => (
     preserveAspectRatio="xMidYMid slice"
   >
     <defs>
-      <pattern id="calcada" x="0" y="0" width="100" height="50" patternUnits="userSpaceOnUse">
+      <pattern id="calcada-wave" x="0" y="0" width="200" height="100" patternUnits="userSpaceOnUse">
+        {/* Row 1 - Dark wave band */}
         <path
-          d="M0 12.5 Q25 0, 50 12.5 Q75 25, 100 12.5 L100 25 Q75 37.5, 50 25 Q25 12.5, 0 25 Z"
+          d="M0 20
+             C 25 5, 50 5, 75 20
+             C 100 35, 125 35, 150 20
+             C 175 5, 200 5, 225 20
+             L 225 35
+             C 200 20, 175 20, 150 35
+             C 125 50, 100 50, 75 35
+             C 50 20, 25 20, 0 35
+             Z"
           fill="currentColor"
         />
+        {/* Row 2 - Dark wave band */}
         <path
-          d="M0 37.5 Q25 25, 50 37.5 Q75 50, 100 37.5 L100 50 Q75 62.5, 50 50 Q25 37.5, 0 50 Z"
+          d="M0 55
+             C 25 40, 50 40, 75 55
+             C 100 70, 125 70, 150 55
+             C 175 40, 200 40, 225 55
+             L 225 70
+             C 200 55, 175 55, 150 70
+             C 125 85, 100 85, 75 70
+             C 50 55, 25 55, 0 70
+             Z"
+          fill="currentColor"
+        />
+        {/* Row 3 - Partial for seamless tiling */}
+        <path
+          d="M0 90
+             C 25 75, 50 75, 75 90
+             C 100 105, 125 105, 150 90
+             C 175 75, 200 75, 225 90
+             L 225 100
+             L 0 100
+             Z"
+          fill="currentColor"
+        />
+        {/* Top partial for seamless tiling */}
+        <path
+          d="M0 0
+             L 225 0
+             L 225 5
+             C 200 -10, 175 -10, 150 5
+             C 125 20, 100 20, 75 5
+             C 50 -10, 25 -10, 0 5
+             Z"
           fill="currentColor"
         />
       </pattern>
     </defs>
-    <rect width="100%" height="100%" fill="url(#calcada)" />
+    <rect width="100%" height="100%" fill="url(#calcada-wave)" />
   </svg>
 );
 
 // ============================================
-// LANDING VIEW - Radical simplicity
+// LANDING VIEW - Cream & Navy with Calçada
 // ============================================
 const LandingView = ({
   onSetup,
@@ -253,15 +303,15 @@ const LandingView = ({
   hasProfile: boolean;
 }) => (
   <div style={{
-    background: tokens.colors.white,
+    background: tokens.colors.cream,
     minHeight: '100vh',
     fontFamily: tokens.font.sans,
-    color: tokens.colors.gray900,
+    color: tokens.colors.navy,
     position: 'relative',
   }}>
-    {/* Subtle calçada texture */}
-    <div style={{ color: tokens.colors.gray200 }}>
-      <CalcadaTexture opacity={0.4} />
+    {/* Calçada wave texture */}
+    <div style={{ color: tokens.colors.navyFaded }}>
+      <CalcadaTexture opacity={0.06} />
     </div>
 
     {/* Navigation - Minimal */}
@@ -275,10 +325,10 @@ const LandingView = ({
       justifyContent: 'space-between',
       alignItems: 'center',
       zIndex: 100,
-      background: 'rgba(255,255,255,0.8)',
+      background: 'rgba(250, 248, 245, 0.85)',
       backdropFilter: 'blur(20px)',
     }}>
-      <RumoLogo size="sm" color={tokens.colors.gray900} />
+      <RumoLogo size="sm" color={tokens.colors.navy} />
       <div style={{ display: 'flex', gap: tokens.space[6], alignItems: 'center' }}>
         {hasProfile && (
           <button
@@ -286,7 +336,7 @@ const LandingView = ({
             style={{
               background: 'none',
               border: 'none',
-              color: tokens.colors.gray500,
+              color: tokens.colors.navyFaded,
               fontSize: '14px',
               cursor: 'pointer',
               fontFamily: tokens.font.sans,
@@ -298,15 +348,15 @@ const LandingView = ({
         <button
           onClick={onSetup}
           style={{
-            background: tokens.colors.gray900,
-            color: tokens.colors.white,
+            background: tokens.colors.navy,
+            color: tokens.colors.cream,
             border: 'none',
             padding: '10px 20px',
             borderRadius: '6px',
             fontSize: '14px',
-            fontWeight: 500,
+            fontWeight: 600,
             cursor: 'pointer',
-            fontFamily: tokens.font.sans,
+            fontFamily: tokens.font.display,
           }}
         >
           Get Started
@@ -327,42 +377,53 @@ const LandingView = ({
     }}>
       <h1 style={{
         fontSize: 'clamp(48px, 8vw, 96px)',
-        fontWeight: 600,
+        fontWeight: 800,
         lineHeight: 1.05,
-        letterSpacing: '-0.03em',
+        letterSpacing: '-0.02em',
         marginBottom: tokens.space[6],
         maxWidth: '900px',
+        fontFamily: tokens.font.display,
+        color: tokens.colors.navy,
       }}>
-        Find your
-        <br />
-        <span style={{ color: tokens.colors.gray400 }}>direction.</span>
+        Find your direction.
       </h1>
 
       <p style={{
         fontSize: 'clamp(18px, 2vw, 22px)',
-        color: tokens.colors.gray500,
-        maxWidth: '480px',
-        lineHeight: 1.5,
+        color: tokens.colors.navyFaded,
+        maxWidth: '600px',
+        lineHeight: 1.6,
         marginBottom: tokens.space[8],
       }}>
-        A personal navigation system for people who want to move with purpose.
+        RUMO is an AI-powered personal navigation system that helps you clarify where you're going—and act with intention.
+      </p>
+
+      <p style={{
+        fontSize: '14px',
+        color: tokens.colors.ochre,
+        marginBottom: tokens.space[4],
+        fontFamily: tokens.font.display,
+        fontWeight: 600,
+        letterSpacing: '0.05em',
+      }}>
+        Begin by creating your personal Chief of Staff.
       </p>
 
       <button
         onClick={onSetup}
         style={{
-          background: tokens.colors.accent,
-          color: tokens.colors.white,
+          background: tokens.colors.navy,
+          color: tokens.colors.cream,
           border: 'none',
           padding: '16px 32px',
           borderRadius: '8px',
           fontSize: '16px',
-          fontWeight: 500,
+          fontWeight: 700,
           cursor: 'pointer',
-          fontFamily: tokens.font.sans,
+          fontFamily: tokens.font.display,
         }}
       >
-        Begin
+        Set Your Course
       </button>
 
       {/* Scroll indicator */}
@@ -371,9 +432,11 @@ const LandingView = ({
         bottom: tokens.space[8],
         left: '50%',
         transform: 'translateX(-50%)',
-        color: tokens.colors.gray300,
+        color: tokens.colors.navyFaded,
         fontSize: '12px',
-        letterSpacing: '0.1em',
+        letterSpacing: '0.15em',
+        fontFamily: tokens.font.display,
+        fontWeight: 600,
       }}>
         SCROLL
       </div>
@@ -388,45 +451,50 @@ const LandingView = ({
       <div style={{ maxWidth: '640px', textAlign: 'center' }}>
         <p style={{
           fontSize: 'clamp(24px, 4vw, 36px)',
-          fontWeight: 500,
+          fontWeight: 700,
           lineHeight: 1.4,
-          color: tokens.colors.gray900,
+          color: tokens.colors.navy,
+          fontFamily: tokens.font.display,
         }}>
           You're moving fast.
           <br />
-          <span style={{ color: tokens.colors.gray400 }}>But toward what?</span>
+          <span style={{ color: tokens.colors.navyFaded }}>But toward what?</span>
         </p>
       </div>
     </section>
 
     {/* Solution - Chief of Staff */}
     <section style={{
-      background: tokens.colors.gray900,
-      color: tokens.colors.white,
+      background: tokens.colors.navy,
+      color: tokens.colors.cream,
       padding: `${tokens.space[10]} ${tokens.space[5]}`,
     }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         <p style={{
           fontSize: '12px',
           letterSpacing: '0.15em',
-          color: tokens.colors.gray500,
+          color: tokens.colors.navyFaded,
           marginBottom: tokens.space[5],
+          fontFamily: tokens.font.display,
+          fontWeight: 600,
         }}>
           THE SOLUTION
         </p>
         <h2 style={{
           fontSize: 'clamp(32px, 5vw, 48px)',
-          fontWeight: 600,
+          fontWeight: 800,
           lineHeight: 1.2,
           marginBottom: tokens.space[6],
+          fontFamily: tokens.font.display,
         }}>
           Your Chief of Staff
         </h2>
         <p style={{
           fontSize: '18px',
           lineHeight: 1.7,
-          color: tokens.colors.gray400,
+          color: tokens.colors.creamDark,
           maxWidth: '560px',
+          opacity: 0.8,
         }}>
           An AI thinking partner configured to how you work. Each morning, it helps you see what matters, cut through noise, and orient your day.
         </p>
@@ -446,24 +514,25 @@ const LandingView = ({
           <div>
             <h3 style={{
               fontSize: '14px',
-              fontWeight: 600,
+              fontWeight: 700,
               letterSpacing: '0.1em',
-              color: tokens.colors.gray400,
+              color: tokens.colors.navy,
               marginBottom: tokens.space[4],
+              fontFamily: tokens.font.display,
             }}>
               WAVES
             </h3>
             <p style={{
               fontSize: '16px',
               lineHeight: 1.6,
-              color: tokens.colors.gray600,
+              color: tokens.colors.navyLight,
               marginBottom: tokens.space[3],
             }}>
               Five dimensions of fulfillment. Not goals—states to inhabit.
             </p>
             <p style={{
               fontSize: '14px',
-              color: tokens.colors.gray400,
+              color: tokens.colors.navyFaded,
             }}>
               Whole · Accomplished · Vital · Expressive · Satisfied
             </p>
@@ -472,24 +541,25 @@ const LandingView = ({
           <div>
             <h3 style={{
               fontSize: '14px',
-              fontWeight: 600,
+              fontWeight: 700,
               letterSpacing: '0.1em',
-              color: tokens.colors.gray400,
+              color: tokens.colors.navy,
               marginBottom: tokens.space[4],
+              fontFamily: tokens.font.display,
             }}>
               SWEATS
             </h3>
             <p style={{
               fontSize: '16px',
               lineHeight: 1.6,
-              color: tokens.colors.gray600,
+              color: tokens.colors.navyLight,
               marginBottom: tokens.space[3],
             }}>
               Six daily practices that create movement. Small actions, compounded.
             </p>
             <p style={{
               fontSize: '14px',
-              color: tokens.colors.gray400,
+              color: tokens.colors.navyFaded,
             }}>
               Synthesis · Work · Energy · Art · Ties · Service
             </p>
@@ -502,18 +572,20 @@ const LandingView = ({
     <section style={{
       padding: `${tokens.space[10]} ${tokens.space[5]}`,
       textAlign: 'center',
-      borderTop: `1px solid ${tokens.colors.gray200}`,
+      borderTop: `1px solid ${tokens.colors.creamDark}`,
     }}>
       <h2 style={{
         fontSize: 'clamp(28px, 4vw, 40px)',
-        fontWeight: 600,
+        fontWeight: 800,
         marginBottom: tokens.space[4],
+        fontFamily: tokens.font.display,
+        color: tokens.colors.navy,
       }}>
         Ready?
       </h2>
       <p style={{
         fontSize: '18px',
-        color: tokens.colors.gray500,
+        color: tokens.colors.navyFaded,
         marginBottom: tokens.space[7],
       }}>
         Set up your Chief of Staff in 5 minutes.
@@ -521,15 +593,15 @@ const LandingView = ({
       <button
         onClick={onSetup}
         style={{
-          background: tokens.colors.gray900,
-          color: tokens.colors.white,
+          background: tokens.colors.navy,
+          color: tokens.colors.cream,
           border: 'none',
           padding: '16px 40px',
           borderRadius: '8px',
           fontSize: '16px',
-          fontWeight: 500,
+          fontWeight: 700,
           cursor: 'pointer',
-          fontFamily: tokens.font.sans,
+          fontFamily: tokens.font.display,
         }}
       >
         Begin Setup
@@ -539,12 +611,15 @@ const LandingView = ({
     {/* Footer - Minimal */}
     <footer style={{
       padding: `${tokens.space[6]} ${tokens.space[5]}`,
-      borderTop: `1px solid ${tokens.colors.gray100}`,
+      borderTop: `1px solid ${tokens.colors.creamDark}`,
       textAlign: 'center',
     }}>
       <p style={{
         fontSize: '13px',
-        color: tokens.colors.gray400,
+        color: tokens.colors.navyFaded,
+        fontFamily: tokens.font.display,
+        fontWeight: 600,
+        letterSpacing: '0.1em',
       }}>
         RUMO
       </p>
