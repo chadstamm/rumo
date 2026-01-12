@@ -670,24 +670,10 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        <strong>We know the feeling.</strong> You're using AI every day—for emails, summaries, quick answers. But every conversation starts from scratch. No memory of your goals, your values, or what you're actually&nbsp;building.
+        We know the feeling. You're using AI every day—but mostly like a glorified search engine. Quick answers, random questions, no continuity. The truth is, AI can be so much more. It can be a thinking partner for your entire&nbsp;life.
       </p>
 
       <p className="animate-fade-in-up stagger-3" style={{
-        fontSize: 'clamp(18px, 2vw, 22px)',
-        color: tokens.colors.navy,
-        maxWidth: '720px',
-        lineHeight: 1.6,
-        marginBottom: tokens.space[4],
-        position: 'relative',
-        zIndex: 1,
-        opacity: 0,
-        fontWeight: 600,
-      }}>
-        RUMO gives your AI the full picture of your&nbsp;life.
-      </p>
-
-      <p className="animate-fade-in-up stagger-4" style={{
         fontSize: '18px',
         color: tokens.colors.ochre,
         marginBottom: tokens.space[6],
@@ -697,12 +683,12 @@ const LandingView = ({
         zIndex: 1,
         opacity: 0,
       }}>
-        Finally move with direction—and wake up knowing exactly where you're&nbsp;headed.
+        Build your personal Chief of Staff in five&nbsp;minutes.
       </p>
 
       <button
         onClick={onSetup}
-        className="btn-primary animate-fade-in-up stagger-5"
+        className="btn-primary animate-fade-in-up stagger-4"
         style={{
           background: tokens.colors.ochre,
           color: tokens.colors.white,
@@ -720,18 +706,6 @@ const LandingView = ({
       >
         FIND YOUR DIRECTION
       </button>
-
-      <p className="animate-fade-in-up stagger-6" style={{
-        fontSize: '14px',
-        color: tokens.colors.navy,
-        marginTop: tokens.space[5],
-        fontStyle: 'italic',
-        position: 'relative',
-        zIndex: 1,
-        opacity: 0,
-      }}>
-        RUMO is Portuguese for "direction"—the heading you set when you know where you're&nbsp;going.
-      </p>
 
     </section>
 
