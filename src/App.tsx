@@ -116,6 +116,7 @@ interface COSProfile {
   existingTools: string;
   primaryLLM: string;
   optimizationFocus: string;
+  cosName: string;
 }
 
 // ============================================
@@ -689,7 +690,7 @@ const SetupView = ({
   };
 
   const advanceStep = () => {
-    const maxSubSteps = [4, 5, 4, 3, 3, 2];
+    const maxSubSteps = [4, 5, 4, 3, 3, 3];
     if (subStep < maxSubSteps[section] - 1) {
       setSubStep(subStep + 1);
     } else if (section < SETUP_SECTIONS.length - 1) {
@@ -704,7 +705,7 @@ const SetupView = ({
     if (subStep > 0) {
       setSubStep(subStep - 1);
     } else if (section > 0) {
-      const maxSubSteps = [4, 5, 4, 3, 3, 2];
+      const maxSubSteps = [4, 5, 4, 3, 3, 3];
       setSection(section - 1);
       setSubStep(maxSubSteps[section - 1] - 1);
     } else {
@@ -712,7 +713,7 @@ const SetupView = ({
     }
   };
 
-  const totalSteps = 21;
+  const totalSteps = 22;
   const currentStep = [0, 4, 9, 13, 16, 19][section] + subStep;
 
   if (showOutput) {
@@ -922,6 +923,25 @@ const SetupView = ({
               onSelect={(v) => { updateProfile('optimizationFocus', v); advanceStep(); }}
             />
           )}
+          {section === 5 && subStep === 2 && (
+            <SetupQuestion
+              title="Would you like to give your Chief of Staff a name?"
+              subtitle="Some people find that naming the role makes it easier to think with consistently."
+              type="text"
+              value={textInput}
+              onChange={setTextInput}
+              placeholder="e.g., Atlas, Compass, Sage..."
+              optional
+              onNext={() => {
+                if (textInput.trim()) {
+                  updateProfile('cosName', textInput);
+                }
+                setTextInput('');
+                advanceStep();
+              }}
+              onSkip={advanceStep}
+            />
+          )}
         </div>
       </div>
     </div>
@@ -940,10 +960,12 @@ const SetupQuestion = ({
   onSelect,
   onToggle,
   onNext,
+  onSkip,
   value,
   onChange,
   placeholder,
   multiline,
+  optional,
 }: {
   title: string;
   subtitle?: string;
@@ -951,6 +973,8 @@ const SetupQuestion = ({
   options?: { value: string; label: string; desc?: string }[];
   selected?: string | string[];
   onSelect?: (value: string) => void;
+  onSkip?: () => void;
+  optional?: boolean;
   onToggle?: (value: string) => void;
   onNext?: () => void;
   value?: string;
@@ -1028,9 +1052,16 @@ const SetupQuestion = ({
         ) : (
           <input type="text" value={value} onChange={(e) => onChange?.(e.target.value)} placeholder={placeholder} style={{ width: '100%', padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none', color: tokens.colors.navy }} />
         )}
-        <button onClick={onNext} disabled={!value?.trim()} style={{ marginTop: tokens.spacing.md, padding: '12px 24px', background: value?.trim() ? tokens.colors.bgNavy : tokens.colors.border, color: value?.trim() ? tokens.colors.textInverse : tokens.colors.textMuted, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 600, cursor: value?.trim() ? 'pointer' : 'not-allowed' }}>
-          CONTINUE
-        </button>
+        <div style={{ display: 'flex', gap: tokens.spacing.sm, marginTop: tokens.spacing.md }}>
+          <button onClick={onNext} disabled={!optional && !value?.trim()} style={{ padding: '12px 24px', background: (optional || value?.trim()) ? tokens.colors.bgNavy : tokens.colors.border, color: (optional || value?.trim()) ? tokens.colors.textInverse : tokens.colors.textMuted, border: 'none', borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 600, cursor: (optional || value?.trim()) ? 'pointer' : 'not-allowed' }}>
+            CONTINUE
+          </button>
+          {optional && onSkip && (
+            <button onClick={onSkip} style={{ padding: '12px 24px', background: 'transparent', color: tokens.colors.navyLight, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, fontSize: '15px', fontWeight: 500, cursor: 'pointer' }}>
+              SKIP FOR NOW
+            </button>
+          )}
+        </div>
       </>
     )}
   </div>
@@ -1052,10 +1083,10 @@ const SetupOutputView = ({ profile, onComplete }: { profile: COSProfile; onCompl
       anchor: 'The Anchor—you ground me, provide calm, and steady the ship',
     };
 
-    return `# Personal Chief of Staff
+    return `# Personal Chief of Staff${profile.cosName ? ` — ${profile.cosName}` : ''}
 
 ## Who You Are
-You are my Chief of Staff—a thinking partner who helps me maintain direction and make better decisions. You embody ${archetypeDesc[profile.stance] || 'a supportive partner'}.
+You are ${profile.cosName ? `${profile.cosName}, ` : ''}my Chief of Staff—a thinking partner who helps me maintain direction and make better decisions. You embody ${archetypeDesc[profile.stance] || 'a supportive partner'}.
 
 ## Tone & Style
 - Characteristics: ${profile.toneWords?.join(', ') || 'direct, calm, thoughtful'}
