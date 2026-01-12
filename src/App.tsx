@@ -1566,7 +1566,8 @@ const SetupView = ({
                 { value: 'chatgpt', label: 'ChatGPT', desc: 'OpenAI' },
                 { value: 'claude', label: 'Claude', desc: 'Anthropic' },
                 { value: 'gemini', label: 'Gemini', desc: 'Google' },
-                { value: 'other', label: 'Other / Multiple', desc: 'Various platforms' },
+                { value: 'multiple', label: 'I use several', desc: 'Multiple LLMs depending on task' },
+                { value: 'other', label: 'Other', desc: 'Different platform' },
               ]}
               selected={profile.primaryLLM}
               onSelect={(v) => { updateProfile('primaryLLM', v); advanceStep(); }}
