@@ -582,6 +582,10 @@ const LandingView = ({
           }}
         >
           SET YOUR COURSE
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '6px' }}>
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
         </button>
       </div>
     </nav>
@@ -669,6 +673,10 @@ const LandingView = ({
         }}
       >
         START HERE
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
       </button>
 
     </section>
@@ -851,6 +859,13 @@ const LandingView = ({
       padding: `${tokens.space[10]} ${tokens.space[5]}`,
     }}>
       <div style={{ maxWidth: '640px', margin: '0 auto' }}>
+        {/* Compass icon */}
+        <div style={{ marginBottom: tokens.space[4], color: tokens.colors.ochre }}>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="currentColor" stroke="none" />
+          </svg>
+        </div>
         <h2 style={{
           fontSize: 'clamp(28px, 4vw, 40px)',
           fontWeight: 700,
@@ -942,6 +957,10 @@ const LandingView = ({
             }}
           >
             GET ORIENTED
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
           </button>
 
           <p style={{
@@ -962,6 +981,20 @@ const LandingView = ({
       <div style={{ maxWidth: '720px', margin: '0 auto' }}>
         {/* Section Header */}
         <div style={{ marginBottom: tokens.space[8], textAlign: 'center' }}>
+          {/* Sliders/Balance icon */}
+          <div style={{ marginBottom: tokens.space[4], color: tokens.colors.ochre }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="4" y1="21" x2="4" y2="14" />
+              <line x1="4" y1="10" x2="4" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12" y2="3" />
+              <line x1="20" y1="21" x2="20" y2="16" />
+              <line x1="20" y1="12" x2="20" y2="3" />
+              <circle cx="4" cy="12" r="2" fill="currentColor" />
+              <circle cx="12" cy="10" r="2" fill="currentColor" />
+              <circle cx="20" cy="14" r="2" fill="currentColor" />
+            </svg>
+          </div>
           <h2 style={{
             fontSize: 'clamp(28px, 4vw, 36px)',
             fontWeight: 700,
@@ -1008,6 +1041,14 @@ const LandingView = ({
               borderTop: `4px solid ${tokens.colors.ochre}`,
             }}
           >
+            {/* Wave icon */}
+            <div style={{ marginBottom: tokens.space[3], color: tokens.colors.ochre }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+              </svg>
+            </div>
             <p style={{
               fontSize: '12px',
               fontWeight: 700,
@@ -1062,6 +1103,14 @@ const LandingView = ({
               borderTop: `4px solid ${tokens.colors.navy}`,
             }}
           >
+            {/* Target/Focus icon */}
+            <div style={{ marginBottom: tokens.space[3], color: tokens.colors.navy }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <circle cx="12" cy="12" r="6" />
+                <circle cx="12" cy="12" r="2" />
+              </svg>
+            </div>
             <p style={{
               fontSize: '12px',
               fontWeight: 700,
@@ -1171,6 +1220,10 @@ const LandingView = ({
         }}
       >
         BEGIN SETUP
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
       </button>
     </section>
 
