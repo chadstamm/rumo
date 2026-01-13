@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // ============================================
 // GLOBAL STYLES - Animations & Hover Effects
@@ -311,8 +311,8 @@ const tokens = {
     shadowMd: 'rgba(0, 0, 0, 0.06)',
   },
   font: {
-    sans: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    display: '"Avenir Next", "Avenir", "Montserrat", "Helvetica Neue", sans-serif',
+    sans: '"DM Sans", -apple-system, BlinkMacSystemFont, sans-serif',
+    display: '"DM Serif Display", Georgia, serif',
   },
   space: {
     1: '4px',
@@ -374,11 +374,74 @@ interface COSProfile {
 }
 
 // ============================================
+// LOCAL STORAGE KEYS
+// ============================================
+const STORAGE_KEYS = {
+  COS_PROFILE: 'rumo_cos_profile',
+  HAS_COMPLETED_SETUP: 'rumo_setup_complete',
+};
+
+// ============================================
 // APP
 // ============================================
 const App = () => {
   const [view, setView] = useState<View>('landing');
   const [cosProfile, setCosProfile] = useState<COSProfile | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load profile from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedProfile = localStorage.getItem(STORAGE_KEYS.COS_PROFILE);
+      const hasCompletedSetup = localStorage.getItem(STORAGE_KEYS.HAS_COMPLETED_SETUP);
+
+      if (savedProfile && hasCompletedSetup === 'true') {
+        setCosProfile(JSON.parse(savedProfile));
+        setView('dashboard');
+      }
+    } catch (e) {
+      console.error('Error loading profile from localStorage:', e);
+    }
+    setIsLoading(false);
+  }, []);
+
+  // Save profile to localStorage when it changes
+  const saveProfile = (profile: COSProfile) => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.COS_PROFILE, JSON.stringify(profile));
+      localStorage.setItem(STORAGE_KEYS.HAS_COMPLETED_SETUP, 'true');
+    } catch (e) {
+      console.error('Error saving profile to localStorage:', e);
+    }
+    setCosProfile(profile);
+  };
+
+  // Clear profile (for reconfiguring)
+  const clearProfile = () => {
+    try {
+      localStorage.removeItem(STORAGE_KEYS.COS_PROFILE);
+      localStorage.removeItem(STORAGE_KEYS.HAS_COMPLETED_SETUP);
+    } catch (e) {
+      console.error('Error clearing profile from localStorage:', e);
+    }
+    setCosProfile(null);
+  };
+
+  // Show loading state briefly while checking localStorage
+  if (isLoading) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: tokens.colors.cream,
+        fontFamily: tokens.font.sans,
+      }}>
+        <RumoLogo size="lg" color={tokens.colors.navy} accentColor={tokens.colors.ochre} />
+      </div>
+    );
+  }
 
   if (view === 'landing') {
     return (
@@ -394,16 +457,16 @@ const App = () => {
     return (
       <SetupView
         onComplete={(profile) => {
-          setCosProfile(profile);
+          saveProfile(profile);
           setView('dashboard');
         }}
-        onBack={() => setView('landing')}
+        onBack={() => cosProfile ? setView('dashboard') : setView('landing')}
       />
     );
   }
 
   if (view === 'synthesis') {
-    return <SynthesisView onBack={() => setView('dashboard')} />;
+    return <SynthesisView onBack={() => setView('dashboard')} cosProfile={cosProfile} />;
   }
 
   // Dashboard view
@@ -412,6 +475,8 @@ const App = () => {
       onSynthesis={() => setView('synthesis')}
       onLanding={() => setView('landing')}
       onReconfigure={() => setView('setup')}
+      cosProfile={cosProfile}
+      onClearProfile={clearProfile}
     />
   );
 };
@@ -419,56 +484,56 @@ const App = () => {
 // ============================================
 // RUMO LOGO COMPONENT
 // ============================================
-const RumoLogo = ({ size = 'md', color = '#4A6785', accentColor }: { size?: 'sm' | 'md' | 'lg'; color?: string; accentColor?: string }) => {
+const RumoLogo = ({ size = 'md', color = '#3D5A80', accentColor }: { size?: 'sm' | 'md' | 'lg'; color?: string; accentColor?: string }) => {
   const scales = { sm: 0.6, md: 0.75, lg: 1 };
   const scale = scales[size];
-  const width = 186 * scale;
+  const width = 200 * scale;
   const height = 52 * scale;
   const compassColor = accentColor || '#C9A227'; // Gold/ochre for compass needle
 
   return (
-    <svg width={width} height={height} viewBox="0 0 186 52" fill="none">
-      {/* R */}
+    <svg width={width} height={height} viewBox="0 0 200 52" fill="none">
+      {/* R - Bold geometric */}
       <path
-        d="M0 10h14c8 0 14 5 14 13 0 6-4 10-9 12l10 15h-9l-9-14h-4v14H0V10zm7 6v13h6c5 0 8-3 8-7 0-4-3-6-8-6H7z"
+        d="M0 8h16c9 0 16 6 16 15 0 7-4 12-10 14l12 17h-10l-11-16H8v16H0V8zm8 7v15h7c6 0 9-3 9-8s-3-7-9-7H8z"
         fill={color}
       />
-      {/* U */}
+      {/* U - Bold geometric */}
       <path
-        d="M36 10h7v26c0 5 3 8 8 8s8-3 8-8V10h7v26c0 9-6 14-15 14s-15-5-15-14V10z"
+        d="M40 8h8v28c0 6 4 9 9 9s9-3 9-9V8h8v28c0 10-7 16-17 16s-17-6-17-16V8z"
         fill={color}
       />
-      {/* M */}
+      {/* M - Bold geometric */}
       <path
-        d="M76 10h9l11 24 11-24h9v40h-7V20l-10 22h-6L83 20v30h-7V10z"
+        d="M84 8h10l12 26 12-26h10v46h-8V18l-11 24h-6L92 18v36h-8V8z"
         fill={color}
       />
-      {/* O as Compass - bezel style matching reference image */}
-      <g transform="translate(126, 5)">
+      {/* O as Compass - matching reference image exactly */}
+      <g transform="translate(138, 2)">
         {/* Outer navy ring */}
-        <circle cx="21" cy="21" r="20" fill={color} />
+        <circle cx="24" cy="24" r="23" fill={color} />
         {/* White bezel ring */}
-        <circle cx="21" cy="21" r="16" fill="white" />
+        <circle cx="24" cy="24" r="18.5" fill="white" />
         {/* Inner navy compass face */}
-        <circle cx="21" cy="21" r="13" fill={color} />
-        {/* Tick marks on white bezel */}
-        <line x1="21" y1="5" x2="21" y2="8" stroke={color} strokeWidth="1.5" />
-        <line x1="21" y1="34" x2="21" y2="37" stroke={color} strokeWidth="1.5" />
-        <line x1="5" y1="21" x2="8" y2="21" stroke={color} strokeWidth="1.5" />
-        <line x1="34" y1="21" x2="37" y2="21" stroke={color} strokeWidth="1.5" />
-        {/* Diamond compass needle pointing NE-SW */}
+        <circle cx="24" cy="24" r="15" fill={color} />
+        {/* Tick marks on white bezel - cardinal directions */}
+        <line x1="24" y1="5.5" x2="24" y2="9" stroke={color} strokeWidth="2" />
+        <line x1="24" y1="39" x2="24" y2="42.5" stroke={color} strokeWidth="2" />
+        <line x1="5.5" y1="24" x2="9" y2="24" stroke={color} strokeWidth="2" />
+        <line x1="39" y1="24" x2="42.5" y2="24" stroke={color} strokeWidth="2" />
+        {/* Diamond compass needle - clean rhombus shape pointing NE */}
         <path
-          d="M21 21 L15 15 L21 18 L27 15 Z"
+          d="M24 10 L28 24 L24 28 L20 24 Z"
           fill={compassColor}
         />
         <path
-          d="M21 21 L27 27 L21 24 L15 27 Z"
+          d="M24 28 L28 24 L24 38 L20 24 Z"
           fill={compassColor}
-          fillOpacity="0.5"
+          fillOpacity="0.4"
         />
-        {/* Center dot */}
-        <circle cx="21" cy="21" r="2.5" fill={color} />
-        <circle cx="21" cy="21" r="1.5" fill="white" fillOpacity="0.4" />
+        {/* Center dot with highlight */}
+        <circle cx="24" cy="24" r="3" fill={color} />
+        <circle cx="23" cy="23" r="1" fill="white" fillOpacity="0.5" />
       </g>
     </svg>
   );
@@ -1953,238 +2018,448 @@ const DashboardView = ({
   onSynthesis,
   onLanding,
   onReconfigure,
+  cosProfile,
+  onClearProfile,
 }: {
   onSynthesis: () => void;
   onLanding: () => void;
   onReconfigure: () => void;
-}) => (
-  <div style={{ background: tokens.colors.bgPrimary, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-    {/* Header */}
-    <header style={{
-      padding: `${tokens.spacing.sm} ${tokens.spacing.lg}`,
-      borderBottom: `1px solid ${tokens.colors.border}`,
-    }}>
-      <div style={{
-        maxWidth: '900px',
-        margin: '0 auto',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}>
-        <button onClick={onLanding} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
-          <RumoLogo size="sm" color={tokens.colors.textPrimary} />
-        </button>
-        <nav style={{ display: 'flex', alignItems: 'center', gap: tokens.spacing.lg }}>
-          <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>HOW IT WORKS</button>
-          <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>WAVES</button>
-          <button style={{ background: 'none', border: 'none', fontSize: '14px', color: tokens.colors.textSecondary, cursor: 'pointer' }}>SWEATS</button>
-          <button onClick={onReconfigure} style={{ background: 'none', border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.full, padding: '8px 16px', fontSize: '14px', color: tokens.colors.textPrimary, cursor: 'pointer' }}>SIGN IN</button>
-        </nav>
-      </div>
-    </header>
+  cosProfile: COSProfile | null;
+  onClearProfile: () => void;
+}) => {
+  const [showSettings, setShowSettings] = useState(false);
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+  const cosName = cosProfile?.cosName || 'your Chief of Staff';
 
-    {/* Hero Section */}
-    <section style={{
-      padding: `${tokens.spacing.xl} ${tokens.spacing.lg}`,
-      borderBottom: `1px solid ${tokens.colors.border}`,
-      background: tokens.colors.bgCard,
-    }}>
-      <div style={{
-        maxWidth: '900px',
-        margin: '0 auto',
-        display: 'grid',
-        gridTemplateColumns: '1fr auto',
-        gap: tokens.spacing.xl,
-        alignItems: 'center',
+  // Get archetype info for personalization
+  const archetypeEmoji: Record<string, string> = {
+    challenger: '⚡',
+    muse: '✨',
+    scientist: '🔬',
+    coach: '🎯',
+    strategist: '♟️',
+    anchor: '⚓',
+  };
+  const currentArchetype = cosProfile?.stance || 'strategist';
+
+  return (
+    <div style={{ background: tokens.colors.cream, minHeight: '100vh', display: 'flex', flexDirection: 'column', fontFamily: tokens.font.sans }}>
+      <GlobalStyles />
+
+      {/* Header */}
+      <header style={{
+        padding: `${tokens.spacing.sm} ${tokens.spacing.lg}`,
+        borderBottom: `1px solid ${tokens.colors.border}`,
+        background: tokens.colors.white,
       }}>
-        <div>
-          <h1 style={{ fontSize: '36px', fontWeight: 400, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs }}>
-            Find Your Direction
-          </h1>
-          <p style={{ fontSize: '16px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.lg }}>
-            Reflect. Choose. Act with clarity, every day.
-          </p>
-          <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
-            <button onClick={onSynthesis} style={{
-              padding: '12px 24px',
-              background: tokens.colors.teal,
-              color: tokens.colors.textInverse,
-              border: 'none',
-              borderRadius: tokens.radius.full,
-              fontSize: '14px',
-              fontWeight: 500,
-              cursor: 'pointer'
-            }}>
-              START TODAY'S SYNTHESIS
-            </button>
-            <button onClick={onReconfigure} style={{
-              padding: '12px 24px',
-              background: 'transparent',
-              color: tokens.colors.textPrimary,
-              border: `1px solid ${tokens.colors.border}`,
-              borderRadius: tokens.radius.full,
-              fontSize: '14px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-            }}>
-              SET UP CHIEF OF STAFF
-              <span style={{ color: tokens.colors.textMuted }}>›</span>
+        <div style={{
+          maxWidth: '1000px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+          <div className="logo-hover" style={{ cursor: 'pointer' }}>
+            <RumoLogo size="sm" color={tokens.colors.navy} accentColor={tokens.colors.ochre} />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: tokens.spacing.md }}>
+            <button
+              onClick={() => setShowSettings(!showSettings)}
+              className="btn-ghost"
+              style={{
+                background: 'none',
+                border: `1px solid ${tokens.colors.border}`,
+                borderRadius: tokens.radius.full,
+                padding: '8px 16px',
+                fontSize: '14px',
+                fontWeight: 500,
+                color: tokens.colors.navy,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+              }}
+            >
+              <span>{archetypeEmoji[currentArchetype]}</span>
+              {cosProfile?.cosName || 'Settings'}
             </button>
           </div>
         </div>
-        <div style={{ textAlign: 'center' }}>
-          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.sm }}>Your Heading</p>
-          <CompassVisual heading={160} />
-        </div>
-      </div>
-    </section>
+      </header>
 
-    {/* Action Cards */}
-    <section style={{ padding: `${tokens.spacing.xl} ${tokens.spacing.lg}` }}>
-      <div style={{
-        maxWidth: '900px',
-        margin: '0 auto',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: tokens.spacing.md,
-      }}>
-        {/* Daily Synthesis Card - teal accent */}
+      {/* Settings Dropdown */}
+      {showSettings && (
         <div style={{
-          background: `linear-gradient(135deg, ${tokens.colors.bgCard} 0%, ${tokens.colors.tealSubtle} 100%)`,
+          position: 'absolute',
+          top: '60px',
+          right: tokens.spacing.lg,
+          background: tokens.colors.white,
           border: `1px solid ${tokens.colors.border}`,
           borderRadius: tokens.radius.lg,
-          padding: tokens.spacing.lg,
-          boxShadow: `0 1px 3px ${tokens.colors.shadowSm}`,
+          padding: tokens.spacing.sm,
+          boxShadow: '0 8px 30px rgba(0,0,0,0.12)',
+          zIndex: 100,
+          minWidth: '200px',
         }}>
-          <h3 style={{ fontSize: '18px', fontWeight: 500, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs }}>Daily Synthesis</h3>
-          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.md }}>Review & reflect.</p>
-          <button onClick={onSynthesis} style={{
-            padding: '10px 20px',
-            background: tokens.colors.teal,
-            color: tokens.colors.textInverse,
-            border: 'none',
-            borderRadius: tokens.radius.full,
-            fontSize: '14px',
-            fontWeight: 500,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}>
-            BEGIN
-            <span>›</span>
+          <button
+            onClick={() => { onReconfigure(); setShowSettings(false); }}
+            style={{
+              width: '100%',
+              padding: tokens.spacing.sm,
+              background: 'none',
+              border: 'none',
+              textAlign: 'left',
+              cursor: 'pointer',
+              borderRadius: tokens.radius.md,
+              fontSize: '14px',
+              color: tokens.colors.navy,
+            }}
+            onMouseOver={(e) => e.currentTarget.style.background = tokens.colors.gray100}
+            onMouseOut={(e) => e.currentTarget.style.background = 'none'}
+          >
+            Reconfigure COS
+          </button>
+          <button
+            onClick={() => { onClearProfile(); setShowSettings(false); }}
+            style={{
+              width: '100%',
+              padding: tokens.spacing.sm,
+              background: 'none',
+              border: 'none',
+              textAlign: 'left',
+              cursor: 'pointer',
+              borderRadius: tokens.radius.md,
+              fontSize: '14px',
+              color: tokens.colors.coral,
+            }}
+            onMouseOver={(e) => e.currentTarget.style.background = tokens.colors.coralSubtle}
+            onMouseOut={(e) => e.currentTarget.style.background = 'none'}
+          >
+            Reset & Start Over
           </button>
         </div>
+      )}
 
-        {/* Track WAVES Card - coral accent */}
-        <div style={{
-          background: `linear-gradient(135deg, ${tokens.colors.bgCard} 0%, ${tokens.colors.coralSubtle} 100%)`,
-          border: `1px solid ${tokens.colors.border}`,
-          borderRadius: tokens.radius.lg,
-          padding: tokens.spacing.lg,
-          boxShadow: `0 1px 3px ${tokens.colors.shadowSm}`,
-        }}>
-          <h3 style={{ fontSize: '18px', fontWeight: 500, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs }}>Track Your WAVES</h3>
-          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.md }}>Check-In to Balance.</p>
-          <button style={{
-            padding: '10px 20px',
-            background: 'transparent',
-            color: tokens.colors.textPrimary,
-            border: `1px solid ${tokens.colors.border}`,
-            borderRadius: tokens.radius.full,
-            fontSize: '14px',
-            fontWeight: 500,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
+      {/* Main Content */}
+      <main style={{ flex: 1, padding: `${tokens.spacing.xl} ${tokens.spacing.lg}` }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+
+          {/* Personalized Greeting */}
+          <div className="animate-fade-in-up" style={{ marginBottom: tokens.spacing.xl }}>
+            <h1 style={{
+              fontSize: 'clamp(28px, 4vw, 40px)',
+              fontWeight: 400,
+              color: tokens.colors.navy,
+              fontFamily: tokens.font.display,
+              marginBottom: tokens.spacing.xs,
+            }}>
+              {greeting}.
+            </h1>
+            <p style={{
+              fontSize: '18px',
+              color: tokens.colors.navyFaded,
+              lineHeight: 1.6,
+            }}>
+              {cosProfile?.cosName ? `${cosProfile.cosName} is ready when you are.` : 'Your navigation system is ready.'}
+            </p>
+          </div>
+
+          {/* Primary Action - Daily Synthesis */}
+          <div
+            className="card-hover animate-fade-in-up stagger-1"
+            onClick={onSynthesis}
+            style={{
+              background: `linear-gradient(135deg, ${tokens.colors.navy} 0%, #2D4A6A 100%)`,
+              borderRadius: tokens.radius.xl,
+              padding: tokens.spacing.xl,
+              marginBottom: tokens.spacing.lg,
+              cursor: 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Decorative compass */}
+            <div style={{
+              position: 'absolute',
+              top: '-20px',
+              right: '-20px',
+              width: '200px',
+              height: '200px',
+              opacity: 0.1,
+            }}>
+              <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" stroke="white" strokeWidth="2" fill="none" />
+                <circle cx="50" cy="50" r="35" stroke="white" strokeWidth="1" fill="none" />
+                <path d="M50 5 L55 50 L50 95 L45 50 Z" fill="white" />
+              </svg>
+            </div>
+
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <p style={{
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '0.15em',
+                color: tokens.colors.ochre,
+                marginBottom: tokens.spacing.sm,
+              }}>
+                DAILY SYNTHESIS
+              </p>
+              <h2 style={{
+                fontSize: 'clamp(24px, 3vw, 32px)',
+                fontWeight: 400,
+                color: tokens.colors.white,
+                fontFamily: tokens.font.display,
+                marginBottom: tokens.spacing.sm,
+              }}>
+                Start your day with clarity
+              </h2>
+              <p style={{
+                fontSize: '16px',
+                color: 'rgba(255,255,255,0.7)',
+                marginBottom: tokens.spacing.lg,
+                maxWidth: '500px',
+              }}>
+                A quick conversation with {cosName} to orient your day, surface what matters, and set your direction.
+              </p>
+              <button
+                className="btn-primary"
+                style={{
+                  background: tokens.colors.ochre,
+                  color: tokens.colors.white,
+                  border: 'none',
+                  padding: '14px 28px',
+                  borderRadius: tokens.radius.full,
+                  fontSize: '15px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                BEGIN SYNTHESIS
+              </button>
+            </div>
+          </div>
+
+          {/* Secondary Actions Grid */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: tokens.spacing.md,
+            marginBottom: tokens.spacing.xl,
           }}>
-            VIEW
-            <span style={{ color: tokens.colors.textMuted }}>›</span>
-          </button>
-        </div>
+            {/* WAVES Card */}
+            <div
+              className="card-hover animate-fade-in-up stagger-2"
+              style={{
+                background: tokens.colors.white,
+                borderRadius: tokens.radius.lg,
+                padding: tokens.spacing.lg,
+                border: `1px solid ${tokens.colors.border}`,
+                borderLeft: `4px solid ${tokens.colors.coral}`,
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: tokens.spacing.md }}>
+                <div>
+                  <p style={{
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    letterSpacing: '0.1em',
+                    color: tokens.colors.coral,
+                    marginBottom: tokens.spacing.xs,
+                  }}>
+                    WAVES
+                  </p>
+                  <h3 style={{
+                    fontSize: '20px',
+                    fontWeight: 500,
+                    color: tokens.colors.navy,
+                    fontFamily: tokens.font.display,
+                  }}>
+                    How life feels
+                  </h3>
+                </div>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={tokens.colors.coral} strokeWidth="2" strokeLinecap="round">
+                  <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                  <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                  <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+                </svg>
+              </div>
+              <p style={{
+                fontSize: '14px',
+                color: tokens.colors.textSecondary,
+                lineHeight: 1.6,
+                marginBottom: tokens.spacing.md,
+              }}>
+                Check in across five dimensions: Wholeness, Accomplishment, Vitality, Expression, Satisfaction.
+              </p>
+              <button
+                className="btn-secondary"
+                style={{
+                  background: 'transparent',
+                  color: tokens.colors.navy,
+                  border: `1px solid ${tokens.colors.border}`,
+                  padding: '10px 20px',
+                  borderRadius: tokens.radius.full,
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                }}
+              >
+                Check In
+              </button>
+            </div>
 
-        {/* Run SWEATS Card - purple accent */}
-        <div style={{
-          background: `linear-gradient(135deg, ${tokens.colors.bgCard} 0%, ${tokens.colors.purpleSubtle} 100%)`,
-          border: `1px solid ${tokens.colors.border}`,
-          borderRadius: tokens.radius.lg,
-          padding: tokens.spacing.lg,
-          boxShadow: `0 1px 3px ${tokens.colors.shadowSm}`,
-        }}>
-          <h3 style={{ fontSize: '18px', fontWeight: 500, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.xs }}>Run Your SWEATS</h3>
-          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.md }}>Log Intentions.</p>
-          <button style={{
-            padding: '10px 20px',
-            background: 'transparent',
-            color: tokens.colors.textPrimary,
-            border: `1px solid ${tokens.colors.border}`,
-            borderRadius: tokens.radius.full,
-            fontSize: '14px',
-            fontWeight: 500,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}>
-            START
-            <span style={{ color: tokens.colors.textMuted }}>›</span>
-          </button>
-        </div>
-      </div>
-    </section>
+            {/* SWEATS Card */}
+            <div
+              className="card-hover animate-fade-in-up stagger-3"
+              style={{
+                background: tokens.colors.white,
+                borderRadius: tokens.radius.lg,
+                padding: tokens.spacing.lg,
+                border: `1px solid ${tokens.colors.border}`,
+                borderLeft: `4px solid ${tokens.colors.purple}`,
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: tokens.spacing.md }}>
+                <div>
+                  <p style={{
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    letterSpacing: '0.1em',
+                    color: tokens.colors.purple,
+                    marginBottom: tokens.spacing.xs,
+                  }}>
+                    SWEATS
+                  </p>
+                  <h3 style={{
+                    fontSize: '20px',
+                    fontWeight: 500,
+                    color: tokens.colors.navy,
+                    fontFamily: tokens.font.display,
+                  }}>
+                    Where effort goes
+                  </h3>
+                </div>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={tokens.colors.purple} strokeWidth="2" strokeLinecap="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <circle cx="12" cy="12" r="6" />
+                  <circle cx="12" cy="12" r="2" />
+                </svg>
+              </div>
+              <p style={{
+                fontSize: '14px',
+                color: tokens.colors.textSecondary,
+                lineHeight: 1.6,
+                marginBottom: tokens.spacing.md,
+              }}>
+                Track effort across: Synthesis, Work, Energy, Art, Ties, Service.
+              </p>
+              <button
+                className="btn-secondary"
+                style={{
+                  background: 'transparent',
+                  color: tokens.colors.navy,
+                  border: `1px solid ${tokens.colors.border}`,
+                  padding: '10px 20px',
+                  borderRadius: tokens.radius.full,
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                }}
+              >
+                Log Effort
+              </button>
+            </div>
+          </div>
 
-    {/* Weekly Progress */}
-    <section style={{ padding: `0 ${tokens.spacing.lg} ${tokens.spacing.xl}` }}>
-      <div style={{
-        maxWidth: '900px',
-        margin: '0 auto',
-        background: tokens.colors.bgCard,
-        border: `1px solid ${tokens.colors.border}`,
-        borderRadius: tokens.radius.lg,
-        padding: tokens.spacing.lg,
-        boxShadow: `0 1px 3px ${tokens.colors.shadowSm}`,
+          {/* Your Direction Section */}
+          <div
+            className="animate-fade-in-up stagger-4"
+            style={{
+              background: tokens.colors.white,
+              borderRadius: tokens.radius.lg,
+              padding: tokens.spacing.xl,
+              border: `1px solid ${tokens.colors.border}`,
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: tokens.spacing.xl }}>
+              <CompassVisual heading={160} />
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '20px',
+                  fontWeight: 500,
+                  color: tokens.colors.navy,
+                  fontFamily: tokens.font.display,
+                  marginBottom: tokens.spacing.sm,
+                }}>
+                  Your Direction
+                </h3>
+                {cosProfile?.outcomes ? (
+                  <div>
+                    <p style={{ fontSize: '14px', color: tokens.colors.textSecondary, marginBottom: tokens.spacing.sm }}>
+                      90-day focus:
+                    </p>
+                    <p style={{
+                      fontSize: '15px',
+                      color: tokens.colors.navy,
+                      lineHeight: 1.6,
+                      fontStyle: 'italic',
+                    }}>
+                      "{cosProfile.outcomes.slice(0, 150)}{cosProfile.outcomes.length > 150 ? '...' : ''}"
+                    </p>
+                  </div>
+                ) : (
+                  <p style={{ fontSize: '15px', color: tokens.colors.textSecondary }}>
+                    Complete your COS setup to define your direction.
+                  </p>
+                )}
+              </div>
+            </div>
+            <div style={{
+              marginTop: tokens.spacing.lg,
+              paddingTop: tokens.spacing.lg,
+              borderTop: `1px solid ${tokens.colors.border}`,
+            }}>
+              <WeeklyProgressChart />
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer style={{
+        padding: `${tokens.spacing.md} ${tokens.spacing.lg}`,
+        borderTop: `1px solid ${tokens.colors.border}`,
+        background: tokens.colors.white,
       }}>
-        <h3 style={{ fontSize: '18px', fontWeight: 500, color: tokens.colors.textPrimary, marginBottom: tokens.spacing.lg }}>Your Progress This Week</h3>
-        <WeeklyProgressChart />
-      </div>
-    </section>
-
-    {/* Footer */}
-    <footer style={{
-      marginTop: 'auto',
-      padding: `${tokens.spacing.md} ${tokens.spacing.lg}`,
-      borderTop: `1px solid ${tokens.colors.border}`,
-    }}>
-      <div style={{
-        maxWidth: '900px',
-        margin: '0 auto',
-        display: 'flex',
-        justifyContent: 'center',
-        gap: tokens.spacing.lg,
-        alignItems: 'center',
-      }}>
-        <button style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>PRIVACY</button>
-        <span style={{ color: tokens.colors.border }}>|</span>
-        <button style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>CONTACT</button>
-        <span style={{ color: tokens.colors.border }}>|</span>
-        <button style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>ABOUT</button>
-        <span style={{ color: tokens.colors.border }}>|</span>
-        <span style={{ fontSize: '13px', color: tokens.colors.textMuted }}>© RUMO</span>
-      </div>
-    </footer>
-  </div>
-);
+        <div style={{
+          maxWidth: '1000px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+          <span style={{ fontSize: '13px', color: tokens.colors.textMuted }}>© 2026 RUMO</span>
+          <div style={{ display: 'flex', gap: tokens.spacing.md }}>
+            <button className="link-hover" style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>Privacy</button>
+            <button className="link-hover" style={{ background: 'none', border: 'none', fontSize: '13px', color: tokens.colors.textMuted, cursor: 'pointer' }}>About</button>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
 
 // ============================================
 // SYNTHESIS VIEW
 // ============================================
-const SynthesisView = ({ onBack }: { onBack: () => void }) => {
+const SynthesisView = ({ onBack, cosProfile }: { onBack: () => void; cosProfile: COSProfile | null }) => {
+  const cosName = cosProfile?.cosName || 'Your COS';
+  const hour = new Date().getHours();
+  const timeOfDay = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
+
   const [messages, setMessages] = useState<{ role: 'cos' | 'user'; text: string }[]>([
-    { role: 'cos', text: "What would be useful to think through this morning?" }
+    { role: 'cos', text: `Good ${timeOfDay}. What would be useful to think through right now?` }
   ]);
   const [input, setInput] = useState('');
 
@@ -2200,42 +2475,126 @@ const SynthesisView = ({ onBack }: { onBack: () => void }) => {
         "What's actually at stake?",
         "Where's the misalignment?",
         "What's one thing that would make today useful?",
+        "How does this connect to your 90-day outcomes?",
+        "What would the best version of you do here?",
+        "What are you avoiding by focusing on this?",
       ];
       setMessages(prev => [...prev, { role: 'cos', text: responses[Math.floor(Math.random() * responses.length)] }]);
     }, 600);
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: tokens.colors.bgPrimary, display: 'flex', flexDirection: 'column' }}>
-      <header style={{ padding: tokens.spacing.md, borderBottom: `1px solid ${tokens.colors.border}`, display: 'flex', alignItems: 'center', gap: tokens.spacing.md }}>
-        <button onClick={onBack} style={{ background: 'none', border: 'none', color: tokens.colors.textMuted, cursor: 'pointer', fontSize: '14px' }}>← BACK</button>
-        <div>
-          <p style={{ fontSize: '12px', color: tokens.colors.teal, letterSpacing: '0.1em' }}>SYNTHESIS</p>
-          <p style={{ fontSize: '14px', color: tokens.colors.textSecondary }}>Morning orientation</p>
+    <div style={{ minHeight: '100vh', background: tokens.colors.cream, display: 'flex', flexDirection: 'column', fontFamily: tokens.font.sans }}>
+      <GlobalStyles />
+      <header style={{
+        padding: tokens.spacing.md,
+        borderBottom: `1px solid ${tokens.colors.border}`,
+        display: 'flex',
+        alignItems: 'center',
+        gap: tokens.spacing.md,
+        background: tokens.colors.white,
+      }}>
+        <button
+          onClick={onBack}
+          className="btn-ghost"
+          style={{
+            background: 'none',
+            border: `1px solid ${tokens.colors.border}`,
+            borderRadius: tokens.radius.full,
+            padding: '8px 16px',
+            color: tokens.colors.navy,
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: 500,
+          }}
+        >
+          ← Back
+        </button>
+        <div style={{ flex: 1 }}>
+          <p style={{ fontSize: '12px', color: tokens.colors.ochre, letterSpacing: '0.1em', fontWeight: 600 }}>SYNTHESIS</p>
+          <p style={{ fontSize: '14px', color: tokens.colors.navy }}>
+            {cosProfile?.cosName ? `with ${cosProfile.cosName}` : 'Daily orientation'}
+          </p>
         </div>
       </header>
 
-      <div style={{ flex: 1, padding: tokens.spacing.lg, maxWidth: '640px', margin: '0 auto', width: '100%' }}>
+      <div style={{ flex: 1, padding: tokens.spacing.xl, maxWidth: '700px', margin: '0 auto', width: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: tokens.spacing.lg }}>
           {messages.map((msg, i) => (
-            <div key={i} style={{ paddingLeft: msg.role === 'user' ? tokens.spacing.lg : 0 }}>
-              <p style={{ fontSize: '18px', lineHeight: 1.6, color: msg.role === 'user' ? tokens.colors.textPrimary : tokens.colors.textSecondary }}>{msg.text}</p>
+            <div
+              key={i}
+              className={i === messages.length - 1 ? 'animate-fade-in' : ''}
+              style={{
+                padding: tokens.spacing.md,
+                background: msg.role === 'user' ? tokens.colors.white : 'transparent',
+                borderRadius: tokens.radius.lg,
+                marginLeft: msg.role === 'user' ? tokens.spacing.xl : 0,
+                border: msg.role === 'user' ? `1px solid ${tokens.colors.border}` : 'none',
+              }}
+            >
+              {msg.role === 'cos' && (
+                <p style={{
+                  fontSize: '12px',
+                  color: tokens.colors.ochre,
+                  marginBottom: tokens.spacing.xs,
+                  fontWeight: 600,
+                  letterSpacing: '0.05em',
+                }}>
+                  {cosName.toUpperCase()}
+                </p>
+              )}
+              <p style={{
+                fontSize: '18px',
+                lineHeight: 1.7,
+                color: tokens.colors.navy,
+                fontFamily: msg.role === 'cos' ? tokens.font.display : tokens.font.sans,
+              }}>
+                {msg.text}
+              </p>
             </div>
           ))}
         </div>
       </div>
 
-      <div style={{ padding: tokens.spacing.md, borderTop: `1px solid ${tokens.colors.border}`, background: tokens.colors.bgCard }}>
-        <div style={{ maxWidth: '640px', margin: '0 auto', display: 'flex', gap: tokens.spacing.sm }}>
+      <div style={{
+        padding: tokens.spacing.md,
+        borderTop: `1px solid ${tokens.colors.border}`,
+        background: tokens.colors.white,
+      }}>
+        <div style={{ maxWidth: '700px', margin: '0 auto', display: 'flex', gap: tokens.spacing.sm }}>
           <input
             type="text"
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSend()}
-            placeholder="Type here..."
-            style={{ flex: 1, padding: tokens.spacing.sm, border: `1px solid ${tokens.colors.border}`, borderRadius: tokens.radius.md, fontSize: '16px', outline: 'none' }}
+            placeholder="What's on your mind..."
+            className="input-focus"
+            style={{
+              flex: 1,
+              padding: tokens.spacing.sm,
+              border: `2px solid ${tokens.colors.border}`,
+              borderRadius: tokens.radius.lg,
+              fontSize: '16px',
+              outline: 'none',
+              fontFamily: tokens.font.sans,
+            }}
           />
-          <button onClick={handleSend} style={{ padding: '12px 24px', background: tokens.colors.bgNavy, color: tokens.colors.textInverse, border: 'none', borderRadius: tokens.radius.full, fontSize: '14px', fontWeight: 500, cursor: 'pointer' }}>SEND</button>
+          <button
+            onClick={handleSend}
+            className="btn-primary"
+            style={{
+              padding: '12px 24px',
+              background: tokens.colors.ochre,
+              color: tokens.colors.white,
+              border: 'none',
+              borderRadius: tokens.radius.full,
+              fontSize: '14px',
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            Send
+          </button>
         </div>
       </div>
     </div>
