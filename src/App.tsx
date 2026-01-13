@@ -312,7 +312,7 @@ const tokens = {
   },
   font: {
     sans: '"DM Sans", -apple-system, BlinkMacSystemFont, sans-serif',
-    display: '"DM Serif Display", Georgia, serif',
+    display: '"Source Serif 4", Georgia, serif',
   },
   space: {
     1: '4px',
