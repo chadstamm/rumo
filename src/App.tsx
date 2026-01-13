@@ -312,7 +312,7 @@ const tokens = {
   },
   font: {
     sans: '"DM Sans", -apple-system, BlinkMacSystemFont, sans-serif',
-    display: '"DM Serif Display", Georgia, serif',
+    display: '"Source Serif 4", Georgia, serif',
   },
   space: {
     1: '4px',
@@ -743,7 +743,8 @@ const LandingView = ({
           fontSize: '16px',
           fontWeight: 700,
           cursor: 'pointer',
-          fontFamily: tokens.font.display,
+          fontFamily: tokens.font.sans,
+          letterSpacing: '0.05em',
           position: 'relative',
           zIndex: 1,
           opacity: 0,
@@ -1049,7 +1050,8 @@ const LandingView = ({
               fontSize: '16px',
               fontWeight: 700,
               cursor: 'pointer',
-              fontFamily: tokens.font.display,
+              fontFamily: tokens.font.sans,
+              letterSpacing: '0.05em',
               marginBottom: tokens.space[3],
             }}
           >
@@ -1301,7 +1303,8 @@ const LandingView = ({
           fontSize: '16px',
           fontWeight: 700,
           cursor: 'pointer',
-          fontFamily: tokens.font.display,
+          fontFamily: tokens.font.sans,
+          letterSpacing: '0.05em',
         }}
       >
         FIND YOUR DIRECTION
