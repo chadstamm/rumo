@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Source_Serif_4, DM_Sans } from 'next/font/google'
 import './globals.css'
 import { Nav } from '@/components/nav'
+import { AuthProvider } from '@/components/auth-provider'
 
 const sourceSerif = Source_Serif_4({
   subsets: ['latin'],
@@ -29,8 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sourceSerif.variable} ${dmSans.variable}`}>
       <body className="font-body">
-        <Nav />
-        {children}
+        <AuthProvider>
+          <Nav />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   )

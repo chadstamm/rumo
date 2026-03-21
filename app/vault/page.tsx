@@ -1,7 +1,16 @@
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 import { CompassRose } from '@/components/compass-rose'
 import Link from 'next/link'
 
-export default function VaultPage() {
+export default async function VaultPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect('/auth/login?next=/vault')
+  }
+
   return (
     <main className="min-h-screen bg-cream flex items-center justify-center px-6">
       <div className="flex flex-col items-center text-center max-w-lg gap-8">

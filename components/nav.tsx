@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { CompassRose } from './compass-rose'
+import { useAuth } from '@/components/auth-provider'
 
 const navLinks = [
   { label: 'The Path', href: '/start' },
@@ -12,6 +13,7 @@ const navLinks = [
 
 export function Nav() {
   const pathname = usePathname()
+  const { user, loading, signOut } = useAuth()
 
   if (pathname === '/') return null
 
@@ -48,12 +50,23 @@ export function Nav() {
             )
           })}
 
-          <Link
-            href="/auth/login"
-            className="font-body text-sm tracking-wide text-navy opacity-50 hover:opacity-80 transition-opacity duration-200"
-          >
-            Sign in
-          </Link>
+          {!loading && (
+            user ? (
+              <button
+                onClick={() => signOut()}
+                className="font-body text-sm tracking-wide text-navy opacity-50 hover:opacity-80 transition-opacity duration-200"
+              >
+                Sign out
+              </button>
+            ) : (
+              <Link
+                href="/auth/login"
+                className="font-body text-sm tracking-wide text-navy opacity-50 hover:opacity-80 transition-opacity duration-200"
+              >
+                Sign in
+              </Link>
+            )
+          )}
         </div>
       </div>
     </nav>
