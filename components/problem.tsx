@@ -52,7 +52,7 @@ export function Problem() {
           </p>
 
           <p className="font-body text-navy font-medium text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            You shouldn't have to settle for that. Not when the technology exists to make it personal.
+            You shouldn't have to settle for that. Not when it takes four steps to fix it.
           </p>
         </div>
       </div>
