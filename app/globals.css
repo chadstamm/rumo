@@ -1,6 +1,31 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #1a2744;
+  --color-navy-light: #243352;
+  --color-cream: #faf6f1;
+  --color-cream-dark: #f0e8dd;
+  --color-ochre: #c4943a;
+  --color-ochre-light: #d4a94f;
+  --color-ocean: #2a6496;
+  --color-muted: #8a7e6b;
+
+  --font-display: var(--font-source-serif), Georgia, serif;
+  --font-body: var(--font-dm-sans), system-ui, sans-serif;
+
+  --animate-fade-in-up: fadeInUp 0.8s ease-out forwards;
+  --animate-fade-in: fadeIn 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 
 html {
   scroll-behavior: smooth;
@@ -9,11 +34,10 @@ html {
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #faf6f1;
-  color: #1a2744;
+  background-color: var(--color-cream);
+  color: var(--color-navy);
 }
 
-/* Scroll-triggered animation utility */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
