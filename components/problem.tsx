@@ -33,9 +33,9 @@ export function Problem() {
                      text-[clamp(2rem,5.5vw,3.75rem)]
                      mb-10 sm:mb-14"
         >
-          Everyone's Talking About AI.
+          Everyone&apos;s Talking About AI.
           <br />
-          <span className="text-navy/40">Almost No One Is Using It Well.</span>
+          <span className="text-ochre">Few Know How to Use It.</span>
         </h2>
 
         {/* Thin ochre separator between heading and body */}
