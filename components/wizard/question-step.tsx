@@ -223,7 +223,7 @@ export function QuestionStep() {
   const isLastOverall = isLastQuestionInSection && isLastSection
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-3xl mx-auto">
       {/* Question */}
       <div className="mb-8">
         <h2 className="font-display text-navy text-2xl sm:text-3xl font-semibold leading-tight mb-3">

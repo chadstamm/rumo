@@ -66,7 +66,7 @@ export function Hero() {
       {/* ── Hero Content ── */}
       <div className="relative z-10 flex-1 flex flex-col items-start justify-center px-6 sm:px-10 lg:px-16">
         {/* Logo */}
-        <div className="hero-fade-in mb-6 sm:mb-8">
+        <div className="hero-fade-in mb-3 sm:mb-4">
           <Image
             src="/rumo-logo-teal.svg"
             alt="RUMO"

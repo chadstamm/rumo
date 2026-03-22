@@ -1,7 +1,6 @@
 'use client'
 
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
-import { CompassRose } from '@/components/compass-rose'
 
 // ── Journey Steps ──
 
@@ -9,38 +8,17 @@ const STEPS = [
   {
     number: '01',
     title: 'Identity',
-    description: 'Your values, beliefs, fears, and aspirations. The foundation AI needs to know you — not just what you do, but who you are when it matters.',
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
-        <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
-        <circle cx="24" cy="24" r="14" stroke="currentColor" strokeWidth="1" opacity="0.2" />
-        <polygon points="24,6 28,20 24,16 20,20" fill="currentColor" opacity="0.6" />
-        <polygon points="24,42 20,28 24,32 28,28" fill="currentColor" opacity="0.3" />
-        <circle cx="24" cy="24" r="3" fill="currentColor" opacity="0.5" />
-      </svg>
-    ),
+    description: 'Your values, beliefs, fears, and aspirations — the foundation AI needs to actually know you.',
   },
   {
     number: '02',
     title: 'Voice',
-    description: 'Your writing patterns, sentence rhythms, humor, metaphors — the things that make a reader say "that sounds like you." Captured from your own words.',
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
-        <path d="M36 8C30 14 24 24 20 34C18 38 16 42 15 44L13 46L16 45C18 43 22 36 26 30C30 24 34 16 36 12L36 8Z" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
-        <line x1="18" y1="36" x2="32" y2="14" stroke="currentColor" strokeWidth="0.8" opacity="0.2" />
-      </svg>
-    ),
+    description: 'Your sentence rhythms, humor, metaphors, and the words you never use. Captured from your own writing.',
   },
   {
     number: '03',
     title: 'Stories',
-    description: 'The moments that shaped you. A smell, a failure, a place that felt like home. The raw material that makes AI output feel lived-in, not generated.',
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
-        <path d="M24 8C18 10 10 12 6 14V40C10 38 18 36 24 34C30 36 38 38 42 40V14C38 12 30 10 24 8Z" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
-        <line x1="24" y1="8" x2="24" y2="34" stroke="currentColor" strokeWidth="1" opacity="0.2" />
-      </svg>
-    ),
+    description: 'The moments that shaped you — a smell, a failure, a crossroads. Raw material that makes AI feel lived-in.',
   },
 ]
 
@@ -53,197 +31,158 @@ const OUTPUTS = [
   { name: 'Story Bank', desc: 'What you\'ve lived', slug: 'story-bank' },
 ]
 
-// ── Section Intro ──
+// ── Combined Plan Section ──
 
-function JourneyIntro() {
-  const ref = useScrollReveal()
+export function Pillars() {
+  const introRef = useScrollReveal()
+  const stepsRef = useScrollReveal(0.08)
+  const outputRef = useScrollReveal(0.1)
 
   return (
-    <section className="bg-navy text-cream py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background: 'radial-gradient(ellipse at 50% 100%, rgba(30,190,177,0.06) 0%, transparent 50%)',
-        }}
-      />
-
-      <div ref={ref} className="reveal relative z-10 max-w-3xl mx-auto px-6 sm:px-10 lg:px-16 text-center">
-        <div className="flex items-center justify-center gap-4 mb-6">
-          <span className="w-8 h-px bg-teal/40" aria-hidden="true" />
-          <span className="font-body text-xs tracking-[0.3em] uppercase text-teal font-medium">
-            How It Works
-          </span>
-          <span className="w-8 h-px bg-teal/40" aria-hidden="true" />
-        </div>
-
-        <h2
-          className="font-display font-semibold leading-[1.12] tracking-tight text-cream mb-5"
-          style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3rem)' }}
+    <section id="pillars" className="relative overflow-hidden">
+      {/* ── Top half: How it works (navy bg) ── */}
+      <div className="bg-navy text-cream">
+        {/* Intro */}
+        <div
+          ref={introRef}
+          className="reveal max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 pt-20 sm:pt-28 lg:pt-32 pb-6 text-center"
         >
-          One Journey. Three Sections.
-          <br className="hidden sm:inline" />
-          {' '}Four Documents That Know You.
-        </h2>
-
-        <p className="font-body text-cream/60 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
-          Answer 38 curated questions. Rumo generates a complete personal AI foundation
-          — your identity, your voice, your stories, all in documents you own.
-        </p>
-      </div>
-    </section>
-  )
-}
-
-// ── Journey Steps ──
-
-function JourneySteps() {
-  const ref = useScrollReveal(0.08)
-
-  return (
-    <section className="bg-cream py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-      {/* Compass watermark */}
-      <div
-        className="absolute -right-10 top-1/2 -translate-y-1/2 w-[300px] h-[300px] opacity-[0.02] pointer-events-none"
-        aria-hidden="true"
-      >
-        <CompassRose className="w-full h-full" />
-      </div>
-
-      <div ref={ref} className="reveal relative z-10 max-w-5xl mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14">
-          {STEPS.map((step) => (
-            <div key={step.number} className="relative">
-              {/* Step number watermark */}
-              <span
-                className="absolute -top-4 -left-2 font-display text-[5rem] font-bold text-navy/[0.04] leading-none select-none pointer-events-none"
-                aria-hidden="true"
-              >
-                {step.number}
-              </span>
-
-              {/* Icon */}
-              <div className="w-12 h-12 text-teal/70 mb-5">
-                {step.icon}
-              </div>
-
-              {/* Content */}
-              <h3 className="font-display text-navy text-xl sm:text-2xl font-semibold mb-3">
-                {step.title}
-              </h3>
-              <p className="font-body text-navy/60 text-sm sm:text-base leading-relaxed">
-                {step.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ── What You Get ──
-
-function WhatYouGet() {
-  const ref = useScrollReveal(0.1)
-
-  return (
-    <section className="bg-navy text-cream py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background: 'radial-gradient(ellipse at 30% 50%, rgba(42,100,150,0.06) 0%, transparent 50%)',
-        }}
-      />
-
-      <div ref={ref} className="reveal relative z-10 max-w-4xl mx-auto px-6 sm:px-10 lg:px-16">
-        {/* Header */}
-        <div className="text-center mb-12 sm:mb-14">
-          <div className="flex items-center justify-center gap-3 mb-5">
-            <span className="w-8 h-px bg-ochre/40" aria-hidden="true" />
-            <span className="font-body text-xs tracking-[0.25em] uppercase text-ochre-light/70 font-medium">
-              What You Get
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <span className="w-8 h-px bg-teal/40" aria-hidden="true" />
+            <span className="font-body text-xs tracking-[0.3em] uppercase text-teal font-medium">
+              How It Works
             </span>
-            <span className="w-8 h-px bg-ochre/40" aria-hidden="true" />
+            <span className="w-8 h-px bg-teal/40" aria-hidden="true" />
           </div>
 
           <h2
-            className="font-display font-semibold leading-[1.12] tracking-tight mb-4"
-            style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}
+            className="font-display font-semibold leading-[1.12] tracking-tight text-cream mb-4"
+            style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3rem)' }}
           >
-            Four Documents. Your Complete AI Foundation.
+            One Journey. Three Sections.
+            <br className="hidden sm:inline" />
+            {' '}Four Documents That Know You.
           </h2>
-          <p className="font-body text-cream/50 text-sm sm:text-base max-w-lg mx-auto">
-            Generated together after you complete all three sections — so every document
-            benefits from everything you shared.
+
+          <p className="font-body text-cream/50 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
+            Answer 38 curated questions. Rumo generates a complete personal AI foundation
+            — your identity, your voice, your stories, all in documents you own.
           </p>
         </div>
 
-        {/* Output cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {OUTPUTS.map((doc) => (
-            <a
-              key={doc.name}
-              href={`/docs/${doc.slug}`}
-              className="group px-6 py-5 rounded-xl border border-cream/[0.08] bg-cream/[0.03]
-                         hover:border-teal/20 hover:bg-cream/[0.05] transition-all duration-300
-                         flex items-center justify-between"
-            >
-              <div>
-                <h3 className="font-display text-cream font-semibold text-base sm:text-lg mb-1">
-                  {doc.name}
+        {/* Three steps */}
+        <div
+          ref={stepsRef}
+          className="reveal max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 py-14 sm:py-16"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+            {STEPS.map((step) => (
+              <div key={step.number} className="relative pl-14 md:pl-0">
+                {/* Step number */}
+                <span
+                  className="absolute top-0 left-0 md:static font-display text-4xl md:text-5xl font-bold text-teal/20 leading-none mb-3 block"
+                >
+                  {step.number}
+                </span>
+
+                <h3 className="font-display text-cream text-xl font-semibold mb-2 mt-1 md:mt-0">
+                  {step.title}
                 </h3>
-                <p className="font-body text-cream/40 text-sm">
-                  {doc.desc}
+                <p className="font-body text-cream/50 text-sm leading-relaxed">
+                  {step.description}
                 </p>
               </div>
-              <svg
-                width="18" height="18" viewBox="0 0 18 18" fill="none"
-                className="text-cream/20 group-hover:text-teal transition-colors duration-300 flex-shrink-0 ml-4"
-                aria-hidden="true"
-              >
-                <path d="M7 5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-12">
-          <a
-            href="#the-path"
-            className="inline-flex items-center gap-2
-                       px-8 py-4 rounded-lg
-                       bg-teal text-white font-body font-semibold text-sm tracking-wide
-                       shadow-lg shadow-teal/20
-                       transition-all duration-300
-                       hover:bg-teal-light hover:shadow-xl hover:shadow-teal/30
-                       hover:-translate-y-0.5 active:translate-y-0
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
-          >
-            Begin Your Journey
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">
-              <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </a>
-          <p className="font-body text-cream/30 text-xs mt-4">
-            Free. No account required to start.
-          </p>
+        {/* Connecting line */}
+        <div className="flex justify-center pb-0" aria-hidden="true">
+          <div className="w-px h-12 bg-gradient-to-b from-teal/20 to-cream/10" />
+        </div>
+      </div>
+
+      {/* ── Bottom half: What you get (cream bg with navy cards) ── */}
+      <div className="bg-cream">
+        <div className="flex justify-center pt-0" aria-hidden="true">
+          <div className="w-px h-8 bg-gradient-to-b from-navy/10 to-transparent" />
+        </div>
+
+        <div
+          ref={outputRef}
+          className="reveal max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 pt-4 pb-16 sm:pb-20"
+        >
+          {/* Label */}
+          <div className="text-center mb-10">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <span className="w-6 h-px bg-ochre/40" aria-hidden="true" />
+              <span className="font-body text-[10px] sm:text-xs tracking-[0.25em] uppercase text-ochre font-medium">
+                What You Get
+              </span>
+              <span className="w-6 h-px bg-ochre/40" aria-hidden="true" />
+            </div>
+            <p className="font-body text-muted text-sm max-w-md mx-auto">
+              Generated together so every document benefits from everything you shared.
+              Or build them one at a time.
+            </p>
+          </div>
+
+          {/* Four document cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {OUTPUTS.map((doc) => (
+              <a
+                key={doc.slug}
+                href={`/docs/${doc.slug}`}
+                className="group relative px-6 py-5 rounded-xl
+                           bg-navy text-cream
+                           border border-navy/80
+                           hover:border-teal/30 hover:shadow-lg hover:shadow-teal/5
+                           hover:-translate-y-0.5
+                           transition-all duration-300
+                           flex items-center justify-between"
+              >
+                <div>
+                  <h3 className="font-display text-cream font-semibold text-base sm:text-lg mb-0.5">
+                    {doc.name}
+                  </h3>
+                  <p className="font-body text-cream/40 text-sm">
+                    {doc.desc}
+                  </p>
+                </div>
+                <svg
+                  width="18" height="18" viewBox="0 0 18 18" fill="none"
+                  className="text-cream/15 group-hover:text-teal transition-colors duration-300 flex-shrink-0 ml-4"
+                  aria-hidden="true"
+                >
+                  <path d="M7 5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="text-center mt-10">
+            <a
+              href="#the-path"
+              className="inline-flex items-center gap-2.5
+                         px-8 py-4 rounded-lg
+                         bg-teal text-white font-body font-semibold text-sm tracking-wide
+                         shadow-lg shadow-teal/15
+                         transition-all duration-300
+                         hover:bg-teal-light hover:shadow-xl hover:shadow-teal/25
+                         hover:-translate-y-0.5 active:translate-y-0"
+            >
+              Build All Four at Once
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+            <p className="font-body text-navy/30 text-xs mt-3">
+              Free. No account required to start.
+            </p>
+          </div>
         </div>
       </div>
     </section>
-  )
-}
-
-// ── Main Export ──
-
-export function Pillars() {
-  return (
-    <div id="pillars">
-      <JourneyIntro />
-      <JourneySteps />
-      <WhatYouGet />
-    </div>
   )
 }
