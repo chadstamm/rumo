@@ -43,8 +43,15 @@ export function Nav() {
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link
+        <a
           href="/"
+          onClick={(e) => {
+            if (pathname === '/') {
+              e.preventDefault()
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+              setScrolled(false)
+            }
+          }}
           className="flex items-center hover:opacity-80 transition-opacity duration-200"
         >
           <Image
@@ -54,7 +61,7 @@ export function Nav() {
             height={59}
             className="h-10 w-auto"
           />
-        </Link>
+        </a>
 
         {/* Links */}
         <div className="flex items-center gap-8">
