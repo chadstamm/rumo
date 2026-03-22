@@ -4,16 +4,16 @@ import { SECTION_NAMES, type Section } from '@/types/wizard'
 import { useWizard } from '@/context/wizard-context'
 
 export function ProgressBar() {
-  const { state, totalQuestionsInSection } = useWizard()
+  const { state, activeSections, totalQuestionsInSection } = useWizard()
   const { currentSection, currentStep, completedSections } = state
 
-  const sections: Section[] = [0, 1, 2, 3]
+  const sections = activeSections
   const sectionProgress = (currentStep + 1) / Math.max(totalQuestionsInSection, 1)
 
   // Overall progress: completed sections + fraction of current
-  const completedWeight = completedSections.length
+  const completedWeight = completedSections.filter((s) => sections.includes(s)).length
   const currentWeight = sectionProgress
-  const overallProgress = ((completedWeight + currentWeight) / 4) * 100
+  const overallProgress = ((completedWeight + currentWeight) / sections.length) * 100
 
   return (
     <div className="w-full">

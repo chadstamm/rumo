@@ -47,10 +47,10 @@ const STEPS = [
 // ── Output Documents ──
 
 const OUTPUTS = [
-  { name: 'Personal Constitution', desc: 'Who you are always' },
-  { name: 'State of the Union', desc: 'Where you are right now' },
-  { name: 'Writing Codex', desc: 'How you write' },
-  { name: 'Story Bank', desc: 'What you\'ve lived' },
+  { name: 'Personal Constitution', desc: 'Who you are always', slug: 'constitution' },
+  { name: 'State of the Union', desc: 'Where you are right now', slug: 'sotu' },
+  { name: 'Writing Codex', desc: 'How you write', slug: 'codex' },
+  { name: 'Story Bank', desc: 'What you\'ve lived', slug: 'story-bank' },
 ]
 
 // ── Section Intro ──
@@ -183,18 +183,29 @@ function WhatYouGet() {
         {/* Output cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {OUTPUTS.map((doc) => (
-            <div
+            <a
               key={doc.name}
-              className="px-6 py-5 rounded-xl border border-cream/[0.08] bg-cream/[0.03]
-                         hover:border-teal/20 hover:bg-cream/[0.05] transition-all duration-300"
+              href={`/docs/${doc.slug}`}
+              className="group px-6 py-5 rounded-xl border border-cream/[0.08] bg-cream/[0.03]
+                         hover:border-teal/20 hover:bg-cream/[0.05] transition-all duration-300
+                         flex items-center justify-between"
             >
-              <h3 className="font-display text-cream font-semibold text-base sm:text-lg mb-1">
-                {doc.name}
-              </h3>
-              <p className="font-body text-cream/40 text-sm">
-                {doc.desc}
-              </p>
-            </div>
+              <div>
+                <h3 className="font-display text-cream font-semibold text-base sm:text-lg mb-1">
+                  {doc.name}
+                </h3>
+                <p className="font-body text-cream/40 text-sm">
+                  {doc.desc}
+                </p>
+              </div>
+              <svg
+                width="18" height="18" viewBox="0 0 18 18" fill="none"
+                className="text-cream/20 group-hover:text-teal transition-colors duration-300 flex-shrink-0 ml-4"
+                aria-hidden="true"
+              >
+                <path d="M7 5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
           ))}
         </div>
 

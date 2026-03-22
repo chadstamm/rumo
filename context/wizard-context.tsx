@@ -6,26 +6,39 @@ import {
   useReducer,
   useCallback,
   useEffect,
+  useMemo,
   type ReactNode,
 } from 'react'
-import type { Section, WizardState, WizardAnswers } from '@/types/wizard'
+import type { Section, WizardState } from '@/types/wizard'
 import { INITIAL_WIZARD_STATE } from '@/types/wizard'
 import { getQuestionsForSection, getVisibleQuestions } from '@/data/questions'
 
-const STORAGE_KEY = 'rumo-wizard-state'
+const STORAGE_KEY_PREFIX = 'rumo-wizard'
 
 // ── Actions ──
 
 type WizardAction =
   | { type: 'SET_ANSWER'; questionId: string; value: string | string[] }
-  | { type: 'NEXT_STEP' }
-  | { type: 'PREV_STEP' }
+  | { type: 'NEXT_STEP'; activeSections: Section[] }
+  | { type: 'PREV_STEP'; activeSections: Section[] }
   | { type: 'GO_TO_SECTION'; section: Section }
   | { type: 'COMPLETE_SECTION'; section: Section }
   | { type: 'RESET' }
   | { type: 'HYDRATE'; state: WizardState }
 
 // ── Reducer ──
+
+function getNextSection(current: Section, activeSections: Section[]): Section | null {
+  const idx = activeSections.indexOf(current)
+  if (idx < 0 || idx >= activeSections.length - 1) return null
+  return activeSections[idx + 1]
+}
+
+function getPrevSection(current: Section, activeSections: Section[]): Section | null {
+  const idx = activeSections.indexOf(current)
+  if (idx <= 0) return null
+  return activeSections[idx - 1]
+}
 
 function wizardReducer(state: WizardState, action: WizardAction): WizardState {
   const now = new Date().toISOString()
@@ -49,12 +62,13 @@ function wizardReducer(state: WizardState, action: WizardAction): WizardState {
         return { ...state, currentStep: nextStep, updatedAt: now }
       }
 
-      // Section complete — move to next section or stay
-      const nextSection = (state.currentSection + 1) as Section
-      if (nextSection <= 3) {
-        const completed = state.completedSections.includes(state.currentSection)
-          ? state.completedSections
-          : [...state.completedSections, state.currentSection]
+      // Section complete — find next active section
+      const nextSection = getNextSection(state.currentSection, action.activeSections)
+      const completed = state.completedSections.includes(state.currentSection)
+        ? state.completedSections
+        : [...state.completedSections, state.currentSection]
+
+      if (nextSection !== null) {
         return {
           ...state,
           currentSection: nextSection,
@@ -65,22 +79,15 @@ function wizardReducer(state: WizardState, action: WizardAction): WizardState {
       }
 
       // All sections complete
-      return {
-        ...state,
-        completedSections: state.completedSections.includes(state.currentSection)
-          ? state.completedSections
-          : [...state.completedSections, state.currentSection],
-        updatedAt: now,
-      }
+      return { ...state, completedSections: completed, updatedAt: now }
     }
 
     case 'PREV_STEP': {
       if (state.currentStep > 0) {
         return { ...state, currentStep: state.currentStep - 1, updatedAt: now }
       }
-      // Go to previous section's last step
-      if (state.currentSection > 0) {
-        const prevSection = (state.currentSection - 1) as Section
+      const prevSection = getPrevSection(state.currentSection, action.activeSections)
+      if (prevSection !== null) {
         const prevQuestions = getVisibleQuestions(
           getQuestionsForSection(prevSection),
           state.answers
@@ -96,12 +103,7 @@ function wizardReducer(state: WizardState, action: WizardAction): WizardState {
     }
 
     case 'GO_TO_SECTION':
-      return {
-        ...state,
-        currentSection: action.section,
-        currentStep: 0,
-        updatedAt: now,
-      }
+      return { ...state, currentSection: action.section, currentStep: 0, updatedAt: now }
 
     case 'COMPLETE_SECTION':
       return {
@@ -127,6 +129,7 @@ function wizardReducer(state: WizardState, action: WizardAction): WizardState {
 
 interface WizardContextValue {
   state: WizardState
+  activeSections: Section[]
   currentQuestion: ReturnType<typeof getQuestionsForSection>[number] | null
   visibleQuestions: ReturnType<typeof getQuestionsForSection>
   totalQuestionsInSection: number
@@ -147,30 +150,59 @@ const WizardContext = createContext<WizardContextValue | null>(null)
 
 // ── Provider ──
 
-export function WizardProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(wizardReducer, INITIAL_WIZARD_STATE)
+interface WizardProviderProps {
+  children: ReactNode
+  /** Filter to specific sections (for standalone document wizards). Defaults to all [0,1,2,3]. */
+  filterSections?: Section[]
+  /** Storage key suffix for isolated persistence per document */
+  storageKey?: string
+}
 
-  // Hydrate from localStorage on mount
+export function WizardProvider({
+  children,
+  filterSections,
+  storageKey,
+}: WizardProviderProps) {
+  const activeSections = useMemo(
+    () => filterSections ?? ([0, 1, 2, 3] as Section[]),
+    [filterSections]
+  )
+
+  const fullStorageKey = storageKey
+    ? `${STORAGE_KEY_PREFIX}-${storageKey}`
+    : `${STORAGE_KEY_PREFIX}-full`
+
+  const initialState: WizardState = {
+    ...INITIAL_WIZARD_STATE,
+    currentSection: activeSections[0],
+  }
+
+  const [state, dispatch] = useReducer(wizardReducer, initialState)
+
+  // Hydrate from localStorage
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY)
+      const saved = localStorage.getItem(fullStorageKey)
       if (saved) {
         const parsed = JSON.parse(saved) as WizardState
-        dispatch({ type: 'HYDRATE', state: parsed })
+        // Verify the saved section is still valid for this wizard
+        if (activeSections.includes(parsed.currentSection)) {
+          dispatch({ type: 'HYDRATE', state: parsed })
+        }
       }
     } catch {
-      // Corrupted storage — start fresh
+      // Start fresh
     }
-  }, [])
+  }, [fullStorageKey, activeSections])
 
-  // Persist to localStorage on every change
+  // Persist to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+      localStorage.setItem(fullStorageKey, JSON.stringify(state))
     } catch {
-      // Storage full or unavailable
+      // Storage full
     }
-  }, [state])
+  }, [state, fullStorageKey])
 
   // Derived values
   const sectionQuestions = getQuestionsForSection(state.currentSection)
@@ -178,15 +210,20 @@ export function WizardProvider({ children }: { children: ReactNode }) {
   const currentQuestion = visibleQuestions[state.currentStep] ?? null
 
   const totalAnswered = Object.keys(state.answers).length
-  const totalQuestions = [0, 1, 2, 3].reduce(
-    (sum, s) => sum + getQuestionsForSection(s as Section).length,
+  const totalQuestions = activeSections.reduce<number>(
+    (sum, s) => sum + getQuestionsForSection(s).length,
     0
   )
 
-  const isFirstQuestion = state.currentSection === 0 && state.currentStep === 0
+  const isFirstQuestion =
+    state.currentSection === activeSections[0] && state.currentStep === 0
   const isLastQuestionInSection = state.currentStep === visibleQuestions.length - 1
-  const isLastSection = state.currentSection === 3
-  const isComplete = isLastSection && isLastQuestionInSection && state.completedSections.includes(3)
+  const isLastSection =
+    state.currentSection === activeSections[activeSections.length - 1]
+  const isComplete =
+    isLastSection &&
+    isLastQuestionInSection &&
+    state.completedSections.includes(activeSections[activeSections.length - 1])
 
   const setAnswer = useCallback(
     (questionId: string, value: string | string[]) => {
@@ -195,21 +232,28 @@ export function WizardProvider({ children }: { children: ReactNode }) {
     []
   )
 
-  const nextStep = useCallback(() => dispatch({ type: 'NEXT_STEP' }), [])
-  const prevStep = useCallback(() => dispatch({ type: 'PREV_STEP' }), [])
+  const nextStep = useCallback(
+    () => dispatch({ type: 'NEXT_STEP', activeSections }),
+    [activeSections]
+  )
+  const prevStep = useCallback(
+    () => dispatch({ type: 'PREV_STEP', activeSections }),
+    [activeSections]
+  )
   const goToSection = useCallback(
     (section: Section) => dispatch({ type: 'GO_TO_SECTION', section }),
     []
   )
   const reset = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY)
+    localStorage.removeItem(fullStorageKey)
     dispatch({ type: 'RESET' })
-  }, [])
+  }, [fullStorageKey])
 
   return (
     <WizardContext.Provider
       value={{
         state,
+        activeSections,
         currentQuestion,
         visibleQuestions,
         totalQuestionsInSection: visibleQuestions.length,
