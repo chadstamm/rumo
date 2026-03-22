@@ -1,18 +1,12 @@
 import type { Metadata } from 'next'
-import { Source_Serif_4, DM_Sans } from 'next/font/google'
+import { Open_Sans } from 'next/font/google'
 import './globals.css'
 import { Nav } from '@/components/nav'
 import { AuthProvider } from '@/components/auth-provider'
 
-const sourceSerif = Source_Serif_4({
+const openSans = Open_Sans({
   subsets: ['latin'],
-  variable: '--font-source-serif',
-  display: 'swap',
-})
-
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  variable: '--font-dm-sans',
+  variable: '--font-open-sans',
   display: 'swap',
 })
 
@@ -28,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${sourceSerif.variable} ${dmSans.variable}`}>
+    <html lang="en" className={openSans.variable}>
       <body className="font-body">
         <AuthProvider>
           <Nav />

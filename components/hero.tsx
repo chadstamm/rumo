@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 export function Hero() {
   const handleScrollDown = () => {
     const target = document.getElementById('problem')
@@ -26,9 +28,7 @@ export function Hero() {
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
 
-      {/* ── Cinematic Overlay ──
-          Multi-stop gradient: subtle top vignette, heavy bottom for text legibility.
-          Layered with a slight overall navy tint for color grading. */}
+      {/* ── Cinematic Overlay ── */}
       <div
         className="absolute inset-0 z-[1]"
         aria-hidden="true"
@@ -63,65 +63,21 @@ export function Hero() {
         }}
       />
 
-      {/* ── Top Navigation / Logo ── */}
-      <header className="relative z-10 flex items-center px-6 pt-6 sm:px-10 sm:pt-8 lg:px-16 lg:pt-10 hero-fade-in">
-        <a
-          href="#hero"
-          className="flex items-center gap-3 group"
-          aria-label="Rumo — back to top"
-        >
-          {/* Compass Rose SVG */}
-          <svg
-            width="40"
-            height="40"
-            viewBox="0 0 40 40"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="flex-shrink-0 drop-shadow-lg transition-transform duration-500 group-hover:rotate-45"
-            aria-hidden="true"
-          >
-            {/* Outer ring */}
-            <circle cx="20" cy="20" r="18.5" stroke="#c4943a" strokeWidth="1.2" opacity="0.5" />
-            <circle cx="20" cy="20" r="16" stroke="#c4943a" strokeWidth="0.6" opacity="0.3" />
-
-            {/* Cardinal points — N/S elongated, E/W shorter, classic compass rose */}
-            {/* North */}
-            <polygon points="20,2 22.8,16 20,13 17.2,16" fill="#c4943a" />
-            {/* South */}
-            <polygon points="20,38 17.2,24 20,27 22.8,24" fill="#c4943a" opacity="0.55" />
-            {/* East */}
-            <polygon points="38,20 24,17.2 27,20 24,22.8" fill="#c4943a" opacity="0.7" />
-            {/* West */}
-            <polygon points="2,20 16,22.8 13,20 16,17.2" fill="#c4943a" opacity="0.7" />
-
-            {/* Intercardinal points — smaller, decorative */}
-            {/* NE */}
-            <polygon points="32.7,7.3 23.5,15 24.8,13.7 26.5,15.4" fill="#c4943a" opacity="0.35" />
-            {/* SE */}
-            <polygon points="32.7,32.7 24.8,26.3 26.5,24.6 23.5,25" fill="#c4943a" opacity="0.35" />
-            {/* SW */}
-            <polygon points="7.3,32.7 15,23.5 13.7,24.8 15.4,26.5" fill="#c4943a" opacity="0.35" />
-            {/* NW */}
-            <polygon points="7.3,7.3 15.4,13.5 13.7,15.2 15,15" fill="#c4943a" opacity="0.35" />
-
-            {/* Center dot */}
-            <circle cx="20" cy="20" r="2.2" fill="#c4943a" />
-            <circle cx="20" cy="20" r="1" fill="#1a2744" />
-          </svg>
-
-          {/* Brand wordmark */}
-          <span
-            className="font-display text-cream text-xl tracking-[0.25em] font-semibold uppercase drop-shadow-lg select-none"
-            style={{ letterSpacing: '0.25em' }}
-          >
-            RUMO
-          </span>
-        </a>
-      </header>
-
       {/* ── Hero Content ── */}
       <div className="relative z-10 flex-1 flex flex-col justify-end pb-28 sm:pb-32 lg:pb-36 px-6 sm:px-10 lg:px-16">
-        {/* Headline — StoryBrand: customer as hero, aspiration-focused */}
+        {/* Logo — centered above headline */}
+        <div className="hero-fade-in mb-8 sm:mb-10 lg:mb-12">
+          <Image
+            src="/rumo-logo.svg"
+            alt="RUMO"
+            width={280}
+            height={100}
+            className="w-[200px] sm:w-[260px] lg:w-[320px] h-auto drop-shadow-lg"
+            priority
+          />
+        </div>
+
+        {/* Headline */}
         <h1
           className="font-display text-white font-semibold leading-[1.08] tracking-tight
                      text-[clamp(2.4rem,7vw,5.5rem)]
@@ -133,7 +89,7 @@ export function Hero() {
           <span className="text-ochre-light">Direction</span> Makes It Yours.
         </h1>
 
-        {/* Subtext — empathy + authority positioning */}
+        {/* Subtext */}
         <p
           className="font-body text-white/70 mt-5 sm:mt-6 lg:mt-7
                      text-base sm:text-lg lg:text-xl
@@ -176,11 +132,8 @@ export function Hero() {
         </button>
       </div>
 
-      {/* ── Inline Styles for Animations ──
-          Using a <style> tag for keyframe animations that can't be done
-          purely with Tailwind utility classes. */}
+      {/* ── Inline Styles for Animations ── */}
       <style>{`
-        /* ── Entrance Animations ── */
         .hero-fade-in {
           opacity: 0;
           animation: heroFadeIn 1s ease-out forwards;
@@ -192,7 +145,6 @@ export function Hero() {
           animation: heroFadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
-        /* Staggered delays */
         .hero-delay-1 {
           animation-delay: 0.4s;
         }
@@ -204,41 +156,25 @@ export function Hero() {
         }
 
         @keyframes heroFadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
 
         @keyframes heroFadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(28px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(28px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ── Scroll Indicator Bounce ── */
         .hero-bounce {
           animation: heroBounce 2s ease-in-out infinite;
           animation-delay: 2s;
         }
 
         @keyframes heroBounce {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(6px);
-          }
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(6px); }
         }
 
-        /* ── Video poster fallback for older browsers ── */
         video::-webkit-media-controls {
           display: none !important;
         }
