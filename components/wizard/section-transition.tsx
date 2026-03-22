@@ -81,7 +81,7 @@ export function SectionTransition({
                    transition-all duration-300 delay-400
                    ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
       >
-        {section === 0 ? 'Let\'s Go' : 'Begin Section'}
+        {section === 0 ? 'LET\'S GO' : 'BEGIN SECTION'}
       </button>
     </div>
   )

@@ -64,7 +64,7 @@ export function Hero() {
       />
 
       {/* ── Hero Content ── */}
-      <div className="relative z-10 flex-1 flex flex-col items-start justify-center px-6 sm:px-10 lg:px-16">
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 sm:px-10 lg:px-16">
         {/* Logo */}
         <div className="hero-fade-in mb-3 sm:mb-4">
           <Image
@@ -81,7 +81,7 @@ export function Hero() {
         <h1
           className="font-display text-white font-semibold leading-[1.08] tracking-tight
                      text-[clamp(2rem,6vw,4.5rem)]
-                     max-w-3xl
+                     max-w-3xl mx-auto
                      hero-fade-in-up hero-delay-1"
         >
           FIND YOUR DIRECTION
@@ -103,7 +103,7 @@ export function Hero() {
         <p
           className="font-body text-white/70 mt-5 sm:mt-6 lg:mt-7
                      text-base sm:text-lg lg:text-xl
-                     max-w-xl leading-relaxed
+                     max-w-xl mx-auto leading-relaxed
                      hero-fade-in-up hero-delay-2"
         >
           Most people use AI without telling it who they are.
@@ -123,7 +123,7 @@ export function Hero() {
                        hover:-translate-y-0.5 active:translate-y-0
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
           >
-            Begin Your Journey
+            BEGIN YOUR JOURNEY
             <svg
               width="18"
               height="18"
@@ -154,7 +154,7 @@ export function Hero() {
           aria-label="Scroll to next section"
         >
           <span className="font-body text-xs tracking-[0.2em] uppercase">
-            Start Here
+            START HERE
           </span>
           <svg
             width="20"

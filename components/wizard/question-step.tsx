@@ -321,7 +321,7 @@ export function QuestionStep() {
                            : 'bg-navy/10 text-navy/30 cursor-not-allowed'
                        }`}
           >
-            {isLastOverall ? 'Finish' : 'Continue →'}
+            {isLastOverall ? 'FINISH' : 'CONTINUE →'}
           </button>
         </div>
       </div>

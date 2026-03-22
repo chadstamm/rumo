@@ -249,7 +249,7 @@ export function Horizon() {
                          whitespace-nowrap"
             >
               <span className="flex items-center justify-center gap-2">
-                Stay on Course
+                STAY ON COURSE
                 <svg
                   width="16"
                   height="16"
