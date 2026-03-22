@@ -109,6 +109,39 @@ export function Hero() {
           Most people use AI without telling it who they are.
           Rumo fixes that in one journey.
         </p>
+
+        {/* CTA Button */}
+        <div className="mt-8 sm:mt-10 hero-fade-in-up hero-delay-2" style={{ animationDelay: '1s' }}>
+          <a
+            href="#the-path"
+            className="group inline-flex items-center gap-2.5
+                       px-8 py-4 rounded-lg
+                       bg-teal text-white font-body font-semibold text-sm tracking-wide
+                       shadow-lg shadow-teal/25
+                       transition-all duration-300
+                       hover:bg-teal-light hover:shadow-xl hover:shadow-teal/30
+                       hover:-translate-y-0.5 active:translate-y-0
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+          >
+            Begin Your Journey
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              className="transition-transform duration-300 group-hover:translate-x-0.5"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 9h10M10 5l4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
 
       {/* ── Scroll Indicator ── */}

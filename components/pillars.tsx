@@ -201,7 +201,7 @@ function WhatYouGet() {
         {/* CTA */}
         <div className="text-center mt-12">
           <a
-            href="/start"
+            href="#the-path"
             className="inline-flex items-center gap-2
                        px-8 py-4 rounded-lg
                        bg-teal text-white font-body font-semibold text-sm tracking-wide
