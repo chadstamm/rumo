@@ -308,12 +308,12 @@ export function PillarSection({
                 rel="noopener noreferrer"
                 className="pillar-cta group inline-flex items-center gap-2
                            px-7 py-3.5 rounded-lg
-                           bg-ochre text-white font-body font-semibold text-sm tracking-wide
-                           shadow-lg shadow-ochre/20
+                           bg-teal text-white font-body font-semibold text-sm tracking-wide
+                           shadow-lg shadow-teal/20
                            transition-all duration-300
-                           hover:bg-ochre-light hover:shadow-xl hover:shadow-ochre/30
+                           hover:bg-teal-light hover:shadow-xl hover:shadow-teal/30
                            hover:-translate-y-0.5
-                           focus:outline-none focus-visible:ring-2 focus-visible:ring-ochre focus-visible:ring-offset-2
+                           focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2
                            active:translate-y-0"
                 style={
                   { '--tw-ring-offset-color': isDark ? '#1a2744' : '#faf6f1' } as React.CSSProperties

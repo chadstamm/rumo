@@ -254,7 +254,7 @@ export function Guide() {
                              focus:outline-none focus-visible:ring-2 focus-visible:ring-ochre focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
                   aria-label={label}
                 >
-                  <span className="transition-colors duration-300 text-navy/40 group-hover:text-ochre">
+                  <span className="transition-colors duration-300 text-navy/40 group-hover:text-teal">
                     {icon}
                   </span>
                   <span className="hidden sm:inline">{label}</span>

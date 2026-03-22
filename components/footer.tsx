@@ -28,7 +28,7 @@ export function Footer() {
               href="https://chadstamm.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cream/60 hover:text-ochre transition-colors duration-300"
+              className="text-cream/60 hover:text-teal transition-colors duration-300"
             >
               Chad Stamm
             </a>
@@ -40,7 +40,7 @@ export function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 font-body text-xs sm:text-sm text-cream/50
-                       hover:text-ochre transition-colors duration-300 order-3"
+                       hover:text-teal transition-colors duration-300 order-3"
           >
             <Coffee size={14} strokeWidth={1.5} aria-hidden="true" />
             <span>Buy me a coffee</span>

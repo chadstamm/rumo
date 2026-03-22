@@ -233,18 +233,18 @@ export function Horizon() {
                          bg-navy-light/80 border border-cream/[0.08]
                          text-cream placeholder:text-cream/30
                          font-body text-sm
-                         focus:outline-none focus:border-ochre/40 focus:bg-navy-light
+                         focus:outline-none focus:border-teal/40 focus:bg-navy-light
                          transition-colors duration-200"
             />
             <button
               type="submit"
               className="horizon-cta group
                          px-6 py-3.5 rounded-lg sm:rounded-l-none
-                         bg-ochre text-white
+                         bg-teal text-white
                          font-body font-semibold text-sm tracking-wide
                          transition-all duration-300
-                         hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/20
-                         focus:outline-none focus-visible:ring-2 focus-visible:ring-ochre focus-visible:ring-offset-2 focus-visible:ring-offset-navy
+                         hover:bg-teal-light hover:shadow-lg hover:shadow-teal/20
+                         focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-navy
                          active:scale-[0.98]
                          whitespace-nowrap"
             >
@@ -308,9 +308,9 @@ export function Horizon() {
           border-radius: inherit;
           background: linear-gradient(
             135deg,
-            rgba(212, 169, 79, 0.3),
-            rgba(196, 148, 58, 0.1),
-            rgba(212, 169, 79, 0.3)
+            rgba(30, 190, 177, 0.3),
+            rgba(30, 190, 177, 0.1),
+            rgba(30, 190, 177, 0.3)
           );
           opacity: 0;
           transition: opacity 0.3s ease;

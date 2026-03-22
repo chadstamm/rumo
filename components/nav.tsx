@@ -66,8 +66,8 @@ export function Nav() {
                 href={href}
                 className={`font-body text-sm tracking-wide transition-colors duration-200 ${
                   isActive
-                    ? 'text-ochre font-medium'
-                    : 'text-navy opacity-70 hover:opacity-100 hover:text-navy'
+                    ? 'text-teal font-medium'
+                    : 'text-navy opacity-70 hover:opacity-100 hover:text-teal'
                 }`}
               >
                 {label}

@@ -106,7 +106,7 @@ export function Hero() {
         <button
           onClick={handleScrollDown}
           className="group flex flex-col items-center gap-2 cursor-pointer
-                     text-white/40 hover:text-white/70 transition-colors duration-300
+                     text-white/40 hover:text-teal-light transition-colors duration-300
                      focus:outline-none focus-visible:ring-2 focus-visible:ring-ochre focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded"
           aria-label="Scroll to next section"
         >
