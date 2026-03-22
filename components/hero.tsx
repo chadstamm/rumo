@@ -64,7 +64,7 @@ export function Hero() {
       />
 
       {/* ── Hero Content ── */}
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 sm:px-10 lg:px-16">
+      <div className="relative z-10 flex-1 flex flex-col items-start justify-center px-10 sm:px-16 lg:px-24">
         {/* Logo */}
         <div className="hero-fade-in mb-2 sm:mb-3">
           <Image
@@ -92,7 +92,7 @@ export function Hero() {
         <h1
           className="font-display text-white font-semibold leading-[1.08] tracking-tight
                      text-[clamp(2rem,6vw,4.5rem)]
-                     max-w-3xl mx-auto
+                     max-w-3xl
                      hero-fade-in-up hero-delay-1"
         >
           FIND YOUR DIRECTION
@@ -104,7 +104,7 @@ export function Hero() {
         <p
           className="font-body text-white/70 mt-5 sm:mt-6 lg:mt-7
                      text-base sm:text-lg lg:text-xl
-                     max-w-xl mx-auto leading-relaxed
+                     max-w-xl leading-relaxed
                      hero-fade-in-up hero-delay-2"
         >
           Most people use AI without telling it who they are.
