@@ -64,15 +64,15 @@ export function Hero() {
       />
 
       {/* ── Hero Content ── */}
-      <div className="relative z-10 flex-1 flex flex-col justify-end pb-28 sm:pb-32 lg:pb-36 px-6 sm:px-10 lg:px-16">
-        {/* Logo — centered above headline */}
-        <div className="hero-fade-in mb-8 sm:mb-10 lg:mb-12">
+      <div className="relative z-10 flex-1 flex flex-col items-start justify-center px-6 sm:px-10 lg:px-16">
+        {/* Logo */}
+        <div className="hero-fade-in mb-6 sm:mb-8">
           <Image
             src="/rumo-logo-teal.svg"
             alt="RUMO"
             width={500}
             height={147}
-            className="w-[300px] sm:w-[420px] lg:w-[540px] h-auto drop-shadow-lg"
+            className="w-[240px] sm:w-[320px] lg:w-[400px] h-auto drop-shadow-lg"
             priority
           />
         </div>
@@ -80,8 +80,8 @@ export function Hero() {
         {/* Headline */}
         <h1
           className="font-display text-white font-semibold leading-[1.08] tracking-tight
-                     text-[clamp(2.4rem,7vw,5.5rem)]
-                     max-w-4xl
+                     text-[clamp(2rem,6vw,4.5rem)]
+                     max-w-3xl
                      hero-fade-in-up hero-delay-1"
         >
           FIND YOUR DIRECTION
