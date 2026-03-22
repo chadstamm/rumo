@@ -79,13 +79,13 @@ export function Hero() {
 
         {/* Descriptor — between logo and headline */}
         <p
-          className="font-body text-white/50 mb-5 sm:mb-6
-                     text-[11px] sm:text-sm lg:text-base tracking-[0.35em] sm:tracking-[0.4em] uppercase
+          className="font-body text-white/60 font-semibold mb-5 sm:mb-6
+                     text-xs sm:text-sm lg:text-base tracking-[0.35em] sm:tracking-[0.45em] uppercase
                      w-[240px] sm:w-[320px] lg:w-[400px]
                      hero-fade-in"
           style={{ animationDelay: '0.3s' }}
         >
-          Personal AI Navigation System
+          AI Navigation System
         </p>
 
         {/* Headline */}
