@@ -68,7 +68,7 @@ export function Hero() {
         {/* Logo — centered above headline */}
         <div className="hero-fade-in mb-8 sm:mb-10 lg:mb-12">
           <Image
-            src="/rumo-logo.svg"
+            src="/rumo-logo-teal.svg"
             alt="RUMO"
             width={500}
             height={147}
@@ -107,7 +107,7 @@ export function Hero() {
                      hero-fade-in-up hero-delay-2"
         >
           Most people use AI without telling it who they are.
-          Rumo fixes that in four steps.
+          Rumo fixes that in one journey.
         </p>
       </div>
 

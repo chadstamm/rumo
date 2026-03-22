@@ -13,7 +13,7 @@ const openSans = Open_Sans({
 export const metadata: Metadata = {
   title: 'RUMO — Find Your Direction',
   description:
-    'Most people use AI without telling it who they are. Rumo is a personal AI foundation system that fixes that in four steps.',
+    'Most people use AI without telling it who they are. Rumo is a personal AI foundation system — one journey, four documents that know you.',
 }
 
 export default function RootLayout({
