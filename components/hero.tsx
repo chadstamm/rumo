@@ -106,7 +106,7 @@ export function Hero() {
             href="#the-path"
             className="group inline-flex items-center gap-2.5
                        px-8 py-4 rounded-lg
-                       bg-teal text-white font-body font-semibold text-sm tracking-wide
+                       bg-teal text-white font-body font-bold text-sm tracking-wide
                        shadow-lg shadow-teal/25
                        transition-all duration-300
                        hover:bg-teal-light hover:shadow-xl hover:shadow-teal/30
