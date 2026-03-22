@@ -68,7 +68,7 @@ export function Hero() {
         {/* Logo */}
         <div className="hero-fade-in mb-3 sm:mb-4">
           <Image
-            src="/rumo-logo-teal.svg"
+            src="/rumo-logo.svg"
             alt="RUMO"
             width={500}
             height={147}
