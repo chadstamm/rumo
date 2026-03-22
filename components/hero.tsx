@@ -66,7 +66,7 @@ export function Hero() {
       {/* ── Hero Content ── */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 sm:px-10 lg:px-16">
         {/* Logo */}
-        <div className="hero-fade-in mb-3 sm:mb-4">
+        <div className="hero-fade-in mb-2 sm:mb-3">
           <Image
             src="/rumo-logo.svg"
             alt="RUMO"
@@ -76,6 +76,17 @@ export function Hero() {
             priority
           />
         </div>
+
+        {/* Descriptor — between logo and headline */}
+        <p
+          className="font-body text-white/50 mb-5 sm:mb-6
+                     text-[11px] sm:text-sm lg:text-base tracking-[0.35em] sm:tracking-[0.4em] uppercase
+                     w-[240px] sm:w-[320px] lg:w-[400px]
+                     hero-fade-in"
+          style={{ animationDelay: '0.3s' }}
+        >
+          Personal AI Navigation System
+        </p>
 
         {/* Headline */}
         <h1
@@ -88,16 +99,6 @@ export function Hero() {
           <br />
           <span className="text-ochre-light">WITH RUMO</span>
         </h1>
-
-        {/* Descriptor — prevents travel-brand confusion */}
-        <p
-          className="font-body text-white/50 mt-3 sm:mt-4
-                     text-xs sm:text-sm tracking-[0.2em] uppercase
-                     hero-fade-in-up hero-delay-1"
-          style={{ animationDelay: '0.6s' }}
-        >
-          Personal AI Foundation System
-        </p>
 
         {/* Subtext */}
         <p
@@ -154,7 +155,7 @@ export function Hero() {
           aria-label="Scroll to next section"
         >
           <span className="font-body text-xs tracking-[0.2em] uppercase">
-            START HERE
+            LEARN MORE
           </span>
           <svg
             width="20"
