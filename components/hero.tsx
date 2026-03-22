@@ -71,8 +71,8 @@ export function Hero() {
             src="/rumo-logo.svg"
             alt="RUMO"
             width={500}
-            height={500}
-            className="w-[280px] sm:w-[380px] lg:w-[480px] h-auto drop-shadow-lg"
+            height={147}
+            className="w-[300px] sm:w-[420px] lg:w-[540px] h-auto drop-shadow-lg"
             priority
           />
         </div>
