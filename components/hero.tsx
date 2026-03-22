@@ -97,19 +97,8 @@ export function Hero() {
         >
           FIND YOUR DIRECTION
           <br />
-          <span className="text-ochre-light">WITH RUMO</span>
+          <span className="text-ochre-light">WITH RUMO.</span>
         </h1>
-
-        {/* Subtext */}
-        <p
-          className="font-body text-white/70 mt-5 sm:mt-6 lg:mt-7
-                     text-base sm:text-lg lg:text-xl
-                     max-w-xl leading-relaxed
-                     hero-fade-in-up hero-delay-2"
-        >
-          Most people use AI without telling it who they are.
-          Rumo fixes that in one journey.
-        </p>
 
         {/* CTA Button */}
         <div className="mt-8 sm:mt-10 hero-fade-in-up hero-delay-2" style={{ animationDelay: '1s' }}>
