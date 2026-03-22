@@ -50,9 +50,9 @@ export function Nav() {
           <Image
             src="/rumo-logo-dark.svg"
             alt="RUMO"
-            width={120}
-            height={40}
-            className="h-8 w-auto"
+            width={200}
+            height={60}
+            className="h-14 w-auto"
           />
         </Link>
 

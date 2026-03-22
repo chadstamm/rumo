@@ -70,9 +70,9 @@ export function Hero() {
           <Image
             src="/rumo-logo.svg"
             alt="RUMO"
-            width={280}
-            height={100}
-            className="w-[200px] sm:w-[260px] lg:w-[320px] h-auto drop-shadow-lg"
+            width={500}
+            height={500}
+            className="w-[280px] sm:w-[380px] lg:w-[480px] h-auto drop-shadow-lg"
             priority
           />
         </div>
