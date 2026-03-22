@@ -84,10 +84,20 @@ export function Hero() {
                      max-w-4xl
                      hero-fade-in-up hero-delay-1"
         >
-          AI Is Powerful.
+          FIND YOUR DIRECTION
           <br />
-          <span className="text-ochre-light">Direction</span> Makes It Yours.
+          <span className="text-ochre-light">WITH RUMO</span>
         </h1>
+
+        {/* Descriptor — prevents travel-brand confusion */}
+        <p
+          className="font-body text-white/50 mt-3 sm:mt-4
+                     text-xs sm:text-sm tracking-[0.2em] uppercase
+                     hero-fade-in-up hero-delay-1"
+          style={{ animationDelay: '0.6s' }}
+        >
+          Personal AI Foundation System
+        </p>
 
         {/* Subtext */}
         <p
@@ -96,8 +106,8 @@ export function Hero() {
                      max-w-xl leading-relaxed
                      hero-fade-in-up hero-delay-2"
         >
-          Most people open AI and get generic answers.
-          You deserve a starting point built around who you actually are.
+          Most people use AI without telling it who they are.
+          Rumo fixes that in four steps.
         </p>
       </div>
 

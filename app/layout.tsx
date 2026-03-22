@@ -11,9 +11,9 @@ const openSans = Open_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'RUMO — Find Your Direction with AI',
+  title: 'RUMO — Find Your Direction',
   description:
-    'AI is powerful but generic. You need direction first. Build your personal AI foundation with Rumo.',
+    'Most people use AI without telling it who they are. Rumo is a personal AI foundation system that fixes that in four steps.',
 }
 
 export default function RootLayout({
