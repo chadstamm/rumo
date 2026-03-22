@@ -22,7 +22,7 @@ export function Problem() {
       >
         {/* Eyebrow label */}
         <p
-          className="font-body text-ocean/70 text-xs sm:text-sm tracking-[0.25em] uppercase mb-8 sm:mb-10"
+          className="font-body text-ocean/70 font-bold text-sm sm:text-base tracking-[0.25em] uppercase mb-8 sm:mb-10"
         >
           The Problem
         </p>
