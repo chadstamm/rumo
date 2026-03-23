@@ -1,0 +1,201 @@
+import { AIModel, AIModelId, ModelFieldSpec } from '@/types/models';
+
+export const AI_MODELS: AIModel[] = [
+  {
+    id: 'chatgpt',
+    name: 'ChatGPT',
+    company: 'OpenAI',
+    color: '#10A37F',
+    description: 'Custom Instructions, Personality & Characteristics',
+  },
+  {
+    id: 'claude',
+    name: 'Claude',
+    company: 'Anthropic',
+    color: '#D4A574',
+    description: 'Profile, Personal Preferences & Style',
+  },
+  {
+    id: 'gemini',
+    name: 'Gemini',
+    company: 'Google',
+    color: '#4285F4',
+    description: 'Instructions for Gemini',
+  },
+  {
+    id: 'perplexity',
+    name: 'Perplexity',
+    company: 'Perplexity AI',
+    color: '#20808D',
+    description: 'Personalization & Response Preferences',
+  },
+];
+
+export const MODEL_FIELDS: Record<AIModelId, ModelFieldSpec[]> = {
+  chatgpt: [
+    {
+      id: 'personality',
+      label: 'Base style and tone',
+      type: 'dropdown',
+      options: ['Default', 'Professional', 'Friendly', 'Candid', 'Quirky', 'Efficient', 'Nerdy', 'Cynical'],
+      navigationPath: 'Settings → Personalization → Base style and tone',
+    },
+    {
+      id: 'warm',
+      label: 'Warm',
+      type: 'three-way',
+      options: ['More', 'Default', 'Less'],
+      helpText: 'How sincere, kind, and friendly the tone sounds',
+      navigationPath: 'Settings → Personalization → Characteristics',
+    },
+    {
+      id: 'enthusiastic',
+      label: 'Enthusiastic',
+      type: 'three-way',
+      options: ['More', 'Default', 'Less'],
+      helpText: 'Level of enthusiasm and energy in responses',
+      navigationPath: 'Settings → Personalization → Characteristics',
+    },
+    {
+      id: 'headersAndLists',
+      label: 'Headers & Lists',
+      type: 'three-way',
+      options: ['More', 'Default', 'Less'],
+      helpText: 'Use of markdown formatting (headers, lists, tables)',
+      navigationPath: 'Settings → Personalization → Characteristics',
+    },
+    {
+      id: 'emoji',
+      label: 'Emoji',
+      type: 'three-way',
+      options: ['More', 'Default', 'Less'],
+      helpText: 'Frequency of emoji use in responses',
+      navigationPath: 'Settings → Personalization → Characteristics',
+    },
+    {
+      id: 'customInstructions',
+      label: 'Custom instructions',
+      type: 'textarea',
+      charLimit: 1500,
+      placeholder: 'How ChatGPT should respond, behave, and communicate...',
+      helpText: 'Standing instructions for how ChatGPT responds',
+      navigationPath: 'Settings → Personalization → Custom instructions',
+    },
+    {
+      id: 'nickname',
+      label: 'Nickname',
+      type: 'text',
+      placeholder: 'How ChatGPT should address you',
+      navigationPath: 'Settings → About you → Nickname',
+    },
+    {
+      id: 'occupation',
+      label: 'Occupation',
+      type: 'text',
+      placeholder: 'Your job or profession',
+      navigationPath: 'Settings → About you → Occupation',
+    },
+    {
+      id: 'knowAboutYou',
+      label: 'More about you',
+      type: 'textarea',
+      charLimit: 1500,
+      placeholder: 'What you should know about me...',
+      helpText: 'What ChatGPT should know about you',
+      navigationPath: 'Settings → About you → More about you',
+    },
+  ],
+  claude: [
+    {
+      id: 'fullName',
+      label: 'Full name',
+      type: 'text',
+      placeholder: 'Your full name',
+      navigationPath: 'Initials (bottom-left) → Settings → Profile → Full name',
+    },
+    {
+      id: 'callYou',
+      label: 'What should Claude call you?',
+      type: 'text',
+      placeholder: 'Your preferred name',
+      navigationPath: 'Initials (bottom-left) → Settings → Profile → What should Claude call you?',
+    },
+    {
+      id: 'workDescription',
+      label: 'What best describes your work?',
+      type: 'dropdown',
+      options: ['Product management', 'Engineering', 'Human resources', 'Finance', 'Marketing', 'Sales', 'Operations', 'Data science', 'Design', 'Legal', 'Other'],
+      navigationPath: 'Initials (bottom-left) → Settings → Profile → What best describes your work?',
+    },
+    {
+      id: 'personalPreferences',
+      label: 'Personal preferences',
+      type: 'textarea',
+      placeholder: 'What personal preferences should Claude consider in responses?',
+      helpText: 'Your preferences will apply to all conversations',
+      navigationPath: 'Initials (bottom-left) → Settings → Profile → Personal preferences',
+    },
+    {
+      id: 'recommendedStyle',
+      label: 'Recommended Style',
+      type: 'dropdown',
+      options: ['Normal', 'Concise', 'Explanatory', 'Formal'],
+      helpText: 'Or create a Custom Style with the guidance below',
+      navigationPath: 'Style selector (bottom of chat input)',
+    },
+  ],
+  gemini: [
+    {
+      id: 'savedInfo',
+      label: 'Saved Info',
+      type: 'textarea',
+      placeholder: 'Personal facts and preferences for Gemini...',
+      helpText: 'Add each line as a separate item in Settings → Personal Intelligence → Saved Info',
+      navigationPath: 'Settings → Personal Intelligence → Saved Info',
+    },
+    {
+      id: 'instructions',
+      label: 'Instructions for Gemini',
+      type: 'textarea',
+      placeholder: 'Behavioral and response directives for Gemini...',
+      helpText: 'How Gemini should respond — tone, format, style rules, and communication preferences',
+      navigationPath: 'Settings → Personal Intelligence → Instructions for Gemini',
+    },
+  ],
+  perplexity: [
+    {
+      id: 'occupation',
+      label: 'Your occupation',
+      type: 'text',
+      placeholder: 'Engineer, student, etc.',
+      navigationPath: 'Settings → Personalization → Your occupation',
+    },
+    {
+      id: 'customInstructions',
+      label: 'Custom instructions',
+      type: 'textarea',
+      placeholder: 'Preferences, interests and more about you',
+      navigationPath: 'Settings → Personalization → Custom instructions',
+    },
+    {
+      id: 'responseLength',
+      label: 'Response Length',
+      type: 'three-way',
+      options: ['More', 'Default', 'Less'],
+      helpText: 'How long or short Perplexity responses should be',
+      navigationPath: 'Settings → Response preferences → Response Length',
+    },
+    {
+      id: 'headersAndLists',
+      label: 'Headers and Lists',
+      type: 'dropdown',
+      options: ['Lists', 'Default', 'Paragraphs'],
+      helpText: 'Lists = prefer bulleted lists, Default = mix of paragraphs and lists, Paragraphs = prefer paragraph format',
+      navigationPath: 'Settings → Response preferences → Headers and Lists',
+    },
+  ],
+};
+
+export function getModelById(id: AIModelId): AIModel {
+  return AI_MODELS.find(m => m.id === id)!;
+}

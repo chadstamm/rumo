@@ -172,7 +172,7 @@ export function Pillars() {
                          hover:bg-teal-light hover:shadow-xl hover:shadow-teal/25
                          hover:-translate-y-0.5 active:translate-y-0"
             >
-              BUILD ALL FOUR AT ONCE
+              START FREE — BUILD YOUR INSTRUCTIONS
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                 <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>

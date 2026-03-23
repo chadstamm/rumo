@@ -1,14 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import type { DocumentConfig } from '@/data/documents'
-import type { Section } from '@/types/wizard'
 import { getQuestionsForSection } from '@/data/questions'
-import { ProgressBar } from './progress-bar'
-import { QuestionStep } from './question-step'
-import { SectionTransition } from './section-transition'
 import { CompassRose } from '@/components/compass-rose'
-import { WizardProvider, useWizard } from '@/context/wizard-context'
 
 // ── Hero backgrounds per document ──
 
@@ -102,8 +96,8 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
               </div>
               <div className="w-px h-10 bg-cream/10" aria-hidden="true" />
               <div className="text-center">
-                <p className="font-display text-2xl sm:text-3xl text-cream/60 font-semibold">Free</p>
-                <p className="font-body text-[10px] tracking-[0.15em] uppercase mt-0.5">Always</p>
+                <p className="font-display text-2xl sm:text-3xl text-ochre font-semibold">Pro</p>
+                <p className="font-body text-[10px] tracking-[0.15em] uppercase mt-0.5">Coming Soon</p>
               </div>
             </div>
           </div>
@@ -115,65 +109,46 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
 
 // ── Wizard Content (wider layout) ──
 
-function DocumentWizardContent({ config }: { config: DocumentConfig }) {
-  const { state, isComplete } = useWizard()
-  const [showingSectionIntro, setShowingSectionIntro] = useState(true)
-  const [lastSection, setLastSection] = useState(state.currentSection)
-
-  if (state.currentSection !== lastSection) {
-    setLastSection(state.currentSection)
-    setShowingSectionIntro(true)
-  }
-
-  // Complete state
-  if (isComplete) {
-    return (
-      <div className="bg-cream">
-        <div className="max-w-2xl mx-auto text-center px-6 py-20 sm:py-28">
-          <CompassRose className="w-16 h-16 text-teal/40 mx-auto mb-8" />
-          <h2
-            className="font-display text-navy font-semibold leading-tight mb-4"
-            style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
-          >
-            Your {config.title} Is Ready.
-          </h2>
-          <p className="font-body text-muted text-base leading-relaxed mb-10">
-            Document generation is coming soon. Your answers are saved.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="/"
-              className="font-body font-semibold text-sm px-7 py-3 rounded-lg
-                         bg-teal text-white hover:bg-teal-light
-                         transition-all duration-300"
-            >
-              Back to Rumo
-            </a>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
+function AnchorComingSoon({ config }: { config: DocumentConfig }) {
   return (
     <div className="bg-cream">
-      {/* Progress — full width bar */}
-      <div className="border-b border-navy/[0.06]">
-        <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 py-5">
-          <ProgressBar />
-        </div>
-      </div>
+      <div className="max-w-2xl mx-auto text-center px-6 py-20 sm:py-28">
+        <CompassRose className="w-16 h-16 text-ochre/30 mx-auto mb-8" />
 
-      {/* Question area — wider on desktop */}
-      <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 py-10 sm:py-14">
-        {showingSectionIntro ? (
-          <SectionTransition
-            section={state.currentSection}
-            onBegin={() => setShowingSectionIntro(false)}
-          />
-        ) : (
-          <QuestionStep />
-        )}
+        <h2
+          className="font-display text-navy font-semibold leading-tight mb-4"
+          style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
+        >
+          {config.title} Builder
+        </h2>
+
+        <p className="font-body text-muted text-base sm:text-lg leading-relaxed mb-4 max-w-lg mx-auto">
+          Build your {config.title.toLowerCase()} with guided questions and AI-powered generation.
+          This context anchor will be available with a Rumo subscription.
+        </p>
+
+        <p className="font-body text-navy/30 text-sm mb-10">
+          Launching soon. Start with free custom instructions in the meantime.
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href="/#the-path"
+            className="font-body font-bold text-sm px-8 py-3.5 rounded-lg uppercase
+                       bg-teal text-white
+                       hover:bg-teal-light hover:shadow-lg hover:shadow-teal/20
+                       hover:-translate-y-0.5 active:translate-y-0
+                       transition-all duration-300"
+          >
+            BUILD FREE INSTRUCTIONS
+          </a>
+          <a
+            href="/"
+            className="font-body text-sm text-navy/40 hover:text-navy px-5 py-2.5 transition-colors duration-200"
+          >
+            ← Back to Rumo
+          </a>
+        </div>
       </div>
     </div>
   )
@@ -185,9 +160,7 @@ export function DocumentWizard({ config }: { config: DocumentConfig }) {
   return (
     <div className="min-h-screen bg-cream">
       <DocumentHero config={config} />
-      <WizardProvider filterSections={config.sections} storageKey={config.slug}>
-        <DocumentWizardContent config={config} />
-      </WizardProvider>
+      <AnchorComingSoon config={config} />
     </div>
   )
 }
