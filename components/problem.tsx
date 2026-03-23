@@ -41,18 +41,18 @@ export function Problem() {
         {/* Thin ochre separator between heading and body */}
         <div className="w-12 h-[2px] bg-ochre/60 mb-10 sm:mb-14" aria-hidden="true" />
 
-        {/* Body copy — short, punchy, conversational */}
+        {/* Body copy — problem, empathy, answer */}
         <div className="space-y-5 sm:space-y-6">
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            You open ChatGPT. You type a question. You get an answer that could've been written for anyone. That's not a revolution — that's a search engine with better grammar.
+            Most professionals think they&apos;re using AI. They&apos;re prompting. They&apos;re getting answers. They&apos;re checking the box. But there&apos;s a difference between using AI and actually working with it, and most people don&apos;t know that difference exists yet.
           </p>
 
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            The problem isn't AI. The problem is that AI doesn't know you. It doesn't know how you think, what you've built, or where you're headed. So it gives you generic. And generic is a waste of your time.
+            It&apos;s nobody&apos;s fault. There&apos;s no manual for this, especially when the AI landscape seems to change every week, if not every day. The reality is people need a resource that pulls it all together.
           </p>
 
           <p className="font-body text-navy font-medium text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            You shouldn't have to settle for that. Not when it takes four steps to fix it.
+            That&apos;s what Rumo is. An AI navigation system that starts with the most overlooked input in AI: you.
           </p>
         </div>
       </div>
