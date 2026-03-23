@@ -2,7 +2,6 @@ import { Hero } from '@/components/hero'
 import { Problem } from '@/components/problem'
 import { Pillars } from '@/components/pillars'
 import { WizardEmbedded } from '@/components/wizard/wizard-embedded'
-import { Guide } from '@/components/guide'
 import { Footer } from '@/components/footer'
 
 export default function Home() {
@@ -12,7 +11,6 @@ export default function Home() {
       <Problem />
       <Pillars />
       <WizardEmbedded />
-      <Guide />
       <Footer />
     </div>
   )
