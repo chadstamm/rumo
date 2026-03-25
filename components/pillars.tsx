@@ -42,18 +42,17 @@ function StoriesIcon({ className }: { className?: string }) {
   )
 }
 
-function InstructionsIcon({ className }: { className?: string }) {
+function SituationIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Document with checkmark badge */}
-      <rect x="7" y="3" width="20" height="28" rx="3" fill="currentColor" opacity="0.1" stroke="currentColor" strokeWidth="2" />
-      <path d="M13 11h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M13 16h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M13 21h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      {/* Checkmark circle — bold, overlapping */}
-      <circle cx="29" cy="28" r="9" fill="currentColor" opacity="0.15" />
-      <circle cx="29" cy="28" r="9" stroke="currentColor" strokeWidth="2" />
-      <path d="M24.5 28l3 3 5.5-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Compass / current bearing */}
+      <circle cx="20" cy="20" r="16" fill="currentColor" opacity="0.08" stroke="currentColor" strokeWidth="2" />
+      <circle cx="20" cy="20" r="11" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
+      {/* Compass needle pointing NE — you are here */}
+      <polygon points="20,6 23,18 20,16 17,18" fill="currentColor" />
+      <polygon points="20,34 17,22 20,24 23,22" fill="currentColor" opacity="0.3" />
+      {/* Center dot */}
+      <circle cx="20" cy="20" r="2.5" fill="currentColor" />
     </svg>
   )
 }
@@ -81,9 +80,9 @@ const STEPS = [
   },
   {
     number: '04',
-    title: 'Instructions',
-    description: 'Custom AI instructions built from everything you shared. Tailored for every platform you use.',
-    Icon: InstructionsIcon,
+    title: 'Situation',
+    description: 'Where you are right now — your goals, your constraints, your season of life. The context that keeps AI relevant, not just accurate.',
+    Icon: SituationIcon,
   },
 ]
 

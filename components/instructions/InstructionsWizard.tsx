@@ -117,8 +117,8 @@ export function InstructionsWizard() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             onAnimationStart={() => {
-              // Scroll to top of wizard on step change
-              const el = document.getElementById('the-path')
+              // Scroll to wizard content area (below navy header) on step change
+              const el = document.getElementById('wizard-content')
               if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
             }}
           >

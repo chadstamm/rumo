@@ -54,8 +54,8 @@ export function WizardEmbedded() {
         <div className="h-16 bg-gradient-to-b from-navy to-cream" aria-hidden="true" />
       </div>
 
-      {/* Wizard */}
-      <div className="bg-cream">
+      {/* Wizard — scroll anchor targets the content, not the header */}
+      <div id="wizard-content" className="bg-cream scroll-mt-4">
         <InstructionsProvider>
           <InstructionsWizard />
         </InstructionsProvider>
