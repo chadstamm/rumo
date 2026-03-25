@@ -6,62 +6,65 @@ import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 const ANCHORS = [
   {
     name: 'Personal Constitution',
-    desc: 'Who you are always',
+    desc: 'Who you are always — your values, beliefs, and identity foundation',
     color: 'ochre' as const,
     icon: (
-      <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="7.5" r="3.5" fill="currentColor" opacity="0.2" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="9" r="4" fill="currentColor" opacity="0.25" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
   },
   {
     name: 'Writing Codex',
-    desc: 'How you write',
+    desc: 'How you write — your rhythms, patterns, and voice fingerprint',
     color: 'ochre' as const,
     icon: (
-      <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
-        <rect x="3" y="14" width="3" height="4" rx="1" fill="currentColor" />
-        <rect x="7.5" y="8" width="3" height="10" rx="1" fill="currentColor" />
-        <rect x="12" y="4" width="3" height="14" rx="1" fill="currentColor" opacity="0.6" />
-        <rect x="16.5" y="10" width="2.5" height="8" rx="1" fill="currentColor" opacity="0.4" />
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="16" width="3.5" height="5" rx="1" fill="currentColor" />
+        <rect x="8" y="9" width="3.5" height="12" rx="1" fill="currentColor" opacity="0.7" />
+        <rect x="13" y="4" width="3.5" height="17" rx="1" fill="currentColor" opacity="0.5" />
+        <rect x="18" y="11" width="3" height="10" rx="1" fill="currentColor" opacity="0.35" />
       </svg>
     ),
   },
   {
     name: 'State of the Union',
-    desc: 'Where you are right now',
+    desc: 'Where you are right now — your goals, constraints, and current season',
     color: 'ochre' as const,
     icon: (
-      <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.5" />
-        <polygon points="10,4 11.2,9 10,8 8.8,9" fill="currentColor" />
-        <circle cx="10" cy="10" r="2" fill="currentColor" />
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="12" cy="12" r="5.5" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+        <polygon points="12,4.5 13.5,10.5 12,9.5 10.5,10.5" fill="currentColor" />
+        <circle cx="12" cy="12" r="2" fill="currentColor" />
       </svg>
     ),
   },
   {
     name: 'Story Bank',
-    desc: 'What you\'ve lived',
+    desc: 'What you\'ve lived — the moments, crossroads, and raw material',
     color: 'ochre' as const,
     icon: (
-      <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
-        <path d="M10 4C7.5 3 4.5 2.5 2 3v13c2.5-.5 5.5 0 8 1" fill="currentColor" opacity="0.15" />
-        <path d="M10 4c2.5-1 5.5-1.5 8-.5v13c-2.5-.5-5.5 0-8 1" fill="currentColor" opacity="0.15" />
-        <path d="M10 4C7.5 3 4.5 2.5 2 3v13c2.5-.5 5.5 0 8 1" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-        <path d="M10 4c2.5-1 5.5-1.5 8-.5v13c-2.5-.5-5.5 0-8 1" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-        <path d="M10 4v13" stroke="currentColor" strokeWidth="1.5" />
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5C9 4 6 3.5 3 4v15c3-.5 6 0 9 1" fill="currentColor" opacity="0.15" />
+        <path d="M12 5c3-1 6-1.5 9-.5v15c-3-.5-6 0-9 1" fill="currentColor" opacity="0.15" />
+        <path d="M12 5C9 4 6 3.5 3 4v15c3-.5 6 0 9 1" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M12 5c3-1 6-1.5 9-.5v15c-3-.5-6 0-9 1" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M12 5v15" stroke="currentColor" strokeWidth="1.5" />
       </svg>
     ),
   },
   {
     name: 'Custom Instructions',
-    desc: 'Your AI, configured',
+    desc: 'Your AI, configured — tailored for every platform you use',
     color: 'teal' as const,
     icon: (
-      <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
-        <rect x="4" y="2.5" width="12" height="15" rx="2" fill="currentColor" opacity="0.15" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M7.5 6.5h5M7.5 9.5h5M7.5 12.5h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+        <rect x="4" y="3" width="14" height="18" rx="2.5" fill="currentColor" opacity="0.15" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M8.5 8h7M8.5 11.5h7M8.5 15h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="19" cy="18" r="4.5" fill="currentColor" opacity="0.2" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M17 18l1.5 1.5L21 16.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
@@ -72,7 +75,7 @@ export function Overview() {
 
   return (
     <section className="relative overflow-hidden">
-      {/* ── Background image with overlay ── */}
+      {/* ── Background image ── */}
       <Image
         src="/overview-bg.jpg"
         alt=""
@@ -82,7 +85,7 @@ export function Overview() {
         aria-hidden="true"
       />
 
-      {/* Dark overlay — navy at top, warmer gold at bottom */}
+      {/* Darker overlay — navy at top, warmer gold pulled out at bottom */}
       <div
         className="absolute inset-0"
         aria-hidden="true"
@@ -90,16 +93,16 @@ export function Overview() {
           background: `
             linear-gradient(
               to bottom,
-              rgba(26, 39, 68, 0.90) 0%,
-              rgba(26, 39, 68, 0.85) 40%,
-              rgba(26, 39, 68, 0.78) 70%,
-              rgba(36, 42, 52, 0.75) 100%
+              rgba(26, 39, 68, 0.93) 0%,
+              rgba(26, 39, 68, 0.90) 40%,
+              rgba(26, 39, 68, 0.82) 70%,
+              rgba(30, 35, 44, 0.72) 100%
             )
           `,
         }}
       />
 
-      {/* Warm ochre wash — stronger at bottom for gold contrast against navy How It Works */}
+      {/* Ochre wash — more gold at bottom */}
       <div
         className="absolute inset-0"
         aria-hidden="true"
@@ -107,9 +110,10 @@ export function Overview() {
           background: `
             linear-gradient(
               to bottom,
-              rgba(196, 148, 58, 0.04) 0%,
-              rgba(196, 148, 58, 0.08) 50%,
-              rgba(196, 148, 58, 0.18) 100%
+              rgba(196, 148, 58, 0.03) 0%,
+              rgba(196, 148, 58, 0.06) 40%,
+              rgba(196, 148, 58, 0.14) 75%,
+              rgba(196, 148, 58, 0.25) 100%
             )
           `,
         }}
@@ -146,19 +150,18 @@ export function Overview() {
               <p className="font-body text-cream/70 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
                 The fix is simple: give AI your context before you give it your questions. The harder part is knowing how to compile that context in a way AI can actually use.
               </p>
-
             </div>
           </div>
 
-          {/* ── Right: Context Anchors list ── */}
+          {/* ── Right: Context Anchors ── */}
           <div className="lg:pt-6">
             {/* Header */}
-            <p className="font-body text-ochre font-bold text-sm tracking-[0.25em] uppercase mb-8">
+            <p className="font-body text-ochre font-bold text-sm tracking-[0.25em] uppercase mb-6">
               The Context Anchors
             </p>
 
-            {/* Anchor cards — clean vertical list */}
-            <div className="space-y-3">
+            {/* Cards — white-backed for contrast and visual pop */}
+            <div className="space-y-2.5">
               {ANCHORS.map((anchor) => {
                 const isTeal = anchor.color === 'teal'
                 return (
@@ -166,18 +169,21 @@ export function Overview() {
                     key={anchor.name}
                     className={`
                       flex items-center gap-4 px-5 py-4 rounded-xl
-                      border transition-all duration-300
+                      transition-all duration-300
                       ${isTeal
-                        ? 'bg-teal/[0.08] border-teal/20 hover:border-teal/35'
-                        : 'bg-cream/[0.04] border-cream/[0.08] hover:border-cream/[0.15]'
+                        ? 'bg-white/[0.12] border border-teal/25 hover:bg-white/[0.16] hover:border-teal/40'
+                        : 'bg-white/[0.07] border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.16]'
                       }
                     `}
                   >
-                    {/* Icon */}
+                    {/* Icon container */}
                     <div
                       className={`
-                        w-10 h-10 rounded-lg flex items-center justify-center shrink-0
-                        ${isTeal ? 'bg-teal/15 text-teal' : 'bg-ochre/15 text-ochre'}
+                        w-11 h-11 rounded-xl flex items-center justify-center shrink-0
+                        ${isTeal
+                          ? 'bg-teal/20 text-teal'
+                          : 'bg-white/[0.10] text-ochre'
+                        }
                       `}
                     >
                       {anchor.icon}
@@ -185,21 +191,26 @@ export function Overview() {
 
                     {/* Text */}
                     <div className="flex-1 min-w-0">
-                      <h3 className={`font-display text-sm font-semibold ${isTeal ? 'text-cream' : 'text-cream/80'}`}>
+                      <h3 className="font-display text-sm font-semibold text-white mb-0.5">
                         {anchor.name}
                       </h3>
-                      <p className="font-body text-cream/35 text-xs">
+                      <p className={`font-body text-xs leading-snug ${isTeal ? 'text-teal/60' : 'text-white/40'}`}>
                         {anchor.desc}
                       </p>
                     </div>
-
-                    {/* Arrow */}
-                    <svg className="w-4 h-4 text-cream/15 shrink-0" viewBox="0 0 16 16" fill="none">
-                      <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
                   </div>
                 )
               })}
+            </div>
+
+            {/* Subtle connector line to next section */}
+            <div className="flex justify-center mt-8" aria-hidden="true">
+              <div className="flex flex-col items-center gap-1.5">
+                <div className="w-px h-6 bg-gradient-to-b from-ochre/30 to-ochre/10" />
+                <svg className="w-4 h-4 text-ochre/25" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
