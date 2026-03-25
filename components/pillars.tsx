@@ -2,41 +2,58 @@
 
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 
-// ── Step Icons (inline SVGs for crisp rendering) ──
+// ── Bold Step Icons ──
 
 function IdentityIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="16" cy="11" r="5" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M6 27c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="14" r="7" fill="currentColor" opacity="0.15" />
+      <circle cx="20" cy="14" r="7" stroke="currentColor" strokeWidth="2" />
+      <path d="M6 36c0-7.732 6.268-14 14-14s14 6.268 14 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M6 36c0-7.732 6.268-14 14-14s14 6.268 14 14" fill="currentColor" opacity="0.08" />
     </svg>
   )
 }
 
 function VoiceIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M6 16h2M10 10h2M10 22h2M14 7h2M14 25h2M18 12h2M18 20h2M22 9h2M22 23h2M26 14h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Waveform bars — bold, varied heights */}
+      <rect x="3" y="16" width="3" height="8" rx="1.5" fill="currentColor" />
+      <rect x="9" y="10" width="3" height="20" rx="1.5" fill="currentColor" />
+      <rect x="15" y="6" width="3" height="28" rx="1.5" fill="currentColor" />
+      <rect x="21" y="12" width="3" height="16" rx="1.5" fill="currentColor" />
+      <rect x="27" y="4" width="3" height="32" rx="1.5" fill="currentColor" />
+      <rect x="33" y="14" width="3" height="12" rx="1.5" fill="currentColor" />
     </svg>
   )
 }
 
 function StoriesIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5 7h8c2.2 0 4 1.8 4 4v16c0-1.7-1.3-3-3-3H5V7z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-      <path d="M27 7h-8c-2.2 0-4 1.8-4 4v16c0-1.7 1.3-3 3-3h9V7z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Open book with filled pages */}
+      <path d="M20 8C16 6 10 5 4 6v24c6-1 12 0 16 2" fill="currentColor" opacity="0.1" />
+      <path d="M20 8c4-2 10-3 16-2v24c-6-1-12 0-16 2" fill="currentColor" opacity="0.1" />
+      <path d="M20 8C16 6 10 5 4 6v24c6-1 12 0 16 2" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M20 8c4-2 10-3 16-2v24c-6-1-12 0-16 2" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M20 8v24" stroke="currentColor" strokeWidth="2" />
     </svg>
   )
 }
 
 function InstructionsIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="6" y="4" width="20" height="24" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M11 10h10M11 14h10M11 18h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      <circle cx="22" cy="22" r="5" fill="currentColor" opacity="0.15" />
-      <path d="M20 22l1.5 1.5L24 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Document with checkmark badge */}
+      <rect x="7" y="3" width="20" height="28" rx="3" fill="currentColor" opacity="0.1" stroke="currentColor" strokeWidth="2" />
+      <path d="M13 11h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M13 16h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M13 21h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      {/* Checkmark circle — bold, overlapping */}
+      <circle cx="29" cy="28" r="9" fill="currentColor" opacity="0.15" />
+      <circle cx="29" cy="28" r="9" stroke="currentColor" strokeWidth="2" />
+      <path d="M24.5 28l3 3 5.5-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
@@ -70,7 +87,7 @@ const STEPS = [
   },
 ]
 
-// ── Combined Plan Section ──
+// ── How It Works Section ──
 
 export function Pillars() {
   const sectionRef = useScrollReveal(0.08)
@@ -105,22 +122,24 @@ export function Pillars() {
           Rumo builds your personal AI foundation — context anchors and custom instructions you own.
         </p>
 
-        {/* Four steps — 2x2 grid with icons */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-12 lg:gap-y-14">
+        {/* Four steps — 2x2 grid with bold icons */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-14 lg:gap-y-16">
           {STEPS.map((step) => (
-            <div key={step.number} className="relative group">
-              {/* Number + Icon row */}
-              <div className="flex items-start gap-4 mb-3">
-                <span className="font-display text-5xl lg:text-6xl font-bold text-ochre/20 leading-none shrink-0">
+            <div key={step.number} className="relative">
+              {/* Icon + Number row */}
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-cream/[0.04] border border-cream/[0.06] flex items-center justify-center shrink-0">
+                  <step.Icon className="w-7 h-7 text-teal" />
+                </div>
+                <span className="font-display text-4xl lg:text-5xl font-bold text-ochre/20 leading-none">
                   {step.number}
                 </span>
-                <step.Icon className="w-8 h-8 text-teal/40 mt-2 shrink-0" />
               </div>
 
               <h3 className="font-display text-cream text-xl font-semibold mb-2">
                 {step.title}
               </h3>
-              <p className="font-body text-cream/45 text-sm leading-relaxed">
+              <p className="font-body text-cream/45 text-sm leading-relaxed max-w-sm">
                 {step.description}
               </p>
             </div>
