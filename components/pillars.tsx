@@ -117,8 +117,9 @@ export function Pillars() {
         </h2>
 
         <p className="font-body text-cream/45 text-base sm:text-lg leading-relaxed max-w-xl mx-auto text-center mb-14 sm:mb-16">
-          Answer curated questions about who you are, how you write, and what you&apos;ve lived.
-          Rumo builds your personal AI foundation — context anchors and custom instructions you own.
+          We call it personal context mining. Through curated questions, Rumo extracts
+          who you are, how you write, and what you&apos;ve lived — then assembles it into
+          context anchors and custom instructions you own.
         </p>
 
         {/* Four steps — 2x2 grid with bold icons */}

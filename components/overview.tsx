@@ -82,28 +82,36 @@ export function Overview() {
         aria-hidden="true"
       />
 
-      {/* Dark overlay */}
+      {/* Dark overlay — navy at top, warmer gold at bottom */}
       <div
         className="absolute inset-0"
         aria-hidden="true"
         style={{
           background: `
             linear-gradient(
-              to right,
+              to bottom,
               rgba(26, 39, 68, 0.90) 0%,
-              rgba(26, 39, 68, 0.85) 50%,
-              rgba(26, 39, 68, 0.78) 100%
+              rgba(26, 39, 68, 0.85) 40%,
+              rgba(26, 39, 68, 0.78) 70%,
+              rgba(36, 42, 52, 0.75) 100%
             )
           `,
         }}
       />
 
-      {/* Warm wash */}
+      {/* Warm ochre wash — stronger at bottom for gold contrast against navy How It Works */}
       <div
         className="absolute inset-0"
         aria-hidden="true"
         style={{
-          background: 'linear-gradient(135deg, rgba(196, 148, 58, 0.08) 0%, transparent 60%)',
+          background: `
+            linear-gradient(
+              to bottom,
+              rgba(196, 148, 58, 0.04) 0%,
+              rgba(196, 148, 58, 0.08) 50%,
+              rgba(196, 148, 58, 0.18) 100%
+            )
+          `,
         }}
       />
 
@@ -139,9 +147,6 @@ export function Overview() {
                 The fix is simple: give AI your context before you give it your questions. The harder part is knowing how to compile that context in a way AI can actually use.
               </p>
 
-              <p className="font-body text-cream font-medium text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-                That&apos;s where Rumo comes in. We call it personal context mining — a guided process that extracts who you are, how you think, and what you&apos;ve lived, then assembles it into documents and instructions that make every AI platform work better for you.
-              </p>
             </div>
           </div>
 
