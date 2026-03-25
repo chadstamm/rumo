@@ -9,38 +9,57 @@ import { InstructionsWizard } from '@/components/instructions/InstructionsWizard
  */
 export function WizardEmbedded() {
   return (
-    <section id="the-path" className="bg-cream relative overflow-hidden">
-      {/* Top separator */}
-      <div className="absolute top-0 left-0 right-0 flex justify-center" aria-hidden="true">
-        <div className="w-16 sm:w-20 h-[2px] bg-teal/40" />
-      </div>
+    <section id="the-path" className="relative overflow-hidden">
+      {/* Navy header band */}
+      <div className="bg-navy relative">
+        {/* Subtle glow */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            background: 'radial-gradient(ellipse at center top, rgba(30, 190, 177, 0.06) 0%, transparent 60%)',
+          }}
+        />
 
-      {/* Section header */}
-      <div className="max-w-3xl mx-auto px-6 pt-16 sm:pt-20 lg:pt-24 pb-4 text-center">
-        <div className="flex items-center justify-center gap-4 mb-5">
-          <span className="w-8 h-px bg-teal/30" aria-hidden="true" />
-          <span className="font-body text-xs tracking-[0.3em] uppercase text-teal font-medium">
-            Free Tool
-          </span>
-          <span className="w-8 h-px bg-teal/30" aria-hidden="true" />
+        <div className="relative max-w-3xl mx-auto px-6 pt-20 sm:pt-24 lg:pt-28 pb-14 sm:pb-16 text-center">
+          {/* Eyebrow */}
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <span className="w-10 h-px bg-teal/30" aria-hidden="true" />
+            <span className="font-body text-xs tracking-[0.3em] uppercase text-teal font-semibold">
+              Start Here
+            </span>
+            <span className="w-10 h-px bg-teal/30" aria-hidden="true" />
+          </div>
+
+          <h2
+            className="font-display text-cream font-semibold leading-[1.08] tracking-tight mb-4"
+            style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}
+          >
+            Build Your Custom
+            <br />
+            <span className="text-teal">AI Instructions</span>
+          </h2>
+
+          <p className="font-body text-cream/45 text-base sm:text-lg leading-relaxed max-w-lg mx-auto mb-2">
+            Tell us how you work. We&apos;ll generate instructions
+            tailored for every AI platform you use.
+          </p>
+
+          <p className="font-body text-cream/25 text-sm">
+            Free. No account required to start.
+          </p>
         </div>
 
-        <h2
-          className="font-display text-navy font-semibold leading-[1.12] tracking-tight mb-3"
-          style={{ fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}
-        >
-          Build Your Custom AI Instructions
-        </h2>
-
-        <p className="font-body text-muted text-sm sm:text-base max-w-md mx-auto">
-          Tell us how you work. We&apos;ll generate instructions for every AI platform you use.
-        </p>
+        {/* Gradient transition to cream */}
+        <div className="h-16 bg-gradient-to-b from-navy to-cream" aria-hidden="true" />
       </div>
 
-      {/* Instructions wizard */}
-      <InstructionsProvider>
-        <InstructionsWizard />
-      </InstructionsProvider>
+      {/* Wizard */}
+      <div className="bg-cream">
+        <InstructionsProvider>
+          <InstructionsWizard />
+        </InstructionsProvider>
+      </div>
     </section>
   )
 }
