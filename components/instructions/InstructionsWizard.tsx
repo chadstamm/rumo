@@ -106,15 +106,21 @@ export function InstructionsWizard() {
         </motion.div>
       )}
 
-      {/* Main content */}
-      <main className="relative z-10 min-h-screen">
+      {/* Main content — fixed frame prevents vertical jumping between steps */}
+      <main className="relative z-10 min-h-[70vh] flex flex-col">
         <AnimatePresence mode="wait">
           <motion.div
             key={getStepKey()}
+            className="flex-1 flex flex-col"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
+            onAnimationStart={() => {
+              // Scroll to top of wizard on step change
+              const el = document.getElementById('the-path')
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }}
           >
             {renderStep()}
           </motion.div>

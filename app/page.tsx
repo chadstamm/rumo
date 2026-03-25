@@ -1,5 +1,6 @@
 import { Hero } from '@/components/hero'
 import { Problem } from '@/components/problem'
+import { Overview } from '@/components/overview'
 import { Pillars } from '@/components/pillars'
 import { WizardEmbedded } from '@/components/wizard/wizard-embedded'
 import { Footer } from '@/components/footer'
@@ -9,6 +10,7 @@ export default function Home() {
     <div className="overflow-x-hidden">
       <Hero />
       <Problem />
+      <Overview />
       <Pillars />
       <WizardEmbedded />
       <Footer />

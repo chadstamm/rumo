@@ -2,6 +2,45 @@
 
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 
+// ── Step Icons (inline SVGs for crisp rendering) ──
+
+function IdentityIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="11" r="5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M6 27c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+function VoiceIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 16h2M10 10h2M10 22h2M14 7h2M14 25h2M18 12h2M18 20h2M22 9h2M22 23h2M26 14h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+function StoriesIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 7h8c2.2 0 4 1.8 4 4v16c0-1.7-1.3-3-3-3H5V7z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M27 7h-8c-2.2 0-4 1.8-4 4v16c0-1.7 1.3-3 3-3h9V7z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function InstructionsIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="4" width="20" height="24" rx="2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M11 10h10M11 14h10M11 18h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="22" cy="22" r="5" fill="currentColor" opacity="0.15" />
+      <path d="M20 22l1.5 1.5L24 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 // ── Journey Steps ──
 
 const STEPS = [
@@ -9,44 +48,38 @@ const STEPS = [
     number: '01',
     title: 'Identity',
     description: 'Your values, beliefs, fears, and aspirations — the foundation AI needs to actually know you.',
+    Icon: IdentityIcon,
   },
   {
     number: '02',
     title: 'Voice',
     description: 'Your sentence rhythms, humor, metaphors, and the words you never use. Captured from your own writing.',
+    Icon: VoiceIcon,
   },
   {
     number: '03',
     title: 'Stories',
     description: 'The moments that shaped you — a smell, a failure, a crossroads. Raw material that makes AI feel lived-in.',
+    Icon: StoriesIcon,
   },
   {
     number: '04',
     title: 'Instructions',
     description: 'Custom AI instructions built from everything you shared. Tailored for every platform you use.',
+    Icon: InstructionsIcon,
   },
-]
-
-// ── Output Documents ──
-
-const OUTPUTS = [
-  { name: 'Personal Constitution', desc: 'Who you are always' },
-  { name: 'Writing Codex', desc: 'How you write' },
-  { name: 'State of the Union', desc: 'Where you are right now' },
-  { name: 'Story Bank', desc: 'What you\'ve lived' },
 ]
 
 // ── Combined Plan Section ──
 
 export function Pillars() {
   const sectionRef = useScrollReveal(0.08)
-  const outputRef = useScrollReveal(0.1)
 
   return (
     <section id="pillars" className="bg-navy text-cream">
       <div
         ref={sectionRef}
-        className="reveal max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 pt-20 sm:pt-28 lg:pt-32 pb-16 sm:pb-20"
+        className="reveal max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 pt-20 sm:pt-28 lg:pt-32 pb-20 sm:pb-28 lg:pb-32"
       >
         {/* Section label */}
         <div className="flex items-center justify-center gap-4 mb-6">
@@ -72,14 +105,17 @@ export function Pillars() {
           Rumo builds your personal AI foundation — context anchors and custom instructions you own.
         </p>
 
-        {/* Four steps — 2x2 grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-10 lg:gap-y-12">
-          {STEPS.map((step, i) => (
-            <div key={step.number} className="relative">
-              {/* Step number */}
-              <span className="font-display text-5xl lg:text-6xl font-bold text-ochre/20 leading-none block mb-3">
-                {step.number}
-              </span>
+        {/* Four steps — 2x2 grid with icons */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-12 lg:gap-y-14">
+          {STEPS.map((step) => (
+            <div key={step.number} className="relative group">
+              {/* Number + Icon row */}
+              <div className="flex items-start gap-4 mb-3">
+                <span className="font-display text-5xl lg:text-6xl font-bold text-ochre/20 leading-none shrink-0">
+                  {step.number}
+                </span>
+                <step.Icon className="w-8 h-8 text-teal/40 mt-2 shrink-0" />
+              </div>
 
               <h3 className="font-display text-cream text-xl font-semibold mb-2">
                 {step.title}
@@ -87,44 +123,8 @@ export function Pillars() {
               <p className="font-body text-cream/45 text-sm leading-relaxed">
                 {step.description}
               </p>
-
-              {/* Subtle connector between step 3 and 4 */}
-              {i === 2 && (
-                <div className="hidden sm:block absolute -bottom-6 left-1/2 sm:left-auto sm:right-[-2rem] lg:right-[-2.5rem] sm:top-1/2 sm:-translate-y-1/2">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-ochre/15" aria-hidden="true">
-                    <path d="M7 4l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-              )}
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* ── What gets generated — subtle, not heavy ── */}
-      <div ref={outputRef} className="reveal border-t border-cream/8">
-        <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 py-12 sm:py-14">
-          <p className="font-body text-cream/30 text-xs tracking-[0.25em] uppercase text-center mb-8">
-            Along the way, Rumo generates
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-            {OUTPUTS.map((doc, i) => (
-              <div key={doc.name} className="flex items-center gap-3">
-                <span className="font-display text-cream/70 text-sm font-semibold">
-                  {doc.name}
-                </span>
-                <span className="font-body text-cream/25 text-xs">
-                  {doc.desc}
-                </span>
-                {i < OUTPUTS.length - 1 && (
-                  <span className="text-ochre/20 ml-2 hidden sm:inline" aria-hidden="true">
-                    /
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>
