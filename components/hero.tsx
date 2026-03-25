@@ -25,7 +25,7 @@ export function Hero() {
         poster="/hero-poster.jpg"
         aria-hidden="true"
       >
-        <source src="/hero-bg.mp4" type="video/mp4" />
+        <source src="/hero-bg-v2.mp4" type="video/mp4" />
       </video>
 
       {/* ── Cinematic Overlay ── */}

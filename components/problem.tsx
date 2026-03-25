@@ -44,7 +44,7 @@ export function Problem() {
         {/* Body copy — problem, empathy, answer */}
         <div className="space-y-5 sm:space-y-6">
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            Most professionals think they&apos;re using AI. They&apos;re prompting. They&apos;re getting answers. They&apos;re checking the box. But there&apos;s a difference between using AI and actually working with it, and most people don&apos;t know that difference exists yet.
+            Most professionals think they&apos;re using AI. They&apos;re prompting. They&apos;re getting answers. They&apos;re checking the proverbial AI box. But there&apos;s a difference between using AI and actually working with it, and most people don&apos;t know that difference exists.
           </p>
 
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
