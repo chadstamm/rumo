@@ -24,8 +24,8 @@ function NavLink({ href, label, active, light }: { href: string; label: string; 
       className={`group relative font-body text-sm tracking-wide transition-all duration-200 py-1 ${
         light
           ? active
-            ? 'text-teal-light font-medium'
-            : 'text-white/70 hover:text-white'
+            ? 'text-ochre-light font-medium'
+            : 'text-ochre/70 hover:text-ochre-light'
           : active
             ? 'text-teal font-medium'
             : 'text-navy/70 hover:text-teal'
@@ -34,7 +34,7 @@ function NavLink({ href, label, active, light }: { href: string; label: string; 
       {label}
       <span
         className={`absolute bottom-0 left-0 h-[2px] rounded-full transition-all duration-300 ease-out ${
-          light ? 'bg-teal-light' : 'bg-teal'
+          light ? 'bg-ochre-light' : 'bg-teal'
         } ${active ? 'w-full' : 'w-0 group-hover:w-full'}`}
       />
     </Link>
@@ -43,31 +43,24 @@ function NavLink({ href, label, active, light }: { href: string; label: string; 
 
 // ── Anchors dropdown trigger ──
 
-function AnchorsButton({ open, onClick, active, light }: {
-  open: boolean; onClick: () => void; active: boolean; light?: boolean
+function AnchorsButton({ active, light }: {
+  active: boolean; light?: boolean
 }) {
   return (
-    <button
-      onClick={onClick}
-      className={`group relative font-body text-sm tracking-wide transition-all duration-200 flex items-center gap-1.5 py-1 ${
+    <span
+      className={`group relative font-body text-sm tracking-wide transition-all duration-200 py-1 cursor-pointer ${
         light
-          ? active ? 'text-teal-light font-medium' : 'text-white/70 hover:text-white'
+          ? active ? 'text-ochre-light font-medium' : 'text-ochre/70 hover:text-ochre-light'
           : active ? 'text-teal font-medium' : 'text-navy/70 hover:text-teal'
       }`}
     >
       Anchors
-      <svg
-        width="12" height="12" viewBox="0 0 12 12" fill="none"
-        className={`transition-transform duration-300 ${open ? 'rotate-180' : 'group-hover:translate-y-0.5'}`}
-      >
-        <path d="M3 4.5l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
       <span
         className={`absolute bottom-0 left-0 h-[2px] rounded-full transition-all duration-300 ease-out ${
-          light ? 'bg-teal-light' : 'bg-teal'
+          light ? 'bg-ochre-light' : 'bg-teal'
         } ${active ? 'w-full' : 'w-0 group-hover:w-full'}`}
       />
-    </button>
+    </span>
   )
 }
 
@@ -197,18 +190,18 @@ export function Nav() {
     return (
       <>
         {/* Desktop: floating glass pill nav */}
-        <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 hidden md:block hero-fade-in" style={{ animationDelay: '1.2s' }}>
+        <nav className="fixed top-5 right-6 z-50 hidden md:block hero-fade-in" style={{ animationDelay: '1.2s' }}>
           <div className="flex items-center gap-7 px-7 py-3 rounded-2xl
                           bg-navy/30 backdrop-blur-xl border border-white/[0.08]
                           shadow-lg shadow-navy/20">
-            {/* Anchors */}
-            <div ref={dropdownRef} className="relative">
-              <AnchorsButton
-                open={anchorsOpen}
-                onClick={() => setAnchorsOpen(!anchorsOpen)}
-                active={isAnchorsActive}
-                light
-              />
+            {/* Anchors — hover to open */}
+            <div
+              ref={dropdownRef}
+              className="relative"
+              onMouseEnter={() => setAnchorsOpen(true)}
+              onMouseLeave={() => setAnchorsOpen(false)}
+            >
+              <AnchorsButton active={isAnchorsActive} light />
               {anchorsOpen && (
                 <AnchorsMegaDropdown
                   pathname={pathname}
@@ -287,12 +280,13 @@ export function Nav() {
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-7">
-            <div ref={!isHome || scrolled ? dropdownRef : undefined} className="relative">
-              <AnchorsButton
-                open={anchorsOpen}
-                onClick={() => setAnchorsOpen(!anchorsOpen)}
-                active={isAnchorsActive}
-              />
+            <div
+              ref={!isHome || scrolled ? dropdownRef : undefined}
+              className="relative"
+              onMouseEnter={() => setAnchorsOpen(true)}
+              onMouseLeave={() => setAnchorsOpen(false)}
+            >
+              <AnchorsButton active={isAnchorsActive} />
               {anchorsOpen && (
                 <AnchorsMegaDropdown
                   pathname={pathname}
