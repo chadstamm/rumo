@@ -35,7 +35,7 @@ export function Problem() {
         >
           Everyone&apos;s Talking About AI.
           <br />
-          <span className="text-ochre">Few Know How to Use It.</span>
+          <span className="text-ochre">Not Everyone Knows How to Use It.</span>
         </h2>
 
         {/* Thin ochre separator between heading and body */}

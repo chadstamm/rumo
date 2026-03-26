@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Open_Sans } from 'next/font/google'
+import { Open_Sans, Sail } from 'next/font/google'
 import './globals.css'
 import { Nav } from '@/components/nav'
 import { AuthProvider } from '@/components/auth-provider'
@@ -7,6 +7,13 @@ import { AuthProvider } from '@/components/auth-provider'
 const openSans = Open_Sans({
   subsets: ['latin'],
   variable: '--font-open-sans',
+  display: 'swap',
+})
+
+const sail = Sail({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-sail',
   display: 'swap',
 })
 
@@ -22,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={openSans.variable}>
+    <html lang="en" className={`${openSans.variable} ${sail.variable}`}>
       <body className="font-body">
         <AuthProvider>
           <Nav />
