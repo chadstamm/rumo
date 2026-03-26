@@ -101,9 +101,9 @@ export default function AnchorsPage() {
             </p>
             <Link
               href="/start"
-              className="font-body text-sm font-semibold tracking-wide px-7 py-3 rounded-full
-                         bg-teal text-white shadow-md shadow-teal/20
-                         hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30
+              className="shimmer-hover font-body text-sm font-semibold tracking-wide px-7 py-3 rounded-full
+                         bg-ochre text-white shadow-md shadow-ochre/20
+                         hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
                          transition-all duration-200 hover:-translate-y-[1px]"
             >
               Chart Your Course

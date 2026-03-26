@@ -104,13 +104,13 @@ export function Hero() {
         <div className="mt-8 sm:mt-10 hero-fade-in-up hero-delay-2" style={{ animationDelay: '1s' }}>
           <a
             href="#the-path"
-            className="group inline-flex items-center gap-2.5
-                       px-8 py-4 rounded-lg
+            className="glow-hover group inline-flex items-center gap-2.5
+                       px-8 py-4 rounded-full
                        bg-teal text-white font-body font-bold text-sm tracking-wide
                        shadow-lg shadow-teal/25
                        transition-all duration-300
-                       hover:bg-teal-light hover:shadow-xl hover:shadow-teal/30
-                       hover:-translate-y-0.5 active:translate-y-0
+                       hover:bg-teal-light
+                       active:translate-y-0
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
           >
             BEGIN YOUR JOURNEY

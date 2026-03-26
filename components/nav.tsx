@@ -312,18 +312,6 @@ export function Nav() {
             <NavLink href="/instructions" label="Configure" active={pathname === '/instructions'} />
             <NavLink href="/vault" label="Vault" active={pathname === '/vault'} />
 
-            <Link
-              href="/start"
-              className={`font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
-                         transition-all duration-200 hover:-translate-y-[1px] ${
-                pathname === '/start'
-                  ? 'shimmer-hover bg-ochre-light text-white shadow-md shadow-ochre/20'
-                  : 'shimmer-hover bg-ochre text-white shadow-md shadow-ochre/20 hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30'
-              }`}
-            >
-              Chart Your Course
-            </Link>
-
             {!loading && (
               user ? (
                 <button
@@ -341,6 +329,18 @@ export function Nav() {
                 </Link>
               )
             )}
+
+            <Link
+              href="/start"
+              className={`shimmer-hover font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
+                         transition-all duration-200 hover:-translate-y-[1px] ${
+                pathname === '/start'
+                  ? 'bg-ochre-light text-white shadow-md shadow-ochre/20'
+                  : 'bg-ochre text-white shadow-md shadow-ochre/20 hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30'
+              }`}
+            >
+              Chart Your Course
+            </Link>
           </div>
 
           {/* Mobile hamburger */}

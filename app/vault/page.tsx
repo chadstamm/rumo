@@ -191,7 +191,7 @@ export default function VaultPage() {
               </p>
               <Link
                 href="/instructions"
-                className="font-body font-bold text-sm px-6 py-3 rounded-lg uppercase
+                className="glow-hover font-body font-bold text-sm px-6 py-3 rounded-full uppercase
                            bg-teal text-white hover:bg-teal-light
                            transition-all duration-300 inline-block"
               >
