@@ -57,6 +57,43 @@ function SituationIcon({ className }: { className?: string }) {
   )
 }
 
+function TimelineIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Horizontal timeline with nodes */}
+      <line x1="4" y1="20" x2="36" y2="20" stroke="currentColor" strokeWidth="2" opacity="0.3" />
+      <circle cx="8" cy="20" r="3" fill="currentColor" opacity="0.4" />
+      <circle cx="20" cy="20" r="4" fill="currentColor" />
+      <circle cx="32" cy="20" r="3" fill="currentColor" opacity="0.4" />
+      {/* Vertical ticks */}
+      <line x1="8" y1="12" x2="8" y2="16" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
+      <line x1="20" y1="10" x2="20" y2="15" stroke="currentColor" strokeWidth="2" />
+      <line x1="32" y1="12" x2="32" y2="16" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
+      {/* Arrow forward */}
+      <path d="M34 17l4 3-4 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
+    </svg>
+  )
+}
+
+function RosterIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Central person */}
+      <circle cx="20" cy="14" r="5" fill="currentColor" />
+      <path d="M12 28c0-4.418 3.582-8 8-8s8 3.582 8 8" fill="currentColor" opacity="0.15" />
+      {/* Left person (smaller) */}
+      <circle cx="8" cy="18" r="3.5" fill="currentColor" opacity="0.4" />
+      <path d="M2 30c0-3.314 2.686-6 6-6s6 2.686 6 6" fill="currentColor" opacity="0.08" />
+      {/* Right person (smaller) */}
+      <circle cx="32" cy="18" r="3.5" fill="currentColor" opacity="0.4" />
+      <path d="M26 30c0-3.314 2.686-6 6-6s6 2.686 6 6" fill="currentColor" opacity="0.08" />
+      {/* Connection lines */}
+      <line x1="12" y1="16" x2="16" y2="15" stroke="currentColor" strokeWidth="1" opacity="0.2" />
+      <line x1="28" y1="16" x2="24" y2="15" stroke="currentColor" strokeWidth="1" opacity="0.2" />
+    </svg>
+  )
+}
+
 // ── Journey Steps ──
 
 const STEPS = [
@@ -83,6 +120,18 @@ const STEPS = [
     title: 'Situation',
     description: 'Where you are right now — your goals, your constraints, your season of life. The context that keeps AI relevant, not just accurate.',
     Icon: SituationIcon,
+  },
+  {
+    number: '05',
+    title: 'Timeline',
+    description: 'Your life chapters, milestones, and trajectory. The chronological arc that tells AI not just who you are, but how you got here.',
+    Icon: TimelineIcon,
+  },
+  {
+    number: '06',
+    title: 'Roster',
+    description: 'The people who shape your world — relationships, dynamics, and how you connect. Context that helps AI navigate your life without stepping on landmines.',
+    Icon: RosterIcon,
   },
 ]
 
@@ -111,19 +160,19 @@ export function Pillars() {
           className="font-display font-semibold leading-[1.12] tracking-tight text-cream mb-4 text-center"
           style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3rem)' }}
         >
-          One Journey. Four Steps.
+          Six Context Anchors.
           <br className="hidden sm:inline" />
           {' '}AI That Actually Knows You.
         </h2>
 
         <p className="font-body text-cream/45 text-base sm:text-lg leading-relaxed max-w-xl mx-auto text-center mb-14 sm:mb-16">
-          We call it personal context mining. Through curated questions, Rumo extracts
-          who you are, how you write, and what you&apos;ve lived — then assembles it into
-          context anchors and custom instructions you own.
+          We call them context anchors. Through curated questions, Rumo extracts
+          who you are, how you write, what you&apos;ve lived, and who matters to you — then
+          assembles it into the foundation your AI agent needs to actually be useful.
         </p>
 
-        {/* Four steps — 2x2 grid with bold icons */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-14 lg:gap-y-16">
+        {/* Six anchors — 3x2 grid with bold icons */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-12 lg:gap-x-14 gap-y-14 lg:gap-y-16">
           {STEPS.map((step) => (
             <div key={step.number} className="relative">
               {/* Icon + Number row */}

@@ -48,6 +48,24 @@ export const DOCUMENTS: DocumentConfig[] = [
     sections: [0, 3],
     accent: 'ochre',
   },
+  {
+    slug: 'timeline',
+    title: 'Timeline',
+    subtitle: 'Where you\'ve been and where you\'re headed',
+    description:
+      'Your life chapters, milestones, and trajectory. The chronological context that gives AI a sense of your arc — not just who you are, but how you got here.',
+    sections: [0, 4],
+    accent: 'teal',
+  },
+  {
+    slug: 'roster',
+    title: 'Roster',
+    subtitle: 'The people who shape your world',
+    description:
+      'Your inner circle, professional network, and relationship patterns. The people context that helps AI navigate your world without stepping on landmines.',
+    sections: [0, 5],
+    accent: 'ochre',
+  },
 ]
 
 export function getDocumentBySlug(slug: string): DocumentConfig | undefined {

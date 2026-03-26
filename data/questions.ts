@@ -1,15 +1,17 @@
 import type { WizardQuestion } from '@/types/wizard'
 
 /**
- * Rumo Unified Question Set — 38 curated questions
+ * Rumo Unified Question Set — 58 curated questions across 6 anchor builders
  *
- * Curated from 124 questions across WeTheMe, WriteLikeMe, and StoryArchive.
- * Deduplicated, reordered for flow, reduced to essentials.
+ * Curated from 124 questions across WeTheMe, WriteLikeMe, and StoryArchive,
+ * plus new Timeline and Roster sections.
  *
  * Section 0 (Shared Intake): 7 questions — collected first, feeds all generation prompts
  * Section 1 (Identity): 10 questions — values, beliefs, aspirations
  * Section 2 (Voice): 12 questions — writing patterns, style, samples
  * Section 3 (Stories): 9 questions — memory triggers, signature language
+ * Section 4 (Timeline): 10 questions — milestones, chapters, trajectory
+ * Section 5 (Roster): 10 questions — relationships, network, people context
  */
 
 export const QUESTIONS: WizardQuestion[] = [
@@ -407,6 +409,200 @@ export const QUESTIONS: WizardQuestion[] = [
     inputType: 'textarea',
     placeholder: 'The words I\'ve adopted...',
   },
+
+  // ═══════════════════════════════════════════════════
+  // SECTION 4: TIMELINE
+  // "The arc of your life — where you've been and where you're headed"
+  // ═══════════════════════════════════════════════════
+
+  {
+    id: 'life-chapters',
+    section: 4,
+    question: 'If you broke your life into chapters, what would they be called?',
+    subtext: 'Give each chapter a name and a rough timeframe. Think of the major eras — the moves, the careers, the relationships, the reinventions.',
+    considerations: [
+      'Where did each chapter start and end?',
+      'What defined each era?',
+      'Which chapter are you in right now?',
+    ],
+    inputType: 'textarea',
+    placeholder: 'Chapter 1: "The Setup" (1985-2005)... Chapter 2: "The Detour" (2005-2012)...',
+    required: true,
+  },
+  {
+    id: 'career-arc',
+    section: 4,
+    question: 'Walk through your professional timeline. Jobs, roles, pivots — the path that got you here.',
+    subtext: 'Not a resume. The real version — including the detours, the dead ends, and the lucky breaks.',
+    inputType: 'textarea',
+    placeholder: 'I started in... then moved to... the pivot that changed everything was...',
+    required: true,
+  },
+  {
+    id: 'defining-year',
+    section: 4,
+    question: 'What single year changed the trajectory of your life?',
+    subtext: 'The one you point to when someone asks "when did things shift?"',
+    inputType: 'textarea',
+    placeholder: 'The year was... and what happened was...',
+    required: true,
+  },
+  {
+    id: 'places-lived',
+    section: 4,
+    question: 'Where have you lived, and what did each place give you or take from you?',
+    subtext: 'Geography shapes identity. The places you\'ve been aren\'t just backdrop — they\'re character development.',
+    inputType: 'textarea',
+    placeholder: 'I lived in... and it gave me... / took from me...',
+    required: true,
+  },
+  {
+    id: 'personal-milestones',
+    section: 4,
+    question: 'What are the personal milestones that matter most — the ones that aren\'t on any resume?',
+    subtext: 'Marriages, kids, losses, moves, breakthroughs, breakdowns. The real markers.',
+    inputType: 'textarea',
+    placeholder: 'The milestones that shaped me most...',
+    required: true,
+  },
+  {
+    id: 'pattern-recognition',
+    section: 4,
+    question: 'Looking at your timeline, what pattern keeps repeating?',
+    subtext: 'We all have recurring themes — cycles of building and leaving, seeking and finding, starting and stalling. Name yours.',
+    inputType: 'textarea',
+    placeholder: 'The pattern I keep seeing is...',
+    required: true,
+  },
+  {
+    id: 'current-chapter',
+    section: 4,
+    question: 'Describe the chapter you\'re in right now. What\'s it about, and how far into it are you?',
+    subtext: 'The present chapter is the one your AI needs to understand most. Be specific about what you\'re navigating.',
+    inputType: 'textarea',
+    placeholder: 'Right now I\'m in the middle of...',
+    required: true,
+  },
+  {
+    id: 'next-chapter',
+    section: 4,
+    question: 'What does the next chapter look like? What are you building toward?',
+    subtext: 'Not a wish list. The actual trajectory — where you\'re pointed and what has to happen to get there.',
+    inputType: 'textarea',
+    placeholder: 'The next chapter is about...',
+    required: true,
+  },
+  {
+    id: 'timeline-regret',
+    section: 4,
+    question: 'What\'s a period of your life you\'d do differently if you could — and what would you change?',
+    subtext: 'Regret is data. It tells the AI what you\'ve learned and what you\'re compensating for now.',
+    inputType: 'textarea',
+    placeholder: 'If I could redo... I would...',
+  },
+  {
+    id: 'legacy-snapshot',
+    section: 4,
+    question: 'If your timeline ended today, what would the headline be?',
+    subtext: 'Not what you want it to be. What it actually is, right now, based on what you\'ve done.',
+    inputType: 'textarea',
+    placeholder: 'The headline would be...',
+    required: true,
+  },
+
+  // ═══════════════════════════════════════════════════
+  // SECTION 5: ROSTER
+  // "The people who matter — relationships, roles, and how you connect"
+  // ═══════════════════════════════════════════════════
+
+  {
+    id: 'inner-circle',
+    section: 5,
+    question: 'Who are the 5-7 people closest to you right now? Name them and describe your relationship in one line each.',
+    subtext: 'Partner, family, best friends, business partners — the people who would notice if you disappeared for a week.',
+    inputType: 'textarea',
+    placeholder: '[Name] — [relationship, one line]...',
+    required: true,
+  },
+  {
+    id: 'professional-network',
+    section: 5,
+    question: 'Who are the key people in your professional world? Bosses, collaborators, mentors, clients — the ones who shape your work life.',
+    subtext: 'Include reporting relationships, power dynamics, and how you feel about each connection.',
+    inputType: 'textarea',
+    placeholder: '[Name] — [role/relationship, dynamic]...',
+    required: true,
+  },
+  {
+    id: 'mentor-figures',
+    section: 5,
+    question: 'Who has mentored you — formally or informally — and what did each one give you?',
+    subtext: 'Teachers, coaches, bosses, friends who saw something in you before you did.',
+    inputType: 'textarea',
+    placeholder: '[Name] taught me...',
+    required: true,
+  },
+  {
+    id: 'relationship-style',
+    section: 5,
+    question: 'How do you show up in relationships? What\'s your pattern — the good and the bad?',
+    subtext: 'Are you the initiator or the responder? The planner or the spontaneous one? The one who holds on or the one who lets go?',
+    inputType: 'textarea',
+    placeholder: 'In relationships, I tend to...',
+    required: true,
+  },
+  {
+    id: 'difficult-relationship',
+    section: 5,
+    question: 'Who\'s a person in your life that challenges you — and what does the friction reveal about you?',
+    subtext: 'Not enemies. The relationships that push your buttons because they mirror something true.',
+    inputType: 'textarea',
+    placeholder: 'The person who challenges me most is... because...',
+  },
+  {
+    id: 'lost-connection',
+    section: 5,
+    question: 'Is there someone you\'ve lost touch with that you think about more than you\'d expect?',
+    subtext: 'The connections that linger say something about what you value in people.',
+    inputType: 'textarea',
+    placeholder: 'I still think about... because...',
+  },
+  {
+    id: 'communication-preferences',
+    section: 5,
+    question: 'How do you prefer to communicate with the people closest to you? And what drives you crazy?',
+    subtext: 'Text vs. call vs. in-person. Quick hits vs. deep dives. Morning person vs. late-night texter. This shapes how your AI interacts about and with others.',
+    inputType: 'textarea',
+    placeholder: 'I prefer... What drives me crazy is...',
+    required: true,
+  },
+  {
+    id: 'people-energy',
+    section: 5,
+    question: 'Who gives you energy and who drains it — and do the people in your life know which category they\'re in?',
+    subtext: 'This isn\'t about being judgmental. It\'s about giving your AI real context for how relationships affect you.',
+    inputType: 'textarea',
+    placeholder: 'Energy givers: ... Energy drains: ...',
+    required: true,
+  },
+  {
+    id: 'trust-builders',
+    section: 5,
+    question: 'What builds trust for you? And what breaks it instantly?',
+    subtext: 'Everyone has a trust architecture. Yours shapes every relationship you maintain.',
+    inputType: 'textarea',
+    placeholder: 'I trust people who... I lose trust when...',
+    required: true,
+  },
+  {
+    id: 'roster-gap',
+    section: 5,
+    question: 'What kind of person is missing from your life right now?',
+    subtext: 'A collaborator, a creative partner, a specific kind of friend, a mentor for the next chapter. Name the gap.',
+    inputType: 'textarea',
+    placeholder: 'The person I\'m missing is someone who...',
+    required: true,
+  },
 ]
 
 /** Get questions for a specific section */
@@ -436,4 +632,6 @@ export const SECTION_QUESTION_COUNTS = {
   1: QUESTIONS.filter((q) => q.section === 1).length,
   2: QUESTIONS.filter((q) => q.section === 2).length,
   3: QUESTIONS.filter((q) => q.section === 3).length,
+  4: QUESTIONS.filter((q) => q.section === 4).length,
+  5: QUESTIONS.filter((q) => q.section === 5).length,
 }

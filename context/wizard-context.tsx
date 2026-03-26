@@ -152,7 +152,7 @@ const WizardContext = createContext<WizardContextValue | null>(null)
 
 interface WizardProviderProps {
   children: ReactNode
-  /** Filter to specific sections (for standalone document wizards). Defaults to all [0,1,2,3]. */
+  /** Filter to specific sections (for standalone anchor builders). Defaults to all [0,1,2,3,4,5]. */
   filterSections?: Section[]
   /** Storage key suffix for isolated persistence per document */
   storageKey?: string
@@ -164,7 +164,7 @@ export function WizardProvider({
   storageKey,
 }: WizardProviderProps) {
   const activeSections = useMemo(
-    () => filterSections ?? ([0, 1, 2, 3] as Section[]),
+    () => filterSections ?? ([0, 1, 2, 3, 4, 5] as Section[]),
     [filterSections]
   )
 

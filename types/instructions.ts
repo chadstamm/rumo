@@ -21,6 +21,9 @@ export interface InstructionsState {
   writingCodex: string | null
   personalConstitution: string | null
   storyBank: string | null
+  stateOfUnion: string | null
+  timeline: string | null
+  roster: string | null
   answers: InstructionAnswer[]
   analyzedInsights: AnalyzedInsight[]
   isComplete: boolean

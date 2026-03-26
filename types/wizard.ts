@@ -1,12 +1,14 @@
 export type InputType = 'textarea' | 'select' | 'multiselect' | 'file' | 'phrase-list'
 
-export type Section = 0 | 1 | 2 | 3
+export type Section = 0 | 1 | 2 | 3 | 4 | 5
 
 export const SECTION_NAMES: Record<Section, string> = {
   0: 'Getting Started',
   1: 'Identity',
   2: 'Voice',
   3: 'Stories',
+  4: 'Timeline',
+  5: 'Roster',
 }
 
 export const SECTION_SUBTITLES: Record<Section, string> = {
@@ -14,6 +16,8 @@ export const SECTION_SUBTITLES: Record<Section, string> = {
   1: 'Your values, beliefs, and the person you\'re becoming',
   2: 'How you write, what makes it yours, and what to never do',
   3: 'The moments that shaped you and the language you carry',
+  4: 'The arc of your life — milestones, chapters, and where you\'re headed',
+  5: 'The people who matter — relationships, roles, and how you connect',
 }
 
 export interface WizardQuestion {

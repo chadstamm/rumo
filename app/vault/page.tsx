@@ -216,6 +216,8 @@ export default function VaultPage() {
               { name: 'State of the Union', slug: 'sotu', desc: 'Where you are right now' },
               { name: 'Writing Codex', slug: 'codex', desc: 'How you write' },
               { name: 'Story Bank', slug: 'story-bank', desc: 'What you\'ve lived' },
+              { name: 'Timeline', slug: 'timeline', desc: 'Where you\'ve been and where you\'re headed' },
+              { name: 'Roster', slug: 'roster', desc: 'The people who shape your world' },
             ].map((anchor) => (
               <Link
                 key={anchor.slug}

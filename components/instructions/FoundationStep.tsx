@@ -260,11 +260,85 @@ const cardVariants = {
 // ── Main Component ──────────────────────────────────────────────────
 
 export function FoundationStep() {
-  const { state, setWritingCodex, setPersonalConstitution, setStoryBank, nextStep, prevStep } = useInstructions();
+  const {
+    state, setWritingCodex, setPersonalConstitution, setStoryBank,
+    setStateOfUnion, setTimeline, setRoster, nextStep, prevStep,
+  } = useInstructions();
 
-  const writingCodex = state.writingCodex ?? '';
-  const personalConstitution = state.personalConstitution ?? '';
-  const storyBank = state.storyBank ?? '';
+  const ANCHOR_CARDS = [
+    {
+      id: 'codex',
+      title: 'Writing Codex',
+      description: 'Your unique writing voice and style patterns',
+      placeholder: 'Paste your writing codex here...',
+      value: state.writingCodex ?? '',
+      setter: setWritingCodex,
+      icon: PenIcon,
+      iconBg: 'rgba(79, 70, 229, 0.08)',
+      iconColor: 'var(--primary)',
+      slug: 'codex',
+    },
+    {
+      id: 'constitution',
+      title: 'Personal Constitution',
+      description: 'Your values, principles, and how you want to show up',
+      placeholder: 'Paste your personal constitution here...',
+      value: state.personalConstitution ?? '',
+      setter: setPersonalConstitution,
+      icon: ScrollIcon,
+      iconBg: 'rgba(6, 182, 212, 0.08)',
+      iconColor: 'var(--accent)',
+      slug: 'constitution',
+    },
+    {
+      id: 'story-bank',
+      title: 'Story Bank',
+      description: 'Your personal stories, experiences, and narrative patterns',
+      placeholder: 'Paste your story bank here...',
+      value: state.storyBank ?? '',
+      setter: setStoryBank,
+      icon: BookIcon,
+      iconBg: 'rgba(245, 158, 11, 0.08)',
+      iconColor: '#f59e0b',
+      slug: 'story-bank',
+    },
+    {
+      id: 'sotu',
+      title: 'State of the Union',
+      description: 'Your current situation, goals, and active priorities',
+      placeholder: 'Paste your state of the union here...',
+      value: state.stateOfUnion ?? '',
+      setter: setStateOfUnion,
+      icon: ScrollIcon,
+      iconBg: 'rgba(6, 182, 212, 0.08)',
+      iconColor: 'var(--accent)',
+      slug: 'sotu',
+    },
+    {
+      id: 'timeline',
+      title: 'Timeline',
+      description: 'Your life chapters, milestones, and trajectory',
+      placeholder: 'Paste your timeline here...',
+      value: state.timeline ?? '',
+      setter: setTimeline,
+      icon: PenIcon,
+      iconBg: 'rgba(79, 70, 229, 0.08)',
+      iconColor: 'var(--primary)',
+      slug: 'timeline',
+    },
+    {
+      id: 'roster',
+      title: 'Roster',
+      description: 'Your key relationships, network, and people context',
+      placeholder: 'Paste your roster here...',
+      value: state.roster ?? '',
+      setter: setRoster,
+      icon: BookIcon,
+      iconBg: 'rgba(245, 158, 11, 0.08)',
+      iconColor: '#f59e0b',
+      slug: 'roster',
+    },
+  ];
 
   return (
     <motion.div
@@ -274,7 +348,7 @@ export function FoundationStep() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="w-full max-w-4xl">
+      <div className="w-full max-w-5xl">
         {/* ── Headline ─────────────────────────────────────────── */}
         <motion.div
           className="text-center mb-10 sm:mb-14"
@@ -286,211 +360,80 @@ export function FoundationStep() {
             className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4"
             style={{ color: 'var(--ink)' }}
           >
-            Share Your Foundation
+            Upload Your Context Anchors
           </h2>
           <p
             className="text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
             style={{ color: 'var(--muted)' }}
           >
-            If you have a Writing Codex, Personal Constitution, or Story Bank,
-            paste or upload them here. They&apos;ll make your custom instructions
-            even more accurate.
+            If you already have context anchors, paste or upload them here.
+            The more context you provide, the better your custom instructions will be.
           </p>
         </motion.div>
 
-        {/* ── Two cards: side-by-side on desktop, stacked on mobile ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mb-10 sm:mb-12">
-          {/* Card 1 — Writing Codex */}
-          <motion.div
-            className="rounded-2xl p-6 sm:p-7"
-            style={{
-              background: 'var(--bg-card)',
-              border: '1px solid var(--border)',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
-            }}
-            custom={0}
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {/* Icon */}
-            <div
-              className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
-              style={{ background: 'rgba(79, 70, 229, 0.08)' }}
-            >
-              <PenIcon className="w-5 h-5" style={{ color: 'var(--primary)' }} />
-            </div>
-
-            {/* Title + description */}
-            <h3
-              className="font-body text-lg font-bold mb-1"
-              style={{ color: 'var(--ink)' }}
-            >
-              Writing Codex
-            </h3>
-            <p
-              className="text-sm mb-4"
-              style={{ color: 'var(--muted)' }}
-            >
-              Your unique writing voice and style patterns
-            </p>
-
-            {/* Textarea */}
-            <textarea
-              rows={6}
-              className="textarea-clean"
-              placeholder="Paste your writing codex here..."
-              value={writingCodex}
-              onChange={(e) => setWritingCodex(e.target.value)}
-            />
-
-            {/* File upload */}
-            <FileDropZone
-              id="codex-file-upload"
-              onTextExtracted={(text) => setWritingCodex(text)}
-            />
-
-            {/* Cross-promo link */}
-            <p className="text-sm mt-4">
-              Don&apos;t have one?{' '}
-              <a
-                href="https://writelikeme.coach"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-accent"
+        {/* ── Six anchor cards — 3x2 grid ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-10 sm:mb-12">
+          {ANCHOR_CARDS.map((card, i) => {
+            const IconComponent = card.icon;
+            return (
+              <motion.div
+                key={card.id}
+                className="rounded-2xl p-6 sm:p-7"
+                style={{
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border)',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
+                }}
+                custom={i}
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
               >
-                Create yours at WriteLikeMe &rarr;
-              </a>
-            </p>
-          </motion.div>
+                <div
+                  className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                  style={{ background: card.iconBg }}
+                >
+                  <IconComponent className="w-5 h-5" style={{ color: card.iconColor }} />
+                </div>
 
-          {/* Card 2 — Personal Constitution */}
-          <motion.div
-            className="rounded-2xl p-6 sm:p-7"
-            style={{
-              background: 'var(--bg-card)',
-              border: '1px solid var(--border)',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
-            }}
-            custom={1}
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {/* Icon */}
-            <div
-              className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
-              style={{ background: 'rgba(6, 182, 212, 0.08)' }}
-            >
-              <ScrollIcon className="w-5 h-5" style={{ color: 'var(--accent)' }} />
-            </div>
+                <h3
+                  className="font-body text-lg font-bold mb-1"
+                  style={{ color: 'var(--ink)' }}
+                >
+                  {card.title}
+                </h3>
+                <p
+                  className="text-sm mb-4"
+                  style={{ color: 'var(--muted)' }}
+                >
+                  {card.description}
+                </p>
 
-            {/* Title + description */}
-            <h3
-              className="font-body text-lg font-bold mb-1"
-              style={{ color: 'var(--ink)' }}
-            >
-              Personal Constitution
-            </h3>
-            <p
-              className="text-sm mb-4"
-              style={{ color: 'var(--muted)' }}
-            >
-              Your values, principles, and how you want to show up
-            </p>
+                <textarea
+                  rows={5}
+                  className="textarea-clean"
+                  placeholder={card.placeholder}
+                  value={card.value}
+                  onChange={(e) => card.setter(e.target.value)}
+                />
 
-            {/* Textarea */}
-            <textarea
-              rows={6}
-              className="textarea-clean"
-              placeholder="Paste your personal constitution here..."
-              value={personalConstitution}
-              onChange={(e) => setPersonalConstitution(e.target.value)}
-            />
+                <FileDropZone
+                  id={`${card.id}-file-upload`}
+                  onTextExtracted={(text) => card.setter(text)}
+                />
 
-            {/* File upload */}
-            <FileDropZone
-              id="constitution-file-upload"
-              onTextExtracted={(text) => setPersonalConstitution(text)}
-            />
-
-            {/* Cross-promo link */}
-            <p className="text-sm mt-4">
-              Don&apos;t have one?{' '}
-              <a
-                href="https://wethe.me"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-accent"
-              >
-                Create yours at We The Me &rarr;
-              </a>
-            </p>
-          </motion.div>
-
-          {/* Card 3 — Story Bank */}
-          <motion.div
-            className="rounded-2xl p-6 sm:p-7"
-            style={{
-              background: 'var(--bg-card)',
-              border: '1px solid var(--border)',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
-            }}
-            custom={2}
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {/* Icon */}
-            <div
-              className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
-              style={{ background: 'rgba(245, 158, 11, 0.08)' }}
-            >
-              <BookIcon className="w-5 h-5" style={{ color: '#f59e0b' }} />
-            </div>
-
-            {/* Title + description */}
-            <h3
-              className="font-body text-lg font-bold mb-1"
-              style={{ color: 'var(--ink)' }}
-            >
-              Story Bank
-            </h3>
-            <p
-              className="text-sm mb-4"
-              style={{ color: 'var(--muted)' }}
-            >
-              Your personal stories, experiences, and narrative patterns
-            </p>
-
-            {/* Textarea */}
-            <textarea
-              rows={6}
-              className="textarea-clean"
-              placeholder="Paste your story bank here..."
-              value={storyBank}
-              onChange={(e) => setStoryBank(e.target.value)}
-            />
-
-            {/* File upload */}
-            <FileDropZone
-              id="storybank-file-upload"
-              onTextExtracted={(text) => setStoryBank(text)}
-            />
-
-            {/* Cross-promo link */}
-            <p className="text-sm mt-4">
-              Don&apos;t have one?{' '}
-              <a
-                href="https://storyarchive.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-accent"
-              >
-                Build yours at Story Archive &rarr;
-              </a>
-            </p>
-          </motion.div>
+                <p className="text-sm mt-4">
+                  Don&apos;t have one?{' '}
+                  <a
+                    href={`/docs/${card.slug}`}
+                    className="link-accent"
+                  >
+                    Build yours with Rumo &rarr;
+                  </a>
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* ── Navigation ──────────────────────────────────────── */}

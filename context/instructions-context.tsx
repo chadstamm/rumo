@@ -27,6 +27,9 @@ const initialState: WizardState = {
   writingCodex: null,
   personalConstitution: null,
   storyBank: null,
+  stateOfUnion: null,
+  timeline: null,
+  roster: null,
   answers: [],
   analyzedInsights: [],
   isComplete: false,
@@ -46,6 +49,9 @@ type WizardAction =
   | { type: 'SET_WRITING_CODEX'; payload: string }
   | { type: 'SET_PERSONAL_CONSTITUTION'; payload: string }
   | { type: 'SET_STORY_BANK'; payload: string }
+  | { type: 'SET_STATE_OF_UNION'; payload: string }
+  | { type: 'SET_TIMELINE'; payload: string }
+  | { type: 'SET_ROSTER'; payload: string }
   | { type: 'SAVE_ANSWER'; payload: WizardAnswer }
   | { type: 'SET_INSIGHT'; payload: AnalyzedInsight }
   | { type: 'START_GENERATING' }
@@ -85,6 +91,15 @@ function wizardReducer(state: WizardState, action: WizardAction): WizardState {
 
     case 'SET_STORY_BANK':
       return { ...state, storyBank: action.payload };
+
+    case 'SET_STATE_OF_UNION':
+      return { ...state, stateOfUnion: action.payload };
+
+    case 'SET_TIMELINE':
+      return { ...state, timeline: action.payload };
+
+    case 'SET_ROSTER':
+      return { ...state, roster: action.payload };
 
     case 'SAVE_ANSWER': {
       const existingIndex = state.answers.findIndex(a => a.questionId === action.payload.questionId);
@@ -150,6 +165,9 @@ interface InstructionsContextType {
   setWritingCodex: (text: string) => void;
   setPersonalConstitution: (text: string) => void;
   setStoryBank: (text: string) => void;
+  setStateOfUnion: (text: string) => void;
+  setTimeline: (text: string) => void;
+  setRoster: (text: string) => void;
   // Navigation
   goToStep: (step: number) => void;
   nextStep: () => void;
@@ -296,6 +314,18 @@ export function InstructionsProvider({ children }: { children: ReactNode }) {
 
   const setStoryBank = useCallback((text: string) => {
     dispatch({ type: 'SET_STORY_BANK', payload: text });
+  }, []);
+
+  const setStateOfUnion = useCallback((text: string) => {
+    dispatch({ type: 'SET_STATE_OF_UNION', payload: text });
+  }, []);
+
+  const setTimeline = useCallback((text: string) => {
+    dispatch({ type: 'SET_TIMELINE', payload: text });
+  }, []);
+
+  const setRoster = useCallback((text: string) => {
+    dispatch({ type: 'SET_ROSTER', payload: text });
   }, []);
 
   // Answers
@@ -502,6 +532,9 @@ export function InstructionsProvider({ children }: { children: ReactNode }) {
     setWritingCodex,
     setPersonalConstitution,
     setStoryBank,
+    setStateOfUnion,
+    setTimeline,
+    setRoster,
     goToStep,
     nextStep,
     prevStep,
