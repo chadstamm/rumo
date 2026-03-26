@@ -217,7 +217,7 @@ export function Nav() {
 
             <Link
               href="/start"
-              className="font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
+              className="shimmer-hover font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
                          bg-ochre text-white shadow-md shadow-ochre/20
                          hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
                          transition-all duration-200 hover:-translate-y-[1px]"
@@ -317,8 +317,8 @@ export function Nav() {
               className={`font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
                          transition-all duration-200 hover:-translate-y-[1px] ${
                 pathname === '/start'
-                  ? 'bg-ochre-light text-white shadow-md shadow-ochre/20'
-                  : 'bg-ochre text-white shadow-md shadow-ochre/20 hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30'
+                  ? 'shimmer-hover bg-ochre-light text-white shadow-md shadow-ochre/20'
+                  : 'shimmer-hover bg-ochre text-white shadow-md shadow-ochre/20 hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30'
               }`}
             >
               Chart Your Course
@@ -471,10 +471,10 @@ function MobileMenu({
           <Link
             href="/start"
             onClick={onClose}
-            className="block text-center font-body text-base font-semibold tracking-wide
+            className="shimmer-hover block text-center font-body text-base font-semibold tracking-wide
                        px-6 py-3.5 mt-4 rounded-full
-                       bg-teal text-white shadow-md shadow-teal/20
-                       hover:bg-teal-light transition-all duration-200"
+                       bg-ochre text-white shadow-md shadow-ochre/20
+                       hover:bg-ochre-light transition-all duration-200"
           >
             Chart Your Course
           </Link>
