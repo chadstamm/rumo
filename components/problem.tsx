@@ -30,12 +30,12 @@ export function Problem() {
         {/* Display heading */}
         <h2
           className="font-display text-navy font-bold leading-[1.1] tracking-tight
-                     text-[clamp(2rem,5.5vw,3.75rem)]
+                     text-[clamp(1.75rem,4.5vw,3.25rem)]
                      mb-10 sm:mb-14"
         >
           Everyone&apos;s Talking About AI.
           <br />
-          <span className="text-ochre">Not Everyone Knows How to Use It.</span>
+          <span className="text-ochre">Few Know How to Use It.</span>
         </h2>
 
         {/* Thin ochre separator between heading and body */}
