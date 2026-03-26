@@ -3,154 +3,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
-import { useState, useEffect, useRef, useCallback, type ReactNode } from 'react'
-
-// ── Bold anchor icons ──
-
-function ShieldIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 48 48" fill="none">
-      <path d="M24 4L6 12v12c0 11.1 7.7 21.5 18 24 10.3-2.5 18-12.9 18-24V12L24 4z" fill="currentColor" opacity="0.1" />
-      <path d="M24 4L6 12v12c0 11.1 7.7 21.5 18 24 10.3-2.5 18-12.9 18-24V12L24 4z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
-      <path d="M16 24l5 5 10-10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function QuillIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 48 48" fill="none">
-      <path d="M38 4c-8 4-16 12-20 22l-2 8 8-2c10-4 18-12 22-20" fill="currentColor" opacity="0.1" />
-      <path d="M38 4c-8 4-16 12-20 22l-2 8 8-2c10-4 18-12 22-20" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
-      <path d="M16 26l6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M6 42l10-8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-    </svg>
-  )
-}
-
-function BookIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 48 48" fill="none">
-      <path d="M24 10C20 8 14 7 8 8v28c6-1 12 0 16 2" fill="currentColor" opacity="0.1" />
-      <path d="M24 10c4-2 10-3 16-2v28c-6-1-12 0-16 2" fill="currentColor" opacity="0.1" />
-      <path d="M24 10C20 8 14 7 8 8v28c6-1 12 0 16 2" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
-      <path d="M24 10c4-2 10-3 16-2v28c-6-1-12 0-16 2" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
-      <path d="M24 10v28" stroke="currentColor" strokeWidth="2.5" />
-    </svg>
-  )
-}
-
-function CompassIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 48 48" fill="none">
-      <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2.5" />
-      <circle cx="24" cy="24" r="13" stroke="currentColor" strokeWidth="1.5" opacity="0.2" />
-      <polygon points="24,6 27,20 24,17 21,20" fill="currentColor" />
-      <polygon points="24,42 21,28 24,31 27,28" fill="currentColor" opacity="0.25" />
-      <circle cx="24" cy="24" r="3" fill="currentColor" />
-    </svg>
-  )
-}
-
-function TimelineNodeIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 48 48" fill="none">
-      <line x1="4" y1="24" x2="44" y2="24" stroke="currentColor" strokeWidth="2.5" opacity="0.2" />
-      <circle cx="12" cy="24" r="4" fill="currentColor" opacity="0.25" />
-      <circle cx="24" cy="24" r="5" fill="currentColor" />
-      <circle cx="36" cy="24" r="4" fill="currentColor" opacity="0.25" />
-      <line x1="12" y1="12" x2="12" y2="19" stroke="currentColor" strokeWidth="2" opacity="0.2" />
-      <line x1="24" y1="10" x2="24" y2="18" stroke="currentColor" strokeWidth="2.5" />
-      <line x1="36" y1="12" x2="36" y2="19" stroke="currentColor" strokeWidth="2" opacity="0.2" />
-      <path d="M40 21l5 3-5 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.35" />
-    </svg>
-  )
-}
-
-function PeopleIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 48 48" fill="none">
-      <circle cx="24" cy="16" r="6" fill="currentColor" />
-      <path d="M14 38c0-5.5 4.5-10 10-10s10 4.5 10 10" fill="currentColor" opacity="0.15" />
-      <circle cx="10" cy="22" r="4.5" fill="currentColor" opacity="0.35" />
-      <path d="M2 38c0-4.4 3.6-8 8-8" stroke="currentColor" strokeWidth="2" opacity="0.2" />
-      <circle cx="38" cy="22" r="4.5" fill="currentColor" opacity="0.35" />
-      <path d="M46 38c0-4.4-3.6-8-8-8" stroke="currentColor" strokeWidth="2" opacity="0.2" />
-    </svg>
-  )
-}
-
-// ── Small tab icons (compact versions) ──
-
-function SmallShield({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none">
-      <path d="M12 2L3 6v6c0 5.6 3.8 10.7 9 12 5.2-1.3 9-6.4 9-12V6L12 2z" fill="currentColor" opacity="0.15" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  )
-}
-
-function SmallQuill({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none">
-      <path d="M20 2c-4 2-8 6-10 11l-1 4 4-1c5-2 9-6 11-10" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-      <path d="M3 21l5-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  )
-}
-
-function SmallBook({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none">
-      <path d="M12 5C10 4 7 3.5 4 4v14c3-.5 6 0 8 1m0-14c2-1 5-1.5 8-.5v14c-3-.5-6 0-8 1m0-14v14" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function SmallCompass({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-      <polygon points="12,3 13.5,10 12,8.5 10.5,10" fill="currentColor" />
-      <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-    </svg>
-  )
-}
-
-function SmallTimeline({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none">
-      <line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
-      <circle cx="6" cy="12" r="2" fill="currentColor" opacity="0.35" />
-      <circle cx="12" cy="12" r="2.5" fill="currentColor" />
-      <circle cx="18" cy="12" r="2" fill="currentColor" opacity="0.35" />
-    </svg>
-  )
-}
-
-function SmallPeople({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="8" r="3" fill="currentColor" />
-      <path d="M7 19c0-2.8 2.2-5 5-5s5 2.2 5 5" fill="currentColor" opacity="0.15" />
-      <circle cx="5" cy="11" r="2" fill="currentColor" opacity="0.35" />
-      <circle cx="19" cy="11" r="2" fill="currentColor" opacity="0.35" />
-    </svg>
-  )
-}
+import { useState, useEffect, useRef, useCallback } from 'react'
+import {
+  AnchorIcon, QuillIcon, ShipLogIcon, CompassIcon, ChronIcon, HelmIcon,
+  SmallAnchorIcon, SmallQuillIcon, SmallShipLogIcon, SmallCompassIcon, SmallChronIcon, SmallHelmIcon,
+} from '@/components/icons/anchor-icons'
 
 // ── Anchor data ──
 
-const ANCHORS: {
-  name: string
-  desc: string
-  detail: string
-  slug: string
-  number: string
-  accent: string
-  Icon: (props: { className?: string }) => ReactNode
-  SmallIcon: (props: { className?: string }) => ReactNode
-}[] = [
+const ANCHORS = [
   {
     name: 'Personal Constitution',
     desc: 'Who you are always',
@@ -158,8 +19,8 @@ const ANCHORS: {
     slug: 'constitution',
     number: '01',
     accent: '#c4943a',
-    Icon: ShieldIcon,
-    SmallIcon: SmallShield,
+    Icon: AnchorIcon,
+    SmallIcon: SmallAnchorIcon,
   },
   {
     name: 'Writing Codex',
@@ -169,7 +30,7 @@ const ANCHORS: {
     number: '02',
     accent: '#1ebeb1',
     Icon: QuillIcon,
-    SmallIcon: SmallQuill,
+    SmallIcon: SmallQuillIcon,
   },
   {
     name: 'Story Bank',
@@ -178,8 +39,8 @@ const ANCHORS: {
     slug: 'story-bank',
     number: '03',
     accent: '#c4943a',
-    Icon: BookIcon,
-    SmallIcon: SmallBook,
+    Icon: ShipLogIcon,
+    SmallIcon: SmallShipLogIcon,
   },
   {
     name: 'State of the Union',
@@ -189,7 +50,7 @@ const ANCHORS: {
     number: '04',
     accent: '#1ebeb1',
     Icon: CompassIcon,
-    SmallIcon: SmallCompass,
+    SmallIcon: SmallCompassIcon,
   },
   {
     name: 'Timeline',
@@ -198,8 +59,8 @@ const ANCHORS: {
     slug: 'timeline',
     number: '05',
     accent: '#c4943a',
-    Icon: TimelineNodeIcon,
-    SmallIcon: SmallTimeline,
+    Icon: ChronIcon,
+    SmallIcon: SmallChronIcon,
   },
   {
     name: 'Roster',
@@ -208,8 +69,8 @@ const ANCHORS: {
     slug: 'roster',
     number: '06',
     accent: '#1ebeb1',
-    Icon: PeopleIcon,
-    SmallIcon: SmallPeople,
+    Icon: HelmIcon,
+    SmallIcon: SmallHelmIcon,
   },
 ]
 

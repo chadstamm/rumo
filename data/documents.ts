@@ -1,5 +1,8 @@
 import type { Section } from '@/types/wizard'
 
+/** All sections used in the full "Chart Your Course" build, in order. */
+export const FULL_BUILD_SECTIONS: Section[] = [0, 1, 6, 2, 3, 4, 5]
+
 export interface DocumentConfig {
   slug: string
   title: string
@@ -27,7 +30,7 @@ export const DOCUMENTS: DocumentConfig[] = [
     subtitle: 'Where you are right now',
     description:
       'Your current situation, active challenges, and immediate priorities. A living document that evolves as your life does.',
-    sections: [0, 1],
+    sections: [0, 6],
     accent: 'ochre',
   },
   {

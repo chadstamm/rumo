@@ -164,7 +164,7 @@ export function WizardProvider({
   storageKey,
 }: WizardProviderProps) {
   const activeSections = useMemo(
-    () => filterSections ?? ([0, 1, 2, 3, 4, 5] as Section[]),
+    () => filterSections ?? ([0, 1, 6, 2, 3, 4, 5] as Section[]),
     [filterSections]
   )
 

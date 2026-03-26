@@ -1,98 +1,9 @@
 'use client'
 
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
-
-// ── Bold Step Icons ──
-
-function IdentityIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="20" cy="14" r="7" fill="currentColor" opacity="0.15" />
-      <circle cx="20" cy="14" r="7" stroke="currentColor" strokeWidth="2" />
-      <path d="M6 36c0-7.732 6.268-14 14-14s14 6.268 14 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M6 36c0-7.732 6.268-14 14-14s14 6.268 14 14" fill="currentColor" opacity="0.08" />
-    </svg>
-  )
-}
-
-function VoiceIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Waveform bars — bold, varied heights */}
-      <rect x="3" y="16" width="3" height="8" rx="1.5" fill="currentColor" />
-      <rect x="9" y="10" width="3" height="20" rx="1.5" fill="currentColor" />
-      <rect x="15" y="6" width="3" height="28" rx="1.5" fill="currentColor" />
-      <rect x="21" y="12" width="3" height="16" rx="1.5" fill="currentColor" />
-      <rect x="27" y="4" width="3" height="32" rx="1.5" fill="currentColor" />
-      <rect x="33" y="14" width="3" height="12" rx="1.5" fill="currentColor" />
-    </svg>
-  )
-}
-
-function StoriesIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Open book with filled pages */}
-      <path d="M20 8C16 6 10 5 4 6v24c6-1 12 0 16 2" fill="currentColor" opacity="0.1" />
-      <path d="M20 8c4-2 10-3 16-2v24c-6-1-12 0-16 2" fill="currentColor" opacity="0.1" />
-      <path d="M20 8C16 6 10 5 4 6v24c6-1 12 0 16 2" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M20 8c4-2 10-3 16-2v24c-6-1-12 0-16 2" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M20 8v24" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  )
-}
-
-function SituationIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Compass / current bearing */}
-      <circle cx="20" cy="20" r="16" fill="currentColor" opacity="0.08" stroke="currentColor" strokeWidth="2" />
-      <circle cx="20" cy="20" r="11" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
-      {/* Compass needle pointing NE — you are here */}
-      <polygon points="20,6 23,18 20,16 17,18" fill="currentColor" />
-      <polygon points="20,34 17,22 20,24 23,22" fill="currentColor" opacity="0.3" />
-      {/* Center dot */}
-      <circle cx="20" cy="20" r="2.5" fill="currentColor" />
-    </svg>
-  )
-}
-
-function TimelineIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Horizontal timeline with nodes */}
-      <line x1="4" y1="20" x2="36" y2="20" stroke="currentColor" strokeWidth="2" opacity="0.3" />
-      <circle cx="8" cy="20" r="3" fill="currentColor" opacity="0.4" />
-      <circle cx="20" cy="20" r="4" fill="currentColor" />
-      <circle cx="32" cy="20" r="3" fill="currentColor" opacity="0.4" />
-      {/* Vertical ticks */}
-      <line x1="8" y1="12" x2="8" y2="16" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
-      <line x1="20" y1="10" x2="20" y2="15" stroke="currentColor" strokeWidth="2" />
-      <line x1="32" y1="12" x2="32" y2="16" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
-      {/* Arrow forward */}
-      <path d="M34 17l4 3-4 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
-    </svg>
-  )
-}
-
-function RosterIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Central person */}
-      <circle cx="20" cy="14" r="5" fill="currentColor" />
-      <path d="M12 28c0-4.418 3.582-8 8-8s8 3.582 8 8" fill="currentColor" opacity="0.15" />
-      {/* Left person (smaller) */}
-      <circle cx="8" cy="18" r="3.5" fill="currentColor" opacity="0.4" />
-      <path d="M2 30c0-3.314 2.686-6 6-6s6 2.686 6 6" fill="currentColor" opacity="0.08" />
-      {/* Right person (smaller) */}
-      <circle cx="32" cy="18" r="3.5" fill="currentColor" opacity="0.4" />
-      <path d="M26 30c0-3.314 2.686-6 6-6s6 2.686 6 6" fill="currentColor" opacity="0.08" />
-      {/* Connection lines */}
-      <line x1="12" y1="16" x2="16" y2="15" stroke="currentColor" strokeWidth="1" opacity="0.2" />
-      <line x1="28" y1="16" x2="24" y2="15" stroke="currentColor" strokeWidth="1" opacity="0.2" />
-    </svg>
-  )
-}
+import {
+  AnchorIcon, QuillIcon, ShipLogIcon, CompassIcon, ChronIcon, HelmIcon,
+} from '@/components/icons/anchor-icons'
 
 // ── Journey Steps ──
 
@@ -101,37 +12,37 @@ const STEPS = [
     number: '01',
     title: 'Identity',
     description: 'Your values, beliefs, fears, and aspirations — the foundation AI needs to actually know you.',
-    Icon: IdentityIcon,
+    Icon: AnchorIcon,
   },
   {
     number: '02',
     title: 'Voice',
     description: 'Your sentence rhythms, humor, metaphors, and the words you never use. Captured from your own writing.',
-    Icon: VoiceIcon,
+    Icon: QuillIcon,
   },
   {
     number: '03',
     title: 'Stories',
     description: 'The moments that shaped you — a smell, a failure, a crossroads. Raw material that makes AI feel lived-in.',
-    Icon: StoriesIcon,
+    Icon: ShipLogIcon,
   },
   {
     number: '04',
     title: 'Situation',
     description: 'Where you are right now — your goals, your constraints, your season of life. The context that keeps AI relevant, not just accurate.',
-    Icon: SituationIcon,
+    Icon: CompassIcon,
   },
   {
     number: '05',
     title: 'Timeline',
     description: 'Your life chapters, milestones, and trajectory. The chronological arc that tells AI not just who you are, but how you got here.',
-    Icon: TimelineIcon,
+    Icon: ChronIcon,
   },
   {
     number: '06',
     title: 'Roster',
     description: 'The people who shape your world — relationships, dynamics, and how you connect. Context that helps AI navigate your life without stepping on landmines.',
-    Icon: RosterIcon,
+    Icon: HelmIcon,
   },
 ]
 

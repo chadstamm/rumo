@@ -1,17 +1,18 @@
 import type { WizardQuestion } from '@/types/wizard'
 
 /**
- * Rumo Unified Question Set — 58 curated questions across 6 anchor builders
+ * Rumo Unified Question Set — 68 curated questions across 7 sections (6 anchors + shared intake)
  *
  * Curated from 124 questions across WeTheMe, WriteLikeMe, and StoryArchive,
- * plus new Timeline and Roster sections.
+ * plus Timeline, Roster, and Situation sections.
  *
  * Section 0 (Shared Intake): 7 questions — collected first, feeds all generation prompts
- * Section 1 (Identity): 10 questions — values, beliefs, aspirations
- * Section 2 (Voice): 12 questions — writing patterns, style, samples
- * Section 3 (Stories): 9 questions — memory triggers, signature language
- * Section 4 (Timeline): 10 questions — milestones, chapters, trajectory
- * Section 5 (Roster): 10 questions — relationships, network, people context
+ * Section 1 (Identity): 10 questions — values, beliefs, aspirations → Personal Constitution
+ * Section 2 (Voice): 12 questions — writing patterns, style, samples → Writing Codex
+ * Section 3 (Stories): 9 questions — memory triggers, signature language → Story Bank
+ * Section 4 (Timeline): 10 questions — milestones, chapters, trajectory → Timeline
+ * Section 5 (Roster): 10 questions — relationships, network, people context → Roster
+ * Section 6 (Situation): 10 questions — current season, constraints, priorities → State of the Union
  */
 
 export const QUESTIONS: WizardQuestion[] = [
@@ -603,6 +604,105 @@ export const QUESTIONS: WizardQuestion[] = [
     placeholder: 'The person I\'m missing is someone who...',
     required: true,
   },
+  // ═══════════════════════════════════════════════════
+  // SECTION 6: SITUATION (STATE OF THE UNION)
+  // "Where you are right now — the living layer"
+  // ═══════════════════════════════════════════════════
+
+  {
+    id: 'life-season',
+    section: 6,
+    question: 'What season of life are you in right now, and how does it feel?',
+    subtext: 'Building, recovering, transitioning, coasting, grinding, blooming — name it honestly. AI can\'t help you navigate a situation it doesn\'t understand.',
+    inputType: 'textarea',
+    placeholder: 'Right now I\'m in the middle of...',
+    required: true,
+  },
+  {
+    id: 'active-roles',
+    section: 6,
+    question: 'What roles are you currently juggling? List every hat you wear — professional, personal, all of it.',
+    subtext: 'Parent, founder, employee, caretaker, student, partner, freelancer. The real list, not the tidy one.',
+    inputType: 'textarea',
+    placeholder: 'The hats I\'m wearing right now...',
+    required: true,
+  },
+  {
+    id: 'top-priorities',
+    section: 6,
+    question: 'What are your top 3-5 priorities right now — the things that actually get your time and attention?',
+    subtext: 'Not what you wish your priorities were. What are you actually spending your days on?',
+    considerations: [
+      'What gets your first hours of the day?',
+      'What do you check on constantly?',
+      'What would cause a crisis if you dropped it?',
+    ],
+    inputType: 'textarea',
+    placeholder: 'Right now, the things that actually get my time are...',
+    required: true,
+  },
+  {
+    id: 'active-challenges',
+    section: 6,
+    question: 'What\'s the hardest thing you\'re dealing with right now?',
+    subtext: 'The thing that keeps showing up. The problem you\'re actively trying to solve — or avoid.',
+    inputType: 'textarea',
+    placeholder: 'The hardest thing I\'m navigating is...',
+    required: true,
+  },
+  {
+    id: 'constraints',
+    section: 6,
+    question: 'What are your current constraints? Money, time, geography, health, obligations — what\'s limiting your options?',
+    subtext: 'Constraints aren\'t excuses. They\'re the real boundaries your AI needs to work within.',
+    inputType: 'textarea',
+    placeholder: 'Right now I\'m limited by...',
+    required: true,
+  },
+  {
+    id: 'pending-decisions',
+    section: 6,
+    question: 'What decisions are you sitting on right now — the ones you haven\'t made yet but know you need to?',
+    subtext: 'The stuff that lives in the back of your mind. Career moves, relationship shifts, financial calls, geographic changes.',
+    inputType: 'textarea',
+    placeholder: 'The decisions I\'m avoiding or still working through...',
+    required: true,
+  },
+  {
+    id: 'whats-working',
+    section: 6,
+    question: 'What\'s actually working in your life right now? Where do you have momentum?',
+    subtext: 'We focus on problems, but knowing your strengths right now is just as important for AI context.',
+    inputType: 'textarea',
+    placeholder: 'What\'s working well right now...',
+    required: true,
+  },
+  {
+    id: 'whats-not-working',
+    section: 6,
+    question: 'What\'s not working — the thing you keep tolerating or trying to fix?',
+    subtext: 'Be specific. "My job" isn\'t enough. What about it? What\'s the friction?',
+    inputType: 'textarea',
+    placeholder: 'What\'s not working is...',
+    required: true,
+  },
+  {
+    id: 'six-month-target',
+    section: 6,
+    question: 'If you could change one thing about your situation in the next six months, what would it be?',
+    subtext: 'Not a wish. A target. Something you could actually move toward starting this week.',
+    inputType: 'textarea',
+    placeholder: 'In six months, I want to have...',
+    required: true,
+  },
+  {
+    id: 'unsaid-truth',
+    section: 6,
+    question: 'What\'s a truth about your current situation that you haven\'t said out loud yet?',
+    subtext: 'The thing you know but haven\'t admitted — to yourself or anyone else. This is between you and your document.',
+    inputType: 'textarea',
+    placeholder: 'The thing I haven\'t said yet is...',
+  },
 ]
 
 /** Get questions for a specific section */
@@ -634,4 +734,5 @@ export const SECTION_QUESTION_COUNTS = {
   3: QUESTIONS.filter((q) => q.section === 3).length,
   4: QUESTIONS.filter((q) => q.section === 4).length,
   5: QUESTIONS.filter((q) => q.section === 5).length,
+  6: QUESTIONS.filter((q) => q.section === 6).length,
 }

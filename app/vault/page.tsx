@@ -6,6 +6,9 @@ import Link from 'next/link'
 import type { GenerationResult } from '@/types/models'
 import { AI_MODELS, MODEL_FIELDS } from '@/data/models'
 import type { AIModelId } from '@/types/models'
+import {
+  SmallAnchorIcon, SmallQuillIcon, SmallShipLogIcon, SmallCompassIcon, SmallChronIcon, SmallHelmIcon,
+} from '@/components/icons/anchor-icons'
 
 const INSTRUCTIONS_KEY = 'rumo-instructions-state'
 
@@ -13,6 +16,15 @@ interface SavedInstructionsState {
   isComplete: boolean
   generationResult: GenerationResult | null
   selectedModels: AIModelId[]
+}
+
+const ANCHOR_SMALL_ICONS: Record<string, (props: { className?: string }) => React.ReactNode> = {
+  constitution: SmallAnchorIcon,
+  sotu: SmallCompassIcon,
+  codex: SmallQuillIcon,
+  'story-bank': SmallShipLogIcon,
+  timeline: SmallChronIcon,
+  roster: SmallHelmIcon,
 }
 
 function CopyButton({ text, label }: { text: string; label?: string }) {
@@ -145,8 +157,13 @@ export default function VaultPage() {
   return (
     <main className="min-h-screen bg-cream">
       {/* Header */}
-      <div className="bg-navy text-cream">
-        <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
+      <div className="relative bg-navy text-cream overflow-hidden">
+        {/* Compass rose watermark */}
+        <div className="absolute -bottom-16 -right-16 w-64 h-64 opacity-[0.025]" aria-hidden="true">
+          <CompassRose className="w-full h-full text-cream" />
+        </div>
+
+        <div className="relative max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
           <CompassRose className="w-8 h-8 text-teal/40 mb-5" />
           <h1
             className="font-display text-cream font-semibold leading-tight mb-3"
@@ -154,6 +171,7 @@ export default function VaultPage() {
           >
             Your Vault
           </h1>
+          <div className="w-12 h-[2px] bg-ochre/50 mb-4" aria-hidden="true" />
           <p className="font-body text-cream/50 text-base max-w-lg">
             Everything you&apos;ve built with Rumo, in one place.
           </p>
@@ -212,38 +230,50 @@ export default function VaultPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
-              { name: 'Personal Constitution', slug: 'constitution', desc: 'Who you are always' },
-              { name: 'State of the Union', slug: 'sotu', desc: 'Where you are right now' },
-              { name: 'Writing Codex', slug: 'codex', desc: 'How you write' },
-              { name: 'Story Bank', slug: 'story-bank', desc: 'What you\'ve lived' },
-              { name: 'Timeline', slug: 'timeline', desc: 'Where you\'ve been and where you\'re headed' },
-              { name: 'Roster', slug: 'roster', desc: 'The people who shape your world' },
-            ].map((anchor) => (
-              <Link
-                key={anchor.slug}
-                href={`/docs/${anchor.slug}`}
-                className="group px-6 py-5 rounded-xl border border-navy/10 bg-white
-                           hover:border-ochre/30 hover:shadow-sm
-                           transition-all duration-300 flex items-center justify-between"
-              >
-                <div>
-                  <h3 className="font-display text-navy font-semibold text-base mb-0.5">
-                    {anchor.name}
-                  </h3>
-                  <p className="font-body text-navy/40 text-sm">{anchor.desc}</p>
-                  <span className="font-body text-[10px] text-ochre uppercase tracking-wide mt-2 inline-block">
-                    Coming Soon — Pro
-                  </span>
-                </div>
-                <svg
-                  width="18" height="18" viewBox="0 0 18 18" fill="none"
-                  className="text-navy/15 group-hover:text-ochre transition-colors duration-300 flex-shrink-0 ml-4"
-                  aria-hidden="true"
+              { name: 'Personal Constitution', slug: 'constitution', desc: 'Who you are always', accent: 'ochre' },
+              { name: 'State of the Union', slug: 'sotu', desc: 'Where you are right now', accent: 'teal' },
+              { name: 'Writing Codex', slug: 'codex', desc: 'How you write', accent: 'teal' },
+              { name: 'Story Bank', slug: 'story-bank', desc: 'What you\'ve lived', accent: 'ochre' },
+              { name: 'Timeline', slug: 'timeline', desc: 'Where you\'ve been and where you\'re headed', accent: 'ochre' },
+              { name: 'Roster', slug: 'roster', desc: 'The people who shape your world', accent: 'teal' },
+            ].map((anchor) => {
+              const SmallIcon = ANCHOR_SMALL_ICONS[anchor.slug]
+              return (
+                <Link
+                  key={anchor.slug}
+                  href={`/docs/${anchor.slug}`}
+                  className="group px-6 py-5 rounded-xl border border-navy/10 bg-white
+                             hover:border-ochre/30 hover:shadow-sm
+                             transition-all duration-300 flex items-center gap-4"
                 >
-                  <path d="M7 5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Link>
-            ))}
+                  {/* Icon */}
+                  {SmallIcon && (
+                    <div className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center
+                                     ${anchor.accent === 'teal' ? 'bg-teal/[0.06]' : 'bg-ochre/[0.06]'}`}>
+                      <SmallIcon className={`w-5 h-5 ${anchor.accent === 'teal' ? 'text-teal' : 'text-ochre'}`} />
+                    </div>
+                  )}
+
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-display text-navy font-semibold text-base mb-0.5">
+                      {anchor.name}
+                    </h3>
+                    <p className="font-body text-navy/40 text-sm">{anchor.desc}</p>
+                    <span className="font-body text-[10px] text-ochre uppercase tracking-wide mt-2 inline-block">
+                      Coming Soon — Pro
+                    </span>
+                  </div>
+
+                  <svg
+                    width="18" height="18" viewBox="0 0 18 18" fill="none"
+                    className="text-navy/15 group-hover:text-ochre transition-colors duration-300 flex-shrink-0"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </div>

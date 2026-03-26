@@ -24,9 +24,9 @@ export function WizardComplete() {
         </h1>
 
         <p className="font-body text-muted text-base sm:text-lg leading-relaxed mb-3">
-          You answered {totalAnswered} questions across identity, voice, and stories.
-          That&apos;s the raw material for your Personal Constitution, Writing Codex,
-          Story Bank, and State of the Union.
+          You answered {totalAnswered} questions across identity, situation, voice,
+          stories, timeline, and roster. That&apos;s the raw material for all six
+          context anchors — everything your AI needs to actually know you.
         </p>
 
         <p className="font-body text-navy/40 text-sm mb-10">

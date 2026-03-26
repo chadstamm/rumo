@@ -9,7 +9,7 @@ import { WizardComplete } from './wizard-complete'
 import { SECTION_NAMES } from '@/types/wizard'
 
 export function WizardShell() {
-  const { state, isComplete } = useWizard()
+  const { state, activeSections, isComplete } = useWizard()
   const [showingSectionIntro, setShowingSectionIntro] = useState(true)
   const [lastSection, setLastSection] = useState(state.currentSection)
 
@@ -39,6 +39,8 @@ export function WizardShell() {
           <SectionTransition
             section={state.currentSection}
             onBegin={() => setShowingSectionIntro(false)}
+            totalSections={(activeSections.filter(s => s !== 0) as number[]).length}
+            sectionIndex={(activeSections.filter(s => s !== 0) as number[]).indexOf(state.currentSection as number) + 1}
           />
         ) : (
           <QuestionStep />

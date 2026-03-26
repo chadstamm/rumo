@@ -5,14 +5,18 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@/components/auth-provider'
 import { useEffect, useState, useRef } from 'react'
+import {
+  SmallAnchorIcon, SmallQuillIcon, SmallShipLogIcon,
+  SmallCompassIcon, SmallChronIcon, SmallHelmIcon,
+} from '@/components/icons/anchor-icons'
 
 const ANCHOR_ITEMS = [
-  { label: 'Personal Constitution', subtitle: 'Who am I, and what do I stand for?', href: '/docs/constitution', accent: 'teal' },
-  { label: 'Writing Codex', subtitle: 'How do I write?', href: '/docs/codex', accent: 'teal' },
-  { label: 'Story Bank', subtitle: 'What stories do I always tell?', href: '/docs/story-bank', accent: 'ochre' },
-  { label: 'State of the Union', subtitle: 'What matters to me right now?', href: '/docs/sotu', accent: 'ochre' },
-  { label: 'Timeline', subtitle: 'How has my life unfolded?', href: '/docs/timeline', accent: 'teal' },
-  { label: 'Roster', subtitle: 'Who are the people that matter?', href: '/docs/roster', accent: 'ochre' },
+  { label: 'Personal Constitution', subtitle: 'Who am I, and what do I stand for?', href: '/docs/constitution', accent: 'teal', Icon: SmallAnchorIcon },
+  { label: 'Writing Codex', subtitle: 'How do I write?', href: '/docs/codex', accent: 'teal', Icon: SmallQuillIcon },
+  { label: 'Story Bank', subtitle: 'What stories do I always tell?', href: '/docs/story-bank', accent: 'ochre', Icon: SmallShipLogIcon },
+  { label: 'State of the Union', subtitle: 'What matters to me right now?', href: '/docs/sotu', accent: 'ochre', Icon: SmallCompassIcon },
+  { label: 'Timeline', subtitle: 'How has my life unfolded?', href: '/docs/timeline', accent: 'teal', Icon: SmallChronIcon },
+  { label: 'Roster', subtitle: 'Who are the people that matter?', href: '/docs/roster', accent: 'ochre', Icon: SmallHelmIcon },
 ]
 
 // ── Animated nav link with sliding underline ──
@@ -78,7 +82,7 @@ function AnchorsMegaDropdown({ pathname, onSelect, glass }: {
           : 'bg-white border border-navy/10 shadow-navy/5'
       }`}>
       <div className="grid grid-cols-2 gap-px" style={{ background: glass ? 'rgba(255,255,255,0.05)' : 'rgba(26,39,68,0.04)' }}>
-        {ANCHOR_ITEMS.map(({ label, subtitle, href, accent }) => {
+        {ANCHOR_ITEMS.map(({ label, subtitle, href, accent, Icon }) => {
           const isActive = pathname === href
           const accentColor = accent === 'teal' ? 'var(--teal)' : 'var(--ochre)'
           return (
@@ -97,19 +101,24 @@ function AnchorsMegaDropdown({ pathname, onSelect, glass }: {
                 className="absolute left-0 top-3 bottom-3 w-[3px] rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
                 style={{ background: accentColor }}
               />
-              <div className={`transition-transform duration-200 group-hover:translate-x-1 ${isActive ? 'translate-x-1' : ''}`}>
-                <h4 className={`font-body text-sm font-semibold mb-0.5 ${
-                  glass
-                    ? isActive ? 'text-teal-light' : 'text-white/90'
-                    : isActive ? 'text-teal' : 'text-navy'
-                }`}>
-                  {label}
-                </h4>
-                <p className={`font-body text-xs ${
-                  glass ? 'text-white/40' : 'text-navy/40'
-                }`}>
-                  {subtitle}
-                </p>
+              <div className={`flex items-start gap-3 transition-transform duration-200 group-hover:translate-x-1 ${isActive ? 'translate-x-1' : ''}`}>
+                <div className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: accentColor, opacity: isActive ? 1 : 0.5 }}>
+                  <Icon className="w-full h-full" />
+                </div>
+                <div>
+                  <h4 className={`font-body text-sm font-semibold mb-0.5 ${
+                    glass
+                      ? isActive ? 'text-teal-light' : 'text-white/90'
+                      : isActive ? 'text-teal' : 'text-navy'
+                  }`}>
+                    {label}
+                  </h4>
+                  <p className={`font-body text-xs ${
+                    glass ? 'text-white/40' : 'text-navy/40'
+                  }`}>
+                    {subtitle}
+                  </p>
+                </div>
               </div>
             </Link>
           )
@@ -444,17 +453,24 @@ function MobileMenu({
 
           {anchorsOpen && (
             <div className="pl-4 pb-2 space-y-0.5">
-              {ANCHOR_ITEMS.map(({ label, subtitle, href }) => (
+              {ANCHOR_ITEMS.map(({ label, subtitle, href, accent, Icon }) => (
                 <Link
                   key={href}
                   href={href}
                   onClick={onClose}
-                  className={`block py-2.5 transition-colors duration-150 ${
+                  className={`flex items-center gap-3 py-2.5 transition-colors duration-150 ${
                     pathname === href ? 'text-teal' : 'text-navy/60 hover:text-navy'
                   }`}
                 >
-                  <span className="font-body text-base font-medium">{label}</span>
-                  <span className="font-body text-xs text-navy/30 ml-2">{subtitle}</span>
+                  <Icon className={`w-4 h-4 flex-shrink-0 ${
+                    pathname === href
+                      ? 'text-teal'
+                      : accent === 'teal' ? 'text-teal/40' : 'text-ochre/40'
+                  }`} />
+                  <div>
+                    <span className="font-body text-base font-medium">{label}</span>
+                    <span className="font-body text-xs text-navy/30 ml-2">{subtitle}</span>
+                  </div>
                 </Link>
               ))}
             </div>

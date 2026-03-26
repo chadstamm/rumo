@@ -11,9 +11,15 @@ import { CompassRose } from '@/components/compass-rose'
 export function SectionTransition({
   section,
   onBegin,
+  totalSections,
+  sectionIndex,
 }: {
   section: Section
   onBegin: () => void
+  /** Total number of content sections (excluding shared intake). */
+  totalSections?: number
+  /** 1-based index of this section among content sections. */
+  sectionIndex?: number
 }) {
   const [animate, setAnimate] = useState(false)
 
@@ -23,7 +29,10 @@ export function SectionTransition({
     return () => clearTimeout(timer)
   })
 
-  const sectionNumber = section === 0 ? null : section
+  // Use passed-in values if available, fall back to section number
+  const showLabel = section !== 0
+  const displayIndex = sectionIndex ?? section
+  const displayTotal = totalSections ?? 5
 
   return (
     <div className="w-full max-w-xl mx-auto text-center py-12 sm:py-16">
@@ -37,7 +46,7 @@ export function SectionTransition({
       </div>
 
       {/* Section label */}
-      {sectionNumber && (
+      {showLabel && (
         <div
           className={`flex items-center justify-center gap-3 mb-4 transition-all duration-700 delay-100 ${
             animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
@@ -45,7 +54,7 @@ export function SectionTransition({
         >
           <span className="w-8 h-px bg-ochre/40" aria-hidden="true" />
           <span className="font-body text-xs tracking-[0.25em] uppercase text-ochre font-medium">
-            Section {sectionNumber} of 3
+            Section {displayIndex} of {displayTotal}
           </span>
           <span className="w-8 h-px bg-ochre/40" aria-hidden="true" />
         </div>
