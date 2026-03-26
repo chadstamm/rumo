@@ -71,14 +71,12 @@ function AnchorsMegaDropdown({ pathname, onSelect, glass }: {
   pathname: string; onSelect: () => void; glass?: boolean
 }) {
   return (
-    <div
-      className={`absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[520px] rounded-2xl overflow-hidden
-        shadow-xl animate-dropdown-in ${
+    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[520px] animate-dropdown-in">
+      <div className={`rounded-2xl overflow-hidden shadow-xl ${
         glass
           ? 'bg-navy/80 backdrop-blur-xl border border-white/10 shadow-navy/30'
           : 'bg-white border border-navy/10 shadow-navy/5'
-      }`}
-    >
+      }`}>
       <div className="grid grid-cols-2 gap-px" style={{ background: glass ? 'rgba(255,255,255,0.05)' : 'rgba(26,39,68,0.04)' }}>
         {ANCHOR_ITEMS.map(({ label, subtitle, href, accent }) => {
           const isActive = pathname === href
@@ -137,6 +135,7 @@ function AnchorsMegaDropdown({ pathname, onSelect, glass }: {
             <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </Link>
+      </div>
       </div>
     </div>
   )
