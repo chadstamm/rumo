@@ -95,7 +95,7 @@ export function Hero() {
                      max-w-3xl
                      hero-fade-in-up hero-delay-1"
         >
-          FIND YOUR DIRECTION
+          GIVE YOUR AI DIRECTION
           <br />
           <span className="text-ochre-light">WITH RUMO.</span>
         </h1>
