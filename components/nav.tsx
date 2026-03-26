@@ -24,8 +24,8 @@ function NavLink({ href, label, active, light }: { href: string; label: string; 
       className={`group relative font-body text-sm tracking-wide transition-all duration-200 py-1 ${
         light
           ? active
-            ? 'text-ochre-light font-medium'
-            : 'text-ochre/70 hover:text-ochre-light'
+            ? 'text-white font-medium'
+            : 'text-white/70 hover:text-white'
           : active
             ? 'text-teal font-medium'
             : 'text-navy/70 hover:text-teal'
@@ -33,9 +33,9 @@ function NavLink({ href, label, active, light }: { href: string; label: string; 
     >
       {label}
       <span
-        className={`absolute bottom-0 left-0 h-[2px] rounded-full transition-all duration-300 ease-out ${
-          light ? 'bg-ochre-light' : 'bg-teal'
-        } ${active ? 'w-full' : 'w-0 group-hover:w-full'}`}
+        className={`absolute bottom-0 left-0 h-[2px] rounded-full transition-all duration-300 ease-out bg-teal ${
+          active ? 'w-full' : 'w-0 group-hover:w-full'
+        }`}
       />
     </Link>
   )
@@ -47,20 +47,21 @@ function AnchorsButton({ active, light }: {
   active: boolean; light?: boolean
 }) {
   return (
-    <span
-      className={`group relative font-body text-sm tracking-wide transition-all duration-200 py-1 cursor-pointer ${
+    <Link
+      href="/anchors"
+      className={`group relative font-body text-sm tracking-wide transition-all duration-200 py-1 ${
         light
-          ? active ? 'text-ochre-light font-medium' : 'text-ochre/70 hover:text-ochre-light'
+          ? active ? 'text-white font-medium' : 'text-white/70 hover:text-white'
           : active ? 'text-teal font-medium' : 'text-navy/70 hover:text-teal'
       }`}
     >
       Anchors
       <span
-        className={`absolute bottom-0 left-0 h-[2px] rounded-full transition-all duration-300 ease-out ${
-          light ? 'bg-ochre-light' : 'bg-teal'
-        } ${active ? 'w-full' : 'w-0 group-hover:w-full'}`}
+        className={`absolute bottom-0 left-0 h-[2px] rounded-full transition-all duration-300 ease-out bg-teal ${
+          active ? 'w-full' : 'w-0 group-hover:w-full'
+        }`}
       />
-    </span>
+    </Link>
   )
 }
 
@@ -217,8 +218,8 @@ export function Nav() {
             <Link
               href="/start"
               className="font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
-                         bg-teal text-white shadow-md shadow-teal/20
-                         hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30
+                         bg-ochre text-white shadow-md shadow-ochre/20
+                         hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
                          transition-all duration-200 hover:-translate-y-[1px]"
             >
               Chart Your Course
@@ -312,8 +313,8 @@ export function Nav() {
               className={`font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
                          transition-all duration-200 hover:-translate-y-[1px] ${
                 pathname === '/start'
-                  ? 'bg-teal-dark text-white shadow-md shadow-teal/20'
-                  : 'bg-teal text-white shadow-md shadow-teal/20 hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30'
+                  ? 'bg-ochre-light text-white shadow-md shadow-ochre/20'
+                  : 'bg-ochre text-white shadow-md shadow-ochre/20 hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30'
               }`}
             >
               Chart Your Course
