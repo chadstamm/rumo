@@ -10,9 +10,11 @@ Consolidates four standalone apps (WeTheMe, WriteLikeMe, StoryArchive, Customize
 - Supabase (auth + Postgres) — magic link sign-in
 - Anthropic SDK (`@anthropic-ai/sdk`) — direct, not Vercel AI SDK
 - Framer Motion for page transitions, vanilla IntersectionObserver for scroll reveals
-- Lucide React for icons, mammoth + pdf-parse for file uploads
-- Deployed on Vercel (Turbopack dev)
-- Domain: withrumo.com (purchased, needs Vercel connection)
+- Custom nautical SVG icons (`components/icons/anchor-icons.tsx`), Lucide React for misc, mammoth + pdf-parse for file uploads
+- Deployed on Vercel (Turbopack dev) — auto-deploys on push to main
+- Vercel project: `rumo` (linked via `.vercel/project.json`)
+- GitHub: `chadstamm/rumo` (origin remote configured)
+- Domain: withrumo.com (purchased, needs Vercel domain connection)
 
 ## Environment Variables
 | Variable | Required | Notes |
@@ -26,11 +28,19 @@ Consolidates four standalone apps (WeTheMe, WriteLikeMe, StoryArchive, Customize
 ### Landing Page (`/`)
 Hero → Problem → Overview ("The Missing Ingredient") → How It Works (4 steps) → Instructions Wizard → Footer
 
-### The Path (`/start`)
-- 38 curated questions: Shared Intake (7q) → Identity (10q) → Voice (12q) → Stories (9q)
+### The Full Build (`/start`)
+- 68 curated questions across 7 sections: Shared Intake (7q) → Identity (10q) → Situation (10q) → Voice (12q) → Stories (9q) → Timeline (10q) → Roster (10q)
+- Produces raw material for all 6 context anchors
 - All documents generated AFTER completion (not mid-journey)
 - Auth deferred — users start immediately, sign-in required to save
 - State: `WizardProvider` context + useReducer + localStorage
+
+### Individual Anchor Builders (`/docs/[slug]`)
+- Each anchor can be built standalone via its own scoped wizard
+- Uses same WizardProvider with `filterSections` and `storageKey` per anchor
+- Shared Intake (section 0) always included as foundation
+- Each has its own localStorage persistence and completion screen
+- Routes: `/docs/constitution`, `/docs/sotu`, `/docs/codex`, `/docs/story-bank`, `/docs/timeline`, `/docs/roster`
 
 ### Instructions Wizard (embedded on homepage + `/instructions`)
 - CustomizedAI port — dynamic AI-generated questions, multi-model output
@@ -40,12 +50,14 @@ Hero → Problem → Overview ("The Missing Ingredient") → How It Works (4 ste
 - Model hardcoded to `claude-opus-4-6` in API routes
 
 ### The Vault (`/vault`)
-- Not yet built. Will show generated documents with view/copy/download/regenerate.
+- Shows saved custom instructions (from instructions wizard) with per-field copy
+- Lists all 6 context anchors with links to builders (currently "Coming Soon — Pro" for generated docs)
+- Will eventually show generated anchor documents with view/copy/download/regenerate
 
 ## Key Files
 | Path | Purpose |
 |------|---------|
-| `data/questions.ts` | 38 curated questions, section helpers |
+| `data/questions.ts` | 68 curated questions (7 sections), section helpers |
 | `data/models.ts` | AI model definitions and field mappings |
 | `types/wizard.ts` | WizardQuestion, WizardState, Section types + constants |
 | `types/instructions.ts` | Instructions wizard types |
@@ -54,8 +66,9 @@ Hero → Problem → Overview ("The Missing Ingredient") → How It Works (4 ste
 | `context/instructions-context.tsx` | InstructionsProvider, useInstructions hook, reducer |
 | `components/wizard/` | Path wizard components (kebab-case filenames) |
 | `components/instructions/` | Instructions wizard components (PascalCase filenames) |
-| `components/pillars.tsx` | "How It Works" — 4 steps with icons |
-| `components/overview.tsx` | "The Missing Ingredient" — context anchors visual |
+| `components/icons/anchor-icons.tsx` | Shared nautical SVG icons (large + small) for all 6 anchors |
+| `components/pillars.tsx` | "How It Works" — 6 steps with shared nautical icons |
+| `components/overview.tsx` | "The Missing Ingredient" — interactive anchor carousel |
 | `components/hero.tsx` | Video hero with teal logo |
 | `app/globals.css` | Tailwind v4 `@theme` tokens + CSS component classes |
 | `proxy.ts` | Next.js 16 proxy — delegates to Supabase middleware |
