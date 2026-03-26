@@ -30,6 +30,15 @@
   100% { opacity: 1; }
 }
 
+@keyframes dropdownIn {
+  0% { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-dropdown-in {
+  animation: dropdownIn 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 html {
   scroll-behavior: smooth;
 }
