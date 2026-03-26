@@ -1,23 +1,44 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 
 /**
- * Forces scroll to top on mount. Prevents browser scroll restoration
- * from pulling users to the middle of the homepage on refresh or navigation.
+ * Forces scroll to top on mount. Uses useLayoutEffect to fire before paint,
+ * and temporarily disables smooth scrolling so the jump is instant.
  */
 export function ScrollToTop() {
-  useEffect(() => {
+  // useLayoutEffect fires synchronously before browser paint
+  useLayoutEffect(() => {
+    // Disable smooth scroll so the jump is instant
+    document.documentElement.style.scrollBehavior = 'auto'
+
     // Disable browser scroll restoration
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual'
     }
 
-    // Always start at top
+    // Force to top immediately
     window.scrollTo(0, 0)
 
-    // Clean up navigation flag if set
-    sessionStorage.removeItem('rumo-scroll-top')
+    // Re-enable smooth scroll after a tick
+    requestAnimationFrame(() => {
+      document.documentElement.style.scrollBehavior = ''
+    })
+  }, [])
+
+  // Belt and suspenders — also catch any late scroll attempts
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (window.scrollY > 0) {
+        document.documentElement.style.scrollBehavior = 'auto'
+        window.scrollTo(0, 0)
+        requestAnimationFrame(() => {
+          document.documentElement.style.scrollBehavior = ''
+        })
+      }
+    }, 50)
+
+    return () => clearTimeout(timeout)
   }, [])
 
   return null
