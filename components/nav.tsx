@@ -7,12 +7,12 @@ import { useAuth } from '@/components/auth-provider'
 import { useEffect, useState, useRef } from 'react'
 
 const ANCHOR_ITEMS = [
-  { label: 'Personal Constitution', subtitle: 'Who you are always', href: '/docs/constitution', accent: 'teal' },
-  { label: 'Writing Codex', subtitle: 'How you write', href: '/docs/codex', accent: 'teal' },
-  { label: 'Story Bank', subtitle: 'What you\'ve lived', href: '/docs/story-bank', accent: 'ochre' },
-  { label: 'State of the Union', subtitle: 'Where you are right now', href: '/docs/sotu', accent: 'ochre' },
-  { label: 'Timeline', subtitle: 'Your arc and trajectory', href: '/docs/timeline', accent: 'teal' },
-  { label: 'Roster', subtitle: 'The people who matter', href: '/docs/roster', accent: 'ochre' },
+  { label: 'Personal Constitution', subtitle: 'Who am I, and what do I stand for?', href: '/docs/constitution', accent: 'teal' },
+  { label: 'Writing Codex', subtitle: 'How do I write?', href: '/docs/codex', accent: 'teal' },
+  { label: 'Story Bank', subtitle: 'What stories do I always tell?', href: '/docs/story-bank', accent: 'ochre' },
+  { label: 'State of the Union', subtitle: 'What matters to me right now?', href: '/docs/sotu', accent: 'ochre' },
+  { label: 'Timeline', subtitle: 'How has my life unfolded?', href: '/docs/timeline', accent: 'teal' },
+  { label: 'Roster', subtitle: 'Who are the people that matter?', href: '/docs/roster', accent: 'ochre' },
 ]
 
 // ── Animated nav link with sliding underline ──
