@@ -1,70 +1,96 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 
 const ANCHORS = [
   {
     name: 'Personal Constitution',
-    desc: 'Who you are always — your values, beliefs, and identity foundation',
-    color: 'ochre' as const,
+    desc: 'Who you are always',
+    slug: 'constitution',
+    accent: 'ochre',
     icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="9" r="4" fill="currentColor" opacity="0.25" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="10" r="5" fill="currentColor" opacity="0.2" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M5 25c0-5 4-9 9-9s9 4 9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
   },
   {
     name: 'Writing Codex',
-    desc: 'How you write — your rhythms, patterns, and voice fingerprint',
-    color: 'ochre' as const,
+    desc: 'How you write',
+    slug: 'codex',
+    accent: 'teal',
     icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="16" width="3.5" height="5" rx="1" fill="currentColor" />
-        <rect x="8" y="9" width="3.5" height="12" rx="1" fill="currentColor" opacity="0.7" />
-        <rect x="13" y="4" width="3.5" height="17" rx="1" fill="currentColor" opacity="0.5" />
-        <rect x="18" y="11" width="3" height="10" rx="1" fill="currentColor" opacity="0.35" />
-      </svg>
-    ),
-  },
-  {
-    name: 'State of the Union',
-    desc: 'Where you are right now — your goals, constraints, and current season',
-    color: 'ochre' as const,
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-        <circle cx="12" cy="12" r="5.5" stroke="currentColor" strokeWidth="1" opacity="0.3" />
-        <polygon points="12,4.5 13.5,10.5 12,9.5 10.5,10.5" fill="currentColor" />
-        <circle cx="12" cy="12" r="2" fill="currentColor" />
+      <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
+        <rect x="4" y="15" width="3" height="7" rx="1.5" fill="currentColor" />
+        <rect x="9" y="9" width="3" height="13" rx="1.5" fill="currentColor" opacity="0.7" />
+        <rect x="14" y="5" width="3" height="17" rx="1.5" fill="currentColor" opacity="0.5" />
+        <rect x="19" y="11" width="3" height="11" rx="1.5" fill="currentColor" opacity="0.35" />
+        <rect x="24" y="13" width="2" height="9" rx="1" fill="currentColor" opacity="0.2" />
       </svg>
     ),
   },
   {
     name: 'Story Bank',
-    desc: 'What you\'ve lived — the moments, crossroads, and raw material',
-    color: 'ochre' as const,
+    desc: 'What you\'ve lived',
+    slug: 'story-bank',
+    accent: 'ochre',
     icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-        <path d="M12 5C9 4 6 3.5 3 4v15c3-.5 6 0 9 1" fill="currentColor" opacity="0.15" />
-        <path d="M12 5c3-1 6-1.5 9-.5v15c-3-.5-6 0-9 1" fill="currentColor" opacity="0.15" />
-        <path d="M12 5C9 4 6 3.5 3 4v15c3-.5 6 0 9 1" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-        <path d="M12 5c3-1 6-1.5 9-.5v15c-3-.5-6 0-9 1" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-        <path d="M12 5v15" stroke="currentColor" strokeWidth="1.5" />
+      <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
+        <path d="M14 6C11 5 8 4.5 5 5v16c3-.5 6 0 9 1" fill="currentColor" opacity="0.12" />
+        <path d="M14 6c3-1 6-1.5 9-1v16c-3-.5-6 0-9 1" fill="currentColor" opacity="0.12" />
+        <path d="M14 6C11 5 8 4.5 5 5v16c3-.5 6 0 9 1" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M14 6c3-1 6-1.5 9-1v16c-3-.5-6 0-9 1" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M14 6v16" stroke="currentColor" strokeWidth="1.5" />
       </svg>
     ),
   },
   {
-    name: 'Custom Instructions',
-    desc: 'Your AI, configured — tailored for every platform you use',
-    color: 'teal' as const,
+    name: 'State of the Union',
+    desc: 'Where you are right now',
+    slug: 'sotu',
+    accent: 'teal',
     icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-        <rect x="4" y="3" width="14" height="18" rx="2.5" fill="currentColor" opacity="0.15" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M8.5 8h7M8.5 11.5h7M8.5 15h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="19" cy="18" r="4.5" fill="currentColor" opacity="0.2" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M17 18l1.5 1.5L21 16.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="11" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="14" cy="14" r="7" stroke="currentColor" strokeWidth="1" opacity="0.25" />
+        <polygon points="14,4 16,12 14,10.5 12,12" fill="currentColor" />
+        <circle cx="14" cy="14" r="2" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Timeline',
+    desc: 'Your arc and trajectory',
+    slug: 'timeline',
+    accent: 'ochre',
+    icon: (
+      <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
+        <line x1="4" y1="14" x2="24" y2="14" stroke="currentColor" strokeWidth="1.5" opacity="0.25" />
+        <circle cx="7" cy="14" r="2.5" fill="currentColor" opacity="0.35" />
+        <circle cx="14" cy="14" r="3" fill="currentColor" />
+        <circle cx="21" cy="14" r="2.5" fill="currentColor" opacity="0.35" />
+        <line x1="7" y1="8" x2="7" y2="11" stroke="currentColor" strokeWidth="1.5" opacity="0.25" />
+        <line x1="14" y1="7" x2="14" y2="10.5" stroke="currentColor" strokeWidth="1.5" />
+        <line x1="21" y1="8" x2="21" y2="11" stroke="currentColor" strokeWidth="1.5" opacity="0.25" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Roster',
+    desc: 'The people who matter',
+    slug: 'roster',
+    accent: 'teal',
+    icon: (
+      <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="10" r="3.5" fill="currentColor" />
+        <path d="M8 22c0-3.3 2.7-6 6-6s6 2.7 6 6" fill="currentColor" opacity="0.12" />
+        <circle cx="6" cy="13" r="2.5" fill="currentColor" opacity="0.35" />
+        <circle cx="22" cy="13" r="2.5" fill="currentColor" opacity="0.35" />
+        <path d="M1.5 22c0-2.5 2-4.5 4.5-4.5" stroke="currentColor" strokeWidth="1" opacity="0.2" />
+        <path d="M26.5 22c0-2.5-2-4.5-4.5-4.5" stroke="currentColor" strokeWidth="1" opacity="0.2" />
       </svg>
     ),
   },
@@ -85,7 +111,7 @@ export function Overview() {
         aria-hidden="true"
       />
 
-      {/* Darker overlay — navy at top, warmer gold pulled out at bottom */}
+      {/* Darker overlay */}
       <div
         className="absolute inset-0"
         aria-hidden="true"
@@ -102,7 +128,7 @@ export function Overview() {
         }}
       />
 
-      {/* Ochre wash — more gold at bottom */}
+      {/* Ochre wash */}
       <div
         className="absolute inset-0"
         aria-hidden="true"
@@ -155,62 +181,65 @@ export function Overview() {
 
           {/* ── Right: Context Anchors ── */}
           <div className="lg:pt-6">
-            {/* Header */}
-            <p className="font-body text-ochre font-bold text-sm tracking-[0.25em] uppercase mb-6">
+            <p className="font-body text-ochre font-bold text-sm tracking-[0.25em] uppercase mb-8">
               The Context Anchors
             </p>
 
-            {/* Cards — white-backed for contrast and visual pop */}
-            <div className="space-y-2.5">
-              {ANCHORS.map((anchor) => {
-                const isTeal = anchor.color === 'teal'
+            {/* Anchor grid — 2x3 cards */}
+            <div className="grid grid-cols-2 gap-3">
+              {ANCHORS.map((anchor, i) => {
+                const isTeal = anchor.accent === 'teal'
                 return (
-                  <div
-                    key={anchor.name}
-                    className={`
-                      flex items-center gap-4 px-5 py-4 rounded-xl
-                      transition-all duration-300
-                      ${isTeal
-                        ? 'bg-white/[0.12] border border-teal/25 hover:bg-white/[0.16] hover:border-teal/40'
-                        : 'bg-white/[0.07] border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.16]'
-                      }
-                    `}
+                  <Link
+                    key={anchor.slug}
+                    href={`/docs/${anchor.slug}`}
+                    className="group relative rounded-xl px-4 py-5 transition-all duration-300 overflow-hidden
+                               bg-white/[0.06] border border-white/[0.08]
+                               hover:bg-white/[0.12] hover:border-white/[0.18]
+                               hover:-translate-y-0.5"
+                    style={{ animationDelay: `${i * 0.08}s` }}
                   >
-                    {/* Icon container */}
+                    {/* Accent top bar on hover */}
                     <div
-                      className={`
-                        w-11 h-11 rounded-xl flex items-center justify-center shrink-0
-                        ${isTeal
-                          ? 'bg-teal/20 text-teal'
-                          : 'bg-white/[0.10] text-ochre'
-                        }
-                      `}
-                    >
+                      className="absolute top-0 left-4 right-4 h-[2px] rounded-b-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{ background: isTeal ? 'var(--teal)' : 'var(--ochre)' }}
+                    />
+
+                    {/* Icon */}
+                    <div className={`mb-3 transition-colors duration-300 ${
+                      isTeal
+                        ? 'text-teal/60 group-hover:text-teal'
+                        : 'text-ochre/60 group-hover:text-ochre-light'
+                    }`}>
                       {anchor.icon}
                     </div>
 
-                    {/* Text */}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-display text-sm font-semibold text-white mb-0.5">
-                        {anchor.name}
-                      </h3>
-                      <p className={`font-body text-xs leading-snug ${isTeal ? 'text-teal/60' : 'text-white/40'}`}>
-                        {anchor.desc}
-                      </p>
-                    </div>
-                  </div>
+                    {/* Name */}
+                    <h3 className="font-display text-sm font-semibold text-white/90 mb-1 group-hover:text-white transition-colors duration-200">
+                      {anchor.name}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="font-body text-[11px] leading-snug text-white/35 group-hover:text-white/50 transition-colors duration-200">
+                      {anchor.desc}
+                    </p>
+                  </Link>
                 )
               })}
             </div>
 
-            {/* Subtle connector line to next section */}
-            <div className="flex justify-center mt-8" aria-hidden="true">
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="w-px h-6 bg-gradient-to-b from-ochre/30 to-ochre/10" />
-                <svg className="w-4 h-4 text-ochre/25" viewBox="0 0 16 16" fill="none">
-                  <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            {/* CTA */}
+            <div className="mt-6 text-center">
+              <Link
+                href="/anchors"
+                className="inline-flex items-center gap-2 font-body text-xs font-semibold tracking-wide uppercase
+                           text-ochre/60 hover:text-ochre-light transition-colors duration-300"
+              >
+                Explore all anchors
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform duration-200 group-hover:translate-x-0.5">
+                  <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </div>
+              </Link>
             </div>
           </div>
         </div>

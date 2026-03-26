@@ -8,7 +8,7 @@ export default function PrivacyPage() {
         <section className="mb-10">
           <h2 className="font-display text-xl text-navy mb-3">What we collect</h2>
           <p className="text-navy/80 leading-relaxed">
-            When you use Rumo, we collect the answers you provide to questions in The Path, any writing samples you submit for voice analysis, and the documents we generate on your behalf — your identity profile, writing codex, and story bank. We collect your email address for authentication purposes.
+            When you use Rumo, we collect the answers you provide to our anchor builder questions, any writing samples you submit for voice analysis, and the context anchor documents we generate on your behalf — including your personal constitution, writing codex, story bank, state of the union, timeline, and roster. We collect your email address for authentication purposes.
           </p>
         </section>
 
