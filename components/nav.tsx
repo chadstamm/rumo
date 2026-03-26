@@ -120,8 +120,8 @@ function AnchorsMegaDropdown({ pathname, onSelect, glass }: {
       <div className={`px-5 py-3 flex items-center justify-between ${
         glass ? 'bg-white/[0.03] border-t border-white/[0.06]' : 'bg-cream/60 border-t border-navy/[0.04]'
       }`}>
-        <span className={`font-body text-xs ${glass ? 'text-white/30' : 'text-navy/30'}`}>
-          6 context anchors
+        <span className={`font-body text-xs ${glass ? 'text-white/60' : 'text-navy/50'}`}>
+          Build all six anchors at once.
         </span>
         <Link
           href="/start"
