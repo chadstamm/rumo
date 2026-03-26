@@ -272,9 +272,13 @@ export function Nav() {
           <a
             href="/"
             onClick={(e) => {
+              e.preventDefault()
               if (pathname === '/') {
-                e.preventDefault()
                 window.scrollTo({ top: 0, behavior: 'smooth' })
+              } else {
+                window.location.href = '/'
+                // Force top on navigation
+                sessionStorage.setItem('rumo-scroll-top', '1')
               }
             }}
             className="flex items-center hover:opacity-80 transition-opacity duration-200"
