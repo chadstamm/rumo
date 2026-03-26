@@ -131,7 +131,7 @@ function AnchorsMegaDropdown({ pathname, onSelect, glass }: {
             glass ? 'text-teal-light hover:text-white' : 'text-teal hover:text-teal-light'
           }`}
         >
-          Full Build
+          Chart Your Course
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform duration-200 group-hover:translate-x-0.5">
             <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -211,9 +211,18 @@ export function Nav() {
               )}
             </div>
 
-            <NavLink href="/start" label="Full Build" active={false} light />
-            <NavLink href="/instructions" label="Instructions" active={false} light />
+            <NavLink href="/instructions" label="Configure" active={false} light />
             <NavLink href="/vault" label="Vault" active={false} light />
+
+            <Link
+              href="/start"
+              className="font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
+                         bg-teal text-white shadow-md shadow-teal/20
+                         hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30
+                         transition-all duration-200 hover:-translate-y-[1px]"
+            >
+              Chart Your Course
+            </Link>
           </div>
         </nav>
 
@@ -295,9 +304,20 @@ export function Nav() {
               )}
             </div>
 
-            <NavLink href="/start" label="Full Build" active={pathname === '/start'} />
-            <NavLink href="/instructions" label="Instructions" active={pathname === '/instructions'} />
+            <NavLink href="/instructions" label="Configure" active={pathname === '/instructions'} />
             <NavLink href="/vault" label="Vault" active={pathname === '/vault'} />
+
+            <Link
+              href="/start"
+              className={`font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
+                         transition-all duration-200 hover:-translate-y-[1px] ${
+                pathname === '/start'
+                  ? 'bg-teal-dark text-white shadow-md shadow-teal/20'
+                  : 'bg-teal text-white shadow-md shadow-teal/20 hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30'
+              }`}
+            >
+              Chart Your Course
+            </Link>
 
             {!loading && (
               user ? (
@@ -436,14 +456,22 @@ function MobileMenu({
             </div>
           )}
 
-          <Link href="/start" onClick={onClose} className={`${mobileLinkClass(pathname === '/start')} py-3`}>
-            Full Build
-          </Link>
           <Link href="/instructions" onClick={onClose} className={`${mobileLinkClass(pathname === '/instructions')} py-3`}>
-            AI Instructions
+            Configure
           </Link>
           <Link href="/vault" onClick={onClose} className={`${mobileLinkClass(pathname === '/vault')} py-3`}>
             Vault
+          </Link>
+
+          <Link
+            href="/start"
+            onClick={onClose}
+            className="block text-center font-body text-base font-semibold tracking-wide
+                       px-6 py-3.5 mt-4 rounded-full
+                       bg-teal text-white shadow-md shadow-teal/20
+                       hover:bg-teal-light transition-all duration-200"
+          >
+            Chart Your Course
           </Link>
 
           <div className="pt-4 mt-4 border-t border-navy/[0.08]">
