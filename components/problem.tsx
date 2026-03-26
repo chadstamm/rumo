@@ -48,11 +48,11 @@ export function Problem() {
           </p>
 
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            That&apos;s okay. It&apos;s nobody&apos;s fault. There&apos;s no manual for this, especially when the AI landscape seems to change every week, if not every day. The reality is people need a resource that pulls it all together.
+            That&apos;s okay. It&apos;s nobody&apos;s fault. There&apos;s no manual for this, especially when the landscape seems to change every day. But the problem isn&apos;t the technology. It&apos;s that your AI doesn&apos;t know who you are, how you think, or what you&apos;re trying to build.
           </p>
 
           <p className="font-body text-navy font-medium text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            That&apos;s what Rumo is, an AI navigation system that starts with the most overlooked input in AI: you.
+            Rumo fixes that. Starting with the most overlooked input in AI: you.
           </p>
         </div>
       </div>

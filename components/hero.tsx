@@ -77,16 +77,8 @@ export function Hero() {
           />
         </div>
 
-        {/* Descriptor — between logo and headline */}
-        <p
-          className="font-body text-white/60 font-semibold mb-5 sm:mb-6
-                     text-xs sm:text-base lg:text-lg tracking-[0.35em] sm:tracking-[0.45em] uppercase
-                     w-[240px] sm:w-[320px] lg:w-[400px]
-                     hero-fade-in"
-          style={{ animationDelay: '0.3s' }}
-        >
-          AI Navigation System
-        </p>
+        {/* Spacer — between logo and headline (descriptor removed) */}
+        <div className="mb-5 sm:mb-6" />
 
         {/* Headline */}
         <h1
@@ -113,7 +105,7 @@ export function Hero() {
                        active:translate-y-0
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
           >
-            BEGIN YOUR JOURNEY
+            LAUNCH YOURS TODAY
             <svg
               width="18"
               height="18"
