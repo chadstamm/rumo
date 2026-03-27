@@ -16,7 +16,7 @@ const ANCHOR_ITEMS = [
   { label: 'Story Bank', subtitle: 'What stories do I always tell?', href: '/docs/story-bank', accent: 'ochre', Icon: SmallShipLogIcon },
   { label: 'State of the Union', subtitle: 'What matters to me right now?', href: '/docs/sotu', accent: 'ochre', Icon: SmallCompassIcon },
   { label: 'Timeline', subtitle: 'How has my life unfolded?', href: '/docs/timeline', accent: 'teal', Icon: SmallChronIcon },
-  { label: 'Roster', subtitle: 'Who are the people that matter?', href: '/docs/roster', accent: 'ochre', Icon: SmallHelmIcon },
+  { label: 'Influence Roster', subtitle: 'Who are the people that matter?', href: '/docs/roster', accent: 'ochre', Icon: SmallHelmIcon },
 ]
 
 // ── Animated nav link with sliding underline ──

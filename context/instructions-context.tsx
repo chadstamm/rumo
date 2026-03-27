@@ -167,7 +167,7 @@ interface InstructionsContextType {
   setStoryBank: (text: string) => void;
   setStateOfUnion: (text: string) => void;
   setTimeline: (text: string) => void;
-  setRoster: (text: string) => void;
+  setInfluence Roster: (text: string) => void;
   // Navigation
   goToStep: (step: number) => void;
   nextStep: () => void;
@@ -324,7 +324,7 @@ export function InstructionsProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'SET_TIMELINE', payload: text });
   }, []);
 
-  const setRoster = useCallback((text: string) => {
+  const setInfluence Roster = useCallback((text: string) => {
     dispatch({ type: 'SET_ROSTER', payload: text });
   }, []);
 
@@ -534,7 +534,7 @@ export function InstructionsProvider({ children }: { children: ReactNode }) {
     setStoryBank,
     setStateOfUnion,
     setTimeline,
-    setRoster,
+    setInfluence Roster,
     goToStep,
     nextStep,
     prevStep,

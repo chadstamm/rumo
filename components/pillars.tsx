@@ -53,7 +53,7 @@ const ANCHORS = [
     accentGlow: 'rgba(196, 148, 58, 0.15)',
   },
   {
-    title: 'Roster',
+    title: 'Influence Roster',
     question: 'Who are the people that matter?',
     description: 'Your inner circle, professional network, and relationship patterns. The people context that helps AI navigate your world.',
     slug: 'roster',

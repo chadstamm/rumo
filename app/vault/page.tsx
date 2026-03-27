@@ -235,7 +235,7 @@ export default function VaultPage() {
               { name: 'Writing Codex', slug: 'codex', desc: 'How you write', accent: 'teal' },
               { name: 'Story Bank', slug: 'story-bank', desc: 'What you\'ve lived', accent: 'ochre' },
               { name: 'Timeline', slug: 'timeline', desc: 'Where you\'ve been and where you\'re headed', accent: 'ochre' },
-              { name: 'Roster', slug: 'roster', desc: 'The people who shape your world', accent: 'teal' },
+              { name: 'Influence Roster', slug: 'roster', desc: 'The people who shape your world', accent: 'teal' },
             ].map((anchor) => {
               const SmallIcon = ANCHOR_SMALL_ICONS[anchor.slug]
               return (

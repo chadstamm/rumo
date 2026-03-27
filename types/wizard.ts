@@ -8,7 +8,7 @@ export const SECTION_NAMES: Record<Section, string> = {
   2: 'Voice',
   3: 'Stories',
   4: 'Timeline',
-  5: 'Roster',
+  5: 'Influence Roster',
   6: 'Situation',
 }
 

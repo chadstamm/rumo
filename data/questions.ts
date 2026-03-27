@@ -4,14 +4,14 @@ import type { WizardQuestion } from '@/types/wizard'
  * Rumo Unified Question Set — 68 curated questions across 7 sections (6 anchors + shared intake)
  *
  * Curated from 124 questions across WeTheMe, WriteLikeMe, and StoryArchive,
- * plus Timeline, Roster, and Situation sections.
+ * plus Timeline, Influence Roster, and Situation sections.
  *
  * Section 0 (Shared Intake): 7 questions — collected first, feeds all generation prompts
  * Section 1 (Identity): 10 questions — values, beliefs, aspirations → Personal Constitution
  * Section 2 (Voice): 12 questions — writing patterns, style, samples → Writing Codex
  * Section 3 (Stories): 9 questions — memory triggers, signature language → Story Bank
  * Section 4 (Timeline): 10 questions — milestones, chapters, trajectory → Timeline
- * Section 5 (Roster): 10 questions — relationships, network, people context → Roster
+ * Section 5 (Influence Roster): 10 questions — relationships, network, people context → Influence Roster
  * Section 6 (Situation): 10 questions — current season, constraints, priorities → State of the Union
  */
 

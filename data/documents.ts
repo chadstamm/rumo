@@ -62,7 +62,7 @@ export const DOCUMENTS: DocumentConfig[] = [
   },
   {
     slug: 'roster',
-    title: 'Roster',
+    title: 'Influence Roster',
     subtitle: 'The people who shape your world',
     description:
       'Your inner circle, professional network, and relationship patterns. The people context that helps AI navigate your world without stepping on landmines.',
