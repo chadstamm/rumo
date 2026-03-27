@@ -73,8 +73,8 @@ export function Overview() {
           </div>
 
           {/* ── Right: Pull quote ── */}
-          <div className="hidden lg:flex items-center justify-end">
-            <blockquote className="relative text-right">
+          <div className="hidden lg:flex items-center justify-center">
+            <blockquote className="relative text-center">
               {/* Opening quote mark */}
               <span
                 className="absolute -top-8 -left-6 font-script text-[7rem] leading-none text-ochre/30 select-none pointer-events-none"
@@ -82,7 +82,7 @@ export function Overview() {
               >
                 &ldquo;
               </span>
-              <p className="font-script text-cream/80 text-[clamp(1.75rem,3.2vw,2.5rem)] leading-[1.35]">
+              <p className="font-script text-cream/80 text-[clamp(2rem,3.8vw,3rem)] leading-[1.35]">
                 Give your AI context before you give it questions.
               </p>
               {/* Closing quote mark */}
@@ -92,7 +92,7 @@ export function Overview() {
               >
                 &rdquo;
               </span>
-              <div className="w-10 h-[2px] bg-ochre/40 mt-6 ml-auto" aria-hidden="true" />
+              <div className="w-10 h-[2px] bg-ochre/40 mt-6 mx-auto" aria-hidden="true" />
             </blockquote>
           </div>
         </div>

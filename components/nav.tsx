@@ -11,7 +11,7 @@ import {
 } from '@/components/icons/anchor-icons'
 
 const ANCHOR_ITEMS = [
-  { label: 'Personal Constitution', subtitle: 'Who am I, and what do I stand for?', href: '/docs/constitution', accent: 'teal', Icon: SmallAnchorIcon },
+  { label: 'Personal Constitution', subtitle: 'Who am I? What do I stand for?', href: '/docs/constitution', accent: 'teal', Icon: SmallAnchorIcon },
   { label: 'Writing Codex', subtitle: 'How do I write?', href: '/docs/codex', accent: 'teal', Icon: SmallQuillIcon },
   { label: 'Story Bank', subtitle: 'What stories do I always tell?', href: '/docs/story-bank', accent: 'ochre', Icon: SmallShipLogIcon },
   { label: 'State of the Union', subtitle: 'What matters to me right now?', href: '/docs/sotu', accent: 'ochre', Icon: SmallCompassIcon },

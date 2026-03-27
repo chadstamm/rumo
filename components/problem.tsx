@@ -52,7 +52,7 @@ export function Problem() {
           </p>
 
           <p className="font-body text-navy font-medium text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            RUMO fixes that. Starting with the most overlooked input in AI:
+            RUMO fixes that, and it all starts with the most overlooked input in AI:
           </p>
 
           <p className="font-body text-navy font-semibold text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
