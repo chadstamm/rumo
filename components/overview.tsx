@@ -74,18 +74,25 @@ export function Overview() {
 
           {/* ── Right: Pull quote ── */}
           <div className="hidden lg:flex items-center justify-center">
-            <blockquote className="relative">
-              {/* Decorative open quote */}
+            <blockquote className="relative px-4">
+              {/* Opening quote mark */}
               <span
-                className="absolute -top-8 -left-4 font-display text-[6rem] leading-none text-ochre/15 select-none pointer-events-none"
+                className="absolute -top-10 -left-2 font-script text-[8rem] leading-none text-ochre/30 select-none pointer-events-none"
                 aria-hidden="true"
               >
                 &ldquo;
               </span>
-              <p className="font-display text-cream/90 text-[clamp(1.5rem,3vw,2.25rem)] font-semibold leading-[1.25] tracking-tight">
+              <p className="font-script text-cream/80 text-[clamp(1.75rem,3.2vw,2.5rem)] leading-[1.35]">
                 Give your AI context before you give it questions.
               </p>
-              <div className="w-10 h-[2px] bg-ochre/40 mt-6" aria-hidden="true" />
+              {/* Closing quote mark */}
+              <span
+                className="absolute -bottom-12 right-0 font-script text-[8rem] leading-none text-ochre/30 select-none pointer-events-none"
+                aria-hidden="true"
+              >
+                &rdquo;
+              </span>
+              <div className="w-10 h-[2px] bg-ochre/40 mt-8" aria-hidden="true" />
             </blockquote>
           </div>
         </div>
