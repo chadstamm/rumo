@@ -44,7 +44,7 @@ export function Overview() {
         ref={sectionRef}
         className="reveal relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 py-28 sm:py-36 lg:py-44"
       >
-        <div className="max-w-3xl">
+        <div className="max-w-2xl">
           {/* ── Editorial text only ── */}
           <p className="font-body text-ochre font-bold text-sm sm:text-base tracking-[0.25em] uppercase mb-8 sm:mb-10">
             The Missing Ingredient
@@ -62,10 +62,10 @@ export function Overview() {
           <div className="w-12 h-[2px] bg-ochre/50 mb-10 sm:mb-14" aria-hidden="true" />
 
           <div className="space-y-5 sm:space-y-6">
-            <p className="font-body text-cream/70 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
+            <p className="font-body text-cream/85 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
               The difference between generic AI output and something that actually works for you comes down to one thing: context. Your identity, your voice, your lived experience. When AI has those inputs, it stops guessing and starts collaborating.
             </p>
-            <p className="font-body text-cream/70 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
+            <p className="font-body text-cream/85 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
               The fix is simple: give AI your context before you give it your questions. The harder part is compiling that context in a way AI can actually use.
             </p>
           </div>
