@@ -175,7 +175,7 @@ export function Pillars() {
 
                 {/* Title */}
                 <h3
-                  className="font-display text-cream text-2xl sm:text-3xl font-semibold mb-3
+                  className="font-display text-cream text-xl sm:text-2xl font-semibold mb-3
                              transition-colors duration-300"
                   style={{ }}
                 >
