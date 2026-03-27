@@ -87,7 +87,7 @@ export function Overview() {
               </p>
               {/* Closing quote mark */}
               <span
-                className="absolute -bottom-10 right-0 font-script text-[7rem] leading-none text-ochre/30 select-none pointer-events-none"
+                className="absolute -bottom-16 -right-8 font-script text-[7rem] leading-none text-ochre/30 select-none pointer-events-none"
                 aria-hidden="true"
               >
                 &rdquo;
