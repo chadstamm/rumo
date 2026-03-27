@@ -99,7 +99,7 @@ export function Pillars() {
           <div className="w-12 h-[2px] bg-ochre/50 mx-auto mb-6 sm:mb-8" aria-hidden="true" />
 
           <p className="font-body text-cream/85 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            Whether you&apos;re making your AI assistant smarter or building something that actually knows you, it starts with the same six inputs. RUMO helps you build each one through curated questions, then compiles them into context your AI can use from day one.
+            Whether you&apos;re making your AI assistant smarter or building an agent partner that actually knows you, it starts with the same six inputs. RUMO helps you build each one through curated questions, then compiles them into context your AI can use from day one.
           </p>
         </div>
 
