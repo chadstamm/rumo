@@ -12,6 +12,7 @@ const ANCHORS = [
     question: 'Who am I, and what do I stand for?',
     description: 'Your values, beliefs, non-negotiables, and aspirations — the foundation document that tells AI what you stand for.',
     slug: 'constitution',
+    icon: '/icons/constitution.png',
     accent: '#c4943a',
     accentGlow: 'rgba(196, 148, 58, 0.15)',
   },
@@ -20,6 +21,7 @@ const ANCHORS = [
     question: 'How do I write?',
     description: 'Your sentence rhythms, humor, metaphors, and the words you never use. A complete voice fingerprint built from your own patterns.',
     slug: 'codex',
+    icon: '/icons/codex.png',
     accent: '#1ebeb1',
     accentGlow: 'rgba(30, 190, 177, 0.15)',
   },
@@ -28,6 +30,7 @@ const ANCHORS = [
     question: 'What stories do I always tell?',
     description: 'The moments that shaped you — smells, failures, crossroads, places that felt like home. Raw material that makes AI feel lived-in.',
     slug: 'story-bank',
+    icon: '/icons/story-bank.png',
     accent: '#c4943a',
     accentGlow: 'rgba(196, 148, 58, 0.15)',
   },
@@ -36,6 +39,7 @@ const ANCHORS = [
     question: 'What matters to me right now?',
     description: 'Your current situation, active challenges, and immediate priorities. A living document that evolves as your life does.',
     slug: 'sotu',
+    icon: '/icons/sotu.png',
     accent: '#1ebeb1',
     accentGlow: 'rgba(30, 190, 177, 0.15)',
   },
@@ -44,6 +48,7 @@ const ANCHORS = [
     question: 'How has my life unfolded?',
     description: 'Life chapters, milestones, and where you\'re headed. The chronological context that tells AI not just who you are, but how you got here.',
     slug: 'timeline',
+    icon: '/icons/timeline.png',
     accent: '#c4943a',
     accentGlow: 'rgba(196, 148, 58, 0.15)',
   },
@@ -52,6 +57,7 @@ const ANCHORS = [
     question: 'Who are the people that matter?',
     description: 'Your inner circle, professional network, and relationship patterns. The people context that helps AI navigate your world.',
     slug: 'roster',
+    icon: '/icons/roster.png',
     accent: '#1ebeb1',
     accentGlow: 'rgba(30, 190, 177, 0.15)',
   },
@@ -155,6 +161,18 @@ export function Pillars() {
               />
 
               <div className="px-7 py-8 sm:px-8 sm:py-9">
+                {/* Icon */}
+                <div className="mb-5">
+                  <Image
+                    src={anchor.icon}
+                    alt=""
+                    width={44}
+                    height={44}
+                    className="opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+                    aria-hidden="true"
+                  />
+                </div>
+
                 {/* Title */}
                 <h3
                   className="font-display text-cream text-xl sm:text-2xl font-semibold mb-3
