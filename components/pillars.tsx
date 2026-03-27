@@ -77,20 +77,20 @@ export function Pillars() {
         ref={sectionRef}
         className="reveal relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 pt-24 sm:pt-32 lg:pt-40 pb-24 sm:pb-32 lg:pb-40"
       >
-        {/* ── Header area ── */}
-        <div className="max-w-[44rem] mb-20 sm:mb-24">
-          <p className="font-body text-ochre font-bold text-sm sm:text-base tracking-[0.25em] uppercase mb-8 sm:mb-10">
+        {/* ── Header area — centered ── */}
+        <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-16">
+          <p className="font-body text-ochre font-bold text-sm sm:text-base tracking-[0.25em] uppercase mb-6 sm:mb-8">
             How It Works
           </p>
 
           <h2
             className="font-display text-cream font-bold leading-[1.1] tracking-tight
-                       text-[clamp(1.75rem,4.5vw,3.25rem)] mb-10 sm:mb-14"
+                       text-[clamp(1.75rem,4.5vw,3.25rem)] mb-6 sm:mb-8"
           >
             The 6 Context Anchors
           </h2>
 
-          <div className="w-12 h-[2px] bg-ochre/50 mb-10 sm:mb-14" aria-hidden="true" />
+          <div className="w-12 h-[2px] bg-ochre/50 mx-auto mb-6 sm:mb-8" aria-hidden="true" />
 
           <p className="font-body text-cream/85 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
             Whether you&apos;re making your AI assistant smarter or building something that actually knows you, it starts with the same six inputs. Rumo helps you build each one through curated questions, then compiles them into context your AI can use from day one.
@@ -98,7 +98,7 @@ export function Pillars() {
         </div>
 
         {/* ── Anchor icon — hero-scale, centered with glow ── */}
-        <div className="relative flex justify-center mb-20 sm:mb-28">
+        <div className="relative flex justify-center mb-14 sm:mb-18">
           {/* Glow ring behind icon */}
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] rounded-full pointer-events-none"
