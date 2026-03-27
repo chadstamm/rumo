@@ -9,7 +9,7 @@ import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 const ANCHORS = [
   {
     title: 'Personal Constitution',
-    question: 'Who am I, and what do I stand for?',
+    question: 'Who am I? What do I stand for?',
     description: 'Your values, beliefs, non-negotiables, and aspirations — the foundation document that tells AI what you stand for.',
     slug: 'constitution',
     icon: '/icons/constitution.png',
@@ -175,7 +175,7 @@ export function Pillars() {
 
                 {/* Title */}
                 <h3
-                  className="font-display text-cream text-xl sm:text-2xl font-semibold mb-3
+                  className="font-display text-cream text-2xl sm:text-3xl font-semibold mb-3
                              transition-colors duration-300"
                   style={{ }}
                 >
@@ -186,14 +186,14 @@ export function Pillars() {
 
                 {/* Question */}
                 <p
-                  className="font-body text-sm sm:text-base italic mb-5 transition-colors duration-300"
+                  className="font-body text-sm sm:text-base italic font-semibold mb-5 transition-colors duration-300"
                   style={{ color: `${anchor.accent}90` }}
                 >
                   &ldquo;{anchor.question}&rdquo;
                 </p>
 
                 {/* Description */}
-                <p className="font-body text-cream/50 text-sm sm:text-[0.95rem] leading-relaxed group-hover:text-cream/70 transition-colors duration-300">
+                <p className="font-body text-cream/55 text-sm sm:text-[0.95rem] font-medium leading-relaxed group-hover:text-cream/75 transition-colors duration-300">
                   {anchor.description}
                 </p>
 
