@@ -262,7 +262,7 @@ const cardVariants = {
 export function FoundationStep() {
   const {
     state, setWritingCodex, setPersonalConstitution, setStoryBank,
-    setStateOfUnion, setTimeline, setInfluence Roster, nextStep, prevStep,
+    setStateOfUnion, setTimeline, setRoster, nextStep, prevStep,
   } = useInstructions();
 
   const ANCHOR_CARDS = [
@@ -332,7 +332,7 @@ export function FoundationStep() {
       description: 'Your key relationships, network, and people context',
       placeholder: 'Paste your roster here...',
       value: state.roster ?? '',
-      setter: setInfluence Roster,
+      setter: setRoster,
       icon: BookIcon,
       iconBg: 'rgba(245, 158, 11, 0.08)',
       iconColor: '#f59e0b',
