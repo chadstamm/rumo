@@ -44,7 +44,7 @@ export function Overview() {
         ref={sectionRef}
         className="reveal relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 py-28 sm:py-36 lg:py-44"
       >
-        <div className="max-w-2xl">
+        <div className="max-w-[44rem]">
           {/* ── Editorial text only ── */}
           <p className="font-body text-ochre font-bold text-sm sm:text-base tracking-[0.25em] uppercase mb-8 sm:mb-10">
             The Missing Ingredient
