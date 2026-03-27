@@ -93,27 +93,35 @@ export function Pillars() {
           <div className="w-12 h-[2px] bg-ochre/50 mx-auto mb-6 sm:mb-8" aria-hidden="true" />
 
           <p className="font-body text-cream/85 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            Whether you&apos;re making your AI assistant smarter or building something that actually knows you, it starts with the same six inputs. Rumo helps you build each one through curated questions, then compiles them into context your AI can use from day one.
+            Whether you&apos;re making your AI assistant smarter or building something that actually knows you, it starts with the same six inputs. RUMO helps you build each one through curated questions, then compiles them into context your AI can use from day one.
           </p>
         </div>
 
-        {/* ── Anchor icon — hero-scale, centered with glow ── */}
-        <div className="relative flex justify-center mb-14 sm:mb-18">
-          {/* Glow ring behind icon */}
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] rounded-full pointer-events-none"
-            aria-hidden="true"
-            style={{
-              background: 'radial-gradient(circle, rgba(196, 148, 58, 0.12) 0%, rgba(196, 148, 58, 0.04) 50%, transparent 70%)',
-            }}
-          />
-          <Image
-            src="/anchor-section-icon.png"
-            alt="Context Anchor"
-            width={160}
-            height={160}
-            className="relative z-10 drop-shadow-[0_0_40px_rgba(196,148,58,0.2)]"
-          />
+        {/* ── Anchor icon — hero-scale, centered with glow + divider lines ── */}
+        <div className="relative flex items-center justify-center gap-6 sm:gap-10 mb-14 sm:mb-18">
+          {/* Left divider */}
+          <div className="flex-1 h-px bg-white/10" aria-hidden="true" />
+
+          {/* Icon with glow */}
+          <div className="relative flex-shrink-0">
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] rounded-full pointer-events-none"
+              aria-hidden="true"
+              style={{
+                background: 'radial-gradient(circle, rgba(196, 148, 58, 0.12) 0%, rgba(196, 148, 58, 0.04) 50%, transparent 70%)',
+              }}
+            />
+            <Image
+              src="/anchor-section-icon.png"
+              alt="Context Anchor"
+              width={160}
+              height={160}
+              className="relative z-10 drop-shadow-[0_0_40px_rgba(196,148,58,0.2)]"
+            />
+          </div>
+
+          {/* Right divider */}
+          <div className="flex-1 h-px bg-white/10" aria-hidden="true" />
         </div>
 
         {/* ── Six anchors — glass cards, 3x2 grid ── */}
