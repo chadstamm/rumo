@@ -125,26 +125,6 @@ function AnchorsMegaDropdown({ pathname, onSelect, glass }: {
         })}
       </div>
 
-      {/* Bottom bar — Full Build CTA */}
-      <div className={`px-5 py-3 flex items-center justify-between ${
-        glass ? 'bg-white/[0.03] border-t border-white/[0.06]' : 'bg-cream/60 border-t border-navy/[0.04]'
-      }`}>
-        <span className={`font-body text-xs ${glass ? 'text-white/60' : 'text-navy/50'}`}>
-          Build all six anchors at once.
-        </span>
-        <Link
-          href="/start"
-          onClick={onSelect}
-          className={`font-body text-xs font-semibold tracking-wide uppercase transition-all duration-200 hover:gap-2 flex items-center gap-1 ${
-            glass ? 'text-teal-light hover:text-white' : 'text-teal hover:text-teal-light'
-          }`}
-        >
-          Chart Your Course
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform duration-200 group-hover:translate-x-0.5">
-            <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </Link>
-      </div>
       </div>
     </div>
   )
@@ -220,17 +200,16 @@ export function Nav() {
               )}
             </div>
 
-            <NavLink href="/instructions" label="Configure" active={false} light />
             <NavLink href="/vault" label="Vault" active={false} light />
 
             <Link
               href="/start"
               className="shimmer-hover font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
-                         bg-ochre text-white shadow-md shadow-ochre/20
-                         hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
+                         bg-teal text-white shadow-md shadow-teal/20
+                         hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30
                          transition-all duration-200 hover:-translate-y-[1px]"
             >
-              Chart Your Course
+              Build Your Constitution
             </Link>
           </div>
         </nav>
@@ -317,7 +296,6 @@ export function Nav() {
               )}
             </div>
 
-            <NavLink href="/instructions" label="Configure" active={pathname === '/instructions'} />
             <NavLink href="/vault" label="Vault" active={pathname === '/vault'} />
 
             {!loading && (
@@ -476,9 +454,6 @@ function MobileMenu({
             </div>
           )}
 
-          <Link href="/instructions" onClick={onClose} className={`${mobileLinkClass(pathname === '/instructions')} py-3`}>
-            Configure
-          </Link>
           <Link href="/vault" onClick={onClose} className={`${mobileLinkClass(pathname === '/vault')} py-3`}>
             Vault
           </Link>
@@ -488,10 +463,10 @@ function MobileMenu({
             onClick={onClose}
             className="shimmer-hover block text-center font-body text-base font-semibold tracking-wide
                        px-6 py-3.5 mt-4 rounded-full
-                       bg-ochre text-white shadow-md shadow-ochre/20
-                       hover:bg-ochre-light transition-all duration-200"
+                       bg-teal text-white shadow-md shadow-teal/20
+                       hover:bg-teal-light transition-all duration-200"
           >
-            Chart Your Course
+            Build Your Constitution
           </Link>
 
           <div className="pt-4 mt-4 border-t border-navy/[0.08]">

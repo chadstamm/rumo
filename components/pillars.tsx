@@ -132,89 +132,100 @@ export function Pillars() {
 
         {/* ── Six anchors — glass cards, 3x2 grid ── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {ANCHORS.map((anchor) => (
-            <Link
-              key={anchor.slug}
-              href={`/docs/${anchor.slug}`}
-              className="group relative block rounded-2xl overflow-hidden
-                         transition-all duration-500
-                         hover:-translate-y-2 hover:shadow-2xl"
-              style={{
-                background: 'rgba(255, 255, 255, 0.03)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = `linear-gradient(135deg, ${anchor.accentGlow} 0%, rgba(255,255,255,0.04) 100%)`
-                e.currentTarget.style.borderColor = `${anchor.accent}40`
-                e.currentTarget.style.boxShadow = `0 20px 60px ${anchor.accentGlow}`
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)'
-                e.currentTarget.style.boxShadow = 'none'
-              }}
-            >
-              {/* Accent top bar */}
-              <div
-                className="h-[3px] w-full transition-opacity duration-500 opacity-40 group-hover:opacity-100"
-                style={{ background: anchor.accent }}
-              />
+          {ANCHORS.map((anchor) => {
+            const isFree = anchor.slug === 'constitution'
 
-              <div className="px-7 py-8 sm:px-8 sm:py-9">
-                {/* Icon */}
-                <div className="mb-5">
-                  <Image
-                    src={anchor.icon}
-                    alt=""
-                    width={44}
-                    height={44}
-                    className="opacity-70 group-hover:opacity-100 transition-opacity duration-300"
-                    aria-hidden="true"
-                  />
-                </div>
+            return (
+              <Link
+                key={anchor.slug}
+                href={isFree ? '/start' : `/docs/${anchor.slug}`}
+                className={`group relative block rounded-2xl overflow-hidden
+                           transition-all duration-500
+                           hover:-translate-y-2 hover:shadow-2xl
+                           ${isFree ? 'ring-1 ring-teal/30' : ''}`}
+                style={{
+                  background: isFree ? 'rgba(30, 190, 177, 0.06)' : 'rgba(255, 255, 255, 0.03)',
+                  border: isFree ? '1px solid rgba(30, 190, 177, 0.20)' : '1px solid rgba(255, 255, 255, 0.06)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = `linear-gradient(135deg, ${anchor.accentGlow} 0%, rgba(255,255,255,0.04) 100%)`
+                  e.currentTarget.style.borderColor = `${anchor.accent}40`
+                  e.currentTarget.style.boxShadow = `0 20px 60px ${anchor.accentGlow}`
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = isFree ? 'rgba(30, 190, 177, 0.06)' : 'rgba(255, 255, 255, 0.03)'
+                  e.currentTarget.style.borderColor = isFree ? 'rgba(30, 190, 177, 0.20)' : 'rgba(255, 255, 255, 0.06)'
+                  e.currentTarget.style.boxShadow = 'none'
+                }}
+              >
+                {/* Accent top bar */}
+                <div
+                  className={`h-[3px] w-full transition-opacity duration-500 ${isFree ? 'opacity-80' : 'opacity-40'} group-hover:opacity-100`}
+                  style={{ background: anchor.accent }}
+                />
 
-                {/* Title */}
-                <h3
-                  className="font-display text-cream text-xl sm:text-2xl font-semibold mb-3
-                             transition-colors duration-300"
-                  style={{ }}
-                >
-                  <span className="group-hover:text-ochre-light transition-colors duration-300">
-                    {anchor.title}
-                  </span>
-                </h3>
+                <div className="px-7 py-8 sm:px-8 sm:py-9">
+                  {/* Icon + Free badge row */}
+                  <div className="flex items-start justify-between mb-5">
+                    <Image
+                      src={anchor.icon}
+                      alt=""
+                      width={44}
+                      height={44}
+                      className={`${isFree ? 'opacity-90' : 'opacity-70'} group-hover:opacity-100 transition-opacity duration-300`}
+                      aria-hidden="true"
+                    />
+                    {isFree && (
+                      <span className="inline-flex items-center px-3 py-1 rounded-full
+                                       bg-teal/15 border border-teal/30
+                                       font-body text-[11px] font-bold tracking-[0.15em] uppercase text-teal-light">
+                        Free
+                      </span>
+                    )}
+                  </div>
 
-                {/* Question */}
-                <p
-                  className="font-body text-sm sm:text-base italic font-semibold mb-5 transition-colors duration-300"
-                  style={{ color: `${anchor.accent}90` }}
-                >
-                  &ldquo;{anchor.question}&rdquo;
-                </p>
-
-                {/* Description */}
-                <p className="font-body text-cream/55 text-sm sm:text-[0.95rem] font-medium leading-relaxed group-hover:text-cream/75 transition-colors duration-300">
-                  {anchor.description}
-                </p>
-
-                {/* Explore arrow */}
-                <div className="mt-6 flex items-center gap-2
-                                opacity-0 group-hover:opacity-100
-                                translate-y-2 group-hover:translate-y-0
-                                transition-all duration-300">
-                  <span
-                    className="font-body text-xs font-bold tracking-[0.15em] uppercase"
-                    style={{ color: anchor.accent }}
+                  {/* Title */}
+                  <h3
+                    className="font-display text-cream text-xl sm:text-2xl font-semibold mb-3
+                               transition-colors duration-300"
                   >
-                    Explore
-                  </span>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform duration-200 group-hover:translate-x-1">
-                    <path d="M3 8h10M9 4.5l4 3.5-4 3.5" stroke={anchor.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                    <span className="group-hover:text-ochre-light transition-colors duration-300">
+                      {anchor.title}
+                    </span>
+                  </h3>
+
+                  {/* Question */}
+                  <p
+                    className="font-body text-sm sm:text-base italic font-semibold mb-5 transition-colors duration-300"
+                    style={{ color: `${anchor.accent}90` }}
+                  >
+                    &ldquo;{anchor.question}&rdquo;
+                  </p>
+
+                  {/* Description */}
+                  <p className="font-body text-cream/55 text-sm sm:text-[0.95rem] font-medium leading-relaxed group-hover:text-cream/75 transition-colors duration-300">
+                    {anchor.description}
+                  </p>
+
+                  {/* CTA — different for free vs paid */}
+                  <div className="mt-6 flex items-center gap-2
+                                  opacity-0 group-hover:opacity-100
+                                  translate-y-2 group-hover:translate-y-0
+                                  transition-all duration-300">
+                    <span
+                      className="font-body text-xs font-bold tracking-[0.15em] uppercase"
+                      style={{ color: anchor.accent }}
+                    >
+                      {isFree ? 'Start Here' : 'Explore'}
+                    </span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform duration-200 group-hover:translate-x-1">
+                      <path d="M3 8h10M9 4.5l4 3.5-4 3.5" stroke={anchor.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            )
+          })}
         </div>
       </div>
     </section>

@@ -20,14 +20,11 @@ export function Footer() {
           <Link href="/anchors" className="font-body text-xs text-cream/30 hover:text-cream/60 tracking-wide transition-colors duration-200">
             Anchors
           </Link>
-          <Link href="/instructions" className="font-body text-xs text-cream/30 hover:text-cream/60 tracking-wide transition-colors duration-200">
-            Configure
+          <Link href="/start" className="font-body text-xs text-cream/30 hover:text-cream/60 tracking-wide transition-colors duration-200">
+            Build Your Constitution
           </Link>
           <Link href="/vault" className="font-body text-xs text-cream/30 hover:text-cream/60 tracking-wide transition-colors duration-200">
             Vault
-          </Link>
-          <Link href="/start" className="font-body text-xs text-cream/30 hover:text-cream/60 tracking-wide transition-colors duration-200">
-            Chart Your Course
           </Link>
           <Link href="/privacy" className="font-body text-xs text-cream/30 hover:text-cream/60 tracking-wide transition-colors duration-200">
             Privacy
