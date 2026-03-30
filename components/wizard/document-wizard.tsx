@@ -210,20 +210,7 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
       <div className="bg-navy">
         <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 py-8 sm:py-10">
           {config.slug === 'constitution' ? (
-            <div className="flex items-start gap-5 sm:gap-6">
-              {/* Icon on far left */}
-              {ANCHOR_PNG_ICONS[config.slug] && (
-                <Image
-                  src={ANCHOR_PNG_ICONS[config.slug]}
-                  alt=""
-                  width={44}
-                  height={44}
-                  className="flex-shrink-0 mt-1 opacity-90"
-                  style={{ filter: 'brightness(0) invert(1) opacity(0.9)' }}
-                  aria-hidden="true"
-                />
-              )}
-
+            <div className="flex items-start justify-between gap-5 sm:gap-6">
               {/* Copy + stats + CTA */}
               <div className="flex-1">
                 <p className="font-body text-cream/80 text-base sm:text-lg font-medium leading-relaxed mb-2">
@@ -248,6 +235,19 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
                   </a>
                 </div>
               </div>
+
+              {/* Icon flush right */}
+              {ANCHOR_PNG_ICONS[config.slug] && (
+                <Image
+                  src={ANCHOR_PNG_ICONS[config.slug]}
+                  alt=""
+                  width={44}
+                  height={44}
+                  className="flex-shrink-0 opacity-90 hidden sm:block"
+                  style={{ filter: 'brightness(0) invert(1) opacity(0.9)' }}
+                  aria-hidden="true"
+                />
+              )}
             </div>
           ) : (
             <p className="font-body text-cream/60 text-sm sm:text-base font-medium">
