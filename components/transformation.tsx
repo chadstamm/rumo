@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 
 export function Transformation() {
@@ -47,29 +46,6 @@ export function Transformation() {
           </p>
         </div>
 
-        {/* ── CTA ── */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-14 sm:mt-16">
-          <Link
-            href="/docs/constitution"
-            className="shimmer-hover inline-flex items-center gap-2.5
-                       px-8 py-4 rounded-full
-                       bg-teal text-white font-body font-bold text-sm tracking-wide
-                       shadow-lg shadow-teal/20
-                       hover:bg-teal-light hover:shadow-xl hover:shadow-teal/30
-                       transition-all duration-300 hover:-translate-y-[1px]"
-          >
-            Build Your Constitution
-            <span className="text-white/60 text-xs font-medium tracking-normal">&mdash; it&apos;s free</span>
-          </Link>
-
-          <Link
-            href="/start"
-            className="font-body text-sm font-semibold tracking-wide text-navy/40
-                       hover:text-ochre transition-colors duration-200"
-          >
-            or chart your full course &rarr;
-          </Link>
-        </div>
       </div>
 
       {/* ── Subtle compass watermark ── */}
