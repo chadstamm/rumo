@@ -28,7 +28,7 @@ const ANCHORS = [
   {
     title: 'Story Bank',
     question: 'What stories do I always tell?',
-    description: 'The moments that shaped you — smells, failures, crossroads, places that felt like home. Raw material that makes AI feel lived-in.',
+    description: 'The stories you always tell, the phrases you repeat, the moments that come up in every conversation. The raw material that makes AI sound like you lived it.',
     slug: 'story-bank',
     icon: '/icons/story-bank.png',
     accent: '#c4943a',
