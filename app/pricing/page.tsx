@@ -24,7 +24,7 @@ export default function PricingPage() {
           </h1>
           <div className="w-12 h-[2px] bg-ochre/50 mx-auto mb-6 sm:mb-8" aria-hidden="true" />
           <p className="font-body text-cream/50 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
-            Build your Personal Constitution for free. When you want the full picture, unlock all six Context Anchors with a single purchase. No subscription. Your documents are yours.
+            Build your Personal Constitution for free. When you want the full picture, unlock all six Context Anchors with a single purchase. No subscription. Your documents are yours to keep.
           </p>
         </div>
       </div>
