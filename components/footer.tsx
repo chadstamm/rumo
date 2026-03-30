@@ -18,7 +18,7 @@ export function Footer() {
         className="absolute inset-0"
         aria-hidden="true"
         style={{
-          background: 'linear-gradient(to bottom, rgba(26, 39, 68, 0.92) 0%, rgba(26, 39, 68, 0.88) 100%)',
+          background: 'linear-gradient(to bottom, rgba(14, 42, 48, 0.90) 0%, rgba(16, 38, 52, 0.88) 100%)',
         }}
       />
 
