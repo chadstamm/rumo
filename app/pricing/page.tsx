@@ -37,7 +37,7 @@ export default function PricingPage() {
             {/* Free tier */}
             <div className="rounded-2xl border-2 border-navy/10 bg-cream p-8 sm:p-10 flex flex-col">
               <div className="mb-8">
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-teal/10 border border-teal/25 font-body text-[11px] font-bold tracking-[0.15em] uppercase text-teal mb-4">
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-ochre/10 border border-ochre/25 font-body text-[11px] font-bold tracking-[0.15em] uppercase text-ochre mb-4">
                   Free
                 </span>
                 <div className="flex items-baseline gap-1 mb-3">
@@ -64,8 +64,8 @@ export default function PricingPage() {
               <Link
                 href="/docs/constitution"
                 className="block text-center font-body text-sm font-bold tracking-[0.1em] uppercase px-7 py-3.5 rounded-full
-                           border-2 border-teal text-teal
-                           hover:bg-teal hover:text-white
+                           border-2 border-ochre text-ochre
+                           hover:bg-ochre hover:text-white
                            transition-all duration-200"
               >
                 Get Started
@@ -73,14 +73,14 @@ export default function PricingPage() {
             </div>
 
             {/* Full Journey */}
-            <div className="rounded-2xl border-2 border-ochre/30 bg-cream p-8 sm:p-10 flex flex-col relative overflow-hidden">
+            <div className="rounded-2xl border-2 border-teal/30 bg-cream p-8 sm:p-10 flex flex-col relative overflow-hidden">
               {/* Recommended badge */}
-              <div className="absolute top-0 right-0 bg-ochre text-white font-body text-[10px] font-bold tracking-[0.15em] uppercase px-4 py-1.5 rounded-bl-xl">
+              <div className="absolute top-0 right-0 bg-teal text-white font-body text-[10px] font-bold tracking-[0.15em] uppercase px-4 py-1.5 rounded-bl-xl">
                 Recommended
               </div>
 
               <div className="mb-8">
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-ochre/10 border border-ochre/25 font-body text-[11px] font-bold tracking-[0.15em] uppercase text-ochre mb-4">
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-teal/10 border border-teal/25 font-body text-[11px] font-bold tracking-[0.15em] uppercase text-teal mb-4">
                   Full Journey
                 </span>
                 <div className="flex items-baseline gap-1 mb-3">
@@ -107,8 +107,8 @@ export default function PricingPage() {
               <Link
                 href="/start"
                 className="block text-center font-body text-sm font-bold tracking-[0.1em] uppercase px-7 py-3.5 rounded-full
-                           bg-ochre text-white shadow-md shadow-ochre/20
-                           hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
+                           bg-teal text-white shadow-md shadow-teal/20
+                           hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30
                            transition-all duration-200"
               >
                 Chart Your Course
