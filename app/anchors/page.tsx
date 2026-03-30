@@ -189,12 +189,12 @@ export default function AnchorsPage() {
             href="/start"
             className="shimmer-hover inline-flex items-center gap-2.5
                        px-8 py-4 rounded-full
-                       bg-ochre text-white font-body font-bold text-sm tracking-wide
+                       bg-ochre text-white font-body font-bold text-sm tracking-[0.15em]
                        shadow-lg shadow-ochre/20
                        hover:bg-ochre-light hover:shadow-xl hover:shadow-ochre/30
                        transition-all duration-300 hover:-translate-y-[1px]"
           >
-            Chart Your Course
+            CHART YOUR COURSE
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M4 9h10M10 5.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
