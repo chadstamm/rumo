@@ -9,7 +9,8 @@ import type { WizardQuestion } from '@/types/wizard'
 function MicrophoneInput({ onTranscript }: { onTranscript: (text: string) => void }) {
   const [listening, setListening] = useState(false)
   const [supported, setSupported] = useState(false)
-  const recognitionRef = useRef<SpeechRecognition | null>(null)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const recognitionRef = useRef<any>(null)
 
   useEffect(() => {
     const SpeechRecognition = (window as unknown as { SpeechRecognition?: typeof window.SpeechRecognition; webkitSpeechRecognition?: typeof window.SpeechRecognition }).SpeechRecognition
@@ -23,7 +24,8 @@ function MicrophoneInput({ onTranscript }: { onTranscript: (text: string) => voi
 
       let finalTranscript = ''
 
-      recognition.onresult = (event: SpeechRecognitionEvent) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      recognition.onresult = (event: any) => {
         let interim = ''
         for (let i = event.resultIndex; i < event.results.length; i++) {
           if (event.results[i].isFinal) {

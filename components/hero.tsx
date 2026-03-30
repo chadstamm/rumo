@@ -94,7 +94,7 @@ export function Hero() {
 
         {/* Bridge line */}
         <p className="mt-6 sm:mt-8 font-body text-cream/80 text-base sm:text-lg max-w-xl font-medium hero-fade-in-up hero-delay-2" style={{ animationDelay: '0.9s' }}>
-          AI gives you generic output because it doesn&apos;t know who you are.
+          AI gives you generic outputs because it doesn&apos;t know who you are.
           <br className="hidden sm:block" />
           Your Personal Constitution is where that changes &mdash; personalized AI that helps you succeed across everything&nbsp;you&nbsp;do.
         </p>

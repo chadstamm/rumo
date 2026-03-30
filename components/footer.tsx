@@ -56,7 +56,6 @@ export function Footer() {
                 Product
               </h4>
               <nav className="flex flex-col gap-3">
-                <FooterLink href="/docs/constitution">Constitution</FooterLink>
                 <FooterLink href="/anchors">Anchors</FooterLink>
                 <FooterLink href="/vault">Vault</FooterLink>
                 <FooterLink href="/pricing">Pricing</FooterLink>
