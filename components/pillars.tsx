@@ -138,10 +138,10 @@ export function Pillars() {
             return (
               <Link
                 key={anchor.slug}
-                href={isFree ? '/start' : `/docs/${anchor.slug}`}
+                href={`/docs/${anchor.slug}`}
                 className={`group relative block rounded-2xl overflow-hidden
-                           transition-all duration-500
-                           hover:-translate-y-2
+                           transition-all duration-500 ease-out
+                           hover:-translate-y-3 hover:scale-[1.02]
                            ${isFree ? 'ring-1 ring-teal/40' : ''}`}
                 style={{
                   background: isFree ? '#f5fffe' : '#faf6f1',
@@ -150,50 +150,54 @@ export function Pillars() {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = `${anchor.accent}50`
-                  e.currentTarget.style.boxShadow = `0 16px 48px rgba(0, 0, 0, 0.15), 0 0 0 1px ${anchor.accent}20`
+                  e.currentTarget.style.boxShadow = `0 24px 56px rgba(0, 0, 0, 0.18), 0 0 24px ${anchor.accentGlow}`
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.borderColor = isFree ? 'rgba(30, 190, 177, 0.25)' : 'rgba(196, 148, 58, 0.12)'
                   e.currentTarget.style.boxShadow = '0 2px 12px rgba(0, 0, 0, 0.08)'
                 }}
               >
-                {/* Accent top bar */}
+                {/* Accent top bar — grows on hover */}
                 <div
-                  className={`h-[3px] w-full transition-opacity duration-500 ${isFree ? 'opacity-100' : 'opacity-60'} group-hover:opacity-100`}
+                  className={`h-[3px] group-hover:h-[5px] w-full transition-all duration-500 ${isFree ? 'opacity-100' : 'opacity-60'} group-hover:opacity-100`}
                   style={{ background: anchor.accent }}
                 />
 
                 <div className="px-7 py-8 sm:px-8 sm:py-9">
                   {/* Icon + Free badge row */}
                   <div className="flex items-start justify-between mb-5">
-                    <Image
-                      src={anchor.icon}
-                      alt=""
-                      width={44}
-                      height={44}
-                      className="opacity-80 group-hover:opacity-100 transition-all duration-300"
-                      style={{ filter: 'brightness(0) opacity(0.7)' }}
-                      aria-hidden="true"
-                    />
+                    <div className="transition-all duration-500 ease-out group-hover:scale-110 group-hover:-rotate-3">
+                      <Image
+                        src={anchor.icon}
+                        alt=""
+                        width={44}
+                        height={44}
+                        className="opacity-85 group-hover:opacity-100 transition-opacity duration-300"
+                        aria-hidden="true"
+                      />
+                    </div>
                     {isFree && (
                       <span className="inline-flex items-center px-3 py-1 rounded-full
                                        bg-teal/10 border border-teal/25
-                                       font-body text-[11px] font-bold tracking-[0.15em] uppercase text-teal">
+                                       font-body text-[11px] font-bold tracking-[0.15em] uppercase text-teal
+                                       transition-all duration-300 group-hover:bg-teal/20 group-hover:border-teal/40">
                         Free
                       </span>
                     )}
                   </div>
 
-                  {/* Title */}
-                  <h3 className="font-display text-navy text-xl sm:text-2xl font-semibold mb-3 transition-colors duration-300">
-                    <span className="group-hover:text-navy/80 transition-colors duration-300">
-                      {anchor.title}
-                    </span>
+                  {/* Title — picks up accent color on hover via CSS variable */}
+                  <h3
+                    className="font-display text-2xl sm:text-[1.7rem] font-semibold mb-3 transition-colors duration-300
+                               text-navy group-hover:text-[--anchor-accent]"
+                    style={{ '--anchor-accent': anchor.accent } as React.CSSProperties}
+                  >
+                    {anchor.title}
                   </h3>
 
                   {/* Question */}
                   <p
-                    className="font-body text-sm sm:text-base italic font-semibold mb-5 transition-colors duration-300"
+                    className="font-body text-sm sm:text-base italic font-semibold mb-5 transition-all duration-300 group-hover:translate-x-1"
                     style={{ color: anchor.accent }}
                   >
                     &ldquo;{anchor.question}&rdquo;
@@ -204,18 +208,18 @@ export function Pillars() {
                     {anchor.description}
                   </p>
 
-                  {/* CTA — different for free vs paid */}
+                  {/* CTA — slides in from left */}
                   <div className="mt-6 flex items-center gap-2
                                   opacity-0 group-hover:opacity-100
-                                  translate-y-2 group-hover:translate-y-0
-                                  transition-all duration-300">
+                                  -translate-x-3 group-hover:translate-x-0
+                                  transition-all duration-400 ease-out">
                     <span
                       className="font-body text-xs font-bold tracking-[0.15em] uppercase"
                       style={{ color: anchor.accent }}
                     >
                       {isFree ? 'Start Here' : 'Explore'}
                     </span>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform duration-200 group-hover:translate-x-1">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform duration-300 group-hover:translate-x-1.5">
                       <path d="M3 8h10M9 4.5l4 3.5-4 3.5" stroke={anchor.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>

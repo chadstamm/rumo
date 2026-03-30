@@ -212,7 +212,7 @@ export function Nav() {
             <NavLink href="/vault" label="Vault" active={false} light />
 
             <Link
-              href="/start"
+              href="/docs/constitution"
               className="shimmer-hover font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
                          bg-teal text-white shadow-md shadow-teal/20
                          hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30
@@ -325,17 +325,17 @@ export function Nav() {
               )
             )}
 
-            <Link
-              href="/start"
-              className={`shimmer-hover font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
-                         transition-all duration-200 hover:-translate-y-[1px] ${
-                pathname === '/start'
-                  ? 'bg-ochre-light text-white shadow-md shadow-ochre/20'
-                  : 'bg-ochre text-white shadow-md shadow-ochre/20 hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30'
-              }`}
-            >
-              Chart Your Course
-            </Link>
+            {pathname !== '/start' && (
+              <Link
+                href="/start"
+                className="shimmer-hover font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
+                           bg-ochre text-white shadow-md shadow-ochre/20
+                           hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
+                           transition-all duration-200 hover:-translate-y-[1px]"
+              >
+                Chart Your Course
+              </Link>
+            )}
           </div>
 
           {/* Mobile hamburger */}
@@ -475,7 +475,7 @@ function MobileMenu({
           </Link>
 
           <Link
-            href="/start"
+            href="/docs/constitution"
             onClick={onClose}
             className="shimmer-hover block text-center font-body text-base font-semibold tracking-wide
                        px-6 py-3.5 mt-4 rounded-full

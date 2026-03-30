@@ -1,11 +1,30 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 export function Footer() {
   return (
-    <footer className="relative bg-navy">
+    <footer className="relative overflow-hidden">
+      {/* ── Ocean background ── */}
+      <Image
+        src="/footer-ocean.jpg"
+        alt=""
+        fill
+        className="object-cover"
+        aria-hidden="true"
+      />
+
+      {/* Dark overlay */}
+      <div
+        className="absolute inset-0"
+        aria-hidden="true"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(26, 39, 68, 0.92) 0%, rgba(26, 39, 68, 0.88) 100%)',
+        }}
+      />
+
       {/* ── Thin ochre divider at top ── */}
       <div
-        className="absolute top-0 left-0 right-0 h-px"
+        className="absolute top-0 left-0 right-0 h-px z-10"
         aria-hidden="true"
         style={{
           background:
@@ -13,43 +32,79 @@ export function Footer() {
         }}
       />
 
-      {/* ── Footer Content ── */}
-      <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 py-10 sm:py-12">
-        {/* Top row — nav links */}
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 mb-8">
-          <Link href="/anchors" className="font-body text-xs text-cream/30 hover:text-cream/60 tracking-wide transition-colors duration-200">
-            Anchors
-          </Link>
-          <Link href="/start" className="font-body text-xs text-cream/30 hover:text-cream/60 tracking-wide transition-colors duration-200">
-            Build Your Constitution
-          </Link>
-          <Link href="/vault" className="font-body text-xs text-cream/30 hover:text-cream/60 tracking-wide transition-colors duration-200">
-            Vault
-          </Link>
-          <Link href="/privacy" className="font-body text-xs text-cream/30 hover:text-cream/60 tracking-wide transition-colors duration-200">
-            Privacy
-          </Link>
+      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
+        {/* ── Top: Logo + Nav columns ── */}
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10 md:gap-16 mb-10 sm:mb-12">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link href="/" aria-label="RUMO home">
+              <Image
+                src="/rumo-logo-teal.svg"
+                alt="RUMO"
+                width={120}
+                height={35}
+                className="h-8 w-auto opacity-60 hover:opacity-80 transition-opacity duration-200"
+              />
+            </Link>
+          </div>
+
+          {/* Nav columns */}
+          <div className="flex flex-wrap gap-12 sm:gap-16">
+            {/* Product */}
+            <div>
+              <h4 className="font-body text-cream/40 text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
+                Product
+              </h4>
+              <nav className="flex flex-col gap-2.5">
+                <FooterLink href="/docs/constitution">Constitution</FooterLink>
+                <FooterLink href="/anchors">Anchors</FooterLink>
+                <FooterLink href="/start">Chart Your Course</FooterLink>
+                <FooterLink href="/vault">Vault</FooterLink>
+              </nav>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h4 className="font-body text-cream/40 text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
+                Company
+              </h4>
+              <nav className="flex flex-col gap-2.5">
+                <FooterLink href="/about">About</FooterLink>
+                <FooterLink href="/contact">Contact</FooterLink>
+              </nav>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <h4 className="font-body text-cream/40 text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
+                Legal
+              </h4>
+              <nav className="flex flex-col gap-2.5">
+                <FooterLink href="/privacy">Privacy</FooterLink>
+                <FooterLink href="/terms">Terms</FooterLink>
+              </nav>
+            </div>
+          </div>
         </div>
 
-        {/* Bottom row */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 pt-6 border-t border-cream/[0.06]">
-          <p className="font-body text-cream/25 text-xs tracking-wide">
-            &copy; 2026 Rumo. All rights reserved.
-          </p>
-
-          <p className="font-body text-cream/25 text-xs tracking-wide">
-            Built by{' '}
-            <a
-              href="https://chadstamm.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cream/40 hover:text-teal transition-colors duration-300"
-            >
-              Chad Stamm
-            </a>
+        {/* ── Bottom bar ── */}
+        <div className="pt-6 border-t border-cream/[0.06]">
+          <p className="font-body text-cream/20 text-xs tracking-wide">
+            &copy; {new Date().getFullYear()} Rumo. All rights reserved.
           </p>
         </div>
       </div>
     </footer>
+  )
+}
+
+function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="font-body text-sm text-cream/30 hover:text-cream/60 tracking-wide transition-colors duration-200"
+    >
+      {children}
+    </Link>
   )
 }
