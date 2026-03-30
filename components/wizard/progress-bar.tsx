@@ -2,18 +2,21 @@
 
 import { useState } from 'react'
 import { useWizard } from '@/context/wizard-context'
+import { getQuestionsForSection } from '@/data/questions'
 
 export function ProgressBar() {
-  const { state, activeSections, totalQuestionsInSection, totalAnswered, totalQuestions, reset } = useWizard()
-  const { currentSection, currentStep, completedSections } = state
+  const { state, activeSections, totalQuestionsInSection, totalQuestions, reset } = useWizard()
+  const { currentSection, currentStep } = state
   const [showConfirm, setShowConfirm] = useState(false)
 
-  const sections = activeSections
-  const sectionProgress = (currentStep + 1) / Math.max(totalQuestionsInSection, 1)
+  // Calculate absolute question number based on position in sequence
+  let currentQuestionNumber = currentStep + 1
+  for (const s of activeSections) {
+    if (s === currentSection) break
+    currentQuestionNumber += getQuestionsForSection(s).length
+  }
 
-  const completedWeight = completedSections.filter((s) => sections.includes(s)).length
-  const currentWeight = sectionProgress
-  const overallProgress = ((completedWeight + currentWeight) / sections.length) * 100
+  const overallProgress = (currentQuestionNumber / totalQuestions) * 100
 
   return (
     <div className="w-full">
@@ -28,9 +31,9 @@ export function ProgressBar() {
       {/* Total + reset */}
       <div className="flex items-center justify-between">
         <p className="font-body text-xs text-navy/60 font-medium">
-          Question {totalAnswered + 1} of {totalQuestions}
+          Question {currentQuestionNumber} of {totalQuestions}
         </p>
-        {totalAnswered > 0 && (
+        {currentQuestionNumber > 1 && (
           <>
             {showConfirm ? (
               <div className="flex items-center gap-2">

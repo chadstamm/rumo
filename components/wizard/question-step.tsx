@@ -384,10 +384,6 @@ export function QuestionStep() {
             ← Back
           </button>
 
-          <p className="font-body text-navy/20 text-xs hidden sm:block">
-            Saved automatically
-          </p>
-
           <div className="flex items-center gap-3">
             <button
               type="button"
