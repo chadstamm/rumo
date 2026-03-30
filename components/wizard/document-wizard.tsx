@@ -10,7 +10,17 @@ import { useWizard } from '@/context/wizard-context'
 import { ProgressBar } from './progress-bar'
 import { QuestionStep } from './question-step'
 import { SectionTransition } from './section-transition'
+import Image from 'next/image'
 import { ANCHOR_ICON_MAP, type AnchorSlug } from '@/components/icons/anchor-icons'
+
+const ANCHOR_PNG_ICONS: Record<string, string> = {
+  constitution: '/icons/constitution.png',
+  codex: '/icons/codex.png',
+  'story-bank': '/icons/story-bank.png',
+  sotu: '/icons/sotu.png',
+  timeline: '/icons/timeline.png',
+  roster: '/icons/roster.png',
+}
 
 // ── Hero backgrounds per document ──
 
@@ -57,13 +67,15 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
         />
       )}
 
-      {/* Overlay */}
+      {/* Overlay — gold-tinted for constitution, navy for others */}
       <div
         className="absolute inset-0"
         aria-hidden="true"
         style={{
           background: heroImage
-            ? `linear-gradient(to bottom, rgba(26,39,68,0.4) 0%, rgba(26,39,68,0.6) 40%, rgba(26,39,68,0.92) 80%, rgba(26,39,68,1) 100%)`
+            ? config.slug === 'constitution'
+              ? `linear-gradient(to bottom, rgba(26,39,68,0.3) 0%, rgba(26,39,68,0.5) 40%, rgba(26,39,68,0.88) 80%, rgba(26,39,68,1) 100%)`
+              : `linear-gradient(to bottom, rgba(26,39,68,0.4) 0%, rgba(26,39,68,0.6) 40%, rgba(26,39,68,0.92) 80%, rgba(26,39,68,1) 100%)`
             : '#1a2744',
         }}
       />
@@ -92,12 +104,18 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
             {/* Left: title + description */}
             <div className="max-w-2xl">
               <div className="flex items-center gap-3 mb-4">
-                {iconEntry && (
-                  <div className="w-7 h-7 text-teal/60">
-                    <iconEntry.Icon className="w-full h-full" />
-                  </div>
+                {ANCHOR_PNG_ICONS[config.slug] && (
+                  <Image
+                    src={ANCHOR_PNG_ICONS[config.slug]}
+                    alt=""
+                    width={28}
+                    height={28}
+                    className="opacity-70"
+                    style={{ filter: 'brightness(0) invert(1) opacity(0.7)' }}
+                    aria-hidden="true"
+                  />
                 )}
-                <span className="font-body text-xs tracking-[0.2em] uppercase text-teal/70 font-medium">
+                <span className="font-body text-xs tracking-[0.2em] uppercase text-ochre/70 font-medium">
                   Context Anchor
                 </span>
               </div>
