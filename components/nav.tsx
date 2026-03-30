@@ -319,7 +319,7 @@ export function Nav() {
               ) : (
                 <Link
                   href="/auth/login"
-                  className="font-body text-sm tracking-wide text-navy opacity-40 hover:opacity-70 transition-opacity duration-200"
+                  className="font-body text-sm tracking-wide text-teal hover:text-teal-light transition-colors duration-200"
                 >
                   Sign in
                 </Link>
