@@ -27,10 +27,10 @@ export function SectionTransition({
   const displayTotal = totalSections ?? 5
 
   return (
-    <div className="w-full max-w-xl mx-auto text-center py-12 sm:py-16">
+    <div className="w-full max-w-xl mx-auto text-center py-6 sm:py-8">
       {/* Compass rose accent */}
       <div
-        className={`mx-auto mb-8 transition-all duration-700 ${
+        className={`mx-auto mb-4 transition-all duration-700 ${
           animate ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
         }`}
       >
@@ -64,7 +64,7 @@ export function SectionTransition({
 
       {/* Section subtitle */}
       <p
-        className={`font-body text-muted text-base sm:text-lg leading-relaxed max-w-md mx-auto mb-8 transition-all duration-700 delay-300 ${
+        className={`font-body text-muted text-base sm:text-lg leading-relaxed max-w-md mx-auto mb-6 transition-all duration-700 delay-300 ${
           animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         }`}
       >
