@@ -89,9 +89,16 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
           <div className="flex items-end justify-between gap-8">
             {/* Left: text */}
             <div className="max-w-2xl">
-              <p className="font-body text-sm tracking-[0.2em] uppercase text-ochre font-bold mb-5">
-                Context Anchor
-              </p>
+              <div className="flex items-center gap-3 mb-5">
+                <span className="font-body text-sm tracking-[0.2em] uppercase text-ochre font-bold">
+                  Context Anchor
+                </span>
+                {config.slug === 'constitution' && (
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-teal/20 border border-teal/30 font-body text-[10px] font-bold tracking-[0.15em] uppercase text-teal-light">
+                    Free
+                  </span>
+                )}
+              </div>
 
               <h1
                 className="font-display text-cream font-bold leading-tight mb-3"
