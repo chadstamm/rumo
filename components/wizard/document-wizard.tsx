@@ -229,10 +229,7 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
                 <p className="font-body text-cream/80 text-base sm:text-lg font-medium leading-relaxed mb-2">
                   Begin with our free Personal Constitution generator, and complete the core Context Anchor in your vault.
                 </p>
-                <p className="font-body text-cream/50 text-sm sm:text-base leading-relaxed mb-5">
-                  Your values, beliefs, non-negotiables, and aspirations &mdash; this is the foundation document that tells AI, and yourself, what you stand for.
-                </p>
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-6 mt-4">
                   <div className="flex items-center gap-4 text-cream/40">
                     <span className="font-display text-xl text-ochre font-bold">{questionCount}</span>
                     <span className="font-body text-xs tracking-[0.15em] uppercase">Questions</span>
