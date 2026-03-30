@@ -1,8 +1,92 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useWizard } from '@/context/wizard-context'
 import type { WizardQuestion } from '@/types/wizard'
+
+// ── Microphone Button ──
+
+function MicrophoneInput({ onTranscript }: { onTranscript: (text: string) => void }) {
+  const [listening, setListening] = useState(false)
+  const [supported, setSupported] = useState(false)
+  const recognitionRef = useRef<SpeechRecognition | null>(null)
+
+  useEffect(() => {
+    const SpeechRecognition = (window as unknown as { SpeechRecognition?: typeof window.SpeechRecognition; webkitSpeechRecognition?: typeof window.SpeechRecognition }).SpeechRecognition
+      || (window as unknown as { webkitSpeechRecognition?: typeof window.SpeechRecognition }).webkitSpeechRecognition
+    if (SpeechRecognition) {
+      setSupported(true)
+      const recognition = new SpeechRecognition()
+      recognition.continuous = true
+      recognition.interimResults = true
+      recognition.lang = 'en-US'
+
+      let finalTranscript = ''
+
+      recognition.onresult = (event: SpeechRecognitionEvent) => {
+        let interim = ''
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript + ' '
+            onTranscript(finalTranscript.trim())
+          } else {
+            interim += event.results[i][0].transcript
+          }
+        }
+      }
+
+      recognition.onend = () => {
+        setListening(false)
+      }
+
+      recognition.onerror = () => {
+        setListening(false)
+      }
+
+      recognitionRef.current = recognition
+    }
+  }, [onTranscript])
+
+  const toggle = useCallback(() => {
+    if (!recognitionRef.current) return
+    if (listening) {
+      recognitionRef.current.stop()
+      setListening(false)
+    } else {
+      recognitionRef.current.start()
+      setListening(true)
+    }
+  }, [listening])
+
+  if (!supported) return null
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      className={`flex items-center gap-2 px-4 py-2 rounded-lg font-body text-sm transition-all duration-200 ${
+        listening
+          ? 'bg-red-500/10 text-red-600 border border-red-500/30'
+          : 'bg-navy/5 text-navy/50 hover:text-navy/70 hover:bg-navy/10 border border-navy/10'
+      }`}
+    >
+      {listening ? (
+        <>
+          <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
+          Stop Recording
+        </>
+      ) : (
+        <>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 1a2.5 2.5 0 0 0-2.5 2.5v4a2.5 2.5 0 0 0 5 0v-4A2.5 2.5 0 0 0 8 1Z" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M3 7v.5a5 5 0 0 0 10 0V7M8 12.5V15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+          Speak Your Answer
+        </>
+      )}
+    </button>
+  )
+}
 
 // ── Textarea Input ──
 
@@ -18,12 +102,10 @@ function TextareaInput({
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
-    // Auto-focus on mount
     const timer = setTimeout(() => textareaRef.current?.focus(), 100)
     return () => clearTimeout(timer)
   }, [question.id])
 
-  // Auto-resize
   useEffect(() => {
     const el = textareaRef.current
     if (el) {
@@ -32,19 +114,26 @@ function TextareaInput({
     }
   }, [value])
 
+  const handleTranscript = useCallback((text: string) => {
+    onChange(value ? value + ' ' + text : text)
+  }, [value, onChange])
+
   return (
-    <textarea
-      ref={textareaRef}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder={question.placeholder}
-      className="w-full min-h-[120px] px-5 py-4 rounded-xl
-                 bg-white border border-navy/10
-                 text-navy font-body text-base leading-relaxed
-                 placeholder:text-navy/25
-                 focus:outline-none focus:border-teal/40 focus:ring-2 focus:ring-teal/10
-                 transition-all duration-200 resize-none"
-    />
+    <div className="space-y-3">
+      <textarea
+        ref={textareaRef}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={question.placeholder}
+        className="w-full min-h-[120px] px-5 py-4 rounded-xl
+                   bg-white border border-navy/10
+                   text-navy font-body text-base leading-relaxed
+                   placeholder:text-navy/25
+                   focus:outline-none focus:border-teal/40 focus:ring-2 focus:ring-teal/10
+                   transition-all duration-200 resize-none"
+      />
+      <MicrophoneInput onTranscript={handleTranscript} />
+    </div>
   )
 }
 
@@ -157,7 +246,6 @@ function FileInput({
 
   return (
     <div className="space-y-4">
-      {/* File upload */}
       <div
         onClick={() => fileRef.current?.click()}
         className="border-2 border-dashed border-navy/15 rounded-xl px-6 py-8
@@ -187,7 +275,6 @@ function FileInput({
         </p>
       </div>
 
-      {/* Paste fallback */}
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -214,11 +301,9 @@ export function QuestionStep() {
   const stringValue = typeof answer === 'string' ? answer : ''
   const arrayValue = Array.isArray(answer) ? answer : []
 
-  const canProceed = !currentQuestion.required || (
-    currentQuestion.inputType === 'multiselect'
-      ? arrayValue.length > 0
-      : stringValue.trim().length > 0
-  )
+  const hasAnswer = currentQuestion.inputType === 'multiselect'
+    ? arrayValue.length > 0
+    : stringValue.trim().length > 0
 
   const isLastOverall = isLastQuestionInSection && isLastSection
 
@@ -297,26 +382,24 @@ export function QuestionStep() {
         </button>
 
         <div className="flex items-center gap-3">
-          {/* Skip (for non-required questions) */}
-          {!currentQuestion.required && (
-            <button
-              type="button"
-              onClick={nextStep}
-              className="font-body text-sm text-navy/40 hover:text-navy/60 px-4 py-2.5 transition-colors duration-200"
-            >
-              Skip
-            </button>
-          )}
+          {/* Skip — always available */}
+          <button
+            type="button"
+            onClick={nextStep}
+            className="font-body text-sm text-navy/40 hover:text-navy/60 px-4 py-2.5 transition-colors duration-200"
+          >
+            Skip
+          </button>
 
           {/* Continue / Finish */}
           <button
             type="button"
             onClick={nextStep}
-            disabled={!canProceed}
+            disabled={!hasAnswer}
             className={`font-body font-semibold text-sm px-7 py-3 rounded-lg
                        transition-all duration-300
                        ${
-                         canProceed
+                         hasAnswer
                            ? 'bg-teal text-white hover:bg-teal-light hover:shadow-lg hover:shadow-teal/20 hover:-translate-y-0.5 active:translate-y-0'
                            : 'bg-navy/10 text-navy/30 cursor-not-allowed'
                        }`}

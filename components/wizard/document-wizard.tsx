@@ -208,6 +208,11 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
   const { state, activeSections, isComplete } = useWizard()
   const [showingSectionIntro, setShowingSectionIntro] = useState(true)
   const [lastSection, setLastSection] = useState(state.currentSection)
+  const [uploadedContext, setUploadedContext] = useState<string[]>([])
+
+  const handleUploadDocs = (text: string) => {
+    setUploadedContext((prev) => [...prev, text])
+  }
 
   // Detect section changes to show transition
   if (state.currentSection !== lastSection) {
@@ -246,6 +251,7 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
             onBegin={() => setShowingSectionIntro(false)}
             totalSections={contentSections.length}
             sectionIndex={currentIdx >= 0 ? currentIdx + 1 : undefined}
+            onUploadDocs={handleUploadDocs}
           />
         ) : (
           <QuestionStep />
