@@ -40,6 +40,15 @@ export const QUESTIONS: WizardQuestion[] = [
     required: true,
   },
   {
+    id: 'background-docs',
+    section: 0,
+    question: 'Have any existing documents that help tell your story?',
+    subtext: 'Bios, resumes, writing samples, LinkedIn profiles — anything that gives us a head start. Totally optional.',
+    inputType: 'file',
+    acceptTypes: '.txt,.md,.doc,.docx,.pdf',
+    placeholder: '',
+  },
+  {
     id: 'core-values',
     section: 0,
     question: 'What are the 3-5 values you\'d fight for, even when it\'s inconvenient?',
