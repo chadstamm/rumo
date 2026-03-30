@@ -35,27 +35,15 @@ export function Transformation() {
 
         <div className="space-y-5 sm:space-y-6">
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            Right now, every conversation with AI starts from zero. You explain who you are. You correct the tone. You add caveats about what you actually meant. It&apos;s like hiring a brilliant consultant who forgets everything between meetings.
+            Right now, every conversation with AI starts from zero. You explain who you are. You correct the tone. You add caveats about what you actually meant. RUMO gives your AI something to remember &mdash; your values, your voice, your stories &mdash; so you build it once and your AI carries it forward.
           </p>
 
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            RUMO gives your AI something to remember. Your values, your voice, your situation, your stories &mdash; compiled into structured context that works across any platform. Claude, ChatGPT, Gemini, whatever comes next. You build it once. Your AI carries it forward.
-          </p>
-
-          <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            The prompts get shorter. The output gets sharper. The gap between what you meant and what you got back starts to close. And then something else happens &mdash; it stops feeling like a tool and starts feeling like a partner.
-          </p>
-
-          <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            Imagine opening a conversation and your AI already knows your writing voice. It knows you hate corporate jargon. It knows you&apos;re in the middle of a career pivot and your kid starts high school in the fall. It doesn&apos;t just answer your questions &mdash; it answers them like someone who&apos;s been paying attention.
-          </p>
-
-          <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            That&apos;s not a fantasy. That&apos;s what happens when you give AI the right context. And the people who figure this out first aren&apos;t going to be the most technical. They&apos;re going to be the most self-aware.
+            The prompts get shorter. The output gets sharper. And eventually it stops feeling like a tool and starts feeling like someone who&apos;s been paying attention.
           </p>
 
           <p className="font-body text-navy font-semibold text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            RUMO helps you get there. Start with who you are. The rest follows.
+            Start with who you are. The rest follows.
           </p>
         </div>
 
