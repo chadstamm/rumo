@@ -42,7 +42,7 @@ export function Transformation() {
           </p>
 
           <p className="font-body text-navy font-semibold text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            So every time you open your AI, it already knows who you&nbsp;are.
+            The result is personalized AI that helps you succeed across everything you do.
           </p>
         </div>
 
