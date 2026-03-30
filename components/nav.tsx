@@ -306,6 +306,7 @@ export function Nav() {
             </div>
 
             <NavLink href="/vault" label="Vault" active={pathname === '/vault'} />
+            <NavLink href="/pricing" label="Pricing" active={pathname === '/pricing'} />
 
             {!loading && (
               user ? (

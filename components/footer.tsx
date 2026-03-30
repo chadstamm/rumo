@@ -59,6 +59,7 @@ export function Footer() {
                 <FooterLink href="/docs/constitution">Constitution</FooterLink>
                 <FooterLink href="/anchors">Anchors</FooterLink>
                 <FooterLink href="/vault">Vault</FooterLink>
+                <FooterLink href="/pricing">Pricing</FooterLink>
               </nav>
             </div>
 
