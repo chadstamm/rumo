@@ -164,21 +164,41 @@ export default function AnchorsPage() {
             })}
           </div>
 
-          {/* CTA section */}
-          <div className="mt-16 sm:mt-20 text-center">
-            <p className="font-body text-navy/40 text-sm mb-5 max-w-md mx-auto">
-              Want all six? Chart Your Course walks you through every anchor in one guided session.
-            </p>
-            <Link
-              href="/start"
-              className="shimmer-hover inline-flex font-body text-sm font-semibold tracking-wide px-7 py-3 rounded-full
-                         bg-ochre text-white shadow-md shadow-ochre/20
-                         hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
-                         transition-all duration-200 hover:-translate-y-[1px]"
-            >
-              Chart Your Course
-            </Link>
-          </div>
+        </div>
+      </div>
+
+      {/* ── Full journey CTA ── */}
+      <div className="bg-navy">
+        <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-28 text-center">
+          <p className="font-body text-ochre font-bold text-sm sm:text-base tracking-[0.25em] uppercase mb-6 sm:mb-8">
+            The Full Journey
+          </p>
+          <h2
+            className="font-display text-cream font-bold leading-[1.1] tracking-tight
+                       text-[clamp(1.75rem,4.5vw,3rem)] mb-6 sm:mb-8"
+          >
+            Build All Six Anchors
+            <br />
+            <span className="text-ochre-light">In One Guided Session.</span>
+          </h2>
+          <div className="w-12 h-[2px] bg-ochre/50 mx-auto mb-8 sm:mb-10" aria-hidden="true" />
+          <p className="font-body text-cream/50 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto mb-10 sm:mb-12">
+            Chart Your Course walks you through every anchor — identity, voice, stories, situation, timeline, and roster — in one focused session. Everything your AI agent needs to truly know you, built in one sitting.
+          </p>
+          <Link
+            href="/start"
+            className="shimmer-hover inline-flex items-center gap-2.5
+                       px-8 py-4 rounded-full
+                       bg-ochre text-white font-body font-bold text-sm tracking-wide
+                       shadow-lg shadow-ochre/20
+                       hover:bg-ochre-light hover:shadow-xl hover:shadow-ochre/30
+                       transition-all duration-300 hover:-translate-y-[1px]"
+          >
+            Chart Your Course
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4 9h10M10 5.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
         </div>
       </div>
     </main>
