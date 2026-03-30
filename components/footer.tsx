@@ -39,7 +39,7 @@ export function Footer() {
           <div className="flex-shrink-0">
             <Link href="/" aria-label="RUMO home">
               <Image
-                src="/rumo-logo-teal.svg"
+                src="/rumo-logo.svg"
                 alt="RUMO"
                 width={136}
                 height={40}
