@@ -52,7 +52,7 @@ export function Footer() {
           <div className="flex flex-wrap gap-12 sm:gap-16">
             {/* Product */}
             <div>
-              <h4 className="font-body text-cream/60 text-[11px] font-bold tracking-[0.2em] uppercase mb-4">
+              <h4 className="font-body text-cream/60 text-sm font-bold tracking-[0.2em] uppercase mb-4">
                 Product
               </h4>
               <nav className="flex flex-col gap-3">
@@ -64,7 +64,7 @@ export function Footer() {
 
             {/* Company */}
             <div>
-              <h4 className="font-body text-cream/60 text-[11px] font-bold tracking-[0.2em] uppercase mb-4">
+              <h4 className="font-body text-cream/60 text-sm font-bold tracking-[0.2em] uppercase mb-4">
                 Company
               </h4>
               <nav className="flex flex-col gap-3">
@@ -75,7 +75,7 @@ export function Footer() {
 
             {/* Legal */}
             <div>
-              <h4 className="font-body text-cream/60 text-[11px] font-bold tracking-[0.2em] uppercase mb-4">
+              <h4 className="font-body text-cream/60 text-sm font-bold tracking-[0.2em] uppercase mb-4">
                 Legal
               </h4>
               <nav className="flex flex-col gap-3">
