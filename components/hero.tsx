@@ -92,20 +92,25 @@ export function Hero() {
           <span className="text-ochre-light">WITH RUMO.</span>
         </h1>
 
+        {/* Bridge line */}
+        <p className="mt-6 sm:mt-8 font-body text-cream/50 text-base sm:text-lg hero-fade-in-up hero-delay-2" style={{ animationDelay: '0.9s' }}>
+          One document. 15 minutes. The foundation your AI needs to actually know&nbsp;you.
+        </p>
+
         {/* CTA Button */}
-        <div className="mt-8 sm:mt-10 hero-fade-in-up hero-delay-2" style={{ animationDelay: '1s' }}>
+        <div className="mt-6 sm:mt-8 hero-fade-in-up hero-delay-2" style={{ animationDelay: '1.1s' }}>
           <a
-            href="#pillars"
+            href="/docs/constitution"
             className="glow-hover group inline-flex items-center gap-2.5
                        px-8 py-4 rounded-full
-                       bg-teal text-white font-body font-bold text-sm tracking-wide
+                       bg-teal text-white font-body font-bold text-sm tracking-[0.12em]
                        shadow-lg shadow-teal/25
                        transition-all duration-300
                        hover:bg-teal-light
                        active:translate-y-0
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
           >
-            LAUNCH YOURS TODAY
+            BUILD YOUR FREE CONSTITUTION
             <svg
               width="18"
               height="18"
