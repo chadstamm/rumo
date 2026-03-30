@@ -93,7 +93,7 @@ export function Hero() {
         </h1>
 
         {/* Bridge line */}
-        <p className="mt-6 sm:mt-8 font-body text-cream/50 text-base sm:text-lg hero-fade-in-up hero-delay-2" style={{ animationDelay: '0.9s' }}>
+        <p className="mt-6 sm:mt-8 font-body text-cream/75 text-base sm:text-lg hero-fade-in-up hero-delay-2" style={{ animationDelay: '0.9s' }}>
           One document. 15 minutes. The foundation your AI needs to actually know&nbsp;you.
         </p>
 
