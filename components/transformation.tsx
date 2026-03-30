@@ -25,24 +25,24 @@ export function Transformation() {
                      text-[clamp(1.75rem,4.5vw,3.25rem)]
                      mb-10 sm:mb-14"
         >
-          You Stop Starting Over.
+          From Documents
           <br />
-          <span className="text-ochre">Your AI Starts Paying Attention.</span>
+          <span className="text-ochre">To a True AI Partner.</span>
         </h2>
 
         <div className="w-12 h-[2px] bg-ochre/60 mb-10 sm:mb-14" aria-hidden="true" />
 
         <div className="space-y-5 sm:space-y-6">
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            Right now, every conversation with AI starts from zero. You explain who you are. You correct the tone. You add caveats about what you actually meant. RUMO gives your AI something to remember &mdash; your values, your voice, your stories &mdash; so you build it once and your AI carries it forward.
+            Once you&apos;ve built your six Context Anchors, you can use them to power custom instructions, feed smarter prompts, or fine-tune the output of any AI tool you work with. But the most important application is bigger than any single prompt &mdash; it&apos;s building a context vault for your own AI agent.
           </p>
 
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            The prompts get shorter. The output gets sharper. And eventually it stops feeling like a tool and starts feeling like someone who&apos;s been paying attention.
+            An agent that knows your values, your voice, your situation, and your history isn&apos;t just answering questions. It&apos;s working alongside you &mdash; anticipating what you need, adapting to how you think, and helping you achieve objectives that are genuinely yours. That&apos;s the difference between using AI and partnering with it.
           </p>
 
           <p className="font-body text-navy font-semibold text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            Start with who you are. The rest follows.
+            RUMO gives you the foundation. What you build on it is up to you.
           </p>
         </div>
 
