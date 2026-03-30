@@ -67,15 +67,13 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
         />
       )}
 
-      {/* Overlay — gold-tinted for constitution, navy for others */}
+      {/* Overlay — warm gold tint over all hero images */}
       <div
         className="absolute inset-0"
         aria-hidden="true"
         style={{
           background: heroImage
-            ? config.slug === 'constitution'
-              ? `linear-gradient(to bottom, rgba(26,39,68,0.3) 0%, rgba(26,39,68,0.5) 40%, rgba(26,39,68,0.88) 80%, rgba(26,39,68,1) 100%)`
-              : `linear-gradient(to bottom, rgba(26,39,68,0.4) 0%, rgba(26,39,68,0.6) 40%, rgba(26,39,68,0.92) 80%, rgba(26,39,68,1) 100%)`
+            ? `linear-gradient(to bottom, rgba(40,32,18,0.35) 0%, rgba(30,28,20,0.55) 40%, rgba(26,39,68,0.88) 80%, rgba(26,39,68,1) 100%)`
             : '#1a2744',
         }}
       />
