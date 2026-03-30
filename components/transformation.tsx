@@ -18,7 +18,7 @@ export function Transformation() {
         className="reveal relative z-10 max-w-3xl mx-auto px-6 sm:px-10 lg:px-16 py-28 sm:py-36 lg:py-44"
       >
         <p className="font-body text-ocean/70 font-bold text-sm sm:text-base tracking-[0.25em] uppercase mb-8 sm:mb-10">
-          What Changes
+          What Changes?
         </p>
 
         <h2
