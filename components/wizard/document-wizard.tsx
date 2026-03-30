@@ -113,9 +113,9 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
                 <Image
                   src={ANCHOR_PNG_ICONS[config.slug]}
                   alt=""
-                  width={140}
-                  height={140}
-                  className="opacity-20"
+                  width={180}
+                  height={180}
+                  className="opacity-100 -ml-8"
                   style={{ filter: 'brightness(0) invert(1)' }}
                   aria-hidden="true"
                 />
