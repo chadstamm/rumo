@@ -93,8 +93,8 @@ export function Hero() {
         </h1>
 
         {/* Bridge line */}
-        <p className="mt-6 sm:mt-8 font-body text-cream/75 text-base sm:text-lg hero-fade-in-up hero-delay-2" style={{ animationDelay: '0.9s' }}>
-          Your AI doesn&apos;t know who you are. Not your voice, not your values, not what you&apos;re building. RUMO&nbsp;changes&nbsp;that.
+        <p className="mt-6 sm:mt-8 font-body text-cream/75 text-base sm:text-lg max-w-xl hero-fade-in-up hero-delay-2" style={{ animationDelay: '0.9s' }}>
+          Without the right context, AI outputs fall flat and agentic systems can&apos;t deliver. RUMO builds the foundation&nbsp;they&apos;re&nbsp;missing.
         </p>
 
         {/* CTA Button */}
