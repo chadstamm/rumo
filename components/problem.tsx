@@ -48,11 +48,11 @@ export function Problem() {
           </p>
 
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            It&apos;s not your fault. There&apos;s no manual for how to give AI the context it actually needs. The technology moves fast, the tools keep changing, and nobody told you the most important input was missing.
+            It&apos;s not your fault. There&apos;s no manual for how to give AI the context it actually needs. The technology moves fast, the tools keep changing, and nobody told you the most important input was missing:
           </p>
 
           <p className="font-body text-navy font-semibold text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            The most overlooked input in AI is you.
+            You.
           </p>
         </div>
       </div>
