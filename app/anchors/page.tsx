@@ -59,7 +59,7 @@ export default function AnchorsPage() {
           </h1>
           <div className="w-12 h-[2px] bg-ochre/50 mb-6 sm:mb-8" aria-hidden="true" />
           <p className="font-body text-cream/60 text-lg sm:text-xl leading-relaxed max-w-2xl">
-            Context Anchors are the documents you give AI to help it give you personalized results. Each document answers a different question your AI needs to know — who you are, how you write, what you&apos;ve lived, where you are right now, how your life has unfolded, and who matters most. Build them one at a time, or chart the full course.
+            Context Anchors are the documents you give AI so it can give you personalized results. Each one answers a question your AI needs to know &mdash; about your identity, your voice, your stories, your situation, your arc, and the people who matter. Start with one or build them all.
           </p>
         </div>
       </div>
@@ -183,7 +183,7 @@ export default function AnchorsPage() {
           </h2>
           <div className="w-12 h-[2px] bg-ochre/50 mx-auto mb-8 sm:mb-10" aria-hidden="true" />
           <p className="font-body text-cream/50 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto mb-10 sm:mb-12">
-            Chart Your Course walks you through every anchor — identity, voice, stories, situation, timeline, and roster — in one focused session. Everything your AI agent needs to truly know you, built in one sitting.
+            Chart Your Course walks you through all six anchors in one guided session. Identity, voice, stories, situation, timeline, and roster &mdash; everything your AI agent needs, built in one go.
           </p>
           <Link
             href="/start"
