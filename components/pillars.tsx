@@ -46,7 +46,7 @@ const ANCHORS = [
   {
     title: 'Timeline',
     question: 'How has my life unfolded?',
-    description: 'Life chapters, milestones, and where you\'re headed. The chronological context that tells AI not just who you are, but how you got here.',
+    description: 'Life chapters, milestones, and where you\'re headed. The chronological arc that tells AI how you got here and where you\'re going.',
     slug: 'timeline',
     icon: '/icons/timeline.png',
     accent: '#c4943a',

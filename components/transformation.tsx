@@ -38,7 +38,7 @@ export function Transformation() {
           </p>
 
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            An agent that knows your values, your voice, your situation, and your history isn&apos;t just answering questions. It&apos;s working alongside you &mdash; anticipating what you need, adapting to how you think, and helping you achieve objectives that are genuinely yours. That&apos;s the difference between using AI and partnering with it.
+            An agent that knows your values, your voice, your situation, and your history works differently. It remembers what matters to you. It writes the way you write. It thinks from your perspective, toward your goals. That&apos;s not a tool anymore. That&apos;s a partner.
           </p>
 
           <p className="font-body text-navy font-semibold text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">

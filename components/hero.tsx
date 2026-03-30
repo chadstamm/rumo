@@ -94,7 +94,7 @@ export function Hero() {
 
         {/* Bridge line */}
         <p className="mt-6 sm:mt-8 font-body text-cream/75 text-base sm:text-lg max-w-xl hero-fade-in-up hero-delay-2" style={{ animationDelay: '0.9s' }}>
-          Without the right context, AI outputs fall flat and agentic systems can&apos;t deliver. RUMO builds the foundation&nbsp;they&apos;re&nbsp;missing.
+          Your AI is guessing because it doesn&apos;t have the right context. RUMO is how you&nbsp;fix&nbsp;that.
         </p>
 
         {/* CTA Button */}
