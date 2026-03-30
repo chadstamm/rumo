@@ -83,7 +83,7 @@ export function Overview() {
                 &ldquo;
               </span>
               <p className="font-script text-cream/80 text-[clamp(2rem,3.8vw,3rem)] leading-[1.35]">
-                Give your AI context before you give it questions.
+                Give AI your context before you give it your questions.
               </p>
               {/* Closing quote mark */}
               <span

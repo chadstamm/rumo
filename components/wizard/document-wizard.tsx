@@ -29,8 +29,8 @@ const HERO_IMAGES: Record<string, string> = {
   sotu: '/heroes/sotu.jpg',
   codex: '/heroes/codex.jpg',
   'story-bank': '/heroes/story-bank.jpg',
-  timeline: '/heroes/constitution.jpg',
-  roster: '/heroes/sotu.jpg',
+  timeline: '/heroes/timeline.jpg',
+  roster: '/heroes/roster.jpg',
 }
 
 // ── Anchor-specific taglines ──
