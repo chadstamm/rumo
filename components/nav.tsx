@@ -11,11 +11,11 @@ import {
 } from '@/components/icons/anchor-icons'
 
 const ANCHOR_ITEMS = [
-  { label: 'Personal Constitution', subtitle: 'Who am I? What do I stand for?', href: '/docs/constitution', accent: 'teal', Icon: SmallAnchorIcon },
-  { label: 'Writing Codex', subtitle: 'How do I write?', href: '/docs/codex', accent: 'teal', Icon: SmallQuillIcon },
+  { label: 'Personal Constitution', subtitle: 'Who am I? What do I stand for?', href: '/docs/constitution', accent: 'teal', Icon: SmallAnchorIcon, isFree: true },
+  { label: 'Writing Codex', subtitle: 'How do I write?', href: '/docs/codex', accent: 'ochre', Icon: SmallQuillIcon },
   { label: 'Story Bank', subtitle: 'What stories do I always tell?', href: '/docs/story-bank', accent: 'ochre', Icon: SmallShipLogIcon },
   { label: 'State of the Union', subtitle: 'What matters to me right now?', href: '/docs/sotu', accent: 'ochre', Icon: SmallCompassIcon },
-  { label: 'Timeline', subtitle: 'How has my life unfolded?', href: '/docs/timeline', accent: 'teal', Icon: SmallChronIcon },
+  { label: 'Timeline', subtitle: 'How has my life unfolded?', href: '/docs/timeline', accent: 'ochre', Icon: SmallChronIcon },
   { label: 'Influence Roster', subtitle: 'Who are the people that matter?', href: '/docs/roster', accent: 'ochre', Icon: SmallHelmIcon },
 ]
 
@@ -82,7 +82,7 @@ function AnchorsMegaDropdown({ pathname, onSelect, glass }: {
           : 'bg-white border border-navy/10 shadow-navy/5'
       }`}>
       <div className="grid grid-cols-2 gap-px" style={{ background: glass ? 'rgba(255,255,255,0.05)' : 'rgba(26,39,68,0.04)' }}>
-        {ANCHOR_ITEMS.map(({ label, subtitle, href, accent, Icon }) => {
+        {ANCHOR_ITEMS.map(({ label, subtitle, href, accent, Icon, isFree }) => {
           const isActive = pathname === href
           const accentColor = accent === 'teal' ? 'var(--teal)' : 'var(--ochre)'
           return (
@@ -106,12 +106,21 @@ function AnchorsMegaDropdown({ pathname, onSelect, glass }: {
                   <Icon className="w-full h-full" />
                 </div>
                 <div>
-                  <h4 className={`font-body text-sm font-semibold mb-0.5 ${
+                  <h4 className={`font-body text-sm font-semibold mb-0.5 flex items-center gap-2 ${
                     glass
                       ? isActive ? 'text-teal-light' : 'text-white/90'
                       : isActive ? 'text-teal' : 'text-navy'
                   }`}>
                     {label}
+                    {isFree && (
+                      <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold tracking-[0.1em] uppercase leading-none ${
+                        glass
+                          ? 'bg-teal/20 text-teal-light border border-teal/30'
+                          : 'bg-teal/10 text-teal border border-teal/20'
+                      }`}>
+                        Free
+                      </span>
+                    )}
                   </h4>
                   <p className={`font-body text-xs ${
                     glass ? 'text-white/40' : 'text-navy/40'
@@ -431,7 +440,7 @@ function MobileMenu({
 
           {anchorsOpen && (
             <div className="pl-4 pb-2 space-y-0.5">
-              {ANCHOR_ITEMS.map(({ label, subtitle, href, accent, Icon }) => (
+              {ANCHOR_ITEMS.map(({ label, subtitle, href, accent, Icon, isFree }) => (
                 <Link
                   key={href}
                   href={href}
@@ -446,8 +455,15 @@ function MobileMenu({
                       : accent === 'teal' ? 'text-teal/40' : 'text-ochre/40'
                   }`} />
                   <div>
-                    <span className="font-body text-base font-medium">{label}</span>
-                    <span className="font-body text-xs text-navy/30 ml-2">{subtitle}</span>
+                    <span className="flex items-center gap-2">
+                      <span className="font-body text-base font-medium">{label}</span>
+                      {isFree && (
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-teal/10 text-teal border border-teal/20 text-[9px] font-bold tracking-[0.1em] uppercase leading-none">
+                          Free
+                        </span>
+                      )}
+                    </span>
+                    <span className="font-body text-xs text-navy/30">{subtitle}</span>
                   </div>
                 </Link>
               ))}

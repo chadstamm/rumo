@@ -13,8 +13,8 @@ const ANCHORS = [
     description: 'Your values, beliefs, non-negotiables, and aspirations — the foundation document that tells AI what you stand for.',
     slug: 'constitution',
     icon: '/icons/constitution.png',
-    accent: '#c4943a',
-    accentGlow: 'rgba(196, 148, 58, 0.15)',
+    accent: '#1ebeb1',
+    accentGlow: 'rgba(30, 190, 177, 0.15)',
   },
   {
     title: 'Writing Codex',
@@ -22,8 +22,8 @@ const ANCHORS = [
     description: 'Your sentence rhythms, humor, metaphors, and the words you never use. A complete voice fingerprint built from your own patterns.',
     slug: 'codex',
     icon: '/icons/codex.png',
-    accent: '#1ebeb1',
-    accentGlow: 'rgba(30, 190, 177, 0.15)',
+    accent: '#c4943a',
+    accentGlow: 'rgba(196, 148, 58, 0.15)',
   },
   {
     title: 'Story Bank',
@@ -40,8 +40,8 @@ const ANCHORS = [
     description: 'Your current situation, active challenges, and immediate priorities. A living document that evolves as your life does.',
     slug: 'sotu',
     icon: '/icons/sotu.png',
-    accent: '#1ebeb1',
-    accentGlow: 'rgba(30, 190, 177, 0.15)',
+    accent: '#c4943a',
+    accentGlow: 'rgba(196, 148, 58, 0.15)',
   },
   {
     title: 'Timeline',
@@ -58,8 +58,8 @@ const ANCHORS = [
     description: 'Your inner circle, professional network, and relationship patterns. The people context that helps AI navigate your world.',
     slug: 'roster',
     icon: '/icons/roster.png',
-    accent: '#1ebeb1',
-    accentGlow: 'rgba(30, 190, 177, 0.15)',
+    accent: '#c4943a',
+    accentGlow: 'rgba(196, 148, 58, 0.15)',
   },
 ]
 
@@ -130,7 +130,7 @@ export function Pillars() {
           <div className="flex-1 h-px bg-white/10" aria-hidden="true" />
         </div>
 
-        {/* ── Six anchors — glass cards, 3x2 grid ── */}
+        {/* ── Six anchors — cream cards on navy, 3x2 grid ── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {ANCHORS.map((anchor) => {
             const isFree = anchor.slug === 'constitution'
@@ -141,26 +141,25 @@ export function Pillars() {
                 href={isFree ? '/start' : `/docs/${anchor.slug}`}
                 className={`group relative block rounded-2xl overflow-hidden
                            transition-all duration-500
-                           hover:-translate-y-2 hover:shadow-2xl
-                           ${isFree ? 'ring-1 ring-teal/30' : ''}`}
+                           hover:-translate-y-2
+                           ${isFree ? 'ring-1 ring-teal/40' : ''}`}
                 style={{
-                  background: isFree ? 'rgba(30, 190, 177, 0.06)' : 'rgba(255, 255, 255, 0.03)',
-                  border: isFree ? '1px solid rgba(30, 190, 177, 0.20)' : '1px solid rgba(255, 255, 255, 0.06)',
+                  background: isFree ? '#f5fffe' : '#faf6f1',
+                  border: isFree ? '1px solid rgba(30, 190, 177, 0.25)' : '1px solid rgba(196, 148, 58, 0.12)',
+                  boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = `linear-gradient(135deg, ${anchor.accentGlow} 0%, rgba(255,255,255,0.04) 100%)`
-                  e.currentTarget.style.borderColor = `${anchor.accent}40`
-                  e.currentTarget.style.boxShadow = `0 20px 60px ${anchor.accentGlow}`
+                  e.currentTarget.style.borderColor = `${anchor.accent}50`
+                  e.currentTarget.style.boxShadow = `0 16px 48px rgba(0, 0, 0, 0.15), 0 0 0 1px ${anchor.accent}20`
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = isFree ? 'rgba(30, 190, 177, 0.06)' : 'rgba(255, 255, 255, 0.03)'
-                  e.currentTarget.style.borderColor = isFree ? 'rgba(30, 190, 177, 0.20)' : 'rgba(255, 255, 255, 0.06)'
-                  e.currentTarget.style.boxShadow = 'none'
+                  e.currentTarget.style.borderColor = isFree ? 'rgba(30, 190, 177, 0.25)' : 'rgba(196, 148, 58, 0.12)'
+                  e.currentTarget.style.boxShadow = '0 2px 12px rgba(0, 0, 0, 0.08)'
                 }}
               >
                 {/* Accent top bar */}
                 <div
-                  className={`h-[3px] w-full transition-opacity duration-500 ${isFree ? 'opacity-80' : 'opacity-40'} group-hover:opacity-100`}
+                  className={`h-[3px] w-full transition-opacity duration-500 ${isFree ? 'opacity-100' : 'opacity-60'} group-hover:opacity-100`}
                   style={{ background: anchor.accent }}
                 />
 
@@ -172,24 +171,21 @@ export function Pillars() {
                       alt=""
                       width={44}
                       height={44}
-                      className={`${isFree ? 'opacity-90' : 'opacity-70'} group-hover:opacity-100 transition-opacity duration-300`}
+                      className="opacity-90 group-hover:opacity-100 transition-opacity duration-300"
                       aria-hidden="true"
                     />
                     {isFree && (
                       <span className="inline-flex items-center px-3 py-1 rounded-full
-                                       bg-teal/15 border border-teal/30
-                                       font-body text-[11px] font-bold tracking-[0.15em] uppercase text-teal-light">
+                                       bg-teal/10 border border-teal/25
+                                       font-body text-[11px] font-bold tracking-[0.15em] uppercase text-teal">
                         Free
                       </span>
                     )}
                   </div>
 
                   {/* Title */}
-                  <h3
-                    className="font-display text-cream text-xl sm:text-2xl font-semibold mb-3
-                               transition-colors duration-300"
-                  >
-                    <span className="group-hover:text-ochre-light transition-colors duration-300">
+                  <h3 className="font-display text-navy text-xl sm:text-2xl font-semibold mb-3 transition-colors duration-300">
+                    <span className="group-hover:text-navy/80 transition-colors duration-300">
                       {anchor.title}
                     </span>
                   </h3>
@@ -197,13 +193,13 @@ export function Pillars() {
                   {/* Question */}
                   <p
                     className="font-body text-sm sm:text-base italic font-semibold mb-5 transition-colors duration-300"
-                    style={{ color: `${anchor.accent}90` }}
+                    style={{ color: anchor.accent }}
                   >
                     &ldquo;{anchor.question}&rdquo;
                   </p>
 
                   {/* Description */}
-                  <p className="font-body text-cream/55 text-sm sm:text-[0.95rem] font-medium leading-relaxed group-hover:text-cream/75 transition-colors duration-300">
+                  <p className="font-body text-navy/50 text-sm sm:text-[0.95rem] font-medium leading-relaxed group-hover:text-navy/70 transition-colors duration-300">
                     {anchor.description}
                   </p>
 
