@@ -94,7 +94,7 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
                   Context Anchor
                 </span>
                 {config.slug === 'constitution' && (
-                  <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-teal/20 border border-teal/30 font-body text-[10px] font-bold tracking-[0.15em] uppercase text-teal-light">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-teal border border-teal font-body text-[10px] font-bold tracking-[0.15em] uppercase text-white">
                     Free
                   </span>
                 )}

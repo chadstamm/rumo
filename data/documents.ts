@@ -20,7 +20,7 @@ export const DOCUMENTS: DocumentConfig[] = [
     title: 'Personal Constitution',
     subtitle: 'Who you are always',
     description:
-      'Your values, beliefs, non-negotiables, and aspirations. The foundation document that tells AI — and yourself — what you stand for.',
+      'This is the foundation document that tells AI — and yourself — what you stand for: your values, beliefs, non-negotiables, and aspirations.',
     sections: [0, 1],
     accent: 'teal',
   },
