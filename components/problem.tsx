@@ -33,9 +33,9 @@ export function Problem() {
                      text-[clamp(1.75rem,4.5vw,3.25rem)]
                      mb-10 sm:mb-14"
         >
-          Everyone&apos;s Talking About AI.
+          Your AI Doesn&apos;t Know
           <br />
-          <span className="text-ochre">Few Know How to Use It.</span>
+          <span className="text-ochre">Who You Are.</span>
         </h2>
 
         {/* Thin ochre separator between heading and body */}
@@ -44,19 +44,15 @@ export function Problem() {
         {/* Body copy — problem, empathy, answer */}
         <div className="space-y-5 sm:space-y-6">
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            Most professionals think they&apos;re using AI. They&apos;re prompting. They&apos;re getting answers. They&apos;re checking the proverbial AI box. But there&apos;s a difference between using AI and actually working with it, and most people don&apos;t know that difference exists.
+            Not your voice. Not your values. Not what you&apos;re building or why it matters. Every conversation starts from zero &mdash; you explain yourself, correct the tone, add caveats about what you actually meant. You&apos;re working with a tool that forgets you between every session.
           </p>
 
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            That&apos;s okay. It&apos;s nobody&apos;s fault. There&apos;s no manual for this, especially when the landscape seems to change every day. But the problem isn&apos;t the technology. It&apos;s that your AI doesn&apos;t know who you are, how you think, or what you&apos;re trying to build.
-          </p>
-
-          <p className="font-body text-navy font-medium text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            RUMO fixes that, and it all starts with the most overlooked input in AI:
+            It&apos;s not your fault. There&apos;s no manual for how to give AI the context it actually needs. The technology moves fast, the tools keep changing, and nobody told you the most important input was missing.
           </p>
 
           <p className="font-body text-navy font-semibold text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            You.
+            The most overlooked input in AI is you.
           </p>
         </div>
       </div>

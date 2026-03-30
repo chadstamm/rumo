@@ -42,7 +42,7 @@ export function Transformation() {
           </p>
 
           <p className="font-body text-navy font-semibold text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            RUMO gives you the foundation for a personalized AI partner. What you do with it depends on you. Anything is&nbsp;possible!
+            So every time you open your AI, it already knows who you&nbsp;are.
           </p>
         </div>
 

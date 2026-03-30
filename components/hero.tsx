@@ -94,7 +94,7 @@ export function Hero() {
 
         {/* Bridge line */}
         <p className="mt-6 sm:mt-8 font-body text-cream/75 text-base sm:text-lg hero-fade-in-up hero-delay-2" style={{ animationDelay: '0.9s' }}>
-          One document. 15 minutes. The foundation your AI needs to actually know&nbsp;you.
+          Your AI doesn&apos;t know who you are. Not your voice, not your values, not what you&apos;re building. RUMO&nbsp;changes&nbsp;that.
         </p>
 
         {/* CTA Button */}
