@@ -41,9 +41,9 @@ export function Footer() {
               <Image
                 src="/rumo-logo-teal.svg"
                 alt="RUMO"
-                width={170}
-                height={50}
-                className="h-[50px] w-auto opacity-80 hover:opacity-100 transition-opacity duration-200"
+                width={136}
+                height={40}
+                className="h-[40px] w-auto opacity-80 hover:opacity-100 transition-opacity duration-200"
               />
             </Link>
           </div>
