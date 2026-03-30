@@ -171,7 +171,8 @@ export function Pillars() {
                       alt=""
                       width={44}
                       height={44}
-                      className="opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                      className="opacity-80 group-hover:opacity-100 transition-all duration-300"
+                      style={{ filter: 'brightness(0) opacity(0.7)' }}
                       aria-hidden="true"
                     />
                     {isFree && (
