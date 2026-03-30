@@ -55,7 +55,7 @@ export function CTASection() {
           <CTACard
             href="/start"
             accent="ochre"
-            eyebrow="Full Course"
+            eyebrow="Full Journey"
             title="Chart Your Course Through All Six Anchors"
             description="The complete build. Identity, voice, stories, situation, timeline, and roster — everything your AI needs to truly know you."
             cta="Chart Your Course"
