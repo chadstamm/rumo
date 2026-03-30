@@ -4,7 +4,6 @@ import { Overview } from '@/components/overview'
 import { Pillars } from '@/components/pillars'
 import { Transformation } from '@/components/transformation'
 import { CTASection } from '@/components/cta-section'
-import { Footer } from '@/components/footer'
 import { ScrollToTop } from '@/components/scroll-to-top'
 
 export default function Home() {
@@ -17,7 +16,6 @@ export default function Home() {
       <Pillars />
       <Transformation />
       <CTASection />
-      <Footer />
     </div>
   )
 }

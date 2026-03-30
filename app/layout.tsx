@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Open_Sans, Sail } from 'next/font/google'
 import './globals.css'
 import { Nav } from '@/components/nav'
+import { Footer } from '@/components/footer'
 import { AuthProvider } from '@/components/auth-provider'
 
 const openSans = Open_Sans({
@@ -34,6 +35,7 @@ export default function RootLayout({
         <AuthProvider>
           <Nav />
           {children}
+          <Footer />
         </AuthProvider>
       </body>
     </html>
