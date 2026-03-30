@@ -57,7 +57,7 @@ export function CTASection() {
             accent="ochre"
             eyebrow="Full Journey"
             title="Chart Your Course Through All Six Anchors"
-            description="The complete build. Identity, voice, stories, situation, timeline, and roster — everything your AI needs to know you."
+            description="Identity, voice, stories, situation, timeline, and roster — everything your AI needs to know you. The result is personalized AI that helps you succeed across everything you do."
             cta="Chart Your Course"
             icon="/anchor-section-icon.png"
           />
