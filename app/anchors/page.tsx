@@ -64,14 +64,13 @@ export default function AnchorsPage() {
         </div>
       </div>
 
-      {/* ── Anchor cards on navy ── */}
-      <div className="bg-navy">
+      {/* ── Anchor cards on cream ── */}
+      <div className="bg-cream">
         <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 py-16 sm:py-24">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {DOCUMENTS.map((doc) => {
               const isFree = doc.slug === 'constitution'
               const accent = isFree ? '#1ebeb1' : '#c4943a'
-              const accentGlow = isFree ? 'rgba(30, 190, 177, 0.15)' : 'rgba(196, 148, 58, 0.15)'
               const icon = ANCHOR_ICONS[doc.slug]
               const question = ANCHOR_QUESTIONS[doc.slug]
 
@@ -80,23 +79,14 @@ export default function AnchorsPage() {
                   key={doc.slug}
                   href={`/docs/${doc.slug}`}
                   className={`group relative block rounded-2xl overflow-hidden
+                             bg-cream border-2 border-navy/15
                              transition-all duration-500 ease-out
                              hover:-translate-y-3 hover:scale-[1.02]
-                             ${isFree ? 'ring-1 ring-teal/40' : ''}`}
+                             hover:border-navy/30 hover:shadow-xl hover:shadow-navy/10
+                             ${isFree ? 'ring-1 ring-teal/30' : ''}`}
                   style={{
-                    background: isFree ? '#f5fffe' : '#faf6f1',
-                    border: isFree ? '1px solid rgba(30, 190, 177, 0.25)' : '1px solid rgba(196, 148, 58, 0.12)',
-                    boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
                     // @ts-expect-error CSS custom property
                     '--anchor-accent': accent,
-                  }}
-                  onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                    e.currentTarget.style.borderColor = `${accent}50`
-                    e.currentTarget.style.boxShadow = `0 24px 56px rgba(0, 0, 0, 0.18), 0 0 24px ${accentGlow}`
-                  }}
-                  onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                    e.currentTarget.style.borderColor = isFree ? 'rgba(30, 190, 177, 0.25)' : 'rgba(196, 148, 58, 0.12)'
-                    e.currentTarget.style.boxShadow = '0 2px 12px rgba(0, 0, 0, 0.08)'
                   }}
                 >
                   {/* Accent top bar */}
@@ -176,7 +166,7 @@ export default function AnchorsPage() {
 
           {/* CTA section */}
           <div className="mt-16 sm:mt-20 text-center">
-            <p className="font-body text-cream/40 text-sm mb-5 max-w-md mx-auto">
+            <p className="font-body text-navy/40 text-sm mb-5 max-w-md mx-auto">
               Want all six? Chart Your Course walks you through every anchor in one guided session.
             </p>
             <Link
