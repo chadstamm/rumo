@@ -5,18 +5,13 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@/components/auth-provider'
 import { useEffect, useState, useRef } from 'react'
-import {
-  SmallAnchorIcon, SmallQuillIcon, SmallShipLogIcon,
-  SmallCompassIcon, SmallChronIcon, SmallHelmIcon,
-} from '@/components/icons/anchor-icons'
-
 const ANCHOR_ITEMS = [
-  { label: 'Personal Constitution', subtitle: 'Who am I? What do I stand for?', href: '/docs/constitution', accent: 'teal', Icon: SmallAnchorIcon, isFree: true },
-  { label: 'Writing Codex', subtitle: 'How do I write?', href: '/docs/codex', accent: 'ochre', Icon: SmallQuillIcon },
-  { label: 'Story Bank', subtitle: 'What stories do I always tell?', href: '/docs/story-bank', accent: 'ochre', Icon: SmallShipLogIcon },
-  { label: 'State of the Union', subtitle: 'What matters to me right now?', href: '/docs/sotu', accent: 'ochre', Icon: SmallCompassIcon },
-  { label: 'Timeline', subtitle: 'How has my life unfolded?', href: '/docs/timeline', accent: 'ochre', Icon: SmallChronIcon },
-  { label: 'Influence Roster', subtitle: 'Who are the people that matter?', href: '/docs/roster', accent: 'ochre', Icon: SmallHelmIcon },
+  { label: 'Personal Constitution', subtitle: 'Who am I? What do I stand for?', href: '/docs/constitution', accent: 'teal', icon: '/icons/constitution.png', isFree: true },
+  { label: 'Writing Codex', subtitle: 'How do I write?', href: '/docs/codex', accent: 'ochre', icon: '/icons/codex.png' },
+  { label: 'Story Bank', subtitle: 'What stories do I always tell?', href: '/docs/story-bank', accent: 'ochre', icon: '/icons/story-bank.png' },
+  { label: 'State of the Union', subtitle: 'What matters to me right now?', href: '/docs/sotu', accent: 'ochre', icon: '/icons/sotu.png' },
+  { label: 'Timeline', subtitle: 'How has my life unfolded?', href: '/docs/timeline', accent: 'ochre', icon: '/icons/timeline.png' },
+  { label: 'Influence Roster', subtitle: 'Who are the people that matter?', href: '/docs/roster', accent: 'ochre', icon: '/icons/roster.png' },
 ]
 
 // ── Animated nav link with sliding underline ──
@@ -82,7 +77,7 @@ function AnchorsMegaDropdown({ pathname, onSelect, glass }: {
           : 'bg-white border border-navy/10 shadow-navy/5'
       }`}>
       <div className="grid grid-cols-2 gap-px" style={{ background: glass ? 'rgba(255,255,255,0.05)' : 'rgba(26,39,68,0.04)' }}>
-        {ANCHOR_ITEMS.map(({ label, subtitle, href, accent, Icon, isFree }) => {
+        {ANCHOR_ITEMS.map(({ label, subtitle, href, accent, icon, isFree }) => {
           const isActive = pathname === href
           const accentColor = accent === 'teal' ? 'var(--teal)' : 'var(--ochre)'
           return (
@@ -102,9 +97,18 @@ function AnchorsMegaDropdown({ pathname, onSelect, glass }: {
                 style={{ background: accentColor }}
               />
               <div className={`flex items-start gap-3 transition-transform duration-200 group-hover:translate-x-1 ${isActive ? 'translate-x-1' : ''}`}>
-                <div className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: accentColor, opacity: isActive ? 1 : 0.5 }}>
-                  <Icon className="w-full h-full" />
-                </div>
+                <Image
+                  src={icon}
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="flex-shrink-0 mt-0.5"
+                  style={{
+                    opacity: isActive ? 0.9 : 0.6,
+                    filter: glass ? 'brightness(0) invert(1) opacity(0.8)' : undefined,
+                  }}
+                  aria-hidden="true"
+                />
                 <div>
                   <h4 className={`font-body text-sm font-semibold mb-0.5 flex items-center gap-2 ${
                     glass
@@ -441,7 +445,7 @@ function MobileMenu({
 
           {anchorsOpen && (
             <div className="pl-4 pb-2 space-y-0.5">
-              {ANCHOR_ITEMS.map(({ label, subtitle, href, accent, Icon, isFree }) => (
+              {ANCHOR_ITEMS.map(({ label, subtitle, href, accent, icon, isFree }) => (
                 <Link
                   key={href}
                   href={href}
@@ -450,11 +454,15 @@ function MobileMenu({
                     pathname === href ? 'text-teal' : 'text-navy/60 hover:text-navy'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 flex-shrink-0 ${
-                    pathname === href
-                      ? 'text-teal'
-                      : accent === 'teal' ? 'text-teal/40' : 'text-ochre/40'
-                  }`} />
+                  <Image
+                    src={icon}
+                    alt=""
+                    width={16}
+                    height={16}
+                    className="flex-shrink-0"
+                    style={{ opacity: pathname === href ? 0.9 : 0.5 }}
+                    aria-hidden="true"
+                  />
                   <div>
                     <span className="flex items-center gap-2">
                       <span className="font-body text-base font-medium">{label}</span>
