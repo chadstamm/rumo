@@ -44,7 +44,7 @@ export function Problem() {
         {/* Body copy — problem, empathy, answer */}
         <div className="space-y-5 sm:space-y-6">
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            Not your voice. Not your values. Not what you&apos;re building or why it matters. Every conversation starts from zero &mdash; you explain yourself, correct the tone, add caveats about what you actually meant. You&apos;re working with a tool that forgets you between every session.
+            Not your voice. Not your values. Not what you&apos;re building or why it matters. Every conversation starts from zero &mdash; you explain yourself, correct the tone, add caveats about what you actually mean. You&apos;re working with a tool that forgets you between every session.
           </p>
 
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
