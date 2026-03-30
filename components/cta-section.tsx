@@ -9,17 +9,12 @@ export function CTASection() {
   const sectionRef = useScrollReveal(0.08)
 
   return (
-    <section className="relative bg-navy overflow-hidden">
-      {/* Atmospheric glow */}
+    <section className="relative overflow-hidden" style={{ background: '#c4943a' }}>
+      {/* Subtle texture overlay */}
       <div
-        className="absolute top-0 left-1/4 w-[600px] h-[600px] pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
-        style={{ background: 'radial-gradient(circle, rgba(30, 190, 177, 0.06) 0%, transparent 70%)' }}
-      />
-      <div
-        className="absolute bottom-0 right-1/4 w-[600px] h-[600px] pointer-events-none"
-        aria-hidden="true"
-        style={{ background: 'radial-gradient(circle, rgba(196, 148, 58, 0.06) 0%, transparent 70%)' }}
+        style={{ background: 'linear-gradient(160deg, rgba(196, 148, 58, 1) 0%, rgba(178, 130, 42, 1) 50%, rgba(160, 115, 35, 1) 100%)' }}
       />
 
       <div
@@ -28,16 +23,16 @@ export function CTASection() {
       >
         {/* Header */}
         <div className="text-center mb-14 sm:mb-18">
-          <p className="font-body text-ochre font-bold text-sm sm:text-base tracking-[0.25em] uppercase mb-6 sm:mb-8">
+          <p className="font-body text-white/70 font-bold text-sm sm:text-base tracking-[0.25em] uppercase mb-6 sm:mb-8">
             Ready?
           </p>
           <h2
-            className="font-display text-cream font-bold leading-[1.1] tracking-tight
+            className="font-display text-white font-bold leading-[1.1] tracking-tight
                        text-[clamp(1.75rem,4.5vw,3.25rem)] mb-6"
           >
             Choose Your Starting Point
           </h2>
-          <div className="w-12 h-[2px] bg-ochre/50 mx-auto" aria-hidden="true" />
+          <div className="w-12 h-[2px] bg-white/30 mx-auto" aria-hidden="true" />
         </div>
 
         {/* Two CTA cards */}
