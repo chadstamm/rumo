@@ -67,7 +67,7 @@ export function Overview() {
                 The difference between generic AI output and something that actually works for you comes down to one thing: context. Your identity, your voice, your lived experience. When AI has those inputs, it stops guessing and starts collaborating.
               </p>
               <p className="font-body text-cream/85 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-                The fix is simple: give AI your context before you give it your questions. The harder part is compiling that context in a way AI can actually use.
+                The fix is simple: give AI your context before you give it your questions. The harder part is compiling that context in a way AI can actually use. That&apos;s what Context Anchors are for — six structured documents that capture who you are so your AI doesn&apos;t have to guess.
               </p>
             </div>
           </div>
