@@ -148,7 +148,7 @@ export default function PricingPage() {
 
           {/* ── End Result repeat ── */}
           <div className="mt-16 sm:mt-20 text-center">
-            <p className="font-body text-navy/40 text-base italic max-w-lg mx-auto">
+            <p className="font-body text-navy font-semibold text-lg sm:text-xl max-w-lg mx-auto">
               The result is personalized AI that helps you succeed across everything you do.
             </p>
           </div>
