@@ -94,7 +94,9 @@ export function Hero() {
 
         {/* Bridge line */}
         <p className="mt-6 sm:mt-8 font-body text-cream/75 text-base sm:text-lg max-w-xl hero-fade-in-up hero-delay-2" style={{ animationDelay: '0.9s' }}>
-          Your AI is guessing because it doesn&apos;t have the right context. RUMO is how you&nbsp;fix&nbsp;that.
+          AI gives you generic output because it doesn&apos;t know who you are.
+          <br className="hidden sm:block" />
+          Your Personal Constitution is where that&nbsp;changes.
         </p>
 
         {/* CTA Button */}
@@ -110,7 +112,7 @@ export function Hero() {
                        active:translate-y-0
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
           >
-            BUILD YOUR FREE CONSTITUTION
+            GET STARTED — IT&apos;S FREE
             <svg
               width="18"
               height="18"
