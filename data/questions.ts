@@ -22,12 +22,21 @@ export const QUESTIONS: WizardQuestion[] = [
   // ═══════════════════════════════════════════════════
 
   {
-    id: 'name-background',
+    id: 'full-name',
     section: 0,
-    question: 'Let\'s start simple. What\'s your name, and what do you do?',
+    question: 'What\'s your name?',
+    subtext: 'First and last. The name you go by professionally.',
+    inputType: 'textarea',
+    placeholder: 'Your full name...',
+    required: true,
+  },
+  {
+    id: 'profession',
+    section: 0,
+    question: 'What do you do?',
     subtext: 'Your professional background, your role, your industry. The elevator version.',
     inputType: 'textarea',
-    placeholder: 'I\'m [name], and I [what you do]...',
+    placeholder: 'I\'m a [role] in [industry], focused on...',
     required: true,
   },
   {

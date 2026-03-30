@@ -86,52 +86,36 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
       {/* Content */}
       <div className="relative z-10 w-full">
         <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 pb-10 sm:pb-14 pt-24 sm:pt-28">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-            {/* Left: title + description */}
-            <div className="max-w-2xl">
-              <div className="flex items-center gap-3 mb-5">
-                {ANCHOR_PNG_ICONS[config.slug] && (
-                  <Image
-                    src={ANCHOR_PNG_ICONS[config.slug]}
-                    alt=""
-                    width={36}
-                    height={36}
-                    className="opacity-90"
-                    style={{ filter: 'brightness(0) invert(1) opacity(0.9)' }}
-                    aria-hidden="true"
-                  />
-                )}
-                <span className="font-body text-sm tracking-[0.2em] uppercase text-ochre font-bold">
-                  Context Anchor
-                </span>
-              </div>
-
-              <h1
-                className="font-display text-cream font-bold leading-tight mb-3"
-                style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}
-              >
-                {config.title}
-              </h1>
-
-              <div className="w-10 h-[2px] bg-ochre/50 mb-4" aria-hidden="true" />
-
-              <p className="font-body text-cream/70 text-base sm:text-lg leading-relaxed font-medium">
-                {config.description}
-              </p>
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-3 mb-5">
+              {ANCHOR_PNG_ICONS[config.slug] && (
+                <Image
+                  src={ANCHOR_PNG_ICONS[config.slug]}
+                  alt=""
+                  width={36}
+                  height={36}
+                  className="opacity-90"
+                  style={{ filter: 'brightness(0) invert(1) opacity(0.9)' }}
+                  aria-hidden="true"
+                />
+              )}
+              <span className="font-body text-sm tracking-[0.2em] uppercase text-ochre font-bold">
+                Context Anchor
+              </span>
             </div>
 
-            {/* Right: stats */}
-            <div className="flex items-center gap-6 lg:gap-8 text-cream/40">
-              <div className="text-center">
-                <p className="font-display text-2xl text-teal font-semibold">{questionCount}</p>
-                <p className="font-body text-[10px] tracking-[0.15em] uppercase mt-0.5">Questions</p>
-              </div>
-              <div className="w-px h-8 bg-cream/10" aria-hidden="true" />
-              <div className="text-center">
-                <p className="font-display text-2xl text-teal font-semibold">{config.sections.length}</p>
-                <p className="font-body text-[10px] tracking-[0.15em] uppercase mt-0.5">Sections</p>
-              </div>
-            </div>
+            <h1
+              className="font-display text-cream font-bold leading-tight mb-3"
+              style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}
+            >
+              {config.title}
+            </h1>
+
+            <div className="w-10 h-[2px] bg-ochre/50 mb-4" aria-hidden="true" />
+
+            <p className="font-body text-cream/70 text-base sm:text-lg leading-relaxed font-medium">
+              {config.description}
+            </p>
           </div>
         </div>
       </div>
@@ -209,6 +193,10 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
   const [showingSectionIntro, setShowingSectionIntro] = useState(true)
   const [lastSection, setLastSection] = useState(state.currentSection)
   const [uploadedContext, setUploadedContext] = useState<string[]>([])
+  const questionCount = config.sections.reduce<number>(
+    (sum, s) => sum + getQuestionsForSection(s).length,
+    0
+  )
 
   const handleUploadDocs = (text: string) => {
     setUploadedContext((prev) => [...prev, text])
@@ -235,6 +223,48 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
   return (
     <div className="min-h-screen bg-cream">
       <DocumentHero config={config} />
+
+      {/* Navy highlight section — stats + CTA anchor */}
+      <div className="bg-navy">
+        <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 py-6 sm:py-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-8">
+              {config.slug === 'constitution' && (
+                <p className="font-body text-cream/60 text-sm sm:text-base font-medium">
+                  The free tool behind RUMO &mdash; your core Context Anchor.
+                </p>
+              )}
+              {config.slug !== 'constitution' && (
+                <p className="font-body text-cream/60 text-sm sm:text-base font-medium">
+                  {questionCount} questions &middot; {config.sections.length} sections
+                </p>
+              )}
+            </div>
+            {config.slug === 'constitution' && (
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-4 text-cream/40">
+                  <span className="font-display text-xl text-ochre font-bold">{questionCount}</span>
+                  <span className="font-body text-xs tracking-[0.15em] uppercase">Questions</span>
+                  <span className="w-px h-5 bg-cream/10" />
+                  <span className="font-display text-xl text-ochre font-bold">{config.sections.length}</span>
+                  <span className="font-body text-xs tracking-[0.15em] uppercase">Sections</span>
+                </div>
+                <a
+                  href="#wizard-start"
+                  className="font-body text-sm font-bold tracking-[0.1em] uppercase px-6 py-2.5 rounded-full
+                             bg-ochre text-white shadow-md shadow-ochre/20
+                             hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
+                             transition-all duration-200"
+                >
+                  Get Started
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div id="wizard-start" />
 
       {/* Progress bar */}
       <div className="sticky top-0 z-20 bg-cream/95 backdrop-blur-sm border-b border-navy/[0.06]">

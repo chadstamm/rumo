@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 export const metadata = {
   title: 'Contact — RUMO',
   description: 'Get in touch with RUMO. Questions, feedback, or partnership inquiries.',
@@ -30,68 +28,32 @@ export default function ContactPage() {
       {/* Content */}
       <div className="bg-cream">
         <div className="max-w-3xl mx-auto px-6 sm:px-10 lg:px-16 py-16 sm:py-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="max-w-md">
             {/* Email */}
-            <div>
+            <div className="mb-12">
               <h2 className="font-display text-navy text-xl font-bold mb-3">
                 Email
               </h2>
               <p className="font-body text-navy/60 text-base mb-4 leading-relaxed">
-                The fastest way to reach the person behind RUMO.
+                The fastest way to reach us.
               </p>
               <a
-                href="mailto:chad@chadstamm.com"
+                href="mailto:hello@withrumo.com"
                 className="font-body text-teal hover:text-teal-light text-base font-medium transition-colors"
               >
-                chad@chadstamm.com
+                hello@withrumo.com
               </a>
             </div>
 
-            {/* Social */}
-            <div>
+            {/* Partnerships */}
+            <div className="p-8 rounded-2xl border-2 border-navy/[0.08] bg-cream">
               <h2 className="font-display text-navy text-xl font-bold mb-3">
-                Social
+                Partnerships &amp; Press
               </h2>
-              <p className="font-body text-navy/60 text-base mb-4 leading-relaxed">
-                Follow along, share feedback, or start a conversation.
+              <p className="font-body text-navy/60 text-base leading-relaxed">
+                Interested in integrations, collaborations, speaking engagements, or press inquiries? Reach out via email. Happy to talk.
               </p>
-              <div className="flex flex-col gap-2">
-                <a
-                  href="https://linkedin.com/in/chadstamm"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-body text-teal hover:text-teal-light text-base font-medium transition-colors"
-                >
-                  LinkedIn &rarr;
-                </a>
-                <a
-                  href="https://chadstamm.bsky.social"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-body text-teal hover:text-teal-light text-base font-medium transition-colors"
-                >
-                  Bluesky &rarr;
-                </a>
-                <a
-                  href="https://instagram.com/chadstamm"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-body text-teal hover:text-teal-light text-base font-medium transition-colors"
-                >
-                  Instagram &rarr;
-                </a>
-              </div>
             </div>
-          </div>
-
-          {/* Note */}
-          <div className="mt-16 sm:mt-20 p-8 rounded-2xl border-2 border-navy/[0.08] bg-cream">
-            <h2 className="font-display text-navy text-xl font-bold mb-3">
-              For Partnerships & Press
-            </h2>
-            <p className="font-body text-navy/60 text-base leading-relaxed">
-              If you&apos;re interested in integrations, collaborations, speaking engagements, or press inquiries, reach out via email. Happy to talk.
-            </p>
           </div>
         </div>
       </div>
