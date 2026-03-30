@@ -47,7 +47,7 @@ export function CTASection() {
             accent="teal"
             eyebrow="Free"
             title="Build Your Personal Constitution"
-            description="Start with the foundation — who you are, what you stand for, and what you believe. Takes about 15 minutes. No account required."
+            description="Start with the foundation — who you are, what you stand for, and what you believe. Takes about 15 minutes."
             cta="Start Building"
             icon="/icons/constitution.png"
             featured
