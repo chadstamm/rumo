@@ -43,7 +43,7 @@ export default function AnchorsPage() {
           className="absolute inset-0"
           aria-hidden="true"
           style={{
-            background: 'linear-gradient(to bottom, rgba(26, 39, 68, 0.88) 0%, rgba(26, 39, 68, 0.94) 100%)',
+            background: 'linear-gradient(to bottom, rgba(26, 39, 68, 0.72) 0%, rgba(26, 39, 68, 0.82) 100%)',
           }}
         />
 
