@@ -47,7 +47,7 @@ export const DOCUMENTS: DocumentConfig[] = [
     title: 'Story Bank',
     subtitle: 'What you\'ve lived',
     description:
-      'The stories you always tell, the phrases you repeat, the moments that come up in every conversation. The raw material that makes AI sound like you lived it.',
+      'The stories you always tell, the phrases you repeat, the moments that come up in every conversation. Raw material that makes AI sound like someone who was actually there.',
     sections: [0, 3],
     accent: 'ochre',
   },
