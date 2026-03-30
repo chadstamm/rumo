@@ -17,7 +17,6 @@ export function Transformation() {
         ref={sectionRef}
         className="reveal relative z-10 max-w-3xl mx-auto px-6 sm:px-10 lg:px-16 py-28 sm:py-36 lg:py-44"
       >
-        {/* ── The Change ── */}
         <p className="font-body text-ocean/70 font-bold text-sm sm:text-base tracking-[0.25em] uppercase mb-8 sm:mb-10">
           What Changes
         </p>
@@ -29,12 +28,12 @@ export function Transformation() {
         >
           You Stop Starting Over.
           <br />
-          <span className="text-ochre">Every Single Time.</span>
+          <span className="text-ochre">Your AI Starts Paying Attention.</span>
         </h2>
 
         <div className="w-12 h-[2px] bg-ochre/60 mb-10 sm:mb-14" aria-hidden="true" />
 
-        <div className="space-y-5 sm:space-y-6 mb-20 sm:mb-28">
+        <div className="space-y-5 sm:space-y-6">
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
             Right now, every conversation with AI starts from zero. You explain who you are. You correct the tone. You add caveats about what you actually meant. It&apos;s like hiring a brilliant consultant who forgets everything between meetings.
           </p>
@@ -43,31 +42,12 @@ export function Transformation() {
             RUMO gives your AI something to remember. Your values, your voice, your situation, your stories &mdash; compiled into structured context that works across any platform. Claude, ChatGPT, Gemini, whatever comes next. You build it once. Your AI carries it forward.
           </p>
 
-          <p className="font-body text-navy font-medium text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            The prompts get shorter. The output gets sharper. The gap between what you meant and what you got back starts to close.
-          </p>
-        </div>
-
-        {/* ── The End-Result ── */}
-        <p className="font-body text-ocean/70 font-bold text-sm sm:text-base tracking-[0.25em] uppercase mb-8 sm:mb-10">
-          Where This Goes
-        </p>
-
-        <h2
-          className="font-display text-navy font-bold leading-[1.1] tracking-tight
-                     text-[clamp(1.75rem,4.5vw,3.25rem)]
-                     mb-10 sm:mb-14"
-        >
-          AI That Actually
-          <br />
-          <span className="text-ochre">Sounds Like You.</span>
-        </h2>
-
-        <div className="w-12 h-[2px] bg-ochre/60 mb-10 sm:mb-14" aria-hidden="true" />
-
-        <div className="space-y-5 sm:space-y-6 mb-16 sm:mb-20">
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            Imagine opening a conversation with AI and it already knows your writing voice. It knows you hate corporate jargon. It knows you&apos;re in the middle of a career pivot and your kid starts high school in the fall. It doesn&apos;t just answer your questions &mdash; it answers them like someone who&apos;s been paying attention.
+            The prompts get shorter. The output gets sharper. The gap between what you meant and what you got back starts to close. And then something else happens &mdash; it stops feeling like a tool and starts feeling like a partner.
+          </p>
+
+          <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
+            Imagine opening a conversation and your AI already knows your writing voice. It knows you hate corporate jargon. It knows you&apos;re in the middle of a career pivot and your kid starts high school in the fall. It doesn&apos;t just answer your questions &mdash; it answers them like someone who&apos;s been paying attention.
           </p>
 
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
@@ -80,7 +60,7 @@ export function Transformation() {
         </div>
 
         {/* ── CTA ── */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-14 sm:mt-16">
           <Link
             href="/docs/constitution"
             className="shimmer-hover inline-flex items-center gap-2.5

@@ -32,18 +32,18 @@ export function Footer() {
         }}
       />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 py-14 sm:py-20">
         {/* ── Top: Logo + Nav columns ── */}
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10 md:gap-16 mb-10 sm:mb-12">
-          {/* Logo */}
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10 md:gap-16 mb-12 sm:mb-14">
+          {/* Logo — large */}
           <div className="flex-shrink-0">
             <Link href="/" aria-label="RUMO home">
               <Image
                 src="/rumo-logo-teal.svg"
                 alt="RUMO"
-                width={120}
-                height={35}
-                className="h-8 w-auto opacity-60 hover:opacity-80 transition-opacity duration-200"
+                width={200}
+                height={59}
+                className="h-14 sm:h-16 w-auto opacity-80 hover:opacity-100 transition-opacity duration-200"
               />
             </Link>
           </div>
@@ -52,23 +52,22 @@ export function Footer() {
           <div className="flex flex-wrap gap-12 sm:gap-16">
             {/* Product */}
             <div>
-              <h4 className="font-body text-cream/40 text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
+              <h4 className="font-body text-cream/60 text-[11px] font-bold tracking-[0.2em] uppercase mb-4">
                 Product
               </h4>
-              <nav className="flex flex-col gap-2.5">
+              <nav className="flex flex-col gap-3">
                 <FooterLink href="/docs/constitution">Constitution</FooterLink>
                 <FooterLink href="/anchors">Anchors</FooterLink>
-                <FooterLink href="/start">Chart Your Course</FooterLink>
                 <FooterLink href="/vault">Vault</FooterLink>
               </nav>
             </div>
 
             {/* Company */}
             <div>
-              <h4 className="font-body text-cream/40 text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
+              <h4 className="font-body text-cream/60 text-[11px] font-bold tracking-[0.2em] uppercase mb-4">
                 Company
               </h4>
-              <nav className="flex flex-col gap-2.5">
+              <nav className="flex flex-col gap-3">
                 <FooterLink href="/about">About</FooterLink>
                 <FooterLink href="/contact">Contact</FooterLink>
               </nav>
@@ -76,10 +75,10 @@ export function Footer() {
 
             {/* Legal */}
             <div>
-              <h4 className="font-body text-cream/40 text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
+              <h4 className="font-body text-cream/60 text-[11px] font-bold tracking-[0.2em] uppercase mb-4">
                 Legal
               </h4>
-              <nav className="flex flex-col gap-2.5">
+              <nav className="flex flex-col gap-3">
                 <FooterLink href="/privacy">Privacy</FooterLink>
                 <FooterLink href="/terms">Terms</FooterLink>
               </nav>
@@ -88,8 +87,8 @@ export function Footer() {
         </div>
 
         {/* ── Bottom bar ── */}
-        <div className="pt-6 border-t border-cream/[0.06]">
-          <p className="font-body text-cream/20 text-xs tracking-wide">
+        <div className="pt-6 border-t border-cream/10">
+          <p className="font-body text-cream/40 text-xs tracking-wide">
             &copy; {new Date().getFullYear()} Rumo. All rights reserved.
           </p>
         </div>
@@ -102,7 +101,7 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
   return (
     <Link
       href={href}
-      className="font-body text-sm text-cream/30 hover:text-cream/60 tracking-wide transition-colors duration-200"
+      className="font-body text-sm text-cream/60 hover:text-cream/90 underline underline-offset-2 decoration-cream/20 hover:decoration-cream/50 tracking-wide transition-colors duration-200"
     >
       {children}
     </Link>
