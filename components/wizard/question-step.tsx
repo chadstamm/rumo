@@ -310,7 +310,7 @@ export function QuestionStep() {
   const isLastOverall = isLastQuestionInSection && isLastSection
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full max-w-3xl mx-auto pb-28">
       {/* Question */}
       <div className="mb-8">
         <h2 className="font-display text-navy text-2xl sm:text-3xl font-semibold leading-tight mb-3">
@@ -367,54 +367,53 @@ export function QuestionStep() {
         )}
       </div>
 
-      {/* Navigation */}
-      <div className="flex items-center justify-between">
-        <button
-          type="button"
-          onClick={prevStep}
-          disabled={isFirstQuestion}
-          className={`font-body text-sm px-5 py-2.5 rounded-lg transition-all duration-200
-                     ${
-                       isFirstQuestion
-                         ? 'text-navy/20 cursor-not-allowed'
-                         : 'text-navy/60 hover:text-navy hover:bg-navy/5'
-                     }`}
-        >
-          ← Back
-        </button>
-
-        <div className="flex items-center gap-3">
-          {/* Skip — always available */}
+      {/* Navigation — pinned to bottom */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 bg-cream/95 backdrop-blur-sm border-t border-navy/[0.06]">
+        <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
           <button
             type="button"
-            onClick={nextStep}
-            className="font-body text-sm text-navy/40 hover:text-navy/60 px-4 py-2.5 transition-colors duration-200"
-          >
-            Skip
-          </button>
-
-          {/* Continue / Finish */}
-          <button
-            type="button"
-            onClick={nextStep}
-            disabled={!hasAnswer}
-            className={`font-body font-semibold text-sm px-7 py-3 rounded-lg
-                       transition-all duration-300
+            onClick={prevStep}
+            disabled={isFirstQuestion}
+            className={`font-body text-sm px-5 py-2.5 rounded-lg transition-all duration-200
                        ${
-                         hasAnswer
-                           ? 'bg-teal text-white hover:bg-teal-light hover:shadow-lg hover:shadow-teal/20 hover:-translate-y-0.5 active:translate-y-0'
-                           : 'bg-navy/10 text-navy/30 cursor-not-allowed'
+                         isFirstQuestion
+                           ? 'text-navy/20 cursor-not-allowed'
+                           : 'text-navy/60 hover:text-navy hover:bg-navy/5'
                        }`}
           >
-            {isLastOverall ? 'FINISH' : 'CONTINUE →'}
+            ← Back
           </button>
+
+          <p className="font-body text-navy/20 text-xs hidden sm:block">
+            Saved automatically
+          </p>
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={nextStep}
+              className="font-body text-sm text-navy/40 hover:text-navy/60 px-4 py-2.5 transition-colors duration-200"
+            >
+              Skip
+            </button>
+
+            <button
+              type="button"
+              onClick={nextStep}
+              disabled={!hasAnswer}
+              className={`font-body font-semibold text-sm px-7 py-3 rounded-lg
+                         transition-all duration-300
+                         ${
+                           hasAnswer
+                             ? 'bg-teal text-white hover:bg-teal-light hover:shadow-lg hover:shadow-teal/20'
+                             : 'bg-navy/10 text-navy/30 cursor-not-allowed'
+                         }`}
+            >
+              {isLastOverall ? 'FINISH' : 'CONTINUE →'}
+            </button>
+          </div>
         </div>
       </div>
-
-      {/* Auto-save indicator */}
-      <p className="font-body text-navy/20 text-xs text-center mt-6">
-        Your progress is saved automatically. Come back anytime.
-      </p>
     </div>
   )
 }

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { SECTION_NAMES } from '@/types/wizard'
 import { useWizard } from '@/context/wizard-context'
 
 export function ProgressBar() {
@@ -16,8 +15,6 @@ export function ProgressBar() {
   const currentWeight = sectionProgress
   const overallProgress = ((completedWeight + currentWeight) / sections.length) * 100
 
-  const currentSectionName = SECTION_NAMES[state.currentSection] || ''
-
   return (
     <div className="w-full">
       {/* Overall progress bar */}
@@ -28,49 +25,42 @@ export function ProgressBar() {
         />
       </div>
 
-      {/* Current position + reset */}
+      {/* Total + reset */}
       <div className="flex items-center justify-between">
-        <p className="font-body text-xs text-navy/60">
-          <span className="font-semibold text-navy">{currentSectionName}</span>
-          {' '}&middot;{' '}
-          Question {currentStep + 1} of {totalQuestionsInSection}
+        <p className="font-body text-xs text-navy/60 font-medium">
+          Question {totalAnswered + 1} of {totalQuestions}
         </p>
-        <div className="flex items-center gap-3">
-          <p className="font-body text-xs text-navy/35">
-            {totalAnswered} of {totalQuestions} total
-          </p>
-          {totalAnswered > 0 && (
-            <>
-              {showConfirm ? (
-                <div className="flex items-center gap-2">
-                  <span className="font-body text-xs text-navy/40">Clear all answers?</span>
-                  <button
-                    type="button"
-                    onClick={() => { reset(); setShowConfirm(false) }}
-                    className="font-body text-xs text-red-500 hover:text-red-600 font-medium transition-colors"
-                  >
-                    Yes
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirm(false)}
-                    className="font-body text-xs text-navy/40 hover:text-navy/60 transition-colors"
-                  >
-                    No
-                  </button>
-                </div>
-              ) : (
+        {totalAnswered > 0 && (
+          <>
+            {showConfirm ? (
+              <div className="flex items-center gap-2">
+                <span className="font-body text-xs text-navy/40">Clear all answers?</span>
                 <button
                   type="button"
-                  onClick={() => setShowConfirm(true)}
-                  className="font-body text-xs text-navy/25 hover:text-navy/50 transition-colors"
+                  onClick={() => { reset(); setShowConfirm(false) }}
+                  className="font-body text-xs text-red-500 hover:text-red-600 font-medium transition-colors"
                 >
-                  Start Over
+                  Yes
                 </button>
-              )}
-            </>
-          )}
-        </div>
+                <button
+                  type="button"
+                  onClick={() => setShowConfirm(false)}
+                  className="font-body text-xs text-navy/40 hover:text-navy/60 transition-colors"
+                >
+                  No
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setShowConfirm(true)}
+                className="font-body text-xs text-navy/25 hover:text-navy/50 transition-colors"
+              >
+                Start Over
+              </button>
+            )}
+          </>
+        )}
       </div>
     </div>
   )

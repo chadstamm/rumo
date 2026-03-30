@@ -86,23 +86,41 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
       {/* Content */}
       <div className="relative z-10 w-full">
         <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 pb-10 sm:pb-14 pt-24 sm:pt-28">
-          <div className="max-w-2xl">
-            <p className="font-body text-sm tracking-[0.2em] uppercase text-ochre font-bold mb-5">
-              Context Anchor
-            </p>
+          <div className="flex items-end justify-between gap-8">
+            {/* Left: text */}
+            <div className="max-w-2xl">
+              <p className="font-body text-sm tracking-[0.2em] uppercase text-ochre font-bold mb-5">
+                Context Anchor
+              </p>
 
-            <h1
-              className="font-display text-cream font-bold leading-tight mb-3"
-              style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}
-            >
-              {config.title}
-            </h1>
+              <h1
+                className="font-display text-cream font-bold leading-tight mb-3"
+                style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}
+              >
+                {config.title}
+              </h1>
 
-            <div className="w-10 h-[2px] bg-ochre/50 mb-4" aria-hidden="true" />
+              <div className="w-10 h-[2px] bg-ochre/50 mb-4" aria-hidden="true" />
 
-            <p className="font-body text-cream/70 text-base sm:text-lg leading-relaxed font-medium">
-              {config.description}
-            </p>
+              <p className="font-body text-cream/70 text-base sm:text-lg leading-relaxed font-medium">
+                {config.description}
+              </p>
+            </div>
+
+            {/* Right: large icon */}
+            {ANCHOR_PNG_ICONS[config.slug] && (
+              <div className="hidden lg:block flex-shrink-0">
+                <Image
+                  src={ANCHOR_PNG_ICONS[config.slug]}
+                  alt=""
+                  width={140}
+                  height={140}
+                  className="opacity-20"
+                  style={{ filter: 'brightness(0) invert(1)' }}
+                  aria-hidden="true"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -206,58 +224,6 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
     <div className="min-h-screen bg-cream">
       <DocumentHero config={config} />
 
-      {/* Navy highlight section */}
-      <div className="bg-navy">
-        <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 py-8 sm:py-10">
-          {config.slug === 'constitution' ? (
-            <div className="flex items-start justify-between gap-5 sm:gap-6">
-              {/* Copy + stats + CTA */}
-              <div className="flex-1">
-                <p className="font-body text-cream/80 text-base sm:text-lg font-medium leading-relaxed mb-2">
-                  Begin with our free Personal Constitution generator, and complete the core Context Anchor in your vault.
-                </p>
-                <div className="flex items-center gap-6 mt-4">
-                  <div className="flex items-center gap-4 text-cream/40">
-                    <span className="font-display text-xl text-ochre font-bold">{questionCount}</span>
-                    <span className="font-body text-xs tracking-[0.15em] uppercase">Questions</span>
-                    <span className="w-px h-5 bg-cream/10" />
-                    <span className="font-display text-xl text-ochre font-bold">{config.sections.length}</span>
-                    <span className="font-body text-xs tracking-[0.15em] uppercase">Sections</span>
-                  </div>
-                  <a
-                    href="#wizard-start"
-                    className="font-body text-sm font-bold tracking-[0.1em] uppercase px-6 py-2.5 rounded-full
-                               bg-ochre text-white shadow-md shadow-ochre/20
-                               hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
-                               transition-all duration-200"
-                  >
-                    Get Started
-                  </a>
-                </div>
-              </div>
-
-              {/* Icon flush right */}
-              {ANCHOR_PNG_ICONS[config.slug] && (
-                <Image
-                  src={ANCHOR_PNG_ICONS[config.slug]}
-                  alt=""
-                  width={44}
-                  height={44}
-                  className="flex-shrink-0 opacity-90 hidden sm:block"
-                  style={{ filter: 'brightness(0) invert(1) opacity(0.9)' }}
-                  aria-hidden="true"
-                />
-              )}
-            </div>
-          ) : (
-            <p className="font-body text-cream/60 text-sm sm:text-base font-medium">
-              {questionCount} questions &middot; {config.sections.length} sections
-            </p>
-          )}
-        </div>
-      </div>
-
-      <div id="wizard-start" />
 
       {/* Progress bar */}
       <div className="sticky top-0 z-20 bg-cream/95 backdrop-blur-sm border-b border-navy/[0.06]">
