@@ -44,7 +44,7 @@ export function Problem() {
         {/* Body copy — problem, empathy, answer */}
         <div className="space-y-5 sm:space-y-6">
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-            Every conversation starts from zero. You explain yourself. You correct the tone. You add caveats about what you actually mean. And the next time you open it? Same thing. Your AI has no idea who it&apos;s talking to.
+            Every conversation seems to start at the beginning. You explain yourself. You correct the tone. You add caveats about what you actually mean. And the next time you open it? Same thing. Your AI has no idea who it&apos;s talking to.
           </p>
 
           <p className="font-body text-navy/80 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
