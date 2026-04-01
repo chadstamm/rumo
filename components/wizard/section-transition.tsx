@@ -37,11 +37,11 @@ export function SectionTransition({
           <div className="flex items-center gap-3 mb-3">
             <div className="w-8 h-[2px] bg-ochre/60" aria-hidden="true" />
             <span className="font-body text-xs tracking-[0.25em] uppercase text-ochre font-bold">
-              Before You Begin
+              Getting Started
             </span>
           </div>
           <h1 className="font-display text-navy font-bold leading-tight" style={{ fontSize: 'clamp(1.75rem, 4vw, 2.25rem)' }}>
-            {SECTION_NAMES[section]}
+            Before You Begin
           </h1>
         </div>
 
