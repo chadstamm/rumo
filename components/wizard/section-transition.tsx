@@ -55,10 +55,11 @@ export function SectionTransition({
             <InstructionItem
               icon={
                 <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
-                  <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.2" />
-                  <path d="M10 2v2M10 16v2M2 10h2M16 10h2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-                  <path d="M12.5 7.5L10 10 7.5 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  <circle cx="10" cy="10" r="1.5" fill="currentColor" />
+                  <circle cx="10" cy="10" r="8.5" stroke="currentColor" strokeWidth="1.2" />
+                  <path d="M10 1.5v1M10 17.5v1M1.5 10h1M17.5 10h1" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                  <polygon points="10,4 12,9 10,10 8,9" fill="currentColor" opacity="0.9" />
+                  <polygon points="10,16 8,11 10,10 12,11" stroke="currentColor" strokeWidth="0.8" fill="none" />
+                  <circle cx="10" cy="10" r="1" fill="currentColor" />
                 </svg>
               }
               title="HOW IT WORKS"
