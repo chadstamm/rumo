@@ -33,6 +33,11 @@ const HERO_IMAGES: Record<string, string> = {
   roster: '/heroes/roster.jpg',
 }
 
+// Focal point overrides — shift object-position for specific hero images
+const HERO_FOCUS: Record<string, string> = {
+  codex: 'center 70%', // Show typewriter keys, not top of machine
+}
+
 // ── Anchor-specific taglines ──
 
 const ANCHOR_TAGLINES: Record<string, string> = {
@@ -64,6 +69,7 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover"
+          style={HERO_FOCUS[config.slug] ? { objectPosition: HERO_FOCUS[config.slug] } : undefined}
         />
       )}
 

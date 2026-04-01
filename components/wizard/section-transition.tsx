@@ -54,16 +54,15 @@ export function SectionTransition({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8 mb-10">
             <InstructionItem
               icon={
-                <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
-                  <polygon points="10,1 11.2,8 10,6.5 8.8,8" fill="currentColor" opacity="0.9" />
-                  <polygon points="19,10 12,11.2 13.5,10 12,8.8" fill="currentColor" opacity="0.6" />
-                  <polygon points="10,19 8.8,12 10,13.5 11.2,12" fill="currentColor" opacity="0.6" />
-                  <polygon points="1,10 8,8.8 6.5,10 8,11.2" fill="currentColor" opacity="0.6" />
-                  <polygon points="14.5,3.5 12,8.5 11.5,10 13,9.5" fill="currentColor" opacity="0.3" />
-                  <polygon points="16.5,14.5 11.5,12 10,11.5 10.5,13" fill="currentColor" opacity="0.3" />
-                  <polygon points="5.5,16.5 8,11.5 8.5,10 7,10.5" fill="currentColor" opacity="0.3" />
-                  <polygon points="3.5,5.5 8.5,8 10,8.5 9.5,7" fill="currentColor" opacity="0.3" />
-                  <circle cx="10" cy="10" r="1.2" fill="currentColor" />
+                <svg width="38" height="38" viewBox="0 0 20 20" fill="none" style={{ transform: 'rotate(-30deg)' }}>
+                  <circle cx="10" cy="10" r="8.5" stroke="currentColor" strokeWidth="1" />
+                  <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
+                  <polygon points="10,2.5 11,9.5 10,10 9,9.5" fill="currentColor" opacity="0.9" />
+                  <polygon points="10,17.5 9,10.5 10,10 11,10.5" stroke="currentColor" strokeWidth="0.6" fill="none" />
+                  <polygon points="2.5,10 9.5,9 10,10 9.5,11" fill="currentColor" opacity="0.4" />
+                  <polygon points="17.5,10 10.5,11 10,10 10.5,9" fill="currentColor" opacity="0.4" />
+                  <circle cx="10" cy="10" r="1" fill="currentColor" />
+                  <text x="10" y="2" textAnchor="middle" fill="currentColor" fontSize="2.5" fontWeight="bold" opacity="0.5">N</text>
                 </svg>
               }
               title="HOW IT WORKS"
