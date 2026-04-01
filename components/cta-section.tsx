@@ -60,6 +60,7 @@ export function CTASection() {
             description="Identity, voice, stories, situation, timeline, and roster — everything your AI needs to know you. The result is personalized AI that helps you succeed across everything you do."
             cta="Chart Your Course"
             icon="/anchor-section-icon.png"
+            price="$49"
           />
         </div>
       </div>
@@ -90,6 +91,7 @@ function CTACard({
   cta,
   icon,
   featured,
+  price,
 }: {
   href: string
   accent: 'teal' | 'ochre'
@@ -99,6 +101,7 @@ function CTACard({
   cta: string
   icon: string
   featured?: boolean
+  price?: string
 }) {
   const [hovered, setHovered] = useState(false)
 
@@ -158,16 +161,23 @@ function CTACard({
       <div className="relative px-8 py-10 sm:px-10 sm:py-12">
         {/* Eyebrow + Icon row */}
         <div className="flex items-start justify-between mb-8">
-          <span
-            className="inline-flex items-center px-3.5 py-1.5 rounded-full font-body text-[11px] font-bold tracking-[0.15em] uppercase transition-all duration-300"
-            style={{
-              background: hovered ? `${accentHex}20` : `${accentHex}10`,
-              border: `1px solid ${hovered ? `${accentHex}40` : `${accentHex}20`}`,
-              color: accentHex,
-            }}
-          >
-            {eyebrow}
-          </span>
+          <div className="flex items-center gap-3">
+            <span
+              className="inline-flex items-center px-3.5 py-1.5 rounded-full font-body text-[11px] font-bold tracking-[0.15em] uppercase transition-all duration-300"
+              style={{
+                background: hovered ? `${accentHex}20` : `${accentHex}10`,
+                border: `1px solid ${hovered ? `${accentHex}40` : `${accentHex}20`}`,
+                color: accentHex,
+              }}
+            >
+              {eyebrow}
+            </span>
+            {price && (
+              <span className="font-body text-cream/50 text-sm font-medium">
+                {price} <span className="text-cream/30 text-xs">one-time</span>
+              </span>
+            )}
+          </div>
 
           <div
             className="transition-all duration-500 ease-out"
