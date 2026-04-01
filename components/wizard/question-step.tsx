@@ -127,6 +127,9 @@ function TextareaInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={question.placeholder}
+        autoComplete="off"
+        data-form-type="other"
+        data-lpignore="true"
         className="w-full min-h-[120px] px-5 py-4 rounded-xl
                    bg-white border border-navy/10
                    text-navy font-body text-base leading-relaxed
@@ -367,9 +370,9 @@ export function QuestionStep() {
         )}
       </div>
 
-      {/* Navigation — pinned to bottom */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 bg-cream/95 backdrop-blur-sm border-t border-navy/[0.06]">
-        <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+      {/* Navigation — inline below content */}
+      <div className="mt-10 pt-6 border-t border-navy/[0.06]">
+        <div className="flex items-center justify-between">
           <button
             type="button"
             onClick={prevStep}
