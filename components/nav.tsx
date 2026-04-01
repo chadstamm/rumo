@@ -27,7 +27,7 @@ function NavLink({ href, label, active, light }: { href: string; label: string; 
             : 'text-white/70 hover:text-white'
           : active
             ? 'text-teal font-medium'
-            : 'text-navy/70 hover:text-teal'
+            : 'text-navy/90 hover:text-teal'
       }`}
     >
       {label}
@@ -51,7 +51,7 @@ function AnchorsButton({ active, light }: {
       className={`group relative font-body text-sm tracking-wide transition-all duration-200 py-1 ${
         light
           ? active ? 'text-white font-medium' : 'text-white/70 hover:text-white'
-          : active ? 'text-teal font-medium' : 'text-navy/70 hover:text-teal'
+          : active ? 'text-teal font-medium' : 'text-navy/90 hover:text-teal'
       }`}
     >
       Anchors
@@ -316,7 +316,7 @@ export function Nav() {
               user ? (
                 <button
                   onClick={() => signOut()}
-                  className="font-body text-sm tracking-wide text-navy opacity-40 hover:opacity-70 transition-opacity duration-200"
+                  className="font-body text-sm tracking-wide text-navy opacity-75 hover:opacity-100 transition-opacity duration-200"
                 >
                   Sign out
                 </button>
@@ -406,7 +406,7 @@ function MobileMenu({
 }: MobileMenuProps) {
   const mobileLinkClass = (active: boolean) =>
     `block font-body text-lg transition-colors duration-150 ${
-      active ? 'text-teal font-semibold' : 'text-navy/80 hover:text-teal'
+      active ? 'text-teal font-semibold' : 'text-navy/90 hover:text-teal'
     }`
 
   return (
@@ -431,7 +431,7 @@ function MobileMenu({
           <button
             onClick={() => setAnchorsOpen(!anchorsOpen)}
             className={`w-full flex items-center justify-between py-3 font-body text-lg transition-colors duration-150 ${
-              isAnchorsActive ? 'text-teal font-semibold' : 'text-navy/80 hover:text-teal'
+              isAnchorsActive ? 'text-teal font-semibold' : 'text-navy/90 hover:text-teal'
             }`}
           >
             Anchors
@@ -451,7 +451,7 @@ function MobileMenu({
                   href={href}
                   onClick={onClose}
                   className={`flex items-center gap-3 py-2.5 transition-colors duration-150 ${
-                    pathname === href ? 'text-teal' : 'text-navy/60 hover:text-navy'
+                    pathname === href ? 'text-teal' : 'text-navy/80 hover:text-navy'
                   }`}
                 >
                   <Image
@@ -499,13 +499,13 @@ function MobileMenu({
               user ? (
                 <button
                   onClick={() => { signOut(); onClose() }}
-                  className="font-body text-base text-navy/50 hover:text-navy/80 transition-colors duration-200"
+                  className="font-body text-base text-navy/75 hover:text-navy transition-colors duration-200"
                 >
                   Sign out
                 </button>
               ) : (
                 <Link href="/auth/login" onClick={onClose}
-                  className="font-body text-base text-navy/50 hover:text-navy/80 transition-colors duration-200"
+                  className="font-body text-base text-navy/75 hover:text-navy transition-colors duration-200"
                 >
                   Sign in
                 </Link>

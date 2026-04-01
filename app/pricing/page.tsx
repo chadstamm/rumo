@@ -23,8 +23,8 @@ export default function PricingPage() {
             <span className="text-ochre-light">Go Further When You&apos;re Ready.</span>
           </h1>
           <div className="w-12 h-[2px] bg-ochre/50 mx-auto mb-6 sm:mb-8" aria-hidden="true" />
-          <p className="font-body text-cream/50 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
-            Build your Personal Constitution for free. When you want the full picture, unlock all six Context Anchors with a single purchase. No subscription. Your documents are yours to keep.
+          <p className="font-body text-cream/70 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
+            Build your Personal Constitution for free. When you want the full picture, unlock all six Context Anchors for $49/year. Your documents are yours to keep and update anytime.
           </p>
         </div>
       </div>
@@ -43,7 +43,7 @@ export default function PricingPage() {
                 <div className="flex items-baseline gap-1 mb-3">
                   <span className="font-display text-navy text-5xl font-bold">$0</span>
                 </div>
-                <p className="font-body text-navy/50 text-sm leading-relaxed">
+                <p className="font-body text-navy/75 text-sm leading-relaxed">
                   Start with the foundation. No account required.
                 </p>
               </div>
@@ -85,9 +85,9 @@ export default function PricingPage() {
                 </span>
                 <div className="flex items-baseline gap-1 mb-3">
                   <span className="font-display text-navy text-5xl font-bold">$49</span>
-                  <span className="font-body text-navy/40 text-sm">/year</span>
+                  <span className="font-body text-navy/60 text-sm">/year</span>
                 </div>
-                <p className="font-body text-navy/50 text-sm leading-relaxed">
+                <p className="font-body text-navy/75 text-sm leading-relaxed">
                   All six Context Anchors. Everything your AI needs to know you.
                 </p>
               </div>
@@ -170,7 +170,7 @@ function PricingFeature({ children, included }: { children: React.ReactNode; inc
           <path d="M5 9h8" stroke="#1a2744" strokeWidth="2" strokeLinecap="round" />
         </svg>
       )}
-      <span className={`font-body text-sm ${included ? 'text-navy/70' : 'text-navy/25'}`}>
+      <span className={`font-body text-sm ${included ? 'text-navy/90' : 'text-navy/35'}`}>
         {children}
       </span>
     </div>
@@ -183,7 +183,7 @@ function FAQ({ question, answer }: { question: string; answer: string }) {
       <h3 className="font-body text-navy font-semibold text-base mb-2">
         {question}
       </h3>
-      <p className="font-body text-navy/50 text-sm leading-relaxed">
+      <p className="font-body text-navy/75 text-sm leading-relaxed">
         {answer}
       </p>
     </div>
