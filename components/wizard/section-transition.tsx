@@ -54,15 +54,17 @@ export function SectionTransition({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8 mb-10">
             <InstructionItem
               icon={
-                <svg width="38" height="38" viewBox="0 0 20 20" fill="none" style={{ transform: 'rotate(-30deg)' }}>
-                  <circle cx="10" cy="10" r="8.5" stroke="currentColor" strokeWidth="1" />
-                  <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
-                  <polygon points="10,2.5 11,9.5 10,10 9,9.5" fill="currentColor" opacity="0.9" />
-                  <polygon points="10,17.5 9,10.5 10,10 11,10.5" stroke="currentColor" strokeWidth="0.6" fill="none" />
-                  <polygon points="2.5,10 9.5,9 10,10 9.5,11" fill="currentColor" opacity="0.4" />
-                  <polygon points="17.5,10 10.5,11 10,10 10.5,9" fill="currentColor" opacity="0.4" />
-                  <circle cx="10" cy="10" r="1" fill="currentColor" />
-                  <text x="10" y="2" textAnchor="middle" fill="currentColor" fontSize="2.5" fontWeight="bold" opacity="0.5">N</text>
+                <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
+                  {/* Tilted compass — ellipse gives perspective */}
+                  <ellipse cx="10" cy="11" rx="8.5" ry="6.5" stroke="currentColor" strokeWidth="1" />
+                  <ellipse cx="10" cy="11" rx="6.5" ry="5" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
+                  {/* Needle pointing NE — the tilt makes it read as compass not clock */}
+                  <line x1="6" y1="14" x2="14" y2="8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  <polygon points="14,8 11.5,9.5 12,8.5" fill="currentColor" />
+                  <circle cx="10" cy="11" r="1.2" fill="currentColor" />
+                  {/* Cardinal marks */}
+                  <text x="10" y="5.5" textAnchor="middle" fill="currentColor" fontSize="2.8" fontWeight="bold" opacity="0.6">N</text>
+                  <text x="10" y="18.5" textAnchor="middle" fill="currentColor" fontSize="2" opacity="0.3">S</text>
                 </svg>
               }
               title="HOW IT WORKS"
