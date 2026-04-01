@@ -3,13 +3,13 @@ export type InputType = 'textarea' | 'select' | 'multiselect' | 'file' | 'phrase
 export type Section = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
 export const SECTION_NAMES: Record<Section, string> = {
-  0: 'Getting Started',
-  1: 'Identity',
-  2: 'Voice',
-  3: 'Stories',
-  4: 'Timeline',
-  5: 'Influence Roster',
-  6: 'Situation',
+  0: 'GETTING STARTED',
+  1: 'IDENTITY',
+  2: 'VOICE',
+  3: 'STORIES',
+  4: 'TIMELINE',
+  5: 'INFLUENCE ROSTER',
+  6: 'SITUATION',
 }
 
 export const SECTION_SUBTITLES: Record<Section, string> = {
