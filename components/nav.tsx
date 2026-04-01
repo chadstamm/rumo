@@ -27,7 +27,7 @@ function NavLink({ href, label, active, light }: { href: string; label: string; 
             : 'text-white/70 hover:text-white'
           : active
             ? 'text-teal font-medium'
-            : 'text-navy/90 hover:text-teal'
+            : 'text-navy font-bold hover:text-teal'
       }`}
     >
       {label}
@@ -51,7 +51,7 @@ function AnchorsButton({ active, light }: {
       className={`group relative font-body text-sm tracking-wide transition-all duration-200 py-1 ${
         light
           ? active ? 'text-white font-medium' : 'text-white/70 hover:text-white'
-          : active ? 'text-teal font-medium' : 'text-navy/90 hover:text-teal'
+          : active ? 'text-teal font-medium' : 'text-navy font-bold hover:text-teal'
       }`}
     >
       Anchors
@@ -406,7 +406,7 @@ function MobileMenu({
 }: MobileMenuProps) {
   const mobileLinkClass = (active: boolean) =>
     `block font-body text-lg transition-colors duration-150 ${
-      active ? 'text-teal font-semibold' : 'text-navy/90 hover:text-teal'
+      active ? 'text-teal font-semibold' : 'text-navy font-bold hover:text-teal'
     }`
 
   return (
@@ -431,7 +431,7 @@ function MobileMenu({
           <button
             onClick={() => setAnchorsOpen(!anchorsOpen)}
             className={`w-full flex items-center justify-between py-3 font-body text-lg transition-colors duration-150 ${
-              isAnchorsActive ? 'text-teal font-semibold' : 'text-navy/90 hover:text-teal'
+              isAnchorsActive ? 'text-teal font-semibold' : 'text-navy font-bold hover:text-teal'
             }`}
           >
             Anchors

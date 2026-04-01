@@ -442,7 +442,7 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
               <button
                 type="button"
                 onClick={reset}
-                className="font-body text-xs text-navy/25 hover:text-navy/40 px-4 py-2 transition-colors duration-200"
+                className="font-body text-xs text-navy/50 hover:text-navy/70 px-4 py-2 transition-colors duration-200"
               >
                 Start Over
               </button>

@@ -57,7 +57,7 @@ export function ProgressBar() {
               <button
                 type="button"
                 onClick={() => setShowConfirm(true)}
-                className="font-body text-xs text-navy/25 hover:text-navy/50 transition-colors"
+                className="font-body text-xs text-navy/50 hover:text-navy/70 transition-colors"
               >
                 Start Over
               </button>
