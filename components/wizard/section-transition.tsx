@@ -55,16 +55,14 @@ export function SectionTransition({
             <InstructionItem
               icon={
                 <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
-                  {/* Tilted compass — ellipse gives perspective */}
-                  <ellipse cx="10" cy="11" rx="8.5" ry="6.5" stroke="currentColor" strokeWidth="1" />
-                  <ellipse cx="10" cy="11" rx="6.5" ry="5" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
-                  {/* Needle pointing NE — the tilt makes it read as compass not clock */}
-                  <line x1="6" y1="14" x2="14" y2="8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                  <polygon points="14,8 11.5,9.5 12,8.5" fill="currentColor" />
-                  <circle cx="10" cy="11" r="1.2" fill="currentColor" />
-                  {/* Cardinal marks */}
-                  <text x="10" y="5.5" textAnchor="middle" fill="currentColor" fontSize="2.8" fontWeight="bold" opacity="0.6">N</text>
-                  <text x="10" y="18.5" textAnchor="middle" fill="currentColor" fontSize="2" opacity="0.3">S</text>
+                  {/* Post */}
+                  <line x1="10" y1="4" x2="10" y2="18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  {/* Top sign — pointing right */}
+                  <polygon points="6,5 16,5 17,6.5 16,8 6,8" stroke="currentColor" strokeWidth="1" fill="currentColor" fillOpacity="0.15" strokeLinejoin="round" />
+                  {/* Bottom sign — pointing left */}
+                  <polygon points="14,10 4,10 3,11.5 4,13 14,13" stroke="currentColor" strokeWidth="1" fill="currentColor" fillOpacity="0.08" strokeLinejoin="round" />
+                  {/* Base */}
+                  <line x1="7" y1="18" x2="13" y2="18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               }
               title="HOW IT WORKS"
