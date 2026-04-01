@@ -112,9 +112,9 @@ export function SectionTransition({
           </div>
         </div>
 
-        {/* CTA — left-aligned to match the editorial feel */}
+        {/* CTA — centered */}
         <div
-          className={`transition-all duration-700 delay-400 ${
+          className={`text-center transition-all duration-700 delay-400 ${
             animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
@@ -122,8 +122,8 @@ export function SectionTransition({
             type="button"
             onClick={onBegin}
             className="font-body font-bold text-sm tracking-[0.1em] uppercase px-10 py-4 rounded-full
-                       bg-ochre text-white shadow-lg shadow-ochre/20
-                       hover:bg-ochre-light hover:shadow-xl hover:shadow-ochre/30
+                       bg-teal text-white shadow-lg shadow-teal/20
+                       hover:bg-teal-light hover:shadow-xl hover:shadow-teal/30
                        hover:-translate-y-0.5 active:translate-y-0
                        transition-all duration-300"
           >
