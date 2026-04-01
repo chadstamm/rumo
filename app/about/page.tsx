@@ -40,7 +40,7 @@ export default function AboutPage() {
             </p>
 
             <p className="font-body text-navy/80 text-lg sm:text-xl leading-relaxed">
-              RUMO exists because that gap shouldn&apos;t require a computer science degree to close. You answer questions about who you are, how you write, what you&apos;ve lived, where you are right now, how your life has unfolded, and who matters most. RUMO compiles those answers into Context Anchors &mdash; structured documents your AI can actually use.
+              RUMO exists because that gap shouldn&apos;t require a computer science degree to close. Through a process we call context mining, you answer questions about who you are, how you write, what you&apos;ve lived, where you are right now, how your life has unfolded, and who matters most. RUMO compiles those answers into Context Anchors &mdash; structured documents your AI can actually use.
             </p>
 
             <p className="font-body text-navy/80 text-lg sm:text-xl leading-relaxed">

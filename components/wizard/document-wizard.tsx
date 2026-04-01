@@ -256,7 +256,7 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
       </main>
 
       {/* Full-width upsell — only on Getting Started intro */}
-      {showFullBuildCTA && <FullBuildCTA />}
+      {showFullBuildCTA && <FullBuildCTA currentSlug={config.slug} />}
     </div>
   )
 }
@@ -272,7 +272,7 @@ const ANCHOR_LABELS: Record<string, string> = {
   roster: 'Influencers',
 }
 
-function FullBuildCTA() {
+function FullBuildCTA({ currentSlug }: { currentSlug?: string }) {
   return (
     <section className="relative bg-navy overflow-hidden">
       {/* Atmospheric layers */}
@@ -330,39 +330,42 @@ function FullBuildCTA() {
           </p>
 
           <p className="font-body text-cream/30 text-sm mb-10">
-            $49 <span className="text-cream/20">·</span> one-time <span className="text-cream/20">·</span> all six anchors <span className="text-cream/20">·</span> lifetime vault access
+            $49/year <span className="text-cream/20">·</span> all six anchors <span className="text-cream/20">·</span> unlimited updates <span className="text-cream/20">·</span> vault access
           </p>
         </div>
 
         {/* Anchor icon row — clickable */}
         <div className="flex items-center justify-center gap-4 sm:gap-8 lg:gap-12 mb-14">
-          {(['constitution', 'codex', 'story-bank', 'sotu', 'timeline', 'roster'] as const).map((slug) => (
-            <Link
-              key={slug}
-              href={`/docs/${slug}`}
-              className="group flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-1"
-            >
-              <div className="relative">
-                <div
-                  className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"
-                  style={{ background: slug === 'constitution' ? 'rgba(30, 190, 177, 0.3)' : 'rgba(196, 148, 58, 0.2)' }}
-                  aria-hidden="true"
-                />
-                <img
-                  src={`/icons/${slug}.png`}
-                  alt={ANCHOR_LABELS[slug]}
-                  className="relative w-10 h-10 sm:w-14 sm:h-14 opacity-50 group-hover:opacity-100 transition-all duration-300"
-                  style={{ filter: 'brightness(0) invert(1)' }}
-                />
-              </div>
-              <span className="font-body text-[10px] sm:text-xs tracking-[0.15em] uppercase text-cream/30 group-hover:text-cream/70 transition-colors duration-300">
-                {ANCHOR_LABELS[slug]}
-              </span>
-              {slug === 'constitution' && (
-                <span className="font-body text-[9px] tracking-wider uppercase text-teal/60 -mt-1">Free</span>
-              )}
-            </Link>
-          ))}
+          {(['constitution', 'codex', 'story-bank', 'sotu', 'timeline', 'roster'] as const).map((slug) => {
+            const isCurrent = slug === currentSlug
+            return (
+              <Link
+                key={slug}
+                href={`/docs/${slug}`}
+                className="group flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="relative">
+                  <div
+                    className={`absolute inset-0 rounded-full transition-opacity duration-300 blur-xl ${isCurrent ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                    style={{ background: slug === 'constitution' ? 'rgba(30, 190, 177, 0.3)' : 'rgba(196, 148, 58, 0.2)' }}
+                    aria-hidden="true"
+                  />
+                  <img
+                    src={`/icons/${slug}.png`}
+                    alt={ANCHOR_LABELS[slug]}
+                    className={`relative w-10 h-10 sm:w-14 sm:h-14 transition-all duration-300 ${isCurrent ? 'opacity-90' : 'opacity-50 group-hover:opacity-100'}`}
+                    style={{ filter: 'brightness(0) invert(1)' }}
+                  />
+                </div>
+                <span className={`font-body text-[10px] sm:text-xs tracking-[0.15em] uppercase transition-colors duration-300 ${isCurrent ? 'text-cream/80' : 'text-cream/30 group-hover:text-cream/70'}`}>
+                  {ANCHOR_LABELS[slug]}
+                </span>
+                {slug === 'constitution' && (
+                  <span className="font-body text-[9px] tracking-wider uppercase text-teal/60 -mt-1">Free</span>
+                )}
+              </Link>
+            )
+          })}
         </div>
 
         {/* CTA button */}

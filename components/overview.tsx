@@ -67,7 +67,7 @@ export function Overview() {
                 Generic AI output and output that actually works for you are separated by one thing: context. Your identity, your voice, your lived experience. Give AI those inputs and something shifts. It <em>gets</em> you.
               </p>
               <p className="font-body text-cream/85 text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed">
-                Give AI your context before you give it your questions. That part is simple. The harder part is compiling that context in a way AI can actually use. That&apos;s what Context Anchors are for &mdash; six documents that capture who you are so your AI doesn&apos;t have to guess.
+                Give AI your context before you give it your questions. That part is simple. The harder part is mining that context &mdash; extracting who you are in a way AI can actually use. That&apos;s what RUMO does. We call it <em>context mining</em>, and it produces six documents that capture who you are so your AI doesn&apos;t have to guess.
               </p>
             </div>
           </div>

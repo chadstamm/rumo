@@ -174,7 +174,7 @@ function CTACard({
             </span>
             {price && (
               <span className="font-body text-cream/50 text-sm font-medium">
-                {price} <span className="text-cream/30 text-xs">one-time</span>
+                {price}<span className="text-cream/30 text-xs">/year</span>
               </span>
             )}
           </div>

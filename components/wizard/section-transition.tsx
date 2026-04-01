@@ -55,15 +55,17 @@ export function SectionTransition({
             <InstructionItem
               icon={
                 <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
-                  <circle cx="10" cy="10" r="8.5" stroke="currentColor" strokeWidth="1.2" />
-                  <path d="M10 1.5v1M10 17.5v1M1.5 10h1M17.5 10h1" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-                  <polygon points="10,4 12,9 10,10 8,9" fill="currentColor" opacity="0.9" />
-                  <polygon points="10,16 8,11 10,10 12,11" stroke="currentColor" strokeWidth="0.8" fill="none" />
-                  <circle cx="10" cy="10" r="1" fill="currentColor" />
+                  <rect x="2" y="3" width="16" height="14" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
+                  <path d="M2 7h16" stroke="currentColor" strokeWidth="1" />
+                  <path d="M7.5 7v10" stroke="currentColor" strokeWidth="0.8" strokeDasharray="1.5 1.5" />
+                  <path d="M12.5 3v4" stroke="currentColor" strokeWidth="0.8" strokeDasharray="1.5 1.5" />
+                  <circle cx="10" cy="12" r="1.5" stroke="currentColor" strokeWidth="1" />
+                  <circle cx="10" cy="12" r="0.5" fill="currentColor" />
+                  <path d="M5 10.5l2 1.5M13 10l2 2" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" />
                 </svg>
               }
               title="HOW IT WORKS"
-              body="Answer guided questions about who you are, what you value, and how you see the world. Your answers become your Personal Constitution."
+              body="We mine your context through guided questions about who you are, what you value, and how you see the world. Your answers become your Personal Constitution."
             />
             <InstructionItem
               icon={

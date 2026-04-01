@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export const metadata = {
   title: 'Pricing — RUMO',
-  description: 'Build your free Personal Constitution or get all six Context Anchors for $49. One-time purchase. No subscription.',
+  description: 'Build your free Personal Constitution or get all six Context Anchors for $49/year. Unlimited generation, vault access, and updates.',
 }
 
 export default function PricingPage() {
@@ -85,7 +85,7 @@ export default function PricingPage() {
                 </span>
                 <div className="flex items-baseline gap-1 mb-3">
                   <span className="font-display text-navy text-5xl font-bold">$49</span>
-                  <span className="font-body text-navy/40 text-sm">one-time</span>
+                  <span className="font-body text-navy/40 text-sm">/year</span>
                 </div>
                 <p className="font-body text-navy/50 text-sm leading-relaxed">
                   All six Context Anchors. Everything your AI needs to know you.
@@ -128,8 +128,8 @@ export default function PricingPage() {
                 answer="No. The Personal Constitution is completely free. Build it, export it, use it. If you want the other five anchors, upgrade whenever you're ready."
               />
               <FAQ
-                question="Is this a subscription?"
-                answer="No. $49 is a one-time purchase. You pay once, you get lifetime access to all six anchors and the Chart Your Course guided session."
+                question="How does the subscription work?"
+                answer="Yes — $49/year gives you unlimited access to all six anchors, the Chart Your Course guided session, and your personal vault. Regenerate and update your documents anytime."
               />
               <FAQ
                 question="What do I get at the end?"

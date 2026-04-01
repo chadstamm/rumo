@@ -221,7 +221,7 @@ export default function AnchorsPage() {
               and Influence Roster — then store and update your documents anytime in your personal vault.
             </p>
             <p className="font-body text-cream/30 text-sm mb-10">
-              $49 <span className="text-cream/20">·</span> one-time <span className="text-cream/20">·</span> all six anchors <span className="text-cream/20">·</span> lifetime vault access
+              $49/year <span className="text-cream/20">·</span> all six anchors <span className="text-cream/20">·</span> unlimited updates <span className="text-cream/20">·</span> vault access
             </p>
           </div>
 
