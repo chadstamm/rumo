@@ -227,6 +227,8 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
   const contentSections = activeSections.filter(s => s !== 0) as number[]
   const currentIdx = contentSections.indexOf(state.currentSection as number)
 
+  const showFullBuildCTA = showingSectionIntro && state.currentSection === 0
+
   return (
     <div className="min-h-screen bg-cream">
       <DocumentHero config={config} />
@@ -252,7 +254,136 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
           <QuestionStep />
         )}
       </main>
+
+      {/* Full-width upsell — only on Getting Started intro */}
+      {showFullBuildCTA && <FullBuildCTA />}
     </div>
+  )
+}
+
+// ── Full Build CTA (full-width, below Getting Started) ──
+
+const ANCHOR_LABELS: Record<string, string> = {
+  constitution: 'Constitution',
+  codex: 'Voice',
+  'story-bank': 'Stories',
+  sotu: 'Situation',
+  timeline: 'Timeline',
+  roster: 'Roster',
+}
+
+function FullBuildCTA() {
+  return (
+    <section className="relative bg-navy overflow-hidden">
+      {/* Atmospheric layers */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background: `
+            radial-gradient(ellipse 80% 50% at 20% 50%, rgba(30, 190, 177, 0.08) 0%, transparent 70%),
+            radial-gradient(ellipse 60% 60% at 80% 30%, rgba(196, 148, 58, 0.06) 0%, transparent 70%),
+            radial-gradient(ellipse 100% 80% at 50% 100%, rgba(0, 0, 0, 0.3) 0%, transparent 50%)
+          `,
+        }}
+      />
+
+      {/* Subtle grid texture */}
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        aria-hidden="true"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px',
+        }}
+      />
+
+      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-28">
+        {/* Top: anchor icon + heading */}
+        <div className="text-center mb-12">
+          <div className="inline-block mb-6">
+            <img
+              src="/anchor-section-icon.png"
+              alt=""
+              className="w-16 h-16 sm:w-20 sm:h-20 mx-auto opacity-70"
+              aria-hidden="true"
+            />
+          </div>
+
+          <p className="font-body text-xs sm:text-sm tracking-[0.3em] uppercase text-ochre font-bold mb-4">
+            Want the full picture?
+          </p>
+
+          <h2
+            className="font-display text-cream font-bold leading-[1.1] tracking-tight mb-5"
+            style={{ fontSize: 'clamp(2rem, 5vw, 3.25rem)' }}
+          >
+            Build All Six Anchors
+          </h2>
+
+          <p className="font-body text-cream/50 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-4">
+            Your Constitution is the foundation. Add your Voice, Stories, Situation, Timeline,
+            and Influence Roster — then store and update your documents anytime in your personal vault.
+          </p>
+
+          <p className="font-body text-cream/30 text-sm mb-10">
+            $49 <span className="text-cream/20">·</span> one-time <span className="text-cream/20">·</span> all six anchors <span className="text-cream/20">·</span> lifetime vault access
+          </p>
+        </div>
+
+        {/* Anchor icon row — clickable */}
+        <div className="flex items-center justify-center gap-4 sm:gap-8 lg:gap-12 mb-14">
+          {(['constitution', 'codex', 'story-bank', 'sotu', 'timeline', 'roster'] as const).map((slug) => (
+            <Link
+              key={slug}
+              href={`/docs/${slug}`}
+              className="group flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-1"
+            >
+              <div className="relative">
+                <div
+                  className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"
+                  style={{ background: slug === 'constitution' ? 'rgba(30, 190, 177, 0.3)' : 'rgba(196, 148, 58, 0.2)' }}
+                  aria-hidden="true"
+                />
+                <img
+                  src={`/icons/${slug}.png`}
+                  alt={ANCHOR_LABELS[slug]}
+                  className="relative w-10 h-10 sm:w-14 sm:h-14 opacity-50 group-hover:opacity-100 transition-all duration-300"
+                  style={{ filter: 'brightness(0) invert(1)' }}
+                />
+              </div>
+              <span className="font-body text-[10px] sm:text-xs tracking-[0.15em] uppercase text-cream/30 group-hover:text-cream/70 transition-colors duration-300">
+                {ANCHOR_LABELS[slug]}
+              </span>
+              {slug === 'constitution' && (
+                <span className="font-body text-[9px] tracking-wider uppercase text-teal/60 -mt-1">Free</span>
+              )}
+            </Link>
+          ))}
+        </div>
+
+        {/* CTA button */}
+        <div className="text-center">
+          <Link
+            href="/start"
+            className="inline-flex items-center gap-3 font-body font-bold text-sm sm:text-base tracking-[0.1em] uppercase
+                       px-10 sm:px-14 py-4 sm:py-5 rounded-full
+                       bg-ochre text-white shadow-lg shadow-ochre/25
+                       hover:bg-ochre-light hover:shadow-xl hover:shadow-ochre/35
+                       hover:-translate-y-1 active:translate-y-0
+                       transition-all duration-300"
+          >
+            CHART YOUR COURSE
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="transition-transform duration-300 group-hover:translate-x-1">
+              <path d="M5 10h10M12 6.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
+        </div>
+      </div>
+    </section>
   )
 }
 
