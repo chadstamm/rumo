@@ -17,6 +17,8 @@ const STORAGE_KEY_PREFIX = 'rumo-wizard'
 
 // ── Actions ──
 
+type GenerationPhase = 'idle' | 'analyzing' | 'generating' | 'streaming' | 'complete' | 'error'
+
 type WizardAction =
   | { type: 'SET_ANSWER'; questionId: string; value: string | string[] }
   | { type: 'NEXT_STEP'; activeSections: Section[] }
@@ -25,6 +27,10 @@ type WizardAction =
   | { type: 'COMPLETE_SECTION'; section: Section }
   | { type: 'RESET' }
   | { type: 'HYDRATE'; state: WizardState }
+  | { type: 'SET_GENERATION_PHASE'; phase: GenerationPhase }
+  | { type: 'APPEND_STREAMED_TEXT'; text: string }
+  | { type: 'SET_GENERATED_TEXT'; text: string }
+  | { type: 'SET_GENERATION_ERROR'; error: string }
 
 // ── Reducer ──
 
@@ -120,6 +126,38 @@ function wizardReducer(state: WizardState, action: WizardAction): WizardState {
     case 'HYDRATE':
       return action.state
 
+    case 'SET_GENERATION_PHASE':
+      return {
+        ...state,
+        generationPhase: action.phase,
+        generationError: action.phase === 'error' ? state.generationError : null,
+        streamedText: action.phase === 'generating' ? '' : state.streamedText,
+        updatedAt: now,
+      }
+
+    case 'APPEND_STREAMED_TEXT':
+      return {
+        ...state,
+        streamedText: state.streamedText + action.text,
+        updatedAt: now,
+      }
+
+    case 'SET_GENERATED_TEXT':
+      return {
+        ...state,
+        streamedText: action.text,
+        generationPhase: 'complete',
+        updatedAt: now,
+      }
+
+    case 'SET_GENERATION_ERROR':
+      return {
+        ...state,
+        generationPhase: 'error',
+        generationError: action.error,
+        updatedAt: now,
+      }
+
     default:
       return state
   }
@@ -144,6 +182,7 @@ interface WizardContextValue {
   prevStep: () => void
   goToSection: (section: Section) => void
   reset: () => void
+  generateDocument: (anchorSlug: string, anchorTitle: string) => Promise<void>
 }
 
 const WizardContext = createContext<WizardContextValue | null>(null)
@@ -195,10 +234,11 @@ export function WizardProvider({
     }
   }, [fullStorageKey, activeSections])
 
-  // Persist to localStorage
+  // Persist to localStorage (exclude generation state to avoid bloat)
   useEffect(() => {
     try {
-      localStorage.setItem(fullStorageKey, JSON.stringify(state))
+      const { generationPhase, streamedText, generationError, analyzedInsights, ...persistState } = state
+      localStorage.setItem(fullStorageKey, JSON.stringify(persistState))
     } catch {
       // Storage full
     }
@@ -249,6 +289,99 @@ export function WizardProvider({
     dispatch({ type: 'RESET' })
   }, [fullStorageKey])
 
+  const generateDocument = useCallback(async (anchorSlug: string, anchorTitle: string) => {
+    try {
+      // Phase 1: Analyze answers with Sonnet
+      dispatch({ type: 'SET_GENERATION_PHASE', phase: 'analyzing' })
+
+      const answeredQuestions = Object.entries(state.answers).filter(
+        ([, v]) => v && (typeof v === 'string' ? v.trim() : (v as string[]).length > 0)
+      )
+
+      // Fire off analysis for each answer in parallel
+      const insightResults = await Promise.allSettled(
+        answeredQuestions.map(async ([questionId, answer]) => {
+          const answerText = Array.isArray(answer) ? answer.join(', ') : answer
+          const res = await fetch('/api/analyze-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question: questionId, answer: answerText }),
+          })
+          if (!res.ok) return { questionId, insight: null }
+          const data = await res.json()
+          return { questionId, insight: data.insight as string | null }
+        })
+      )
+
+      const insights: Record<string, string> = {}
+      for (const result of insightResults) {
+        if (result.status === 'fulfilled' && result.value.insight) {
+          insights[result.value.questionId] = result.value.insight
+        }
+      }
+
+      // Phase 2: Generate document with Opus
+      dispatch({ type: 'SET_GENERATION_PHASE', phase: 'generating' })
+
+      const response = await fetch('/api/generate-anchor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          anchorSlug,
+          anchorTitle,
+          answers: state.answers,
+          analyzedInsights: insights,
+        }),
+      })
+
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({ error: 'Generation failed' }))
+        throw new Error(err.error || 'Generation failed')
+      }
+
+      // Phase 3: Stream the response
+      dispatch({ type: 'SET_GENERATION_PHASE', phase: 'streaming' })
+
+      const reader = response.body!.getReader()
+      const decoder = new TextDecoder()
+      let buffer = ''
+      let flushScheduled = false
+
+      const flushBuffer = () => {
+        if (buffer) {
+          dispatch({ type: 'APPEND_STREAMED_TEXT', text: buffer })
+          buffer = ''
+        }
+        flushScheduled = false
+      }
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        const chunk = decoder.decode(value, { stream: true })
+        buffer += chunk
+
+        if (!flushScheduled) {
+          flushScheduled = true
+          setTimeout(flushBuffer, 80)
+        }
+      }
+
+      // Flush remaining
+      if (buffer) {
+        dispatch({ type: 'APPEND_STREAMED_TEXT', text: buffer })
+      }
+
+      dispatch({ type: 'SET_GENERATION_PHASE', phase: 'complete' })
+    } catch (error) {
+      console.error('Document generation error:', error)
+      dispatch({
+        type: 'SET_GENERATION_ERROR',
+        error: error instanceof Error ? error.message : 'Generation failed',
+      })
+    }
+  }, [state.answers])
+
   return (
     <WizardContext.Provider
       value={{
@@ -268,6 +401,7 @@ export function WizardProvider({
         prevStep,
         goToSection,
         reset,
+        generateDocument,
       }}
     >
       {children}

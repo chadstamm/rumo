@@ -47,6 +47,8 @@ export interface WizardAnswers {
   [questionId: string]: string | string[]
 }
 
+export type GenerationPhase = 'idle' | 'analyzing' | 'generating' | 'streaming' | 'complete' | 'error'
+
 export interface WizardState {
   currentSection: Section
   currentStep: number
@@ -54,6 +56,10 @@ export interface WizardState {
   completedSections: Section[]
   startedAt: string
   updatedAt: string
+  generationPhase: GenerationPhase
+  streamedText: string
+  generationError: string | null
+  analyzedInsights: Record<string, string>
 }
 
 export const INITIAL_WIZARD_STATE: WizardState = {
@@ -63,4 +69,8 @@ export const INITIAL_WIZARD_STATE: WizardState = {
   completedSections: [],
   startedAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
+  generationPhase: 'idle',
+  streamedText: '',
+  generationError: null,
+  analyzedInsights: {},
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import type { DocumentConfig } from '@/data/documents'
 import { getQuestionsForSection } from '@/data/questions'
@@ -145,61 +145,175 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
 // ── Anchor-Specific Completion ──
 
 function AnchorComplete({ config }: { config: DocumentConfig }) {
-  const { totalAnswered, reset } = useWizard()
+  const { state, totalAnswered, reset, generateDocument } = useWizard()
   const iconEntry = ANCHOR_ICON_MAP[config.slug as AnchorSlug]
+  const hasTriggered = useRef(false)
+  const outputRef = useRef<HTMLDivElement>(null)
+
+  // Auto-trigger generation on mount
+  useEffect(() => {
+    if (!hasTriggered.current && state.generationPhase === 'idle') {
+      hasTriggered.current = true
+      generateDocument(config.slug, config.title)
+    }
+  }, [config.slug, config.title, generateDocument, state.generationPhase])
+
+  // Auto-scroll as text streams
+  useEffect(() => {
+    if (outputRef.current && state.generationPhase === 'streaming') {
+      outputRef.current.scrollTop = outputRef.current.scrollHeight
+    }
+  }, [state.streamedText, state.generationPhase])
+
+  const isGenerating = ['analyzing', 'generating', 'streaming'].includes(state.generationPhase)
+  const isDone = state.generationPhase === 'complete'
+  const isError = state.generationPhase === 'error'
+
+  const phaseLabel = {
+    idle: '',
+    analyzing: 'Analyzing your answers...',
+    generating: 'Generating your document...',
+    streaming: 'Writing your ' + config.title.toLowerCase() + '...',
+    complete: '',
+    error: '',
+  }[state.generationPhase]
 
   return (
     <div className="bg-cream">
-      <div className="max-w-lg mx-auto px-6 py-16 sm:py-24 text-center">
-        {iconEntry ? (
-          <div className="w-16 h-16 mx-auto mb-6 text-teal/40">
-            <iconEntry.Icon className="w-full h-full" />
-          </div>
-        ) : (
-          <CompassRose className="w-16 h-16 text-teal/40 mx-auto mb-6" />
-        )}
+      <div className="max-w-3xl mx-auto px-6 py-16 sm:py-24">
+        {/* Header */}
+        <div className="text-center mb-10">
+          {iconEntry ? (
+            <div className="w-16 h-16 mx-auto mb-6 text-teal/40">
+              <iconEntry.Icon className="w-full h-full" />
+            </div>
+          ) : (
+            <CompassRose className="w-16 h-16 text-teal/40 mx-auto mb-6" />
+          )}
 
-        <h2
-          className="font-display text-navy font-semibold leading-tight mb-3"
-          style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
-        >
-          {config.title} Complete.
-        </h2>
+          {isGenerating && (
+            <>
+              <h2
+                className="font-display text-navy font-semibold leading-tight mb-3"
+                style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
+              >
+                Building Your {config.title}
+              </h2>
+              <p className="font-body text-muted text-base leading-relaxed mb-2">
+                {phaseLabel}
+              </p>
+              <div className="w-12 h-1 bg-teal/30 rounded-full mx-auto overflow-hidden">
+                <div className="h-full bg-teal rounded-full animate-pulse" style={{ width: state.generationPhase === 'streaming' ? '80%' : '40%' }} />
+              </div>
+            </>
+          )}
 
-        <p className="font-body text-muted text-base leading-relaxed mb-2">
-          You answered {totalAnswered} questions for your {config.title.toLowerCase()}.
-          That&apos;s the raw material your AI needs.
-        </p>
+          {isDone && (
+            <>
+              <h2
+                className="font-display text-navy font-semibold leading-tight mb-3"
+                style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
+              >
+                Your {config.title}
+              </h2>
+              <p className="font-body text-muted text-base leading-relaxed">
+                Generated from {totalAnswered} answers. Copy it, download it, or upload it to your AI.
+              </p>
+            </>
+          )}
 
-        <p className="font-body text-navy/35 text-sm mb-10">
-          Document generation is coming soon. Your answers are saved.
-        </p>
-
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            href="/anchors"
-            className="shimmer-hover font-body font-semibold text-sm px-7 py-3 rounded-full
-                       bg-ochre text-white shadow-md shadow-ochre/20
-                       hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
-                       transition-all duration-200 hover:-translate-y-[1px]"
-          >
-            Build Another Anchor
-          </Link>
-          <Link
-            href="/vault"
-            className="font-body text-sm text-navy/50 hover:text-navy px-5 py-2.5 transition-colors duration-200"
-          >
-            Go to Vault →
-          </Link>
+          {isError && (
+            <>
+              <h2
+                className="font-display text-navy font-semibold leading-tight mb-3"
+                style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
+              >
+                Generation Failed
+              </h2>
+              <p className="font-body text-red-600 text-base leading-relaxed mb-4">
+                {state.generationError || 'Something went wrong. Your answers are saved — try again.'}
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  hasTriggered.current = false
+                  generateDocument(config.slug, config.title)
+                }}
+                className="font-body font-semibold text-sm px-7 py-3 rounded-full
+                           bg-teal text-white shadow-md shadow-teal/20
+                           hover:bg-teal-light transition-all duration-200"
+              >
+                Try Again
+              </button>
+            </>
+          )}
         </div>
 
-        <button
-          type="button"
-          onClick={reset}
-          className="font-body text-xs text-navy/25 hover:text-navy/40 px-4 py-2 mt-6 transition-colors duration-200"
-        >
-          Start Over
-        </button>
+        {/* Streamed document output */}
+        {(isGenerating || isDone) && state.streamedText && (
+          <div
+            ref={outputRef}
+            className="relative bg-white rounded-2xl border border-navy/10 shadow-sm px-8 py-10 sm:px-12 sm:py-14 mb-10 max-h-[70vh] overflow-y-auto"
+          >
+            <div className="prose prose-navy max-w-none font-body text-base leading-relaxed whitespace-pre-wrap">
+              {state.streamedText}
+            </div>
+          </div>
+        )}
+
+        {/* Actions — only show when complete */}
+        {isDone && (
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button
+              type="button"
+              onClick={() => {
+                navigator.clipboard.writeText(state.streamedText)
+              }}
+              className="shimmer-hover font-body font-semibold text-sm px-7 py-3 rounded-full
+                         bg-teal text-white shadow-md shadow-teal/20
+                         hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30
+                         transition-all duration-200 hover:-translate-y-[1px]"
+            >
+              Copy to Clipboard
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const blob = new Blob([state.streamedText], { type: 'text/markdown' })
+                const url = URL.createObjectURL(blob)
+                const a = document.createElement('a')
+                a.href = url
+                a.download = `${config.slug}-${new Date().toISOString().split('T')[0]}.md`
+                a.click()
+                URL.revokeObjectURL(url)
+              }}
+              className="font-body font-semibold text-sm px-7 py-3 rounded-full
+                         bg-ochre text-white shadow-md shadow-ochre/20
+                         hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
+                         transition-all duration-200 hover:-translate-y-[1px]"
+            >
+              Download .md
+            </button>
+            <Link
+              href="/anchors"
+              className="font-body text-sm text-navy/50 hover:text-navy px-5 py-2.5 transition-colors duration-200"
+            >
+              Build Another Anchor →
+            </Link>
+          </div>
+        )}
+
+        {isDone && (
+          <div className="text-center mt-6">
+            <button
+              type="button"
+              onClick={reset}
+              className="font-body text-xs text-navy/25 hover:text-navy/40 px-4 py-2 transition-colors duration-200"
+            >
+              Start Over
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )
