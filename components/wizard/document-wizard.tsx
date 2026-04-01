@@ -36,6 +36,7 @@ const HERO_IMAGES: Record<string, string> = {
 // Focal point overrides — shift object-position for specific hero images
 const HERO_FOCUS: Record<string, string> = {
   codex: 'center 70%', // Show typewriter keys, not top of machine
+  timeline: 'center 40%', // Focus on the ornate black and white calçada pattern
 }
 
 // ── Anchor-specific taglines ──
