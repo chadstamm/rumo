@@ -25,6 +25,15 @@ const ANCHOR_QUESTIONS: Record<string, string> = {
   roster: 'Who are the people that matter?',
 }
 
+const ANCHOR_CTA_LABELS: Record<string, string> = {
+  constitution: 'Constitution',
+  codex: 'Voice',
+  'story-bank': 'Stories',
+  sotu: 'Situation',
+  timeline: 'Timeline',
+  roster: 'Influencers',
+}
+
 export default function AnchorsPage() {
   return (
     <main className="min-h-screen">
@@ -242,7 +251,7 @@ export default function AnchorsPage() {
                   )}
                 </div>
                 <span className="font-body text-[10px] sm:text-xs tracking-[0.15em] uppercase text-cream/30 group-hover:text-cream/70 transition-colors duration-300">
-                  {ANCHOR_QUESTIONS[doc.slug]?.split('?')[0].replace(/^(Who |How |What )/, '').slice(0, 12) || doc.title}
+                  {ANCHOR_CTA_LABELS[doc.slug] || doc.title}
                 </span>
                 {doc.slug === 'constitution' && (
                   <span className="font-body text-[9px] tracking-wider uppercase text-teal/60 -mt-1">Free</span>

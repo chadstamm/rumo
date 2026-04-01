@@ -269,7 +269,7 @@ const ANCHOR_LABELS: Record<string, string> = {
   'story-bank': 'Stories',
   sotu: 'Situation',
   timeline: 'Timeline',
-  roster: 'Roster',
+  roster: 'Influencers',
 }
 
 function FullBuildCTA() {

@@ -107,7 +107,7 @@ export function SectionTransition({
                 </svg>
               }
               title="WHAT YOU GET"
-              body="A Personal Constitution document you can upload to Claude, ChatGPT, Gemini, or any AI. Your AI goes from generic to genuinely yours."
+              body="Critical context you can upload to Claude, ChatGPT, Gemini, or any AI agent — so it works more effectively on your behalf."
             />
           </div>
         </div>
