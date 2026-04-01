@@ -368,7 +368,7 @@ function FullBuildCTA() {
         {/* CTA button */}
         <div className="text-center">
           <Link
-            href="/start"
+            href="/pricing"
             className="inline-flex items-center gap-3 font-body font-bold text-sm sm:text-base tracking-[0.1em] uppercase
                        px-10 sm:px-14 py-4 sm:py-5 rounded-full
                        bg-ochre text-white shadow-lg shadow-ochre/25
@@ -376,7 +376,7 @@ function FullBuildCTA() {
                        hover:-translate-y-1 active:translate-y-0
                        transition-all duration-300"
           >
-            CHART YOUR COURSE
+            BUILD ALL SIX
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="transition-transform duration-300 group-hover:translate-x-1">
               <path d="M5 10h10M12 6.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
