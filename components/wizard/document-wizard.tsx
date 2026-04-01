@@ -165,12 +165,12 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
     }
   }, [state.streamedText, state.generationPhase])
 
-  const isGenerating = ['analyzing', 'generating', 'streaming'].includes(state.generationPhase)
+  const isGenerating = ['idle', 'analyzing', 'generating', 'streaming'].includes(state.generationPhase)
   const isDone = state.generationPhase === 'complete'
   const isError = state.generationPhase === 'error'
 
   const phaseLabel = {
-    idle: '',
+    idle: 'Preparing your document...',
     analyzing: 'Analyzing your answers...',
     generating: 'Generating your document...',
     streaming: 'Writing your ' + config.title.toLowerCase() + '...',
@@ -322,8 +322,9 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
 // ── Anchor Wizard Body (inside WizardProvider) ──
 
 function AnchorWizardBody({ config }: { config: DocumentConfig }) {
-  const { state, activeSections, isComplete } = useWizard()
-  const [showingSectionIntro, setShowingSectionIntro] = useState(true)
+  const { state, activeSections, isComplete, totalAnswered } = useWizard()
+  // Skip intro on resume if user already has answers (bug fix: refresh shows intro again)
+  const [showingSectionIntro, setShowingSectionIntro] = useState(() => totalAnswered === 0)
   const [lastSection, setLastSection] = useState(state.currentSection)
   const questionCount = config.sections.reduce<number>(
     (sum, s) => sum + getQuestionsForSection(s).length,
@@ -331,9 +332,13 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
   )
 
   // Detect section changes to show transition
+  // Skip intro when navigating backward (user already saw it)
   if (state.currentSection !== lastSection) {
+    const oldIdx = activeSections.indexOf(lastSection)
+    const newIdx = activeSections.indexOf(state.currentSection)
+    const isGoingBack = newIdx < oldIdx
     setLastSection(state.currentSection)
-    setShowingSectionIntro(true)
+    setShowingSectionIntro(!isGoingBack)
   }
 
   if (isComplete) {
