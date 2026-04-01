@@ -55,7 +55,10 @@ export function SectionTransition({
             <InstructionItem
               icon={
                 <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
-                  <path d="M10 2v16M6 6l4-4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.2" />
+                  <path d="M10 2v2M10 16v2M2 10h2M16 10h2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                  <path d="M12.5 7.5L10 10 7.5 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <circle cx="10" cy="10" r="1.5" fill="currentColor" />
                 </svg>
               }
               title="HOW IT WORKS"
@@ -103,7 +106,9 @@ export function SectionTransition({
             <InstructionItem
               icon={
                 <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
-                  <path d="M4 5l4 4-4 4M10 13h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M10 1l1.5 4.5L16 7l-4.5 1.5L10 13l-1.5-4.5L4 7l4.5-1.5L10 1Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+                  <path d="M16 13l.75 2.25L19 16l-2.25.75L16 19l-.75-2.25L13 16l2.25-.75L16 13Z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round" />
+                  <path d="M4 14l.5 1.5L6 16l-1.5.5L4 18l-.5-1.5L2 16l1.5-.5L4 14Z" stroke="currentColor" strokeWidth="0.8" strokeLinejoin="round" />
                 </svg>
               }
               title="WHAT YOU GET"
