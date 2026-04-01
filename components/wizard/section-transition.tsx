@@ -3,14 +3,56 @@
 import { useState } from 'react'
 import { SECTION_NAMES, SECTION_SUBTITLES, type Section } from '@/types/wizard'
 
+// Per-anchor copy for the Getting Started section
+const ANCHOR_INTRO: Record<string, { howItWorks: string; beThorough: string; upload: string; whatYouGet: string }> = {
+  constitution: {
+    howItWorks: 'We mine your context through guided questions about who you are, what you value, and how you see the world. Your answers become your Personal Constitution.',
+    beThorough: 'The more detail you give, the better your AI will understand you. No wrong answers — just honest ones.',
+    upload: 'Have a bio, resume, or personal mission statement? Upload them early on to give RUMO a head start.',
+    whatYouGet: 'Critical context you can upload to Claude, ChatGPT, Gemini, or any AI agent — so it works more effectively on your behalf.',
+  },
+  codex: {
+    howItWorks: 'We mine your writing voice through questions about how you communicate, your stylistic preferences, and what makes your words yours. Your answers become your Writing Codex.',
+    beThorough: 'Include examples. The more specific you are about your voice — phrases you love, patterns you avoid — the sharper your codex will be.',
+    upload: 'Have writing samples, blog posts, or emails that sound like you? Upload them to give RUMO your voice in action.',
+    whatYouGet: 'A Writing Codex document that teaches any AI how to write like you — your tone, your rhythm, your rules.',
+  },
+  'story-bank': {
+    howItWorks: 'We mine your lived experience through questions about the moments that shaped you, the language you carry, and the stories you always tell. Your answers become your Story Bank.',
+    beThorough: 'Real stories with real details. The messy ones are often the most useful — they give AI texture, not just facts.',
+    upload: 'Have journal entries, speeches, or personal essays? Upload them to seed your Story Bank with lived material.',
+    whatYouGet: 'A Story Bank document that gives AI your raw material — so its output feels grounded in your actual life, not generic filler.',
+  },
+  sotu: {
+    howItWorks: 'We mine your current season through questions about where you are right now — your priorities, constraints, and what you\'re navigating. Your answers become your State of the Union.',
+    beThorough: 'Be honest about what\'s hard, not just what\'s going well. AI needs to understand your real situation to give you useful advice.',
+    upload: 'Have a recent journal entry, goals doc, or life plan? Upload it to give RUMO your current context.',
+    whatYouGet: 'A State of the Union document that keeps your AI current — so it knows what you\'re dealing with right now, not just who you are in general.',
+  },
+  timeline: {
+    howItWorks: 'We mine your life arc through questions about milestones, turning points, chapters, and where you\'re headed. Your answers become your Timeline.',
+    beThorough: 'Include the pivots and the detours. The non-obvious chapters often reveal more about your trajectory than the highlights.',
+    upload: 'Have a resume, CV, or personal timeline? Upload it to give RUMO your chronological foundation.',
+    whatYouGet: 'A Timeline document that gives AI the arc of your life — so it understands not just where you are, but how you got here.',
+  },
+  roster: {
+    howItWorks: 'We mine your relationships through questions about the people who matter — mentors, collaborators, family, and the thinkers who shaped you. Your answers become your Influence Roster.',
+    beThorough: 'Don\'t just list names. Explain what each person means to you and how they\'ve influenced your thinking or decisions.',
+    upload: 'Have a contacts list, org chart, or personal CRM? Upload it to give RUMO your relationship landscape.',
+    whatYouGet: 'An Influence Roster document that gives AI your relationship context — so it knows who matters and why when helping you navigate your world.',
+  },
+}
+
 export function SectionTransition({
   section,
   onBegin,
+  anchorSlug,
   totalSections,
   sectionIndex,
 }: {
   section: Section
   onBegin: () => void
+  anchorSlug?: string
   totalSections?: number
   sectionIndex?: number
 }) {
@@ -24,6 +66,8 @@ export function SectionTransition({
   const showLabel = section !== 0
   const displayIndex = sectionIndex ?? section
   const displayTotal = totalSections ?? 5
+
+  const intro = ANCHOR_INTRO[anchorSlug || 'constitution'] || ANCHOR_INTRO.constitution
 
   if (section === 0) {
     return (
@@ -66,7 +110,7 @@ export function SectionTransition({
                 </svg>
               }
               title="HOW IT WORKS"
-              body="We mine your context through guided questions about who you are, what you value, and how you see the world. Your answers become your Personal Constitution."
+              body={intro.howItWorks}
             />
             <InstructionItem
               icon={
@@ -76,7 +120,7 @@ export function SectionTransition({
                 </svg>
               }
               title="BE THOROUGH"
-              body="The more detail you give, the better your AI will understand you. No wrong answers — just honest ones."
+              body={intro.beThorough}
             />
             <InstructionItem
               icon={
@@ -96,7 +140,7 @@ export function SectionTransition({
                 </svg>
               }
               title="UPLOAD EXISTING DOCS"
-              body="Have a bio, resume, or writing samples? Upload them early on to give RUMO a head start."
+              body={intro.upload}
             />
             <InstructionItem
               icon={
@@ -116,7 +160,7 @@ export function SectionTransition({
                 </svg>
               }
               title="WHAT YOU GET"
-              body="Critical context you can upload to Claude, ChatGPT, Gemini, or any AI agent — so it works more effectively on your behalf."
+              body={intro.whatYouGet}
             />
           </div>
         </div>

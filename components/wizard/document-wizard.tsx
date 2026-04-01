@@ -254,6 +254,7 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
           <SectionTransition
             section={state.currentSection}
             onBegin={() => setShowingSectionIntro(false)}
+            anchorSlug={config.slug}
             totalSections={contentSections.length}
             sectionIndex={currentIdx >= 0 ? currentIdx + 1 : undefined}
           />
