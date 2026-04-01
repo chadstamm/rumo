@@ -144,11 +144,26 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
 
 // ── Anchor-Specific Completion ──
 
+// ── Rotating loading messages ──
+
+const LOADING_MESSAGES = [
+  'Reading between the lines...',
+  'Finding what makes you, you...',
+  'Connecting the threads...',
+  'Crafting your document...',
+  'Mining your context...',
+  'Building something personal...',
+  'Almost there...',
+  'Putting the pieces together...',
+]
+
 function AnchorComplete({ config }: { config: DocumentConfig }) {
   const { state, totalAnswered, reset, generateDocument } = useWizard()
   const iconEntry = ANCHOR_ICON_MAP[config.slug as AnchorSlug]
   const hasTriggered = useRef(false)
   const outputRef = useRef<HTMLDivElement>(null)
+  const [loadingMsgIdx, setLoadingMsgIdx] = useState(0)
+  const [copied, setCopied] = useState(false)
 
   // Auto-trigger generation on mount
   useEffect(() => {
@@ -165,156 +180,286 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
     }
   }, [state.streamedText, state.generationPhase])
 
-  const isGenerating = ['idle', 'analyzing', 'generating', 'streaming'].includes(state.generationPhase)
+  // Rotate loading messages every 3 seconds during analysis/generation
+  useEffect(() => {
+    if (state.generationPhase === 'analyzing' || state.generationPhase === 'generating' || state.generationPhase === 'idle') {
+      const interval = setInterval(() => {
+        setLoadingMsgIdx((prev) => (prev + 1) % LOADING_MESSAGES.length)
+      }, 3000)
+      return () => clearInterval(interval)
+    }
+  }, [state.generationPhase])
+
+  // Copy with confirmation
+  const handleCopy = () => {
+    navigator.clipboard.writeText(state.streamedText).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 3000)
+    }).catch(() => {
+      // Fallback
+      const textarea = document.createElement('textarea')
+      textarea.value = state.streamedText
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 3000)
+    })
+  }
+
+  const isPreGen = ['idle', 'analyzing', 'generating'].includes(state.generationPhase)
+  const isStreaming = state.generationPhase === 'streaming'
+  const isGenerating = isPreGen || isStreaming
   const isDone = state.generationPhase === 'complete'
   const isError = state.generationPhase === 'error'
-
-  const phaseLabel = {
-    idle: 'Preparing your document...',
-    analyzing: 'Analyzing your answers...',
-    generating: 'Generating your document...',
-    streaming: 'Writing your ' + config.title.toLowerCase() + '...',
-    complete: '',
-    error: '',
-  }[state.generationPhase]
 
   return (
     <div className="bg-cream">
       <div className="max-w-3xl mx-auto px-6 py-16 sm:py-24">
-        {/* Header */}
-        <div className="text-center mb-10">
-          {iconEntry ? (
-            <div className="w-16 h-16 mx-auto mb-6 text-teal/40">
-              <iconEntry.Icon className="w-full h-full" />
+
+        {/* ── Pre-generation: loading state ── */}
+        {isPreGen && !state.streamedText && (
+          <div className="text-center py-16">
+            {/* Animated icon */}
+            <div className="relative w-20 h-20 mx-auto mb-8">
+              {iconEntry ? (
+                <div className="w-20 h-20 text-teal/40 animate-pulse">
+                  <iconEntry.Icon className="w-full h-full" />
+                </div>
+              ) : (
+                <CompassRose className="w-20 h-20 text-teal/40 animate-pulse" />
+              )}
+              {/* Shimmer ring */}
+              <div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: 'conic-gradient(from 0deg, transparent 0%, rgba(30, 190, 177, 0.2) 25%, transparent 50%)',
+                  animation: 'spin 2s linear infinite',
+                }}
+              />
             </div>
-          ) : (
-            <CompassRose className="w-16 h-16 text-teal/40 mx-auto mb-6" />
-          )}
 
-          {isGenerating && (
-            <>
-              <h2
-                className="font-display text-navy font-semibold leading-tight mb-3"
-                style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
-              >
-                Building Your {config.title}
-              </h2>
-              <p className="font-body text-muted text-base leading-relaxed mb-2">
-                {phaseLabel}
-              </p>
-              <div className="w-12 h-1 bg-teal/30 rounded-full mx-auto overflow-hidden">
-                <div className="h-full bg-teal rounded-full animate-pulse" style={{ width: state.generationPhase === 'streaming' ? '80%' : '40%' }} />
-              </div>
-            </>
-          )}
+            <h2
+              className="font-display text-navy font-semibold leading-tight mb-4"
+              style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
+            >
+              Building Your {config.title}
+            </h2>
 
-          {isDone && (
-            <>
-              <h2
-                className="font-display text-navy font-semibold leading-tight mb-3"
-                style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
+            {/* Rotating message with fade */}
+            <div className="h-8 flex items-center justify-center">
+              <p
+                key={loadingMsgIdx}
+                className="font-body text-navy/50 text-base animate-fade-in"
               >
-                Your {config.title}
-              </h2>
-              <p className="font-body text-muted text-base leading-relaxed">
-                Generated from {totalAnswered} answers. Copy it, download it, or upload it to your AI.
+                {LOADING_MESSAGES[loadingMsgIdx]}
               </p>
-            </>
-          )}
+            </div>
 
-          {isError && (
-            <>
-              <h2
-                className="font-display text-navy font-semibold leading-tight mb-3"
-                style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
+            {/* Phase indicator */}
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <div className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${
+                state.generationPhase === 'idle' ? 'bg-teal animate-pulse' : 'bg-teal/30'
+              }`} />
+              <div className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${
+                state.generationPhase === 'analyzing' ? 'bg-teal animate-pulse' : state.generationPhase === 'generating' ? 'bg-teal/30' : 'bg-navy/10'
+              }`} />
+              <div className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${
+                state.generationPhase === 'generating' ? 'bg-teal animate-pulse' : 'bg-navy/10'
+              }`} />
+            </div>
+            <p className="font-body text-navy/30 text-xs mt-2 tracking-wide uppercase">
+              {state.generationPhase === 'idle' ? 'Preparing' : state.generationPhase === 'analyzing' ? 'Analyzing answers' : 'Generating document'}
+            </p>
+          </div>
+        )}
+
+        {/* ── Streaming: live text ── */}
+        {isStreaming && (
+          <div className="text-center mb-8">
+            <h2
+              className="font-display text-navy font-semibold leading-tight mb-2"
+              style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2rem)' }}
+            >
+              Writing your {config.title.toLowerCase()}
+              <span className="inline-block w-1.5 h-5 bg-teal ml-1 animate-pulse rounded-sm" />
+            </h2>
+            <p className="font-body text-navy/40 text-sm">Watch it come together in real time</p>
+          </div>
+        )}
+
+        {/* ── Complete: header ── */}
+        {isDone && (
+          <div className="text-center mb-8">
+            {/* Success checkmark */}
+            <div className="w-14 h-14 mx-auto mb-5 rounded-full bg-teal/10 flex items-center justify-center">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="#1ebeb1" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <h2
+              className="font-display text-navy font-semibold leading-tight mb-3"
+              style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
+            >
+              Your {config.title}
+            </h2>
+            <p className="font-body text-navy/60 text-base leading-relaxed">
+              Generated from {totalAnswered} answers. Copy it, download it, or upload it to your AI.
+            </p>
+          </div>
+        )}
+
+        {/* ── Error state ── */}
+        {isError && (
+          <div className="text-center py-16">
+            <div className="w-14 h-14 mx-auto mb-5 rounded-full bg-red-50 flex items-center justify-center">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <path d="M12 9v4M12 17h.01" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" />
+                <circle cx="12" cy="12" r="9" stroke="#dc2626" strokeWidth="2" />
+              </svg>
+            </div>
+            <h2
+              className="font-display text-navy font-semibold leading-tight mb-3"
+              style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
+            >
+              Generation Failed
+            </h2>
+            <p className="font-body text-red-600/80 text-base leading-relaxed mb-6 max-w-md mx-auto">
+              {state.generationError || 'Something went wrong. Your answers are saved — try again.'}
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                hasTriggered.current = false
+                generateDocument(config.slug, config.title)
+              }}
+              className="font-body font-semibold text-sm px-7 py-3 rounded-full
+                         bg-teal text-white shadow-md shadow-teal/20
+                         hover:bg-teal-light transition-all duration-200"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+
+        {/* ── Streamed document output ── */}
+        {(isStreaming || isDone) && state.streamedText && (
+          <div
+            ref={outputRef}
+            className="relative bg-white rounded-2xl border border-navy/10 shadow-lg shadow-navy/5 mb-10 max-h-[70vh] overflow-y-auto"
+          >
+            {/* Document header accent */}
+            <div className="h-1 bg-gradient-to-r from-teal via-ochre/50 to-teal rounded-t-2xl" />
+
+            <div className="px-8 py-10 sm:px-12 sm:py-14">
+              <pre className="font-body text-base text-navy/85 leading-relaxed whitespace-pre-wrap break-words" style={{ fontFamily: 'inherit' }}>
+                {state.streamedText}
+                {isStreaming && (
+                  <span className="inline-block w-1.5 h-5 bg-teal ml-0.5 animate-pulse rounded-sm" />
+                )}
+              </pre>
+            </div>
+          </div>
+        )}
+
+        {/* ── Actions ── */}
+        {isDone && (
+          <>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+              <button
+                type="button"
+                onClick={handleCopy}
+                className={`font-body font-semibold text-sm px-7 py-3 rounded-full shadow-md transition-all duration-200 hover:-translate-y-[1px] ${
+                  copied
+                    ? 'bg-teal/20 text-teal border border-teal/30'
+                    : 'bg-teal text-white shadow-teal/20 hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30'
+                }`}
               >
-                Generation Failed
-              </h2>
-              <p className="font-body text-red-600 text-base leading-relaxed mb-4">
-                {state.generationError || 'Something went wrong. Your answers are saved — try again.'}
-              </p>
+                {copied ? 'Copied!' : 'Copy to Clipboard'}
+              </button>
               <button
                 type="button"
                 onClick={() => {
-                  hasTriggered.current = false
-                  generateDocument(config.slug, config.title)
+                  const blob = new Blob([state.streamedText], { type: 'text/markdown' })
+                  const url = URL.createObjectURL(blob)
+                  const a = document.createElement('a')
+                  a.href = url
+                  a.download = `${config.slug}-${new Date().toISOString().split('T')[0]}.md`
+                  a.click()
+                  URL.revokeObjectURL(url)
                 }}
                 className="font-body font-semibold text-sm px-7 py-3 rounded-full
-                           bg-teal text-white shadow-md shadow-teal/20
-                           hover:bg-teal-light transition-all duration-200"
+                           bg-ochre text-white shadow-md shadow-ochre/20
+                           hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
+                           transition-all duration-200 hover:-translate-y-[1px]"
               >
-                Try Again
+                Download .md
               </button>
-            </>
-          )}
-        </div>
-
-        {/* Streamed document output */}
-        {(isGenerating || isDone) && state.streamedText && (
-          <div
-            ref={outputRef}
-            className="relative bg-white rounded-2xl border border-navy/10 shadow-sm px-8 py-10 sm:px-12 sm:py-14 mb-10 max-h-[70vh] overflow-y-auto"
-          >
-            <div className="prose prose-navy max-w-none font-body text-base leading-relaxed whitespace-pre-wrap">
-              {state.streamedText}
+              <Link
+                href="/anchors"
+                className="font-body text-sm text-navy/60 hover:text-navy px-5 py-2.5 transition-colors duration-200"
+              >
+                Build Another Anchor →
+              </Link>
             </div>
-          </div>
-        )}
 
-        {/* Actions — only show when complete */}
-        {isDone && (
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              type="button"
-              onClick={() => {
-                navigator.clipboard.writeText(state.streamedText)
-              }}
-              className="shimmer-hover font-body font-semibold text-sm px-7 py-3 rounded-full
-                         bg-teal text-white shadow-md shadow-teal/20
-                         hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30
-                         transition-all duration-200 hover:-translate-y-[1px]"
-            >
-              Copy to Clipboard
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                const blob = new Blob([state.streamedText], { type: 'text/markdown' })
-                const url = URL.createObjectURL(blob)
-                const a = document.createElement('a')
-                a.href = url
-                a.download = `${config.slug}-${new Date().toISOString().split('T')[0]}.md`
-                a.click()
-                URL.revokeObjectURL(url)
-              }}
-              className="font-body font-semibold text-sm px-7 py-3 rounded-full
-                         bg-ochre text-white shadow-md shadow-ochre/20
-                         hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
-                         transition-all duration-200 hover:-translate-y-[1px]"
-            >
-              Download .md
-            </button>
-            <Link
-              href="/anchors"
-              className="font-body text-sm text-navy/50 hover:text-navy px-5 py-2.5 transition-colors duration-200"
-            >
-              Build Another Anchor →
-            </Link>
-          </div>
-        )}
+            {/* How to use */}
+            <div className="mt-12 pt-10 border-t border-navy/[0.08]">
+              <h3 className="font-display text-navy font-semibold text-lg mb-6 text-center">
+                What to Do With This
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
+                <div className="text-center">
+                  <div className="w-10 h-10 rounded-full bg-teal/10 flex items-center justify-center mx-auto mb-3">
+                    <span className="font-display text-teal font-bold text-sm">1</span>
+                  </div>
+                  <p className="font-body text-navy/70 text-sm leading-relaxed">
+                    Copy or download your document
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="w-10 h-10 rounded-full bg-teal/10 flex items-center justify-center mx-auto mb-3">
+                    <span className="font-display text-teal font-bold text-sm">2</span>
+                  </div>
+                  <p className="font-body text-navy/70 text-sm leading-relaxed">
+                    Upload to Claude, ChatGPT, Gemini, or any AI tool
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="w-10 h-10 rounded-full bg-teal/10 flex items-center justify-center mx-auto mb-3">
+                    <span className="font-display text-teal font-bold text-sm">3</span>
+                  </div>
+                  <p className="font-body text-navy/70 text-sm leading-relaxed">
+                    Watch your AI go from generic to genuinely yours
+                  </p>
+                </div>
+              </div>
+            </div>
 
-        {isDone && (
-          <div className="text-center mt-6">
-            <button
-              type="button"
-              onClick={reset}
-              className="font-body text-xs text-navy/25 hover:text-navy/40 px-4 py-2 transition-colors duration-200"
-            >
-              Start Over
-            </button>
-          </div>
+            {/* Start over */}
+            <div className="text-center mt-8">
+              <button
+                type="button"
+                onClick={reset}
+                className="font-body text-xs text-navy/25 hover:text-navy/40 px-4 py-2 transition-colors duration-200"
+              >
+                Start Over
+              </button>
+            </div>
+          </>
         )}
       </div>
+
+      <style>{`
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out;
+        }
+      `}</style>
     </div>
   )
 }
