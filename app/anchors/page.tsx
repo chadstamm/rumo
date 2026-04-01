@@ -168,39 +168,110 @@ export default function AnchorsPage() {
       </div>
 
       {/* ── Full journey CTA ── */}
-      <div className="bg-navy">
-        <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-28 text-center">
-          <p className="font-body text-ochre font-bold text-sm sm:text-base tracking-[0.25em] uppercase mb-6 sm:mb-8">
-            The Full Journey
-          </p>
-          <h2
-            className="font-display text-cream font-bold leading-[1.1] tracking-tight
-                       text-[clamp(1.75rem,4.5vw,3rem)] mb-6 sm:mb-8"
-          >
-            Build All Six Anchors
-            <br />
-            <span className="text-ochre-light">In One Guided Session.</span>
-          </h2>
-          <div className="w-12 h-[2px] bg-ochre/50 mx-auto mb-8 sm:mb-10" aria-hidden="true" />
-          <p className="font-body text-cream/50 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto mb-10 sm:mb-12">
-            Chart Your Course walks you through all six anchors in one guided session. Identity, voice, stories, situation, timeline, and roster &mdash; everything your AI agent needs, built in one go.
-          </p>
-          <Link
-            href="/start"
-            className="shimmer-hover inline-flex items-center gap-2.5
-                       px-8 py-4 rounded-full
-                       bg-ochre text-white font-body font-bold text-sm tracking-[0.15em]
-                       shadow-lg shadow-ochre/20
-                       hover:bg-ochre-light hover:shadow-xl hover:shadow-ochre/30
-                       transition-all duration-300 hover:-translate-y-[1px]"
-          >
-            CHART YOUR COURSE
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M4 9h10M10 5.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
+      <section className="relative bg-navy overflow-hidden">
+        {/* Atmospheric layers */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            background: `
+              radial-gradient(ellipse 80% 50% at 20% 50%, rgba(30, 190, 177, 0.08) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 60% at 80% 30%, rgba(196, 148, 58, 0.06) 0%, transparent 70%),
+              radial-gradient(ellipse 100% 80% at 50% 100%, rgba(0, 0, 0, 0.3) 0%, transparent 50%)
+            `,
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          aria-hidden="true"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+          }}
+        />
+
+        <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-28">
+          <div className="text-center mb-12">
+            <div className="inline-block mb-6">
+              <Image src="/anchor-section-icon.png" alt="" width={80} height={80} className="mx-auto opacity-70" aria-hidden="true" />
+            </div>
+            <p className="font-body text-xs sm:text-sm tracking-[0.3em] uppercase text-ochre font-bold mb-4">
+              Want the full picture?
+            </p>
+            <h2
+              className="font-display text-cream font-bold leading-[1.1] tracking-tight mb-5"
+              style={{ fontSize: 'clamp(2rem, 5vw, 3.25rem)' }}
+            >
+              Build All Six Anchors
+            </h2>
+            <p className="font-body text-cream/50 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-4">
+              Your Constitution is the foundation. Add your Voice, Stories, Situation, Timeline,
+              and Influence Roster — then store and update your documents anytime in your personal vault.
+            </p>
+            <p className="font-body text-cream/30 text-sm mb-10">
+              $49 <span className="text-cream/20">·</span> one-time <span className="text-cream/20">·</span> all six anchors <span className="text-cream/20">·</span> lifetime vault access
+            </p>
+          </div>
+
+          {/* Anchor icon row */}
+          <div className="flex items-center justify-center gap-4 sm:gap-8 lg:gap-12 mb-14">
+            {DOCUMENTS.map((doc) => (
+              <Link
+                key={doc.slug}
+                href={`/docs/${doc.slug}`}
+                className="group flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="relative">
+                  <div
+                    className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"
+                    style={{ background: doc.slug === 'constitution' ? 'rgba(30, 190, 177, 0.3)' : 'rgba(196, 148, 58, 0.2)' }}
+                    aria-hidden="true"
+                  />
+                  {ANCHOR_ICONS[doc.slug] && (
+                    <Image
+                      src={ANCHOR_ICONS[doc.slug]}
+                      alt={doc.title}
+                      width={56}
+                      height={56}
+                      className="relative opacity-50 group-hover:opacity-100 transition-all duration-300"
+                      style={{ filter: 'brightness(0) invert(1)' }}
+                    />
+                  )}
+                </div>
+                <span className="font-body text-[10px] sm:text-xs tracking-[0.15em] uppercase text-cream/30 group-hover:text-cream/70 transition-colors duration-300">
+                  {ANCHOR_QUESTIONS[doc.slug]?.split('?')[0].replace(/^(Who |How |What )/, '').slice(0, 12) || doc.title}
+                </span>
+                {doc.slug === 'constitution' && (
+                  <span className="font-body text-[9px] tracking-wider uppercase text-teal/60 -mt-1">Free</span>
+                )}
+              </Link>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link
+              href="/pricing"
+              className="inline-flex items-center gap-3 font-body font-bold text-sm sm:text-base tracking-[0.1em] uppercase
+                         px-10 sm:px-14 py-4 sm:py-5 rounded-full
+                         bg-ochre text-white shadow-lg shadow-ochre/25
+                         hover:bg-ochre-light hover:shadow-xl hover:shadow-ochre/35
+                         hover:-translate-y-1 active:translate-y-0
+                         transition-all duration-300"
+            >
+              BUILD ALL SIX
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M5 10h10M12 6.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+          </div>
         </div>
-      </div>
+
+        {/* Gold line before footer */}
+        <div className="h-[2px] bg-gradient-to-r from-transparent via-ochre/50 to-transparent" aria-hidden="true" />
+      </section>
     </main>
   )
 }

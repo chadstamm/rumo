@@ -383,6 +383,9 @@ function FullBuildCTA() {
           </Link>
         </div>
       </div>
+
+      {/* Gold line before footer */}
+      <div className="h-[2px] bg-gradient-to-r from-transparent via-ochre/50 to-transparent" aria-hidden="true" />
     </section>
   )
 }
