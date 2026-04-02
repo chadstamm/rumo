@@ -63,7 +63,8 @@ export function SectionTransition({
     return () => clearTimeout(timer)
   })
 
-  const showLabel = section !== 0
+  const contentSections = (totalSections ?? 5)
+  const showLabel = section !== 0 && contentSections > 1
   const displayIndex = sectionIndex ?? section
   const displayTotal = totalSections ?? 5
 

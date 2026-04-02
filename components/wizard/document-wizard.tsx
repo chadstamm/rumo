@@ -404,47 +404,63 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
               </Link>
             </div>
 
-            {/* How to use */}
-            <div className="mt-12 pt-10 border-t border-navy/[0.08]">
-              <h3 className="font-display text-navy font-semibold text-lg mb-6 text-center">
+            {/* How to use — CTA-style blue panel */}
+            <div className="mt-12 rounded-2xl bg-navy px-8 py-10 sm:px-12 sm:py-12">
+              <h3 className="font-display text-white font-semibold text-xl sm:text-2xl mb-8 text-center">
                 What to Do With This
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
-                <div className="text-center">
-                  <div className="w-10 h-10 rounded-full bg-teal/10 flex items-center justify-center mx-auto mb-3">
+              <div className="grid grid-cols-1 gap-6 max-w-2xl mx-auto">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-teal/20 flex items-center justify-center flex-shrink-0">
                     <span className="font-display text-teal font-bold text-sm">1</span>
                   </div>
-                  <p className="font-body text-navy/70 text-sm leading-relaxed">
-                    Copy or download your document
+                  <p className="font-body text-white/80 text-base leading-relaxed">
+                    Copy your document using the button above, or download it as a markdown file. This is your Personal Constitution — keep it somewhere you can find it.
                   </p>
                 </div>
-                <div className="text-center">
-                  <div className="w-10 h-10 rounded-full bg-teal/10 flex items-center justify-center mx-auto mb-3">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-teal/20 flex items-center justify-center flex-shrink-0">
                     <span className="font-display text-teal font-bold text-sm">2</span>
                   </div>
-                  <p className="font-body text-navy/70 text-sm leading-relaxed">
-                    Upload to Claude, ChatGPT, Gemini, or any AI tool
+                  <p className="font-body text-white/80 text-base leading-relaxed">
+                    Upload it to your AI assistant — Claude, ChatGPT, Gemini, or whichever tool you use. Paste it into the custom instructions, project files, or system prompt. This is what gives your AI real context about who you are.
                   </p>
                 </div>
-                <div className="text-center">
-                  <div className="w-10 h-10 rounded-full bg-teal/10 flex items-center justify-center mx-auto mb-3">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-teal/20 flex items-center justify-center flex-shrink-0">
                     <span className="font-display text-teal font-bold text-sm">3</span>
                   </div>
-                  <p className="font-body text-navy/70 text-sm leading-relaxed">
-                    Watch your AI go from generic to genuinely yours
+                  <p className="font-body text-white/80 text-base leading-relaxed">
+                    Start a conversation and see the difference. Your AI will stop guessing and start responding like it actually knows you — because now it does.
                   </p>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-ochre/20 flex items-center justify-center flex-shrink-0">
+                    <span className="font-display text-ochre font-bold text-sm">4</span>
+                  </div>
+                  <div>
+                    <p className="font-body text-white/80 text-base leading-relaxed">
+                      Ready for more? Your Constitution is just the first anchor. Build out your Writing Codex, Story Bank, State of the Union, Timeline, and Influence Roster to give your AI the full picture.
+                    </p>
+                    <Link
+                      href="/anchors"
+                      className="inline-flex items-center gap-2 mt-3 font-body font-semibold text-sm text-teal hover:text-teal-light transition-colors duration-200"
+                    >
+                      Explore all six anchors →
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Start over */}
-            <div className="text-center mt-8">
+            <div className="text-center mt-10 pt-6 border-t border-navy/[0.08]">
               <button
                 type="button"
                 onClick={reset}
-                className="font-body text-xs text-navy/50 hover:text-navy/70 px-4 py-2 transition-colors duration-200"
+                className="font-body text-sm text-navy/50 hover:text-navy/70 hover:bg-navy/5 px-6 py-3 rounded-lg transition-all duration-200"
               >
-                Start Over
+                Start Over — Build a New {config.title}
               </button>
             </div>
           </>

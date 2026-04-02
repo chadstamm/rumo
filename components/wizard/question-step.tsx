@@ -6,7 +6,7 @@ import type { WizardQuestion } from '@/types/wizard'
 
 // ── Microphone Button ──
 
-function MicrophoneInput({ onTranscript }: { onTranscript: (text: string) => void }) {
+function MicrophoneInput({ onTranscript, onListeningChange }: { onTranscript: (text: string) => void; onListeningChange?: (listening: boolean) => void }) {
   const [listening, setListening] = useState(false)
   const [supported, setSupported] = useState(false)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,10 +39,12 @@ function MicrophoneInput({ onTranscript }: { onTranscript: (text: string) => voi
 
       recognition.onend = () => {
         setListening(false)
+        onListeningChange?.(false)
       }
 
       recognition.onerror = () => {
         setListening(false)
+        onListeningChange?.(false)
       }
 
       recognitionRef.current = recognition
@@ -54,9 +56,11 @@ function MicrophoneInput({ onTranscript }: { onTranscript: (text: string) => voi
     if (listening) {
       recognitionRef.current.stop()
       setListening(false)
+      onListeningChange?.(false)
     } else {
       recognitionRef.current.start()
       setListening(true)
+      onListeningChange?.(true)
     }
   }, [listening])
 
@@ -96,10 +100,12 @@ function TextareaInput({
   question,
   value,
   onChange,
+  onRecordingChange,
 }: {
   question: WizardQuestion
   value: string
   onChange: (v: string) => void
+  onRecordingChange?: (recording: boolean) => void
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -137,7 +143,7 @@ function TextareaInput({
                    focus:outline-none focus:border-teal/40 focus:ring-2 focus:ring-teal/10
                    transition-all duration-200 resize-none"
       />
-      <MicrophoneInput onTranscript={handleTranscript} />
+      <MicrophoneInput onTranscript={handleTranscript} onListeningChange={onRecordingChange} />
     </div>
   )
 }
@@ -299,6 +305,7 @@ function FileInput({
 
 export function QuestionStep() {
   const { currentQuestion, state, setAnswer, nextStep, prevStep, isFirstQuestion, isLastQuestionInSection, isLastSection } = useWizard()
+  const [isRecording, setIsRecording] = useState(false)
 
   if (!currentQuestion) return null
 
@@ -345,6 +352,7 @@ export function QuestionStep() {
             question={currentQuestion}
             value={stringValue}
             onChange={(v) => setAnswer(currentQuestion.id, v)}
+            onRecordingChange={setIsRecording}
           />
         )}
         {currentQuestion.inputType === 'select' && (
@@ -391,7 +399,9 @@ export function QuestionStep() {
             <button
               type="button"
               onClick={nextStep}
-              className="font-body text-sm text-navy/40 hover:text-navy/60 px-4 py-2.5 transition-colors duration-200"
+              disabled={isRecording}
+              className={`font-body text-sm px-4 py-2.5 transition-colors duration-200
+                         ${isRecording ? 'text-navy/20 cursor-not-allowed' : 'text-navy/40 hover:text-navy/60'}`}
             >
               Skip
             </button>
@@ -399,16 +409,16 @@ export function QuestionStep() {
             <button
               type="button"
               onClick={nextStep}
-              disabled={!hasAnswer}
+              disabled={!hasAnswer || isRecording}
               className={`font-body font-semibold text-sm px-7 py-3 rounded-lg
                          transition-all duration-300
                          ${
-                           hasAnswer
+                           hasAnswer && !isRecording
                              ? 'bg-teal text-white hover:bg-teal-light hover:shadow-lg hover:shadow-teal/20'
                              : 'bg-navy/10 text-navy/30 cursor-not-allowed'
                          }`}
             >
-              {isLastOverall ? 'FINISH' : 'CONTINUE →'}
+              {isRecording ? 'STOP RECORDING FIRST' : isLastOverall ? 'FINISH' : 'CONTINUE →'}
             </button>
           </div>
         </div>

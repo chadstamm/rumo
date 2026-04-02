@@ -234,11 +234,17 @@ export function WizardProvider({
     }
   }, [fullStorageKey, activeSections])
 
-  // Persist to localStorage (exclude generation state to avoid bloat)
+  // Persist to localStorage — keep completed generation, exclude in-progress state
   useEffect(() => {
     try {
-      const { generationPhase, streamedText, generationError, analyzedInsights, ...persistState } = state
-      localStorage.setItem(fullStorageKey, JSON.stringify(persistState))
+      const { generationError, analyzedInsights, ...persistState } = state
+      // Only persist generation output if complete (avoid saving partial streams)
+      if (state.generationPhase !== 'complete') {
+        const { generationPhase, streamedText, ...cleanState } = persistState
+        localStorage.setItem(fullStorageKey, JSON.stringify(cleanState))
+      } else {
+        localStorage.setItem(fullStorageKey, JSON.stringify(persistState))
+      }
     } catch {
       // Storage full
     }
@@ -260,10 +266,13 @@ export function WizardProvider({
   const isLastQuestionInSection = state.currentStep === visibleQuestions.length - 1
   const isLastSection =
     state.currentSection === activeSections[activeSections.length - 1]
+  // Complete if all sections are done — regardless of cursor position (handles page revisit)
+  const allSectionsComplete = activeSections.every(s => state.completedSections.includes(s))
   const isComplete =
-    isLastSection &&
+    allSectionsComplete ||
+    (isLastSection &&
     isLastQuestionInSection &&
-    state.completedSections.includes(activeSections[activeSections.length - 1])
+    state.completedSections.includes(activeSections[activeSections.length - 1]))
 
   const setAnswer = useCallback(
     (questionId: string, value: string | string[]) => {
