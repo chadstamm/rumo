@@ -11,6 +11,12 @@ function MicrophoneInput({ onTranscript, onListeningChange }: { onTranscript: (t
   const [supported, setSupported] = useState(false)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any>(null)
+  const onTranscriptRef = useRef(onTranscript)
+  const onListeningChangeRef = useRef(onListeningChange)
+
+  // Keep refs current without recreating recognition
+  useEffect(() => { onTranscriptRef.current = onTranscript }, [onTranscript])
+  useEffect(() => { onListeningChangeRef.current = onListeningChange }, [onListeningChange])
 
   useEffect(() => {
     const SpeechRecognition = (window as unknown as { SpeechRecognition?: typeof window.SpeechRecognition; webkitSpeechRecognition?: typeof window.SpeechRecognition }).SpeechRecognition
@@ -26,41 +32,45 @@ function MicrophoneInput({ onTranscript, onListeningChange }: { onTranscript: (t
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       recognition.onresult = (event: any) => {
-        let interim = ''
         for (let i = event.resultIndex; i < event.results.length; i++) {
           if (event.results[i].isFinal) {
             finalTranscript += event.results[i][0].transcript + ' '
-            onTranscript(finalTranscript.trim())
-          } else {
-            interim += event.results[i][0].transcript
+            onTranscriptRef.current(finalTranscript.trim())
           }
         }
       }
 
       recognition.onend = () => {
         setListening(false)
-        onListeningChange?.(false)
+        onListeningChangeRef.current?.(false)
       }
 
       recognition.onerror = () => {
         setListening(false)
-        onListeningChange?.(false)
+        onListeningChangeRef.current?.(false)
       }
 
       recognitionRef.current = recognition
     }
-  }, [onTranscript])
+
+    return () => {
+      if (recognitionRef.current) {
+        try { recognitionRef.current.stop() } catch { /* already stopped */ }
+        recognitionRef.current = null
+      }
+    }
+  }, []) // Create once on mount, clean up on unmount
 
   const toggle = useCallback(() => {
     if (!recognitionRef.current) return
     if (listening) {
       recognitionRef.current.stop()
       setListening(false)
-      onListeningChange?.(false)
+      onListeningChangeRef.current?.(false)
     } else {
       recognitionRef.current.start()
       setListening(true)
-      onListeningChange?.(true)
+      onListeningChangeRef.current?.(true)
     }
   }, [listening])
 
@@ -424,6 +434,7 @@ export function QuestionStep() {
       <div className="mb-8">
         {currentQuestion.inputType === 'textarea' && (
           <TextareaInput
+            key={currentQuestion.id}
             question={currentQuestion}
             value={stringValue}
             onChange={(v) => setAnswer(currentQuestion.id, v)}
