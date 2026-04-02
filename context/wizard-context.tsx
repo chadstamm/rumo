@@ -124,7 +124,7 @@ function wizardReducer(state: WizardState, action: WizardAction): WizardState {
       return { ...INITIAL_WIZARD_STATE, startedAt: now, updatedAt: now }
 
     case 'HYDRATE':
-      return action.state
+      return { ...INITIAL_WIZARD_STATE, ...action.state }
 
     case 'SET_GENERATION_PHASE':
       return {

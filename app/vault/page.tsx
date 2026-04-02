@@ -1,164 +1,11 @@
-'use client'
-
-import { useState, useEffect } from 'react'
 import { CompassRose } from '@/components/compass-rose'
 import Link from 'next/link'
-import type { GenerationResult } from '@/types/models'
-import { AI_MODELS, MODEL_FIELDS } from '@/data/models'
-import type { AIModelId } from '@/types/models'
-import {
-  SmallAnchorIcon, SmallQuillIcon, SmallShipLogIcon, SmallCompassIcon, SmallChronIcon, SmallHelmIcon,
-} from '@/components/icons/anchor-icons'
-
-const INSTRUCTIONS_KEY = 'rumo-instructions-state'
-
-interface SavedInstructionsState {
-  isComplete: boolean
-  generationResult: GenerationResult | null
-  selectedModels: AIModelId[]
-}
-
-const ANCHOR_SMALL_ICONS: Record<string, (props: { className?: string }) => React.ReactNode> = {
-  constitution: SmallAnchorIcon,
-  sotu: SmallCompassIcon,
-  codex: SmallQuillIcon,
-  'story-bank': SmallShipLogIcon,
-  timeline: SmallChronIcon,
-  roster: SmallHelmIcon,
-}
-
-function CopyButton({ text, label }: { text: string; label?: string }) {
-  const [copied, setCopied] = useState(false)
-
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(text)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
-  return (
-    <button
-      onClick={handleCopy}
-      className="font-body text-xs px-3 py-1.5 rounded-lg
-                 bg-teal/10 text-teal hover:bg-teal/20
-                 transition-all duration-200"
-    >
-      {copied ? 'COPIED' : label || 'COPY'}
-    </button>
-  )
-}
-
-function InstructionsCard({
-  modelId,
-  result,
-}: {
-  modelId: AIModelId
-  result: Record<string, unknown>
-}) {
-  const model = AI_MODELS.find((m) => m.id === modelId)
-  const fields = MODEL_FIELDS[modelId]
-  if (!model || !fields) return null
-
-  return (
-    <div className="rounded-xl border border-navy/10 bg-white overflow-hidden">
-      {/* Model header */}
-      <div
-        className="px-6 py-4 flex items-center gap-3"
-        style={{ borderBottom: `2px solid ${model.color}20` }}
-      >
-        <div
-          className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white"
-          style={{ backgroundColor: model.color }}
-        >
-          {model.name[0]}
-        </div>
-        <div>
-          <h3 className="font-display text-navy font-semibold text-lg">{model.name}</h3>
-          <p className="font-body text-navy/40 text-xs">{model.company}</p>
-        </div>
-      </div>
-
-      {/* Fields */}
-      <div className="px-6 py-5 space-y-5">
-        {fields.map((field) => {
-          const value = result[field.id]
-          if (!value) return null
-
-          return (
-            <div key={field.id}>
-              <div className="flex items-center justify-between mb-2">
-                <label className="font-body text-xs font-semibold text-navy/60 uppercase tracking-wide">
-                  {field.label}
-                </label>
-                <CopyButton text={String(value)} />
-              </div>
-
-              {field.navigationPath && (
-                <p className="font-body text-[10px] text-navy/30 mb-2">
-                  {field.navigationPath}
-                </p>
-              )}
-
-              {field.type === 'textarea' ? (
-                <div className="font-body text-sm text-navy/80 leading-relaxed whitespace-pre-wrap bg-cream/50 rounded-lg px-4 py-3 border border-navy/5">
-                  {String(value)}
-                </div>
-              ) : field.type === 'three-way' ? (
-                <div className="flex items-center gap-2">
-                  {['Less', 'Default', 'More'].map((opt) => (
-                    <span
-                      key={opt}
-                      className={`font-body text-xs px-3 py-1.5 rounded-full ${
-                        String(value) === opt
-                          ? 'bg-teal text-white font-medium'
-                          : 'bg-navy/5 text-navy/30'
-                      }`}
-                    >
-                      {opt}
-                    </span>
-                  ))}
-                </div>
-              ) : (
-                <p className="font-body text-sm text-navy/80 bg-cream/50 rounded-lg px-4 py-2 border border-navy/5">
-                  {String(value)}
-                </p>
-              )}
-            </div>
-          )
-        })}
-      </div>
-    </div>
-  )
-}
 
 export default function VaultPage() {
-  const [instructionsState, setInstructionsState] = useState<SavedInstructionsState | null>(null)
-  const [loaded, setLoaded] = useState(false)
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(INSTRUCTIONS_KEY)
-      if (saved) {
-        const parsed = JSON.parse(saved)
-        if (parsed.isComplete && parsed.generationResult) {
-          setInstructionsState(parsed)
-        }
-      }
-    } catch {
-      // Ignore
-    }
-    setLoaded(true)
-  }, [])
-
-  if (!loaded) return null
-
-  const hasInstructions = instructionsState?.isComplete && instructionsState?.generationResult
-
   return (
     <main className="min-h-screen bg-cream">
       {/* Header */}
       <div className="relative bg-navy text-cream overflow-hidden">
-        {/* Compass rose watermark */}
         <div className="absolute -bottom-16 -right-16 w-64 h-64 opacity-[0.025]" aria-hidden="true">
           <CompassRose className="w-full h-full text-cream" />
         </div>
@@ -173,108 +20,37 @@ export default function VaultPage() {
           </h1>
           <div className="w-12 h-[2px] bg-ochre/50 mb-4" aria-hidden="true" />
           <p className="font-body text-cream/50 text-base max-w-lg">
-            Everything you&apos;ve built with Rumo, in one place.
+            Everything you build with RUMO, in one place.
           </p>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 py-10 sm:py-14">
-        {/* Instructions Section */}
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="w-6 h-px bg-teal/40" aria-hidden="true" />
-            <span className="font-body text-xs tracking-[0.2em] uppercase text-teal font-medium">
-              Custom Instructions
-            </span>
+      <div className="max-w-3xl mx-auto px-6 sm:px-10 lg:px-16 py-16 sm:py-24">
+        <div className="text-center">
+          <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-ochre/10 flex items-center justify-center">
+            <CompassRose className="w-8 h-8 text-ochre/40" />
           </div>
 
-          {hasInstructions ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-              {instructionsState.selectedModels.map((modelId) => {
-                const result = instructionsState.generationResult?.[modelId]
-                if (!result) return null
-                return (
-                  <InstructionsCard
-                    key={modelId}
-                    modelId={modelId}
-                    result={result as Record<string, unknown>}
-                  />
-                )
-              })}
-            </div>
-          ) : (
-            <div className="text-center py-12 rounded-xl border-2 border-dashed border-navy/10">
-              <p className="font-body text-navy/40 text-sm mb-4">
-                No instructions generated yet.
-              </p>
-              <Link
-                href="/instructions"
-                className="glow-hover font-body font-bold text-sm px-6 py-3 rounded-full uppercase
-                           bg-teal text-white hover:bg-teal-light
-                           transition-all duration-300 inline-block"
-              >
-                BUILD FREE INSTRUCTIONS
-              </Link>
-            </div>
-          )}
-        </div>
+          <h2
+            className="font-display text-navy font-semibold leading-tight mb-4"
+            style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}
+          >
+            Coming Soon
+          </h2>
 
-        {/* Context Anchors Section */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <span className="w-6 h-px bg-ochre/40" aria-hidden="true" />
-            <span className="font-body text-xs tracking-[0.2em] uppercase text-ochre font-medium">
-              Context Anchors
-            </span>
-          </div>
+          <p className="font-body text-navy/50 text-base leading-relaxed max-w-md mx-auto mb-8">
+            Your vault will store all six context anchor documents, track your progress, and let you update and regenerate anytime.
+          </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { name: 'Personal Constitution', slug: 'constitution', desc: 'Who you are always', accent: 'ochre' },
-              { name: 'State of the Union', slug: 'sotu', desc: 'Where you are right now', accent: 'teal' },
-              { name: 'Writing Codex', slug: 'codex', desc: 'How you write', accent: 'teal' },
-              { name: 'Story Bank', slug: 'story-bank', desc: 'What you\'ve lived', accent: 'ochre' },
-              { name: 'Timeline', slug: 'timeline', desc: 'Where you\'ve been and where you\'re headed', accent: 'ochre' },
-              { name: 'Influence Roster', slug: 'roster', desc: 'The people who shape your world', accent: 'teal' },
-            ].map((anchor) => {
-              const SmallIcon = ANCHOR_SMALL_ICONS[anchor.slug]
-              return (
-                <Link
-                  key={anchor.slug}
-                  href={`/anchors/${anchor.slug}`}
-                  className="group px-6 py-5 rounded-xl border border-navy/10 bg-white
-                             hover:border-ochre/30 hover:shadow-sm
-                             transition-all duration-300 flex items-center gap-4"
-                >
-                  {/* Icon */}
-                  {SmallIcon && (
-                    <div className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center
-                                     ${anchor.accent === 'teal' ? 'bg-teal/[0.06]' : 'bg-ochre/[0.06]'}`}>
-                      <SmallIcon className={`w-5 h-5 ${anchor.accent === 'teal' ? 'text-teal' : 'text-ochre'}`} />
-                    </div>
-                  )}
-
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-display text-navy font-semibold text-base mb-0.5">
-                      {anchor.name}
-                    </h3>
-                    <p className="font-body text-navy/40 text-sm">{anchor.desc}</p>
-                    <span className="font-body text-[10px] text-ochre uppercase tracking-wide mt-2 inline-block">
-                      Coming Soon — Pro
-                    </span>
-                  </div>
-
-                  <svg
-                    width="18" height="18" viewBox="0 0 18 18" fill="none"
-                    className="text-navy/15 group-hover:text-ochre transition-colors duration-300 flex-shrink-0"
-                    aria-hidden="true"
-                  >
-                    <path d="M7 5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </Link>
-              )
-            })}
-          </div>
+          <Link
+            href="/anchors/constitution"
+            className="inline-flex font-body font-bold text-sm px-8 py-3.5 rounded-full uppercase tracking-wide
+                       bg-teal text-white shadow-md shadow-teal/20
+                       hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30
+                       transition-all duration-200"
+          >
+            Start with Your Constitution
+          </Link>
         </div>
       </div>
     </main>
