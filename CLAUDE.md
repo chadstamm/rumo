@@ -21,7 +21,7 @@ Consolidates four standalone apps (WeTheMe, WriteLikeMe, StoryArchive, Customize
 |----------|----------|-------|
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Supabase anon key |
-| `ANTHROPIC_API_KEY` | Yes | **MISSING ON VERCEL** — instructions wizard fails without it |
+| `ANTHROPIC_API_KEY` | Yes | On Vercel (Production). Added Mar 28, 2026. |
 
 ## Architecture
 
@@ -125,7 +125,6 @@ Hero → Problem → Overview ("The Missing Ingredient") → How It Works (4 ste
 - Instructions components: PascalCase (`ResultsStep.tsx`) — inconsistent, inherited from port
 
 ## Known Issues
-- **ANTHROPIC_API_KEY missing on Vercel** — instructions wizard fails in production
 - **Dead components** — `guide.tsx`, `horizon.tsx`, `pillar-section.tsx`, `section-intro.tsx` are unused (removed from page, files remain)
 - **No tests, no ESLint, no Prettier** — no quality tooling configured
 - **No `.env.example`** — env vars undocumented outside this file

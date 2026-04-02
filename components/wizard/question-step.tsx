@@ -235,7 +235,9 @@ function MultiselectInput({
   )
 }
 
-// ── File Upload Input ──
+// ── File Upload Input (multiple files) ──
+
+type UploadedFile = { name: string; content: string }
 
 function FileInput({
   question,
@@ -246,13 +248,49 @@ function FileInput({
   value: string
   onChange: (v: string) => void
 }) {
-  const [fileName, setFileName] = useState<string | null>(null)
+  const [files, setFiles] = useState<UploadedFile[]>([])
+  const [pastedText, setPastedText] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
 
-  const handleFile = async (file: File) => {
-    setFileName(file.name)
-    const text = await file.text()
-    onChange(text)
+  // On mount, separate any existing value back into pasted text
+  // (files are ephemeral — re-uploads needed if page refreshes, but text persists)
+  useEffect(() => {
+    if (value && files.length === 0) {
+      setPastedText(value)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const buildCombinedValue = (updatedFiles: UploadedFile[], updatedPaste: string) => {
+    const fileParts = updatedFiles.map(f => `--- ${f.name} ---\n${f.content}`).join('\n\n')
+    const parts = [fileParts, updatedPaste].filter(Boolean)
+    onChange(parts.join('\n\n'))
+  }
+
+  const handleFiles = async (fileList: FileList) => {
+    const newFiles: UploadedFile[] = []
+    for (let i = 0; i < fileList.length; i++) {
+      const file = fileList[i]
+      // Skip duplicates by name
+      if (files.some(f => f.name === file.name)) continue
+      const content = await file.text()
+      newFiles.push({ name: file.name, content })
+    }
+    if (newFiles.length > 0) {
+      const updated = [...files, ...newFiles]
+      setFiles(updated)
+      buildCombinedValue(updated, pastedText)
+    }
+  }
+
+  const removeFile = (name: string) => {
+    const updated = files.filter(f => f.name !== name)
+    setFiles(updated)
+    buildCombinedValue(updated, pastedText)
+  }
+
+  const handlePasteChange = (text: string) => {
+    setPastedText(text)
+    buildCombinedValue(files, text)
   }
 
   return (
@@ -267,29 +305,66 @@ function FileInput({
         <input
           ref={fileRef}
           type="file"
+          multiple
           accept={question.acceptTypes || '.txt,.md'}
           className="hidden"
           onChange={(e) => {
-            const file = e.target.files?.[0]
-            if (file) handleFile(file)
+            if (e.target.files && e.target.files.length > 0) {
+              handleFiles(e.target.files)
+            }
+            // Reset so same file can be re-selected
+            e.target.value = ''
           }}
         />
         <p className="font-body text-navy/50 text-sm">
-          {fileName ? (
-            <span className="text-teal font-medium">{fileName}</span>
-          ) : (
-            'Click to upload a file'
-          )}
+          Click to upload a file
         </p>
         <p className="font-body text-navy/30 text-xs mt-1">
-          or paste your text below
+          {question.isWritingSample ? 'or paste your writing sample below' : 'or paste your text below'}
         </p>
       </div>
 
+      {/* Uploaded files list */}
+      {files.length > 0 && (
+        <div className="space-y-2">
+          {files.map((f) => (
+            <div
+              key={f.name}
+              className="flex items-center justify-between px-4 py-2.5 rounded-lg
+                         bg-teal/[0.06] border border-teal/20"
+            >
+              <div className="flex items-center gap-2 min-w-0">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="flex-shrink-0 text-teal">
+                  <path d="M3.5 1.75h4.38L11.5 5.37v6.88a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1V2.75a1 1 0 0 1 1-1Z" stroke="currentColor" strokeWidth="1.2" />
+                  <path d="M7.88 1.75v3.63h3.62" stroke="currentColor" strokeWidth="1.2" />
+                </svg>
+                <span className="font-body text-sm text-navy font-medium truncate">{f.name}</span>
+              </div>
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); removeFile(f.name) }}
+                className="flex-shrink-0 ml-3 text-navy/30 hover:text-red-500 transition-colors duration-200"
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() => fileRef.current?.click()}
+            className="font-body text-xs text-teal hover:text-teal-light transition-colors duration-200"
+          >
+            + Add another file
+          </button>
+        </div>
+      )}
+
       <textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder="Paste your writing sample here..."
+        value={pastedText}
+        onChange={(e) => handlePasteChange(e.target.value)}
+        placeholder={question.isWritingSample ? 'Paste your writing sample here...' : 'Paste your text here...'}
         className="w-full min-h-[160px] px-5 py-4 rounded-xl
                    bg-white border border-navy/10
                    text-navy font-body text-sm leading-relaxed
