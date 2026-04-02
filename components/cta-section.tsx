@@ -43,7 +43,7 @@ export function CTASection() {
         {/* Two CTA cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           <CTACard
-            href="/docs/constitution"
+            href="/anchors/constitution"
             accent="teal"
             eyebrow="Free"
             title="Build Your Personal Constitution"

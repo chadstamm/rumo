@@ -241,7 +241,7 @@ export default function VaultPage() {
               return (
                 <Link
                   key={anchor.slug}
-                  href={`/docs/${anchor.slug}`}
+                  href={`/anchors/${anchor.slug}`}
                   className="group px-6 py-5 rounded-xl border border-navy/10 bg-white
                              hover:border-ochre/30 hover:shadow-sm
                              transition-all duration-300 flex items-center gap-4"

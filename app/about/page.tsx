@@ -55,7 +55,7 @@ export default function AboutPage() {
           {/* CTA */}
           <div className="mt-16 sm:mt-20 text-center">
             <Link
-              href="/docs/constitution"
+              href="/anchors/constitution"
               className="shimmer-hover inline-flex items-center gap-2.5
                          px-8 py-4 rounded-full
                          bg-teal text-white font-body font-bold text-sm tracking-[0.12em]

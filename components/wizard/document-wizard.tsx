@@ -613,7 +613,7 @@ function FullBuildCTA({ currentSlug }: { currentSlug?: string }) {
             return (
               <Link
                 key={slug}
-                href={`/docs/${slug}`}
+                href={`/anchors/${slug}`}
                 className="group flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="relative">

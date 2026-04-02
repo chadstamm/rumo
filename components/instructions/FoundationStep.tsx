@@ -425,7 +425,7 @@ export function FoundationStep() {
                 <p className="text-sm mt-4">
                   Don&apos;t have one?{' '}
                   <a
-                    href={`/docs/${card.slug}`}
+                    href={`/anchors/${card.slug}`}
                     className="link-accent"
                   >
                     Build yours with Rumo &rarr;

@@ -102,7 +102,7 @@ export function Hero() {
         {/* CTA Button */}
         <div className="mt-6 sm:mt-8 hero-fade-in-up hero-delay-2" style={{ animationDelay: '1.1s' }}>
           <a
-            href="/docs/constitution"
+            href="/anchors/constitution"
             className="glow-hover group inline-flex items-center gap-2.5
                        px-8 py-4 rounded-full
                        bg-teal text-white font-body font-bold text-sm tracking-[0.12em]

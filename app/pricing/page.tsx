@@ -62,7 +62,7 @@ export default function PricingPage() {
               </div>
 
               <Link
-                href="/docs/constitution"
+                href="/anchors/constitution"
                 className="block text-center font-body text-sm font-bold tracking-[0.1em] uppercase px-7 py-3.5 rounded-full
                            border-2 border-ochre text-ochre
                            hover:bg-ochre hover:text-white

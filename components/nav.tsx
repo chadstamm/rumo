@@ -6,12 +6,12 @@ import { usePathname } from 'next/navigation'
 import { useAuth } from '@/components/auth-provider'
 import { useEffect, useState, useRef } from 'react'
 const ANCHOR_ITEMS = [
-  { label: 'Personal Constitution', subtitle: 'Who am I? What do I stand for?', href: '/docs/constitution', accent: 'teal', icon: '/icons/constitution.png', isFree: true },
-  { label: 'Writing Codex', subtitle: 'How do I write?', href: '/docs/codex', accent: 'ochre', icon: '/icons/codex.png' },
-  { label: 'Story Bank', subtitle: 'What stories do I always tell?', href: '/docs/story-bank', accent: 'ochre', icon: '/icons/story-bank.png' },
-  { label: 'State of the Union', subtitle: 'What matters to me right now?', href: '/docs/sotu', accent: 'ochre', icon: '/icons/sotu.png' },
-  { label: 'Timeline', subtitle: 'How has my life unfolded?', href: '/docs/timeline', accent: 'ochre', icon: '/icons/timeline.png' },
-  { label: 'Influence Roster', subtitle: 'Who are the people that matter?', href: '/docs/roster', accent: 'ochre', icon: '/icons/roster.png' },
+  { label: 'Personal Constitution', subtitle: 'Who am I? What do I stand for?', href: '/anchors/constitution', accent: 'teal', icon: '/icons/constitution.png', isFree: true },
+  { label: 'Writing Codex', subtitle: 'How do I write?', href: '/anchors/codex', accent: 'ochre', icon: '/icons/codex.png' },
+  { label: 'Story Bank', subtitle: 'What stories do I always tell?', href: '/anchors/story-bank', accent: 'ochre', icon: '/icons/story-bank.png' },
+  { label: 'State of the Union', subtitle: 'What matters to me right now?', href: '/anchors/sotu', accent: 'ochre', icon: '/icons/sotu.png' },
+  { label: 'Timeline', subtitle: 'How has my life unfolded?', href: '/anchors/timeline', accent: 'ochre', icon: '/icons/timeline.png' },
+  { label: 'Influence Roster', subtitle: 'Who are the people that matter?', href: '/anchors/roster', accent: 'ochre', icon: '/icons/roster.png' },
 ]
 
 // ── Animated nav link with sliding underline ──
@@ -185,7 +185,7 @@ export function Nav() {
     return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
 
-  const isAnchorsActive = pathname.startsWith('/docs/')
+  const isAnchorsActive = pathname.startsWith('/anchors/')
 
   // ── Phase 1: Floating glass nav over hero (desktop) + hamburger (mobile) ──
   if (isHome && !scrolled) {
@@ -216,7 +216,7 @@ export function Nav() {
             <NavLink href="/vault" label="Vault" active={false} light />
 
             <Link
-              href="/docs/constitution"
+              href="/anchors/constitution"
               className="shimmer-hover font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
                          bg-teal text-white shadow-md shadow-teal/20
                          hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30
@@ -484,7 +484,7 @@ function MobileMenu({
           </Link>
 
           <Link
-            href="/docs/constitution"
+            href="/anchors/constitution"
             onClick={onClose}
             className="shimmer-hover block text-center font-body text-base font-semibold tracking-wide
                        px-6 py-3.5 mt-4 rounded-full

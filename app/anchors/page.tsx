@@ -86,7 +86,7 @@ export default function AnchorsPage() {
               return (
                 <Link
                   key={doc.slug}
-                  href={`/docs/${doc.slug}`}
+                  href={`/anchors/${doc.slug}`}
                   className={`group relative block rounded-2xl overflow-hidden
                              bg-cream border-2 border-navy/15
                              transition-all duration-500 ease-out
@@ -230,7 +230,7 @@ export default function AnchorsPage() {
             {DOCUMENTS.map((doc) => (
               <Link
                 key={doc.slug}
-                href={`/docs/${doc.slug}`}
+                href={`/anchors/${doc.slug}`}
                 className="group flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="relative">

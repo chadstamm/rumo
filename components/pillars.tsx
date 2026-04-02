@@ -138,7 +138,7 @@ export function Pillars() {
             return (
               <Link
                 key={anchor.slug}
-                href={`/docs/${anchor.slug}`}
+                href={`/anchors/${anchor.slug}`}
                 className={`group relative block rounded-2xl overflow-hidden
                            transition-all duration-500 ease-out
                            hover:-translate-y-3 hover:scale-[1.02]

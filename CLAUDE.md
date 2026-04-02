@@ -35,12 +35,13 @@ Hero → Problem → Overview ("The Missing Ingredient") → How It Works (4 ste
 - Auth deferred — users start immediately, sign-in required to save
 - State: `WizardProvider` context + useReducer + localStorage
 
-### Individual Anchor Builders (`/docs/[slug]`)
+### Individual Anchor Builders (`/anchors/[slug]`)
 - Each anchor can be built standalone via its own scoped wizard
 - Uses same WizardProvider with `filterSections` and `storageKey` per anchor
 - Shared Intake (section 0) always included as foundation
 - Each has its own localStorage persistence and completion screen
-- Routes: `/docs/constitution`, `/docs/sotu`, `/docs/codex`, `/docs/story-bank`, `/docs/timeline`, `/docs/roster`
+- Routes: `/anchors/constitution`, `/anchors/sotu`, `/anchors/codex`, `/anchors/story-bank`, `/anchors/timeline`, `/anchors/roster`
+- Old `/docs/*` URLs permanently redirect to `/anchors/*`
 
 ### Instructions Wizard (embedded on homepage + `/instructions`)
 - CustomizedAI port — dynamic AI-generated questions, multi-model output
