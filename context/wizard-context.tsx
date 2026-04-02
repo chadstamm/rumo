@@ -268,8 +268,11 @@ export function WizardProvider({
     state.currentSection === activeSections[activeSections.length - 1]
   // Complete if all sections are done — regardless of cursor position (handles page revisit)
   const allSectionsComplete = activeSections.every(s => state.completedSections.includes(s))
+  // Also catch: user has answers but cursor is past end of questions (old localStorage state)
+  const cursorPastEnd = currentQuestion === null && totalAnswered > 0
   const isComplete =
     allSectionsComplete ||
+    cursorPastEnd ||
     (isLastSection &&
     isLastQuestionInSection &&
     state.completedSections.includes(activeSections[activeSections.length - 1]))
