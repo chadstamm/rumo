@@ -404,68 +404,104 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
               </Link>
             </div>
 
-            {/* How to use — CTA-style blue panel */}
-            <div className="mt-12 rounded-2xl bg-navy px-8 py-10 sm:px-12 sm:py-12">
-              <h3 className="font-display text-white font-semibold text-xl sm:text-2xl mb-8 text-center">
-                What to Do With This
-              </h3>
-              <div className="grid grid-cols-1 gap-6 max-w-2xl mx-auto">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-teal/20 flex items-center justify-center flex-shrink-0">
-                    <span className="font-display text-teal font-bold text-sm">1</span>
-                  </div>
-                  <p className="font-body text-white/80 text-base leading-relaxed">
-                    Copy your document using the button above, or download it as a markdown file. This is your Personal Constitution — keep it somewhere you can find it.
-                  </p>
+          </>
+        )}
+      </div>
+
+      {/* What to Do With This — full-width navy section */}
+      {isDone && (
+        <section className="relative bg-navy overflow-hidden">
+          <div
+            className="absolute inset-0 pointer-events-none"
+            aria-hidden="true"
+            style={{
+              background: `
+                radial-gradient(ellipse 80% 50% at 20% 50%, rgba(30, 190, 177, 0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 60% at 80% 30%, rgba(196, 148, 58, 0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 100% 80% at 50% 100%, rgba(0, 0, 0, 0.3) 0%, transparent 50%)
+              `,
+            }}
+          />
+
+          <div
+            className="absolute inset-0 opacity-[0.03] pointer-events-none"
+            aria-hidden="true"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px',
+            }}
+          />
+
+          <div className="relative z-10 max-w-3xl mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-28">
+            <h3
+              className="font-display text-cream font-bold leading-tight text-center mb-10"
+              style={{ fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}
+            >
+              What to Do With This
+            </h3>
+
+            <div className="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-teal/20 flex items-center justify-center flex-shrink-0">
+                  <span className="font-display text-teal font-bold text-sm">1</span>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-teal/20 flex items-center justify-center flex-shrink-0">
-                    <span className="font-display text-teal font-bold text-sm">2</span>
-                  </div>
-                  <p className="font-body text-white/80 text-base leading-relaxed">
-                    Upload it to your AI assistant — Claude, ChatGPT, Gemini, or whichever tool you use. Paste it into the custom instructions, project files, or system prompt. This is what gives your AI real context about who you are.
-                  </p>
+                <p className="font-body text-white/80 text-base leading-relaxed">
+                  Copy your document using the button above, or download it as a markdown file. This is your {config.title} — keep it somewhere you can find it.
+                </p>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-teal/20 flex items-center justify-center flex-shrink-0">
+                  <span className="font-display text-teal font-bold text-sm">2</span>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-teal/20 flex items-center justify-center flex-shrink-0">
-                    <span className="font-display text-teal font-bold text-sm">3</span>
-                  </div>
-                  <p className="font-body text-white/80 text-base leading-relaxed">
-                    Start a conversation and see the difference. Your AI will stop guessing and start responding like it actually knows you — because now it does.
-                  </p>
+                <p className="font-body text-white/80 text-base leading-relaxed">
+                  Upload it to your AI assistant — Claude, ChatGPT, Gemini, or whichever tool you use. Paste it into the custom instructions, project files, or system prompt. This is what gives your AI real context about who you are.
+                </p>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-teal/20 flex items-center justify-center flex-shrink-0">
+                  <span className="font-display text-teal font-bold text-sm">3</span>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-ochre/20 flex items-center justify-center flex-shrink-0">
-                    <span className="font-display text-ochre font-bold text-sm">4</span>
-                  </div>
-                  <div>
-                    <p className="font-body text-white/80 text-base leading-relaxed">
-                      Ready for more? Your Constitution is just the first anchor. Build out your Writing Codex, Story Bank, State of the Union, Timeline, and Influence Roster to give your AI the full picture.
-                    </p>
-                    <Link
-                      href="/anchors"
-                      className="inline-flex items-center gap-2 mt-3 font-body font-semibold text-sm text-teal hover:text-teal-light transition-colors duration-200"
-                    >
-                      Explore all six anchors →
-                    </Link>
-                  </div>
+                <p className="font-body text-white/80 text-base leading-relaxed">
+                  Start a conversation and see the difference. Your AI will stop guessing and start responding like it actually knows you — because now it does.
+                </p>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-ochre/20 flex items-center justify-center flex-shrink-0">
+                  <span className="font-display text-ochre font-bold text-sm">4</span>
+                </div>
+                <div>
+                  <p className="font-body text-white/80 text-base leading-relaxed">
+                    Ready for more? Your {config.title} is just the first anchor. Build out your Writing Codex, Story Bank, State of the Union, Timeline, and Influence Roster to give your AI the full picture.
+                  </p>
+                  <Link
+                    href="/anchors"
+                    className="inline-flex items-center gap-2 mt-3 font-body font-semibold text-sm text-teal hover:text-teal-light transition-colors duration-200"
+                  >
+                    Explore all six anchors →
+                  </Link>
                 </div>
               </div>
             </div>
 
             {/* Start over */}
-            <div className="text-center mt-10 pt-6 border-t border-navy/[0.08]">
+            <div className="text-center mt-14 pt-8 border-t border-white/[0.08]">
               <button
                 type="button"
                 onClick={reset}
-                className="font-body text-sm text-navy/50 hover:text-navy/70 hover:bg-navy/5 px-6 py-3 rounded-lg transition-all duration-200"
+                className="font-body text-sm text-white/30 hover:text-white/60 px-6 py-3 rounded-lg transition-all duration-200"
               >
                 Start Over — Build a New {config.title}
               </button>
             </div>
-          </>
-        )}
-      </div>
+          </div>
+
+          {/* Gold line before footer */}
+          <div className="h-[2px] bg-gradient-to-r from-transparent via-ochre/50 to-transparent" aria-hidden="true" />
+        </section>
+      )}
 
       <style>{`
         @keyframes fade-in {
@@ -507,7 +543,6 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
       <>
         <DocumentHero config={config} />
         <AnchorComplete config={config} />
-        <FullBuildCTA currentSlug={config.slug} />
       </>
     )
   }
