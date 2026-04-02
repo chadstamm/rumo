@@ -507,6 +507,7 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
       <>
         <DocumentHero config={config} />
         <AnchorComplete config={config} />
+        <FullBuildCTA currentSlug={config.slug} />
       </>
     )
   }
