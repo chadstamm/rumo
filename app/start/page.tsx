@@ -78,9 +78,7 @@ export default function ChartYourCoursePage() {
           </h1>
           <div className="w-12 h-[2px] bg-ochre/50 mb-6 sm:mb-8" aria-hidden="true" />
           <p className="font-body text-cream/60 text-lg sm:text-xl leading-relaxed max-w-2xl mb-8">
-            Build all six context anchors in one session. {totalQuestions}&nbsp;questions that cover
-            who you are, how you write, what you&apos;ve lived, where you are now, where you&apos;ve
-            been, and who matters. When you&apos;re done, your AI has the full picture.
+            Build all six context anchors in one session. {totalQuestions}&nbsp;questions that cover who you are, how you write, what you&apos;ve lived, where you are now, where you&apos;ve been, and who matters. When you&apos;re done, your AI has the full picture.
           </p>
           <div className="flex flex-col sm:flex-row items-start gap-4 mt-10">
             <Link
@@ -125,9 +123,7 @@ export default function ChartYourCoursePage() {
               </div>
               <h3 className="font-display text-navy font-semibold text-lg mb-2">Answer the questions</h3>
               <p className="font-body text-navy/50 text-sm leading-relaxed">
-                {totalQuestions}&nbsp;questions across six categories. Skip any you want.
-                Upload existing documents to get a head start. Use your microphone
-                if you think better out loud.
+                {totalQuestions}&nbsp;questions across six categories. Skip any you want. Upload existing documents to get a head start. Use your microphone if you think better out loud.
               </p>
             </div>
             <div>
@@ -136,9 +132,7 @@ export default function ChartYourCoursePage() {
               </div>
               <h3 className="font-display text-navy font-semibold text-lg mb-2">We generate your anchors</h3>
               <p className="font-body text-navy/50 text-sm leading-relaxed">
-                AI analyzes your answers and builds six personalized context documents.
-                Your Constitution, Writing Codex, Story Bank, State of the Union,
-                Timeline, and Influence Roster.
+                AI analyzes your answers and builds six personalized context documents. Your Constitution, Writing Codex, Story Bank, State of the Union, Timeline, and Influence Roster.
               </p>
             </div>
             <div>
@@ -147,8 +141,7 @@ export default function ChartYourCoursePage() {
               </div>
               <h3 className="font-display text-navy font-semibold text-lg mb-2">Give your AI direction</h3>
               <p className="font-body text-navy/50 text-sm leading-relaxed">
-                Upload your documents to Claude, ChatGPT, Gemini, or any AI you use.
-                It stops guessing and starts responding like it actually knows you.
+                Upload your documents to Claude, ChatGPT, Gemini, or any AI you use. It stops guessing and starts responding like it actually knows you.
               </p>
             </div>
           </div>
@@ -267,8 +260,7 @@ export default function ChartYourCoursePage() {
             </h2>
 
             <p className="font-body text-cream/50 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-4">
-              {totalQuestions}&nbsp;questions. Six documents. One session that changes
-              how your AI works with you.
+              {totalQuestions}&nbsp;questions. Six documents. One session that changes how your AI works with you.
             </p>
 
             <p className="font-body text-cream/30 text-sm mb-10">
