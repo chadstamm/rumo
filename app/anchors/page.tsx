@@ -226,7 +226,7 @@ export default function AnchorsPage() {
           </div>
 
           {/* Anchor icon row */}
-          <div className="flex items-center justify-center gap-4 sm:gap-8 lg:gap-12 mb-14">
+          <div className="grid grid-cols-3 sm:flex sm:items-center sm:justify-center gap-6 sm:gap-8 lg:gap-12 mb-14 justify-items-center">
             {DOCUMENTS.map((doc) => (
               <Link
                 key={doc.slug}
@@ -245,12 +245,12 @@ export default function AnchorsPage() {
                       alt={doc.title}
                       width={56}
                       height={56}
-                      className="relative opacity-50 group-hover:opacity-100 transition-all duration-300"
+                      className="relative w-9 h-9 sm:w-14 sm:h-14 opacity-50 group-hover:opacity-100 transition-all duration-300"
                       style={{ filter: 'brightness(0) invert(1)' }}
                     />
                   )}
                 </div>
-                <span className="font-body text-[10px] sm:text-xs tracking-[0.15em] uppercase text-cream/30 group-hover:text-cream/70 transition-colors duration-300">
+                <span className="font-body text-[10px] sm:text-xs tracking-[0.1em] sm:tracking-[0.15em] uppercase text-cream/30 group-hover:text-cream/70 transition-colors duration-300">
                   {ANCHOR_CTA_LABELS[doc.slug] || doc.title}
                 </span>
                 {doc.slug === 'constitution' && (
