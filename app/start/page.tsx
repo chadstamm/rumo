@@ -95,8 +95,8 @@ export default function ChartYourCoursePage() {
                 <path d="M5 10h10M12 6.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
-            <span className="font-body text-cream/30 text-sm self-center">
-              $49/year <span className="text-cream/20">·</span> all six anchors <span className="text-cream/20">·</span> unlimited updates
+            <span className="font-body text-cream/60 text-sm self-center">
+              $49/year <span className="text-cream/40">·</span> all six anchors <span className="text-cream/40">·</span> unlimited updates
             </span>
           </div>
         </div>
