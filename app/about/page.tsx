@@ -90,7 +90,7 @@ export default function AboutPage() {
               GET STARTED &mdash; IT&apos;S FREE
             </Link>
             <p className="font-body text-navy/40 text-sm mt-4">
-              Build your Personal Constitution in about 15 minutes. No account required.
+              Build your Personal Constitution in about 15 minutes.
             </p>
           </div>
         </div>
