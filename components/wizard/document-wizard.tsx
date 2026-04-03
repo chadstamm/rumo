@@ -7,6 +7,7 @@ import { getQuestionsForSection } from '@/data/questions'
 import { CompassRose } from '@/components/compass-rose'
 import { WizardProvider } from '@/context/wizard-context'
 import { useWizard } from '@/context/wizard-context'
+import { LeadGateForm, hasLeadBeenCaptured } from './lead-gate-form'
 import { ProgressBar } from './progress-bar'
 import { QuestionStep } from './question-step'
 import { SectionTransition } from './section-transition'
@@ -523,6 +524,7 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
   // Skip intro on resume if user already has answers (bug fix: refresh shows intro again)
   const [showingSectionIntro, setShowingSectionIntro] = useState(() => totalAnswered === 0)
   const [lastSection, setLastSection] = useState(state.currentSection)
+  const [leadGatePassed, setLeadGatePassed] = useState(() => hasLeadBeenCaptured())
   const questionCount = config.sections.reduce<number>(
     (sum, s) => sum + getQuestionsForSection(s).length,
     0
@@ -536,6 +538,21 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
     const isGoingBack = newIdx < oldIdx
     setLastSection(state.currentSection)
     setShowingSectionIntro(!isGoingBack)
+  }
+
+  // Gate: show lead capture form after last question, before generation (Constitution only)
+  const needsLeadGate = config.slug === 'constitution' && !leadGatePassed
+
+  if (isComplete && needsLeadGate) {
+    return (
+      <>
+        <DocumentHero config={config} />
+        <LeadGateForm
+          totalAnswered={totalAnswered}
+          onComplete={() => setLeadGatePassed(true)}
+        />
+      </>
+    )
   }
 
   if (isComplete) {
