@@ -82,9 +82,25 @@ export default function ChartYourCoursePage() {
             who you are, how you write, what you&apos;ve lived, where you are now, where you&apos;ve
             been, and who matters. When you&apos;re done, your AI has the full picture.
           </p>
-          <p className="font-body text-cream/30 text-sm">
-            $49/year <span className="text-cream/20">·</span> all six anchors <span className="text-cream/20">·</span> unlimited updates <span className="text-cream/20">·</span> vault access
-          </p>
+          <div className="flex flex-col sm:flex-row items-start gap-4 mt-10">
+            <Link
+              href="/pricing"
+              className="inline-flex items-center gap-3 font-body font-bold text-sm sm:text-base tracking-[0.1em] uppercase
+                         px-10 py-4 sm:py-5 rounded-full
+                         bg-ochre text-white shadow-lg shadow-ochre/25
+                         hover:bg-ochre-light hover:shadow-xl hover:shadow-ochre/35
+                         hover:-translate-y-1 active:translate-y-0
+                         transition-all duration-300"
+            >
+              GET STARTED
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M5 10h10M12 6.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+            <span className="font-body text-cream/30 text-sm self-center">
+              $49/year <span className="text-cream/20">·</span> all six anchors <span className="text-cream/20">·</span> unlimited updates
+            </span>
+          </div>
         </div>
       </div>
 
