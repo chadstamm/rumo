@@ -20,11 +20,12 @@ interface LeadGateFormProps {
 
 export function LeadGateForm({ onComplete, totalAnswered, onStartOver }: LeadGateFormProps) {
   const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const isValid = firstName.trim().length > 0 && email.trim().includes('@')
+  const isValid = firstName.trim().length > 0 && lastName.trim().length > 0 && email.trim().includes('@')
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -42,6 +43,7 @@ export function LeadGateForm({ onComplete, totalAnswered, onStartOver }: LeadGat
           body: JSON.stringify({
             fields: [
               { name: 'firstname', value: firstName.trim() },
+              { name: 'lastname', value: lastName.trim() },
               { name: 'email', value: email.trim() },
             ],
             context: {
@@ -94,7 +96,7 @@ export function LeadGateForm({ onComplete, totalAnswered, onStartOver }: LeadGat
           <div className="w-10 h-[2px] bg-ochre/40 mx-auto mb-6" aria-hidden="true" />
 
           <p className="font-body text-navy/55 text-base sm:text-lg leading-relaxed max-w-md mx-auto">
-            You just answered {totalAnswered} questions about who you are and
+            You just answered {totalAnswered}&nbsp;questions about who you are and
             what you stand for. That&apos;s the raw material for your Personal Constitution.
           </p>
         </div>
@@ -115,27 +117,50 @@ export function LeadGateForm({ onComplete, totalAnswered, onStartOver }: LeadGat
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5 max-w-sm mx-auto">
-              <div>
-                <label
-                  htmlFor="lead-first-name"
-                  className="block font-body text-xs font-bold tracking-[0.1em] uppercase text-navy/50 mb-2"
-                >
-                  First Name
-                </label>
-                <input
-                  id="lead-first-name"
-                  type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="Your first name"
-                  autoComplete="given-name"
-                  autoFocus
-                  className="w-full px-5 py-3.5 rounded-xl border border-navy/12 bg-cream/50
-                             font-body text-navy text-base
-                             placeholder:text-navy/25
-                             focus:outline-none focus:ring-2 focus:ring-teal/30 focus:border-teal/40 focus:bg-white
-                             transition-all duration-200"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    htmlFor="lead-first-name"
+                    className="block font-body text-xs font-bold tracking-[0.1em] uppercase text-navy/50 mb-2"
+                  >
+                    First Name
+                  </label>
+                  <input
+                    id="lead-first-name"
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="First"
+                    autoComplete="given-name"
+                    autoFocus
+                    className="w-full px-5 py-3.5 rounded-xl border border-navy/12 bg-cream/50
+                               font-body text-navy text-base
+                               placeholder:text-navy/25
+                               focus:outline-none focus:ring-2 focus:ring-teal/30 focus:border-teal/40 focus:bg-white
+                               transition-all duration-200"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="lead-last-name"
+                    className="block font-body text-xs font-bold tracking-[0.1em] uppercase text-navy/50 mb-2"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    id="lead-last-name"
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="Last"
+                    autoComplete="family-name"
+                    className="w-full px-5 py-3.5 rounded-xl border border-navy/12 bg-cream/50
+                               font-body text-navy text-base
+                               placeholder:text-navy/25
+                               focus:outline-none focus:ring-2 focus:ring-teal/30 focus:border-teal/40 focus:bg-white
+                               transition-all duration-200"
+                  />
+                </div>
               </div>
 
               <div>
