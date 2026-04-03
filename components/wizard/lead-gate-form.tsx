@@ -230,32 +230,6 @@ export function LeadGateForm({ onComplete, totalAnswered, onStartOver }: LeadGat
           </button>
         </div>
 
-        {/* Trust signals */}
-        <div className="flex items-center justify-center gap-6 mt-4">
-          <div className="flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="#1ebeb1" strokeWidth="2" strokeLinejoin="round" />
-              <path d="M9 12l2 2 4-4" stroke="#1ebeb1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="font-body text-xs text-navy/35">Your data stays yours</span>
-          </div>
-          <div className="w-px h-3 bg-navy/10" />
-          <div className="flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="11" width="18" height="10" rx="2" stroke="#1ebeb1" strokeWidth="2" />
-              <path d="M7 11V7a5 5 0 0110 0v4" stroke="#1ebeb1" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-            <span className="font-body text-xs text-navy/35">No spam, ever</span>
-          </div>
-          <div className="w-px h-3 bg-navy/10" />
-          <div className="flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="9" stroke="#1ebeb1" strokeWidth="2" />
-              <path d="M12 7v5l3 3" stroke="#1ebeb1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="font-body text-xs text-navy/35">Ready in under a minute</span>
-          </div>
-        </div>
 
       </div>
     </div>
