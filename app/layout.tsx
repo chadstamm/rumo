@@ -20,9 +20,33 @@ const sail = Sail({
 })
 
 export const metadata: Metadata = {
-  title: 'RUMO — Give Your AI Direction',
+  metadataBase: new URL('https://www.withrumo.com'),
+  title: {
+    default: 'RUMO — Give Your AI Direction',
+    template: '%s — RUMO',
+  },
   description:
     'Build the context anchors your AI agent needs to actually know you. Six anchors. One system. AI that works because it knows who you are.',
+  openGraph: {
+    type: 'website',
+    siteName: 'RUMO',
+    title: 'RUMO — Give Your AI Direction',
+    description: 'Build the context anchors your AI needs to actually know you. Six anchors. One system. Your identity, voice, stories, situation, timeline, and relationships.',
+    images: [
+      {
+        url: '/anchors-hero.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'RUMO — Give Your AI Direction',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'RUMO — Give Your AI Direction',
+    description: 'Build the context anchors your AI needs to actually know you. Six anchors. One system.',
+    images: ['/anchors-hero.jpg'],
+  },
 }
 
 export default function RootLayout({
