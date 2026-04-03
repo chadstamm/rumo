@@ -15,9 +15,19 @@ export function Hero() {
       id="hero"
       className="relative min-h-screen w-full overflow-hidden flex flex-col"
     >
-      {/* ── Video Background ── */}
+      {/* ── Mobile: Static Background ── */}
+      <Image
+        src="/hero-mobile.jpg"
+        alt=""
+        fill
+        className="object-cover md:hidden"
+        priority
+        aria-hidden="true"
+      />
+
+      {/* ── Desktop: Video Background ── */}
       <video
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover hidden md:block"
         autoPlay
         muted
         loop
@@ -104,8 +114,8 @@ export function Hero() {
           <a
             href="/anchors/constitution"
             className="glow-hover group inline-flex items-center gap-2.5
-                       px-8 py-4 rounded-full
-                       bg-teal text-white font-body font-bold text-sm tracking-[0.12em]
+                       px-6 sm:px-8 py-4 rounded-full whitespace-nowrap
+                       bg-teal text-white font-body font-bold text-xs sm:text-sm tracking-[0.12em]
                        shadow-lg shadow-teal/25
                        transition-all duration-300
                        hover:bg-teal-light

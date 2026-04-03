@@ -269,7 +269,7 @@ export default function ChartYourCoursePage() {
           </div>
 
           {/* Anchor icon row */}
-          <div className="flex items-center justify-center gap-4 sm:gap-8 lg:gap-12 mb-14">
+          <div className="grid grid-cols-3 sm:flex sm:items-center sm:justify-center gap-6 sm:gap-8 lg:gap-12 mb-14">
             {DOCUMENTS.map((doc) => (
               <div
                 key={doc.slug}
@@ -281,11 +281,11 @@ export default function ChartYourCoursePage() {
                     alt={doc.title}
                     width={48}
                     height={48}
-                    className="opacity-50"
+                    className="w-9 h-9 sm:w-12 sm:h-12 opacity-50"
                     style={{ filter: 'brightness(0) invert(1)' }}
                   />
                 )}
-                <span className="font-body text-[10px] sm:text-xs tracking-[0.15em] uppercase text-cream/30">
+                <span className="font-body text-[10px] sm:text-xs tracking-[0.1em] sm:tracking-[0.15em] uppercase text-cream/30">
                   {ANCHOR_SHORT_LABELS[doc.slug] || doc.title}
                 </span>
               </div>
