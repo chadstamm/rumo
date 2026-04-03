@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { Open_Sans, Sail } from 'next/font/google'
 import './globals.css'
 import { Nav } from '@/components/nav'
@@ -37,6 +38,12 @@ export default function RootLayout({
           {children}
           <Footer />
         </AuthProvider>
+        {/* HubSpot Tracking Code */}
+        <Script
+          id="hs-script-loader"
+          src="//js-eu1.hs-scripts.com/148185112.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
