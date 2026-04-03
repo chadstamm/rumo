@@ -122,7 +122,7 @@ export default function ChartYourCoursePage() {
                 <span className="font-display text-teal font-bold text-sm">1</span>
               </div>
               <h3 className="font-display text-navy font-semibold text-lg mb-2">Answer the questions</h3>
-              <p className="font-body text-navy/50 text-sm leading-relaxed">
+              <p className="font-body text-navy/50 text-base leading-relaxed">
                 {totalQuestions}&nbsp;questions across six categories. Skip any you want. Upload existing documents to get a head start. Use your microphone if you think better out loud.
               </p>
             </div>
@@ -131,7 +131,7 @@ export default function ChartYourCoursePage() {
                 <span className="font-display text-teal font-bold text-sm">2</span>
               </div>
               <h3 className="font-display text-navy font-semibold text-lg mb-2">We generate your anchors</h3>
-              <p className="font-body text-navy/50 text-sm leading-relaxed">
+              <p className="font-body text-navy/50 text-base leading-relaxed">
                 AI analyzes your answers and builds six personalized context documents. Your Constitution, Writing Codex, Story Bank, State of the Union, Timeline, and Influence Roster.
               </p>
             </div>
@@ -140,7 +140,7 @@ export default function ChartYourCoursePage() {
                 <span className="font-display text-teal font-bold text-sm">3</span>
               </div>
               <h3 className="font-display text-navy font-semibold text-lg mb-2">Give your AI direction</h3>
-              <p className="font-body text-navy/50 text-sm leading-relaxed">
+              <p className="font-body text-navy/50 text-base leading-relaxed">
                 Upload your documents to Claude, ChatGPT, Gemini, or any AI you use. It stops guessing and starts responding like it actually knows you.
               </p>
             </div>
@@ -210,7 +210,7 @@ export default function ChartYourCoursePage() {
                       </p>
                     )}
 
-                    <p className="font-body text-navy/50 text-sm leading-relaxed">
+                    <p className="font-body text-navy/50 text-base leading-relaxed">
                       {doc.description}
                     </p>
                   </div>
