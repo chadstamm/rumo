@@ -38,6 +38,17 @@ export default function RootLayout({
           {children}
           <Footer />
         </AuthProvider>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-XS6FSPQRH5"
+          strategy="afterInteractive"
+        />
+        <Script id="ga-config" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XS6FSPQRH5');`}
+        </Script>
         {/* HubSpot Tracking Code */}
         <Script
           id="hs-script-loader"
