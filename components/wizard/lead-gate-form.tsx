@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { CompassRose } from '@/components/compass-rose'
 
 const HUBSPOT_PORTAL_ID = '148185112'
 const HUBSPOT_FORM_ID = 'c5d9eef0-1915-4b61-9216-14a1505a5f36'
@@ -16,9 +15,10 @@ export function hasLeadBeenCaptured(): boolean {
 interface LeadGateFormProps {
   onComplete: () => void
   totalAnswered: number
+  onStartOver: () => void
 }
 
-export function LeadGateForm({ onComplete, totalAnswered }: LeadGateFormProps) {
+export function LeadGateForm({ onComplete, totalAnswered, onStartOver }: LeadGateFormProps) {
   const [firstName, setFirstName] = useState('')
   const [email, setEmail] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -66,87 +66,172 @@ export function LeadGateForm({ onComplete, totalAnswered }: LeadGateFormProps) {
 
   return (
     <div className="bg-cream">
-      <div className="max-w-lg mx-auto px-6 py-16 sm:py-24">
-        <div className="text-center">
-          <CompassRose className="w-16 h-16 text-teal/30 mx-auto mb-8" />
+      <div className="max-w-2xl mx-auto px-6 py-16 sm:py-24">
 
-          <h2
-            className="font-display text-navy font-semibold leading-tight mb-3"
-            style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
-          >
-            Almost There
-          </h2>
+        {/* Success state — what they accomplished */}
+        <div className="text-center mb-12">
+          {/* Animated checkmark ring */}
+          <div className="relative w-20 h-20 mx-auto mb-8">
+            <div className="absolute inset-0 rounded-full bg-teal/10" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="#1ebeb1" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          </div>
 
-          <p className="font-body text-navy/60 text-base leading-relaxed mb-10">
-            You answered {totalAnswered} questions. Enter your name and email and
-            we&apos;ll generate your Personal Constitution.
+          <p className="font-body text-teal font-bold text-xs sm:text-sm tracking-[0.25em] uppercase mb-4">
+            Questions Complete
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-5 text-left">
-            <div>
-              <label
-                htmlFor="lead-first-name"
-                className="block font-body text-sm font-semibold text-navy/70 mb-1.5"
-              >
-                First Name
-              </label>
-              <input
-                id="lead-first-name"
-                type="text"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                placeholder="Your first name"
-                autoComplete="given-name"
-                className="w-full px-4 py-3 rounded-xl border border-navy/15 bg-white
-                           font-body text-navy text-base
-                           placeholder:text-navy/30
-                           focus:outline-none focus:ring-2 focus:ring-teal/30 focus:border-teal/50
-                           transition-all duration-200"
-              />
-            </div>
+          <h2
+            className="font-display text-navy font-bold leading-tight mb-4"
+            style={{ fontSize: 'clamp(1.75rem, 4vw, 2.75rem)' }}
+          >
+            Your Answers Are In
+          </h2>
 
-            <div>
-              <label
-                htmlFor="lead-email"
-                className="block font-body text-sm font-semibold text-navy/70 mb-1.5"
-              >
-                Email
-              </label>
-              <input
-                id="lead-email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                autoComplete="email"
-                className="w-full px-4 py-3 rounded-xl border border-navy/15 bg-white
-                           font-body text-navy text-base
-                           placeholder:text-navy/30
-                           focus:outline-none focus:ring-2 focus:ring-teal/30 focus:border-teal/50
-                           transition-all duration-200"
-              />
-            </div>
+          <div className="w-10 h-[2px] bg-ochre/40 mx-auto mb-6" aria-hidden="true" />
 
-            {error && (
-              <p className="font-body text-sm text-red-600">{error}</p>
-            )}
-
-            <button
-              type="submit"
-              disabled={!isValid || submitting}
-              className="w-full font-body font-bold text-sm tracking-[0.1em] uppercase
-                         px-8 py-4 rounded-full
-                         bg-teal text-white shadow-md shadow-teal/20
-                         hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30
-                         hover:-translate-y-[1px] active:translate-y-0
-                         disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0
-                         transition-all duration-200"
-            >
-              {submitting ? 'Generating...' : 'Generate My Constitution'}
-            </button>
-          </form>
-
+          <p className="font-body text-navy/55 text-base sm:text-lg leading-relaxed max-w-md mx-auto">
+            You just answered {totalAnswered} questions about who you are and
+            what you stand for. That&apos;s the raw material for your Personal Constitution.
+          </p>
         </div>
+
+        {/* The form card — elevated, distinct */}
+        <div className="relative bg-white rounded-2xl border border-navy/10 shadow-xl shadow-navy/5 overflow-hidden">
+          {/* Top accent */}
+          <div className="h-1 bg-gradient-to-r from-teal via-ochre/40 to-teal" />
+
+          <div className="px-8 py-10 sm:px-12 sm:py-12">
+            <div className="text-center mb-8">
+              <h3 className="font-display text-navy font-semibold text-xl sm:text-2xl mb-2">
+                One Last Step
+              </h3>
+              <p className="font-body text-navy/45 text-sm sm:text-base">
+                Enter your name and email to generate your document.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-5 max-w-sm mx-auto">
+              <div>
+                <label
+                  htmlFor="lead-first-name"
+                  className="block font-body text-xs font-bold tracking-[0.1em] uppercase text-navy/50 mb-2"
+                >
+                  First Name
+                </label>
+                <input
+                  id="lead-first-name"
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="Your first name"
+                  autoComplete="given-name"
+                  autoFocus
+                  className="w-full px-5 py-3.5 rounded-xl border border-navy/12 bg-cream/50
+                             font-body text-navy text-base
+                             placeholder:text-navy/25
+                             focus:outline-none focus:ring-2 focus:ring-teal/30 focus:border-teal/40 focus:bg-white
+                             transition-all duration-200"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="lead-email"
+                  className="block font-body text-xs font-bold tracking-[0.1em] uppercase text-navy/50 mb-2"
+                >
+                  Email
+                </label>
+                <input
+                  id="lead-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                  className="w-full px-5 py-3.5 rounded-xl border border-navy/12 bg-cream/50
+                             font-body text-navy text-base
+                             placeholder:text-navy/25
+                             focus:outline-none focus:ring-2 focus:ring-teal/30 focus:border-teal/40 focus:bg-white
+                             transition-all duration-200"
+                />
+              </div>
+
+              {error && (
+                <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-red-50 border border-red-100">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="flex-shrink-0">
+                    <circle cx="12" cy="12" r="9" stroke="#dc2626" strokeWidth="2" />
+                    <path d="M12 9v4M12 17h.01" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                  <p className="font-body text-sm text-red-700">{error}</p>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={!isValid || submitting}
+                className="w-full font-body font-bold text-sm tracking-[0.1em] uppercase
+                           px-8 py-4 rounded-full mt-2
+                           bg-teal text-white shadow-lg shadow-teal/20
+                           hover:bg-teal-light hover:shadow-xl hover:shadow-teal/30
+                           hover:-translate-y-[1px] active:translate-y-0
+                           disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:shadow-none
+                           transition-all duration-200"
+              >
+                {submitting ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeDasharray="60" strokeDashoffset="15" strokeLinecap="round" />
+                    </svg>
+                    Generating...
+                  </span>
+                ) : 'Generate My Constitution'}
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* Start over */}
+        <div className="text-center mt-6">
+          <button
+            type="button"
+            onClick={onStartOver}
+            className="font-body text-xs text-navy/30 hover:text-navy/50 px-4 py-2 transition-colors duration-200"
+          >
+            Start Over
+          </button>
+        </div>
+
+        {/* Trust signals */}
+        <div className="flex items-center justify-center gap-6 mt-4">
+          <div className="flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="#1ebeb1" strokeWidth="2" strokeLinejoin="round" />
+              <path d="M9 12l2 2 4-4" stroke="#1ebeb1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="font-body text-xs text-navy/35">Your data stays yours</span>
+          </div>
+          <div className="w-px h-3 bg-navy/10" />
+          <div className="flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="11" width="18" height="10" rx="2" stroke="#1ebeb1" strokeWidth="2" />
+              <path d="M7 11V7a5 5 0 0110 0v4" stroke="#1ebeb1" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            <span className="font-body text-xs text-navy/35">No spam, ever</span>
+          </div>
+          <div className="w-px h-3 bg-navy/10" />
+          <div className="flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="#1ebeb1" strokeWidth="2" />
+              <path d="M12 7v5l3 3" stroke="#1ebeb1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="font-body text-xs text-navy/35">Ready in under a minute</span>
+          </div>
+        </div>
+
       </div>
     </div>
   )

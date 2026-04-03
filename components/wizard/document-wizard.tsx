@@ -520,7 +520,7 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
 // ── Anchor Wizard Body (inside WizardProvider) ──
 
 function AnchorWizardBody({ config }: { config: DocumentConfig }) {
-  const { state, activeSections, isComplete, totalAnswered } = useWizard()
+  const { state, activeSections, isComplete, totalAnswered, reset } = useWizard()
   // Skip intro on resume if user already has answers (bug fix: refresh shows intro again)
   const [showingSectionIntro, setShowingSectionIntro] = useState(() => totalAnswered === 0)
   const [lastSection, setLastSection] = useState(state.currentSection)
@@ -550,6 +550,7 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
         <LeadGateForm
           totalAnswered={totalAnswered}
           onComplete={() => setLeadGatePassed(true)}
+          onStartOver={reset}
         />
       </>
     )
