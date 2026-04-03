@@ -78,7 +78,7 @@ export default function ChartYourCoursePage() {
           </h1>
           <div className="w-12 h-[2px] bg-ochre/50 mb-6 sm:mb-8" aria-hidden="true" />
           <p className="font-body text-cream/60 text-lg sm:text-xl leading-relaxed max-w-2xl mb-8">
-            Build all six context anchors in one session &mdash; {totalQuestions}&nbsp;questions that cover who you are, how you write, what you&apos;ve lived, where you are now, where you&apos;ve been, and who matters. When you&apos;re done, your AI has the full picture.
+            Build all six context anchors in one session &mdash; {totalQuestions}&nbsp;questions that cover who you are, how you write, what you&apos;ve lived, where you are now, where you&apos;ve been, and who matters. When you&apos;re done, your AI has the full picture and knows how to best work with you.
           </p>
           <div className="flex flex-col sm:flex-row items-start gap-4 mt-10">
             <Link
