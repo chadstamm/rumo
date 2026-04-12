@@ -1,15 +1,15 @@
 import type { WizardQuestion } from '@/types/wizard'
 
 /**
- * Rumo Unified Question Set — 68 curated questions across 7 sections (6 anchors + shared intake)
+ * Rumo Unified Question Set — 73 curated questions across 7 sections (6 anchors + shared intake)
  *
  * Curated from 124 questions across WeTheMe, WriteLikeMe, and StoryArchive,
  * plus Timeline, Influence Roster, and Situation sections.
  *
- * Section 0 (Shared Intake): 7 questions — collected first, feeds all generation prompts
- * Section 1 (Identity): 10 questions — values, beliefs, aspirations → Personal Constitution
- * Section 2 (Voice): 12 questions — writing patterns, style, samples → Writing Codex
- * Section 3 (Stories): 9 questions — memory triggers, signature language → Story Bank
+ * Section 0 (Shared Intake): 5 questions — collected first, feeds all generation prompts
+ * Section 1 (Identity): 14 questions — values, beliefs, aspirations → Personal Constitution
+ * Section 2 (Voice): 17 questions — writing patterns, mechanics, style, constraints, samples → Writing Codex
+ * Section 3 (Stories): 11 questions — memory triggers, relationships, career, loss, language → Story Bank
  * Section 4 (Timeline): 10 questions — milestones, chapters, trajectory → Timeline
  * Section 5 (Influence Roster): 10 questions — relationships, network, people context → Influence Roster
  * Section 6 (Situation): 10 questions — current season, constraints, priorities → State of the Union
@@ -43,24 +43,10 @@ export const QUESTIONS: WizardQuestion[] = [
     id: 'background-docs',
     section: 0,
     question: 'Have any existing documents that help tell your story?',
-    subtext: 'Bios, resumes, writing samples, LinkedIn profiles — anything that gives us a head start. Totally optional.',
+    subtext: 'Bios, resumes, LinkedIn profiles, personal statements — context about who you are. Totally optional. (Writing samples go later.)',
     inputType: 'file',
     acceptTypes: '.txt,.md,.doc,.docx,.pdf',
     placeholder: '',
-  },
-  {
-    id: 'core-values',
-    section: 0,
-    question: 'What are the 3-5 values you\'d fight for, even when it\'s inconvenient?',
-    subtext: 'Not the values that sound good on paper. The ones that actually cost you something.',
-    considerations: [
-      'When have you sacrificed comfort to protect a value?',
-      'What do you judge others for? (This often reveals your deepest values.)',
-      'What would you want people to say about you when you\'re not in the room?',
-    ],
-    inputType: 'textarea',
-    placeholder: 'Be specific. "Integrity" is a start — but what does that look like in your real life?',
-    required: true,
   },
   {
     id: 'influences',
@@ -80,9 +66,31 @@ export const QUESTIONS: WizardQuestion[] = [
     placeholder: 'I always say...',
     required: true,
   },
+
+
+
+  // ═══════════════════════════════════════════════════
+  // SECTION 1: IDENTITY
+  // "Who you are when no one's watching"
+  // ═══════════════════════════════════════════════════
+
+  {
+    id: 'core-values',
+    section: 1,
+    question: 'What are the 3-5 values you\'d fight for, even when it\'s inconvenient?',
+    subtext: 'Not the values that sound good on paper. The ones that actually cost you something.',
+    considerations: [
+      'When have you sacrificed comfort to protect a value?',
+      'What do you judge others for? (This often reveals your deepest values.)',
+      'What would you want people to say about you when you\'re not in the room?',
+    ],
+    inputType: 'textarea',
+    placeholder: 'Be specific. "Integrity" is a start — but what does that look like in your real life?',
+    required: true,
+  },
   {
     id: 'conflict-approach',
-    section: 0,
+    section: 1,
     question: 'How do you handle conflict, failure, and criticism?',
     subtext: 'Character isn\'t revealed in easy moments. Define who you are when things get hard.',
     considerations: [
@@ -96,7 +104,7 @@ export const QUESTIONS: WizardQuestion[] = [
   },
   {
     id: 'afraid-becoming',
-    section: 0,
+    section: 1,
     question: 'What are you most afraid of becoming?',
     subtext: 'Your anti-goals are as defining as your goals. Name the version of yourself you refuse to accept.',
     inputType: 'textarea',
@@ -105,19 +113,13 @@ export const QUESTIONS: WizardQuestion[] = [
   },
   {
     id: 'energy-map',
-    section: 0,
+    section: 1,
     question: 'What gives you energy, and what drains it?',
     subtext: 'Understanding your energy sources is essential context. AI can\'t help you optimize a life it doesn\'t understand.',
     inputType: 'textarea',
     placeholder: 'I come alive when... I lose energy when...',
     required: true,
   },
-
-  // ═══════════════════════════════════════════════════
-  // SECTION 1: IDENTITY
-  // "Who you are when no one's watching"
-  // ═══════════════════════════════════════════════════
-
   {
     id: 'value-regret',
     section: 1,
@@ -212,21 +214,11 @@ export const QUESTIONS: WizardQuestion[] = [
   // ═══════════════════════════════════════════════════
   // SECTION 2: VOICE
   // "How you write — the patterns that make it yours"
+  // Flow: context → goals → macro voice → mechanics → style → constraints → sample
   // ═══════════════════════════════════════════════════
 
-  {
-    id: 'voice-adjectives',
-    section: 2,
-    question: 'If you had to describe your writing voice in 3-5 adjectives, what would they be?',
-    subtext: 'These core descriptors will anchor your entire voice profile.',
-    considerations: [
-      'Think about what others have said about your writing.',
-      'Consider what makes your writing recognizably "you."',
-    ],
-    inputType: 'textarea',
-    placeholder: 'e.g., direct, warm, analytical, witty, conversational...',
-    required: true,
-  },
+  // ── Context: what you write and why ──
+
   {
     id: 'content-types',
     section: 2,
@@ -248,15 +240,6 @@ export const QUESTIONS: WizardQuestion[] = [
     required: true,
   },
   {
-    id: 'writing-journey',
-    section: 2,
-    question: 'Tell us about your writing journey. How did you get here, and how has your voice evolved?',
-    subtext: 'Your writing story helps us understand the depth and character of your voice.',
-    inputType: 'textarea',
-    placeholder: 'When I first started writing... over time my voice became...',
-    required: true,
-  },
-  {
     id: 'writing-goals',
     section: 2,
     question: 'What do you want your writing to accomplish? What effect do you want on readers?',
@@ -265,44 +248,153 @@ export const QUESTIONS: WizardQuestion[] = [
     placeholder: 'I want my writing to make people feel/think/do...',
     required: true,
   },
+
+  // ── Macro voice: the big picture of how you sound ──
+
+  {
+    id: 'voice-adjectives',
+    section: 2,
+    question: 'If you had to describe your writing voice in 3-5 adjectives, what would they be?',
+    subtext: 'These core descriptors will anchor your entire voice profile.',
+    considerations: [
+      'Think about what others have said about your writing.',
+      'Consider what makes your writing recognizably "you."',
+    ],
+    inputType: 'textarea',
+    placeholder: 'e.g., direct, warm, analytical, witty, conversational...',
+    required: true,
+  },
+  {
+    id: 'writing-journey',
+    section: 2,
+    question: 'Tell us about your writing journey. How did you get here, and how has your voice evolved?',
+    subtext: 'Your writing story helps us understand the depth and character of your voice.',
+    inputType: 'textarea',
+    placeholder: 'When I first started writing... over time my voice became...',
+  },
+
+  // ── Mechanics: the nuts and bolts of how you write ──
+
   {
     id: 'sentence-style',
     section: 2,
-    question: 'Describe your typical sentence structure. Short and punchy, or long and flowing?',
+    question: 'How would you describe your sentence style?',
     subtext: 'Sentence rhythm is one of the most distinctive markers of voice.',
+    considerations: [
+      'More like: "Get to the point. Say it clean. Move on." — or more like: "I tend to build longer sentences that layer ideas together, connecting thoughts with dashes and commas before landing somewhere unexpected."',
+    ],
     inputType: 'textarea',
     placeholder: 'My sentences tend to be...',
     required: true,
   },
   {
-    id: 'humor-role',
+    id: 'paragraph-style',
     section: 2,
-    question: 'What role does humor play in your writing? What type?',
-    subtext: 'Humor is highly personal and often defines voice.',
+    question: 'How do you build paragraphs? Short single-idea blocks, or dense multi-idea chunks?',
+    subtext: 'Paragraph rhythm is the level above sentence rhythm — it controls how your writing breathes.',
     considerations: [
-      'Frequency: constant, occasional, or rare?',
-      'Type: dry wit, self-deprecating, absurdist, sarcasm?',
+      'Do you use one-line paragraphs for emphasis?',
+      'Do you tend toward long blocks or frequent breaks?',
     ],
     inputType: 'textarea',
-    placeholder: 'Humor in my writing is...',
+    placeholder: 'My paragraphs tend to be...',
+  },
+  {
+    id: 'punctuation-preferences',
+    section: 2,
+    question: 'What are your punctuation and formatting habits?',
+    subtext: 'These are among the most mechanically distinctive markers of voice — and the first thing AI gets wrong without explicit rules.',
+    considerations: [
+      'Em-dashes (—) or parentheses for asides?',
+      'Oxford comma: yes or no?',
+      'Ellipses, ALL CAPS, bold, exclamation points — love them or avoid them?',
+    ],
+    inputType: 'textarea',
+    placeholder: 'I use a lot of... I never use... My formatting habits include...',
+  },
+  {
+    id: 'vocabulary-level',
+    section: 2,
+    question: 'How would you describe your vocabulary?',
+    subtext: 'Vocabulary level is one of the fastest ways to tell if AI output sounds like you or not.',
+    considerations: [
+      'More like plain, everyday language — or more like reaching for precise, sometimes uncommon words?',
+      'Do you use industry jargon, or do you translate everything into accessible terms?',
+    ],
+    inputType: 'textarea',
+    placeholder: 'My vocabulary tends to be...',
+  },
+  {
+    id: 'formality-shifts',
+    section: 2,
+    question: 'Does your voice shift depending on what you\'re writing? How?',
+    subtext: 'Most people write differently across contexts. A useful codex captures those shifts, not just one register.',
+    inputType: 'textarea',
+    placeholder: 'In emails I\'m more... In long-form I tend to... On social media I...',
   },
   {
     id: 'opening-style',
     section: 2,
     question: 'How do you typically open a piece of writing?',
     subtext: 'Openings set expectations and often become recognizable patterns.',
+    considerations: [
+      'More like a bold statement or question — or more like easing in with a story or scene?',
+    ],
     inputType: 'textarea',
     placeholder: 'I usually start with...',
     required: true,
   },
   {
+    id: 'closing-style',
+    section: 2,
+    question: 'How do you typically end a piece of writing?',
+    subtext: 'Closings are as distinctive as openings — and often overlooked.',
+    considerations: [
+      'A call to action, a question, a quiet landing, a callback, a punch line?',
+    ],
+    inputType: 'textarea',
+    placeholder: 'I usually end with...',
+  },
+
+  // ── Style: the personality layer ──
+
+  {
+    id: 'humor-role',
+    section: 2,
+    question: 'What role does humor play in your writing?',
+    subtext: 'Humor is highly personal and often defines voice.',
+    considerations: [
+      'Frequency: constant, occasional, or rare?',
+      'Type: dry wit, self-deprecating, absurdist, sarcasm, wordplay?',
+    ],
+    inputType: 'textarea',
+    placeholder: 'Humor in my writing is...',
+  },
+  {
+    id: 'metaphor-style',
+    section: 2,
+    question: 'How do you use metaphors, analogies, and figurative language?',
+    subtext: 'Figurative language reveals how you see and explain the world.',
+    considerations: [
+      'Do you draw from sports, nature, cooking, construction, music, travel — or avoid figurative language entirely?',
+    ],
+    inputType: 'textarea',
+    placeholder: 'I tend to draw comparisons from...',
+  },
+  {
     id: 'rules-broken',
     section: 2,
-    question: 'What conventional writing rules do you break? What unconventional choices define your style?',
+    question: 'What conventional writing rules do you break on purpose?',
     subtext: 'Deliberate rule-breaking often creates distinctive voice.',
+    considerations: [
+      'Starting sentences with "And" or "But"? One-word sentences? Sentence fragments? Ignoring paragraph conventions?',
+    ],
     inputType: 'textarea',
     placeholder: 'I deliberately break the rule about...',
   },
+
+  // ── Constraints: what to avoid ──
+
   {
     id: 'words-avoided',
     section: 2,
@@ -310,7 +402,7 @@ export const QUESTIONS: WizardQuestion[] = [
     subtext: 'What you reject is as important as what you embrace.',
     considerations: [
       'Clichés or overused phrases',
-      'Common AI-sounding phrases (e.g., "dive in," "in conclusion")',
+      'Common AI-sounding phrases (e.g., "dive in," "in conclusion," "let\'s unpack")',
       'Tones or approaches that feel inauthentic to you',
     ],
     inputType: 'textarea',
@@ -318,26 +410,26 @@ export const QUESTIONS: WizardQuestion[] = [
     required: true,
   },
   {
-    id: 'metaphor-style',
+    id: 'anti-voice',
     section: 2,
-    question: 'How do you use metaphors, analogies, and figurative language?',
-    subtext: 'Figurative language reveals how you see and explain the world.',
+    question: 'What would immediately make something NOT sound like you?',
+    subtext: 'This is your voice\'s immune system. The things that, if an AI produced them, you\'d instantly know it wasn\'t yours.',
+    considerations: [
+      'A specific tone? Overly formal? Too casual? Corporate speak?',
+      'Structural patterns — listicles, thesis-first openings, summary closings?',
+      'Emotional patterns — too enthusiastic, too cautious, too polished?',
+    ],
     inputType: 'textarea',
-    placeholder: 'I tend to draw comparisons from...',
-  },
-  {
-    id: 'voice-strengths',
-    section: 2,
-    question: 'What are your greatest writing strengths — and what would immediately make something NOT sound like you?',
-    subtext: 'Knowing both sides ensures your voice is preserved and protected.',
-    inputType: 'textarea',
-    placeholder: 'My strengths are... It\'s NOT me when...',
+    placeholder: 'It\'s NOT me when...',
     required: true,
   },
+
+  // ── Sample: show, don't tell ──
+
   {
     id: 'writing-sample',
     section: 2,
-    question: 'Share a writing sample that represents your voice.',
+    question: 'Share a writing sample that represents your voice at its best.',
     subtext: 'Upload a file or paste text. This is the single most valuable input for capturing your patterns.',
     inputType: 'file',
     acceptTypes: '.txt,.md,.doc,.docx,.pdf',
@@ -413,20 +505,37 @@ export const QUESTIONS: WizardQuestion[] = [
     required: true,
   },
   {
-    id: 'go-to-metaphor',
+    id: 'person-who-changed-you',
     section: 3,
-    question: 'Do you have a go-to metaphor or analogy you reach for when explaining something?',
-    subtext: 'The comparison you keep coming back to because it just works.',
+    question: 'Who\'s a person who changed how you see yourself — and what did they do or say that stuck?',
+    subtext: 'A mentor, a friend, a stranger, a partner. Relationships are where most people\'s best stories live.',
     inputType: 'textarea',
-    placeholder: 'I always compare things to...',
+    placeholder: 'The person who changed me was... What they did/said was...',
+    required: true,
   },
   {
-    id: 'adopted-quote',
+    id: 'professional-moment',
     section: 3,
-    question: 'Is there a quote, saying, or piece of advice you\'ve made your own?',
-    subtext: 'Something someone else said first, but you\'ve lived into.',
+    question: 'What\'s a moment in your work or career that anyone who works with you should know about?',
+    subtext: 'A risk you took, a project that mattered, a time you were wrong in front of people who respected you. The professional story that defines you.',
     inputType: 'textarea',
-    placeholder: 'The words I\'ve adopted...',
+    placeholder: 'The work moment that shaped me...',
+  },
+  {
+    id: 'meaningful-loss',
+    section: 3,
+    question: 'What\'s something you\'ve lost that still shapes how you move through the world?',
+    subtext: 'Not every defining story has a silver lining. Some things break and stay broken — and that changes you.',
+    inputType: 'textarea',
+    placeholder: 'What I lost was... and it still affects me because...',
+  },
+  {
+    id: 'language-you-carry',
+    section: 3,
+    question: 'What metaphors, sayings, or borrowed words do you carry with you?',
+    subtext: 'The comparisons you always reach for, the quotes you\'ve made your own, the phrases that stuck from someone else\'s mouth.',
+    inputType: 'textarea',
+    placeholder: 'I always compare things to... The words I\'ve adopted...',
   },
 
   // ═══════════════════════════════════════════════════

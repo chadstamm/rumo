@@ -15,13 +15,13 @@ const ANCHOR_INTRO: Record<string, { howItWorks: string; beThorough: string; upl
     howItWorks: 'We mine your writing voice through questions about how you communicate, your stylistic preferences, and what makes your words yours. Your answers become your Writing Codex.',
     beThorough: 'Include examples. The more specific you are about your voice — phrases you love, patterns you avoid — the sharper your codex will be.',
     upload: 'Have writing samples, blog posts, or emails that sound like you? Upload them to give RUMO your voice in action.',
-    whatYouGet: 'A Writing Codex document that teaches any AI how to write like you — your tone, your rhythm, your rules.',
+    whatYouGet: 'A structured voice profile you can paste into Claude, ChatGPT, Gemini, or any AI — capturing your tone, rhythm, rules, and the patterns that make your writing yours.',
   },
   'story-bank': {
     howItWorks: 'We mine your lived experience through questions about the moments that shaped you, the language you carry, and the stories you always tell. Your answers become your Story Bank.',
     beThorough: 'Real stories with real details. The messy ones are often the most useful — they give AI texture, not just facts.',
     upload: 'Have journal entries, speeches, or personal essays? Upload them to seed your Story Bank with lived material.',
-    whatYouGet: 'A Story Bank document that gives AI your raw material — so its output feels grounded in your actual life, not generic filler.',
+    whatYouGet: 'A structured document of your stories, phrases, and defining moments — paste it into any AI so its output feels grounded in your actual life, not generic filler.',
   },
   sotu: {
     howItWorks: 'We mine your current season through questions about where you are right now — your priorities, constraints, and what you\'re navigating. Your answers become your State of the Union.',
@@ -100,6 +100,16 @@ export function SectionTransition({
             <InstructionItem
               icon={
                 <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
+                  <path d="M10 3a3 3 0 0 0-3 3v3a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z" stroke="currentColor" strokeWidth="1.5" />
+                  <path d="M5 9v.5a5 5 0 0 0 10 0V9M10 14.5V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              }
+              title="SPEAK YOUR ANSWERS"
+              body="Every question has a microphone button. Talk naturally — no time limits. Your words get transcribed automatically."
+            />
+            <InstructionItem
+              icon={
+                <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
                   {/* Post */}
                   <line x1="10" y1="4" x2="10" y2="18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                   {/* Top sign — pointing right */}
@@ -126,16 +136,6 @@ export function SectionTransition({
             <InstructionItem
               icon={
                 <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
-                  <path d="M10 3a3 3 0 0 0-3 3v3a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z" stroke="currentColor" strokeWidth="1.5" />
-                  <path d="M5 9v.5a5 5 0 0 0 10 0V9M10 14.5V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
-              }
-              title="SPEAK YOUR ANSWERS"
-              body="Every question has a microphone button. Talk naturally — no time limits. Your words get transcribed automatically."
-            />
-            <InstructionItem
-              icon={
-                <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
                   <path d="M4 17V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                   <path d="M8 7h4M8 10h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
@@ -149,7 +149,7 @@ export function SectionTransition({
                   <path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               }
-              title="SKIP ANYTHING"
+              title="TAKE YOUR TIME"
               body="Every question can be skipped. Your progress saves automatically. Come back anytime."
             />
             <InstructionItem
@@ -172,6 +172,9 @@ export function SectionTransition({
             animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
+          <p className="font-body text-navy/40 text-sm mb-4">
+            About 15 minutes if you&apos;re thorough. Faster if you skip.
+          </p>
           <button
             type="button"
             onClick={onBegin}
