@@ -1,7 +1,7 @@
 import type { WizardQuestion } from '@/types/wizard'
 
 /**
- * Rumo Unified Question Set — 73 curated questions across 7 sections (6 anchors + shared intake)
+ * Rumo Unified Question Set — 77 curated questions across 7 sections (6 anchors + shared intake)
  *
  * Curated from 124 questions across WeTheMe, WriteLikeMe, and StoryArchive,
  * plus Timeline, Influence Roster, and Situation sections.
@@ -10,8 +10,8 @@ import type { WizardQuestion } from '@/types/wizard'
  * Section 1 (Identity): 14 questions — values, beliefs, aspirations → Personal Constitution
  * Section 2 (Voice): 17 questions — writing patterns, mechanics, style, constraints, samples → Writing Codex
  * Section 3 (Stories): 11 questions — memory triggers, relationships, career, loss, language → Story Bank
- * Section 4 (Timeline): 10 questions — milestones, chapters, trajectory → Timeline
- * Section 5 (Influence Roster): 10 questions — relationships, network, people context → Influence Roster
+ * Section 4 (Timeline): 12 questions — anchor dates, formative years, chapters, milestones, trajectory → Timeline
+ * Section 5 (Influence Roster): 12 questions — Act 1: your people (6), Act 2: your patterns (6) → Influence Roster
  * Section 6 (Situation): 10 questions — current season, constraints, priorities → State of the Union
  */
 
@@ -51,10 +51,10 @@ export const QUESTIONS: WizardQuestion[] = [
   {
     id: 'influences',
     section: 0,
-    question: 'Who are your biggest influences? Writers, thinkers, mentors, communicators — anyone who shaped how you see the world or express yourself.',
-    subtext: 'Influences reveal the DNA of your style and thinking.',
+    question: 'Who are your biggest intellectual and creative influences? Writers, thinkers, philosophers, communicators — the minds that shaped how you see the world.',
+    subtext: 'Not the people in your daily life — the voices in your head. The ones whose ideas you carry around.',
     inputType: 'textarea',
-    placeholder: 'The people who shaped how I think and communicate...',
+    placeholder: 'The thinkers and creators who shaped how I see the world...',
     required: true,
   },
   {
@@ -543,56 +543,89 @@ export const QUESTIONS: WizardQuestion[] = [
   // "The arc of your life — where you've been and where you're headed"
   // ═══════════════════════════════════════════════════
 
+  // ── Anchor dates: the factual skeleton ──
+
   {
-    id: 'life-chapters',
+    id: 'anchor-dates',
     section: 4,
-    question: 'If you broke your life into chapters, what would they be called?',
-    subtext: 'Give each chapter a name and a rough timeframe. Think of the major eras — the moves, the careers, the relationships, the reinventions.',
+    question: 'Give us a few anchor dates to ground your timeline.',
+    subtext: 'Quick facts — we\'ll build the story around them. Include approximate years for anything you\'re not sure about.',
     considerations: [
-      'Where did each chapter start and end?',
-      'What defined each era?',
-      'Which chapter are you in right now?',
+      'Birth year and where you grew up',
+      'When you graduated (high school, college, or equivalent)',
+      'When you started your current work or career path',
+      'Any other dates that mark a clear before/after in your life',
     ],
     inputType: 'textarea',
-    placeholder: 'Chapter 1: "The Setup" (1985-2005)... Chapter 2: "The Detour" (2005-2012)...',
+    placeholder: 'Born [year] in [place]. Graduated [year]. Started [current work] in [year]...',
     required: true,
   },
+
+  // ── Formative years: where it started ──
+
+  {
+    id: 'formative-years',
+    section: 4,
+    question: 'Where did you grow up, and what did those early years give you?',
+    subtext: 'Family, neighborhood, school, the things that shaped you before you had any say in the matter. This is the foundation everything else builds on.',
+    inputType: 'textarea',
+    placeholder: 'I grew up in... What shaped me most was...',
+    required: true,
+  },
+
+  // ── Career and life arc ──
+
   {
     id: 'career-arc',
     section: 4,
     question: 'Walk through your professional timeline. Jobs, roles, pivots — the path that got you here.',
-    subtext: 'Not a resume. The real version — including the detours, the dead ends, and the lucky breaks.',
+    subtext: 'Not a resume. The real version — including the detours, the dead ends, and the lucky breaks. Include years where you can.',
     inputType: 'textarea',
-    placeholder: 'I started in... then moved to... the pivot that changed everything was...',
+    placeholder: 'I started in [field/role] around [year]... then moved to... the pivot that changed everything was...',
     required: true,
   },
   {
+    id: 'life-chapters',
+    section: 4,
+    question: 'Now zoom out — if you broke your whole life into chapters, what would they be called?',
+    subtext: 'Beyond just career. The eras that include the moves, the relationships, the reinventions. Give each a name and a rough timeframe.',
+    inputType: 'textarea',
+    placeholder: 'Chapter 1: "The Setup" (1985-2005)... Chapter 2: "The Detour" (2005-2012)...',
+    required: true,
+  },
+
+  // ── Key moments and geography ──
+
+  {
     id: 'defining-year',
     section: 4,
-    question: 'What single year changed the trajectory of your life?',
+    question: 'What single year changed the trajectory of your life — and what happened?',
     subtext: 'The one you point to when someone asks "when did things shift?"',
     inputType: 'textarea',
-    placeholder: 'The year was... and what happened was...',
+    placeholder: 'The year was [year], and what happened was...',
     required: true,
   },
   {
     id: 'places-lived',
     section: 4,
     question: 'Where have you lived, and what did each place give you or take from you?',
-    subtext: 'Geography shapes identity. The places you\'ve been aren\'t just backdrop — they\'re character development.',
+    subtext: 'Geography shapes identity. Include approximate years — the places you\'ve been aren\'t just backdrop, they\'re character development.',
     inputType: 'textarea',
-    placeholder: 'I lived in... and it gave me... / took from me...',
+    placeholder: '[Place] ([years]) — gave me... / took from me...',
     required: true,
   },
   {
     id: 'personal-milestones',
     section: 4,
     question: 'What are the personal milestones that matter most — the ones that aren\'t on any resume?',
-    subtext: 'Marriages, kids, losses, moves, breakthroughs, breakdowns. The real markers.',
+    subtext: 'Marriages, kids, losses, moves, breakthroughs, breakdowns. Include approximate years.',
     inputType: 'textarea',
-    placeholder: 'The milestones that shaped me most...',
+    placeholder: '[Year]: [milestone]...',
     required: true,
   },
+
+  // ── Reflection: patterns and regret ──
+
   {
     id: 'pattern-recognition',
     section: 4,
@@ -603,9 +636,20 @@ export const QUESTIONS: WizardQuestion[] = [
     required: true,
   },
   {
+    id: 'timeline-regret',
+    section: 4,
+    question: 'What\'s a period of your life you\'d do differently if you could — and what would you change?',
+    subtext: 'Regret is data. It tells the AI what you\'ve learned and what you\'re compensating for now.',
+    inputType: 'textarea',
+    placeholder: 'If I could redo [period/year]... I would...',
+  },
+
+  // ── Present and future ──
+
+  {
     id: 'current-chapter',
     section: 4,
-    question: 'Describe the chapter you\'re in right now. What\'s it about, and how far into it are you?',
+    question: 'What chapter are you in right now — and how far into it are you?',
     subtext: 'The present chapter is the one your AI needs to understand most. Be specific about what you\'re navigating.',
     inputType: 'textarea',
     placeholder: 'Right now I\'m in the middle of...',
@@ -621,14 +665,6 @@ export const QUESTIONS: WizardQuestion[] = [
     required: true,
   },
   {
-    id: 'timeline-regret',
-    section: 4,
-    question: 'What\'s a period of your life you\'d do differently if you could — and what would you change?',
-    subtext: 'Regret is data. It tells the AI what you\'ve learned and what you\'re compensating for now.',
-    inputType: 'textarea',
-    placeholder: 'If I could redo... I would...',
-  },
-  {
     id: 'legacy-snapshot',
     section: 4,
     question: 'If your timeline ended today, what would the headline be?',
@@ -640,52 +676,57 @@ export const QUESTIONS: WizardQuestion[] = [
 
   // ═══════════════════════════════════════════════════
   // SECTION 5: ROSTER
-  // "The people who matter — relationships, roles, and how you connect"
+  // "The people who matter and how you work with them"
+  //
+  // Act 1 (Q1-6): Your People — build the cast of characters
+  // Act 2 (Q7-12): Your Patterns — how you function in relationships
   // ═══════════════════════════════════════════════════
 
+  // ── Act 1: Your People ──
+
+  {
+    id: 'family-partner',
+    section: 5,
+    question: 'Who\'s your family? Partner, parents, siblings, children — describe each relationship and the role it plays in your life right now.',
+    subtext: 'Start with the people closest to home. If you have a partner, include how you make decisions together, divide responsibilities, and handle conflict.',
+    inputType: 'textarea',
+    placeholder: '[Name] — [relationship, role in your life right now]...',
+    required: true,
+  },
   {
     id: 'inner-circle',
     section: 5,
-    question: 'Who are the 5-7 people closest to you right now? Name them and describe your relationship in one line each.',
-    subtext: 'Partner, family, best friends, business partners — the people who would notice if you disappeared for a week.',
+    question: 'Beyond family, who are the 3-5 people closest to you right now? Name them and describe the dynamic.',
+    subtext: 'Best friends, business partners, confidants — the people who would notice if you disappeared for a week. Don\'t repeat anyone from the family question.',
     inputType: 'textarea',
-    placeholder: '[Name] — [relationship, one line]...',
+    placeholder: '[Name] — [who they are, what the dynamic is]...',
     required: true,
   },
   {
     id: 'professional-network',
     section: 5,
-    question: 'Who are the key people in your professional world? Bosses, collaborators, mentors, clients — the ones who shape your work life.',
-    subtext: 'Include reporting relationships, power dynamics, and how you feel about each connection.',
+    question: 'Who are the key people in your professional world? Name them, describe the dynamic, and note how they prefer to communicate.',
+    subtext: 'Bosses, collaborators, clients, key stakeholders. Include power dynamics and anything your AI should know when helping you write to or about them.',
     inputType: 'textarea',
-    placeholder: '[Name] — [role/relationship, dynamic]...',
+    placeholder: '[Name] — [role, dynamic, how they communicate]...',
     required: true,
   },
   {
     id: 'mentor-figures',
     section: 5,
-    question: 'Who has mentored you — formally or informally — and what did each one give you?',
-    subtext: 'Teachers, coaches, bosses, friends who saw something in you before you did.',
+    question: 'Who has shaped you through direct relationship — formally or informally — and what did each one give you?',
+    subtext: 'Teachers, coaches, bosses, friends who saw something in you before you did. These are people you\'ve actually known, not public figures.',
     inputType: 'textarea',
-    placeholder: '[Name] taught me...',
-    required: true,
-  },
-  {
-    id: 'relationship-style',
-    section: 5,
-    question: 'How do you show up in relationships? What\'s your pattern — the good and the bad?',
-    subtext: 'Are you the initiator or the responder? The planner or the spontaneous one? The one who holds on or the one who lets go?',
-    inputType: 'textarea',
-    placeholder: 'In relationships, I tend to...',
+    placeholder: '[Name] gave me...',
     required: true,
   },
   {
     id: 'difficult-relationship',
     section: 5,
-    question: 'Who\'s a person in your life that challenges you — and what does the friction reveal about you?',
-    subtext: 'Not enemies. The relationships that push your buttons because they mirror something true.',
+    question: 'Is there a relationship in your life right now that carries friction? What does it reveal about you?',
+    subtext: 'Not enemies. The connections that push your buttons because they mirror something true. This helps your AI understand your sensitivities.',
     inputType: 'textarea',
-    placeholder: 'The person who challenges me most is... because...',
+    placeholder: 'The relationship that challenges me most is... because...',
   },
   {
     id: 'lost-connection',
@@ -695,11 +736,23 @@ export const QUESTIONS: WizardQuestion[] = [
     inputType: 'textarea',
     placeholder: 'I still think about... because...',
   },
+
+  // ── Act 2: Your Patterns ──
+
+  {
+    id: 'relationship-style',
+    section: 5,
+    question: 'How do you show up in relationships? What\'s your pattern — the good and the bad?',
+    subtext: 'Now we\'re shifting from specific people to how you function with people in general. Are you the initiator or the responder? The one who holds on or the one who lets go?',
+    inputType: 'textarea',
+    placeholder: 'In relationships, I tend to...',
+    required: true,
+  },
   {
     id: 'communication-preferences',
     section: 5,
-    question: 'How do you prefer to communicate with the people closest to you? And what drives you crazy?',
-    subtext: 'Text vs. call vs. in-person. Quick hits vs. deep dives. Morning person vs. late-night texter. This shapes how your AI interacts about and with others.',
+    question: 'How do you prefer to communicate, and what drives you crazy in how others communicate with you?',
+    subtext: 'Text vs. call vs. in-person. Quick hits vs. deep dives. Morning person vs. late-night texter. What shuts you down.',
     inputType: 'textarea',
     placeholder: 'I prefer... What drives me crazy is...',
     required: true,
@@ -707,10 +760,10 @@ export const QUESTIONS: WizardQuestion[] = [
   {
     id: 'people-energy',
     section: 5,
-    question: 'Who gives you energy and who drains it — and do the people in your life know which category they\'re in?',
-    subtext: 'This isn\'t about being judgmental. It\'s about giving your AI real context for how relationships affect you.',
+    question: 'What kinds of interactions give you energy, and what kinds drain it?',
+    subtext: 'Not who — what. Large groups vs. one-on-one. Small talk vs. deep conversation. Collaboration vs. solo work. This shapes how your AI schedules and frames things.',
     inputType: 'textarea',
-    placeholder: 'Energy givers: ... Energy drains: ...',
+    placeholder: 'I get energy from... I get drained by...',
     required: true,
   },
   {
@@ -720,6 +773,15 @@ export const QUESTIONS: WizardQuestion[] = [
     subtext: 'Everyone has a trust architecture. Yours shapes every relationship you maintain.',
     inputType: 'textarea',
     placeholder: 'I trust people who... I lose trust when...',
+    required: true,
+  },
+  {
+    id: 'ai-relationship-handling',
+    section: 5,
+    question: 'For the key people you\'ve named, how should your AI handle communications with or about them?',
+    subtext: 'Think about tone, topics to avoid, formality level, and context your AI needs. Example: "My boss prefers bullet points and hates preamble. My partner and I joke about everything — keep it light."',
+    inputType: 'textarea',
+    placeholder: 'When writing to [Name], my AI should... When [Name] comes up, keep in mind...',
     required: true,
   },
   {
