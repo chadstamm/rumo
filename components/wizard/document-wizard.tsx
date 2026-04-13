@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import type { DocumentConfig } from '@/data/documents'
 import { getQuestionsForSection } from '@/data/questions'
 import { CompassRose } from '@/components/compass-rose'
@@ -13,6 +14,7 @@ import { QuestionStep } from './question-step'
 import { SectionTransition } from './section-transition'
 import Image from 'next/image'
 import { ANCHOR_ICON_MAP, type AnchorSlug } from '@/components/icons/anchor-icons'
+import { saveToVault } from '@/lib/vault-storage'
 
 const ANCHOR_PNG_ICONS: Record<string, string> = {
   constitution: '/icons/constitution.png',
@@ -160,11 +162,13 @@ const LOADING_MESSAGES = [
 
 function AnchorComplete({ config }: { config: DocumentConfig }) {
   const { state, totalAnswered, reset, generateDocument } = useWizard()
+  const router = useRouter()
   const iconEntry = ANCHOR_ICON_MAP[config.slug as AnchorSlug]
   const hasTriggered = useRef(false)
   const outputRef = useRef<HTMLDivElement>(null)
   const [loadingMsgIdx, setLoadingMsgIdx] = useState(0)
   const [copied, setCopied] = useState(false)
+  const [savedToVault, setSavedToVault] = useState(false)
 
   // Auto-trigger generation on mount
   useEffect(() => {
@@ -366,15 +370,42 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
 
         {/* ── Actions ── */}
         {isDone && (
-          <>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+          <div className="space-y-6">
+            {/* Primary: Save to Vault */}
+            <div className="flex justify-center">
+              <button
+                type="button"
+                onClick={() => {
+                  saveToVault({
+                    content: state.streamedText,
+                    anchorSlug: config.slug,
+                    anchorTitle: config.title,
+                    generatedAt: new Date().toISOString(),
+                    answeredCount: totalAnswered,
+                  })
+                  setSavedToVault(true)
+                  setTimeout(() => router.push('/vault'), 800)
+                }}
+                disabled={savedToVault}
+                className={`font-body font-bold text-sm tracking-[0.1em] uppercase px-10 py-4 rounded-full shadow-lg transition-all duration-300 hover:-translate-y-[1px] ${
+                  savedToVault
+                    ? 'bg-teal/20 text-teal border border-teal/30 cursor-default'
+                    : 'bg-teal text-white shadow-teal/20 hover:bg-teal-light hover:shadow-xl hover:shadow-teal/30'
+                }`}
+              >
+                {savedToVault ? 'Saved — Opening Vault...' : 'Save to Vault'}
+              </button>
+            </div>
+
+            {/* Secondary: Copy, Download, Build Another */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 type="button"
                 onClick={handleCopy}
                 className={`font-body font-semibold text-sm px-7 py-3 rounded-full shadow-md transition-all duration-200 hover:-translate-y-[1px] ${
                   copied
                     ? 'bg-teal/20 text-teal border border-teal/30'
-                    : 'bg-teal text-white shadow-teal/20 hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30'
+                    : 'bg-white text-navy border border-navy/15 hover:border-navy/30 hover:shadow-lg'
                 }`}
               >
                 {copied ? 'Copied!' : 'Copy to Clipboard'}
@@ -391,8 +422,8 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
                   URL.revokeObjectURL(url)
                 }}
                 className="font-body font-semibold text-sm px-7 py-3 rounded-full
-                           bg-ochre text-white shadow-md shadow-ochre/20
-                           hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
+                           bg-white text-navy border border-navy/15
+                           hover:border-navy/30 hover:shadow-lg
                            transition-all duration-200 hover:-translate-y-[1px]"
               >
                 Download .md
@@ -404,8 +435,7 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
                 Build Another Anchor →
               </Link>
             </div>
-
-          </>
+          </div>
         )}
       </div>
 
@@ -492,7 +522,7 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
               <button
                 type="button"
                 onClick={reset}
-                className="font-body text-sm text-white/30 hover:text-white/60 px-6 py-3 rounded-lg transition-all duration-200"
+                className="font-body text-sm text-white/50 hover:text-white/80 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 transition-all duration-200"
               >
                 Start Over — Build a New {config.title}
               </button>
