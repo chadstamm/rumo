@@ -50,12 +50,14 @@ export function SectionTransition({
   anchorSlug,
   totalSections,
   sectionIndex,
+  sectionOverview,
 }: {
   section: Section
   onBegin: () => void
   anchorSlug?: string
   totalSections?: number
   sectionIndex?: number
+  sectionOverview?: { name: string; questionCount: number }[]
 }) {
   const [animate, setAnimate] = useState(false)
 

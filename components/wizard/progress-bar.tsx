@@ -1,13 +1,26 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useWizard } from '@/context/wizard-context'
 import { getQuestionsForSection } from '@/data/questions'
 
 export function ProgressBar() {
   const { state, activeSections, totalQuestionsInSection, totalQuestions, reset } = useWizard()
-  const { currentSection, currentStep } = state
+  const { currentSection, currentStep, updatedAt } = state
   const [showConfirm, setShowConfirm] = useState(false)
+  const [showSaved, setShowSaved] = useState(false)
+  const isFirstRender = useRef(true)
+
+  // Flash "Progress saved" when updatedAt changes (skip initial mount)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    setShowSaved(true)
+    const timer = setTimeout(() => setShowSaved(false), 2000)
+    return () => clearTimeout(timer)
+  }, [updatedAt])
 
   // Calculate absolute question number based on position in sequence
   let currentQuestionNumber = currentStep + 1
@@ -28,11 +41,20 @@ export function ProgressBar() {
         />
       </div>
 
-      {/* Total + reset */}
+      {/* Total + save indicator + reset */}
       <div className="flex items-center justify-between">
-        <p className="font-body text-xs text-navy/60 font-medium">
-          Question {currentQuestionNumber} of {totalQuestions}
-        </p>
+        <div className="flex items-center gap-3">
+          <p className="font-body text-xs text-navy/60 font-medium">
+            Question {currentQuestionNumber} of {totalQuestions}
+          </p>
+          <span
+            className={`font-body text-xs text-teal transition-opacity duration-500 ${
+              showSaved ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            Saved
+          </span>
+        </div>
         {currentQuestionNumber > 1 && (
           <>
             {showConfirm ? (
