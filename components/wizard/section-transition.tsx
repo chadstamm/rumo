@@ -101,16 +101,6 @@ export function SectionTransition({
             <InstructionItem
               icon={
                 <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
-                  <path d="M10 3a3 3 0 0 0-3 3v3a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z" stroke="currentColor" strokeWidth="1.5" />
-                  <path d="M5 9v.5a5 5 0 0 0 10 0V9M10 14.5V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
-              }
-              title="SPEAK YOUR ANSWERS"
-              body="Every question has a microphone button. Talk naturally — no time limits. Your words get transcribed automatically."
-            />
-            <InstructionItem
-              icon={
-                <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
                   {/* Post */}
                   <line x1="10" y1="4" x2="10" y2="18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                   {/* Top sign — pointing right */}
@@ -127,12 +117,12 @@ export function SectionTransition({
             <InstructionItem
               icon={
                 <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
-                  <path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z" stroke="currentColor" strokeWidth="1.5" />
-                  <path d="M10 6v4l2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M10 3a3 3 0 0 0-3 3v3a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z" stroke="currentColor" strokeWidth="1.5" />
+                  <path d="M5 9v.5a5 5 0 0 0 10 0V9M10 14.5V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               }
-              title="BE THOROUGH"
-              body={intro.beThorough}
+              title="SPEAK YOUR ANSWERS"
+              body="Every question has a microphone button. Talk naturally — no time limits. Your words get transcribed automatically."
             />
             <InstructionItem
               icon={
@@ -152,6 +142,16 @@ export function SectionTransition({
               }
               title={intro.uploadTitle || 'UPLOAD EXISTING DOCS'}
               body={intro.upload}
+            />
+            <InstructionItem
+              icon={
+                <svg width="38" height="38" viewBox="0 0 20 20" fill="none">
+                  <path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z" stroke="currentColor" strokeWidth="1.5" />
+                  <path d="M10 6v4l2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              }
+              title="BE THOROUGH"
+              body={intro.beThorough}
             />
             <InstructionItem
               icon={
