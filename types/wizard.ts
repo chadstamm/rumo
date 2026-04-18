@@ -49,6 +49,13 @@ export interface WizardAnswers {
 
 export type GenerationPhase = 'idle' | 'analyzing' | 'generating' | 'streaming' | 'complete' | 'error'
 
+export interface AnchorGenerationState {
+  phase: GenerationPhase
+  content: string
+  error: string | null
+  answeredCount: number
+}
+
 export interface WizardState {
   currentSection: Section
   currentStep: number
@@ -60,6 +67,10 @@ export interface WizardState {
   streamedText: string
   generationError: string | null
   analyzedInsights: Record<string, string>
+  /** Per-anchor generation state for the full-build (chart-your-course) flow */
+  anchorGenerations: Record<string, AnchorGenerationState>
+  /** Slug currently being generated in the full-build flow, or null if idle/done */
+  currentGeneratingSlug: string | null
 }
 
 export const INITIAL_WIZARD_STATE: WizardState = {
@@ -73,4 +84,6 @@ export const INITIAL_WIZARD_STATE: WizardState = {
   streamedText: '',
   generationError: null,
   analyzedInsights: {},
+  anchorGenerations: {},
+  currentGeneratingSlug: null,
 }

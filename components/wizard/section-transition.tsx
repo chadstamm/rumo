@@ -4,7 +4,18 @@ import { useState } from 'react'
 import { SECTION_NAMES, SECTION_SUBTITLES, type Section } from '@/types/wizard'
 
 // Per-anchor copy for the Getting Started section
-const ANCHOR_INTRO: Record<string, { howItWorks: string; beThorough: string; upload: string; uploadTitle?: string; whatYouGet: string }> = {
+const ANCHOR_INTRO: Record<string, { howItWorks: string; beThorough: string; upload: string; uploadTitle?: string; whatYouGet: string; timeEstimate?: string }> = {
+  'chart-your-course': {
+    howItWorks:
+      'Over about an hour, we mine your full context — identity, voice, stories, situation, timeline, and the people who shape your world. Your answers become six personalized context anchors your AI can use anywhere.',
+    beThorough:
+      'You\'re building all six anchors in one session. The deeper you go, the richer each anchor becomes. Skip what doesn\'t fit, take breaks — your progress saves automatically.',
+    upload:
+      'Bios, resumes, journal entries, writing samples — anything that already captures part of who you are. Upload it early and RUMO has a head start.',
+    whatYouGet:
+      'Six structured documents — Constitution, Codex, Story Bank, State of the Union, Timeline, and Influence Roster. Upload them to Claude, ChatGPT, Gemini, or any AI. It stops guessing and starts working like it knows you.',
+    timeEstimate: 'About an hour if you\'re thorough. Less if you skip. You can pause and come back any time.',
+  },
   constitution: {
     howItWorks: 'We mine your context through guided questions about who you are, what you value, and how you see the world. Your answers become your Personal Constitution.',
     beThorough: 'The more detail you give, the better your AI will understand you. No wrong answers — just honest ones.',
@@ -185,7 +196,7 @@ export function SectionTransition({
           }`}
         >
           <p className="font-body text-navy/40 text-sm mb-4">
-            About 15 minutes if you&apos;re thorough. Faster if you skip.
+            {intro.timeEstimate ?? 'About 15 minutes if you\'re thorough. Faster if you skip.'}
           </p>
           <button
             type="button"

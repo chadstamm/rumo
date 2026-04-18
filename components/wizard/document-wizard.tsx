@@ -547,6 +547,227 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
   )
 }
 
+// ── Full Build Complete (Chart Your Course — generates all 6 anchors) ──
+
+const FULL_BUILD_ORDER: Array<{ slug: string; title: string }> = [
+  { slug: 'constitution', title: 'Personal Constitution' },
+  { slug: 'codex', title: 'Writing Codex' },
+  { slug: 'story-bank', title: 'Story Bank' },
+  { slug: 'sotu', title: 'State of the Union' },
+  { slug: 'timeline', title: 'Timeline' },
+  { slug: 'roster', title: 'Influence Roster' },
+]
+
+function FullBuildComplete() {
+  const { state, generateAllAnchors, resetFullBuild } = useWizard()
+  const router = useRouter()
+  const hasTriggered = useRef(false)
+  const [navigating, setNavigating] = useState(false)
+
+  // Auto-trigger generation on mount (only once, only if nothing in flight or done)
+  useEffect(() => {
+    if (hasTriggered.current) return
+    const anyInProgress = Object.values(state.anchorGenerations).some(
+      (a) => a.phase === 'analyzing' || a.phase === 'generating' || a.phase === 'streaming'
+    )
+    const allDone =
+      FULL_BUILD_ORDER.length > 0 &&
+      FULL_BUILD_ORDER.every((a) => state.anchorGenerations[a.slug]?.phase === 'complete')
+    if (!anyInProgress && !allDone) {
+      hasTriggered.current = true
+      generateAllAnchors()
+    } else if (allDone) {
+      hasTriggered.current = true
+    }
+  }, [generateAllAnchors, state.anchorGenerations])
+
+  const completedCount = FULL_BUILD_ORDER.filter(
+    (a) => state.anchorGenerations[a.slug]?.phase === 'complete'
+  ).length
+  const erroredCount = FULL_BUILD_ORDER.filter(
+    (a) => state.anchorGenerations[a.slug]?.phase === 'error'
+  ).length
+  const allDone = completedCount === FULL_BUILD_ORDER.length
+  const allFinished = completedCount + erroredCount === FULL_BUILD_ORDER.length
+
+  const handleGoToVault = () => {
+    setNavigating(true)
+    setTimeout(() => router.push('/vault'), 400)
+  }
+
+  const handleRetryAll = () => {
+    hasTriggered.current = false
+    resetFullBuild()
+    // useEffect will re-trigger on next render since anchorGenerations is empty
+  }
+
+  return (
+    <div className="bg-cream">
+      <div className="max-w-3xl mx-auto px-6 py-16 sm:py-24">
+        {/* Header */}
+        <div className="text-center mb-10">
+          {allDone ? (
+            <>
+              <div className="w-14 h-14 mx-auto mb-5 rounded-full bg-teal/10 flex items-center justify-center">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 13l4 4L19 7" stroke="#1ebeb1" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <h2
+                className="font-display text-navy font-semibold leading-tight mb-3"
+                style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
+              >
+                Your Six Anchors Are Ready
+              </h2>
+              <p className="font-body text-navy/60 text-base leading-relaxed max-w-xl mx-auto">
+                Every anchor is built and saved to your vault. Open the vault to read, copy, download, or upload them to your AI.
+              </p>
+            </>
+          ) : (
+            <>
+              <h2
+                className="font-display text-navy font-semibold leading-tight mb-3"
+                style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
+              >
+                Generating Your Anchors
+              </h2>
+              <p className="font-body text-navy/55 text-base leading-relaxed max-w-xl mx-auto">
+                Building one at a time. Each anchor takes about a minute. {completedCount} of {FULL_BUILD_ORDER.length} done.
+              </p>
+            </>
+          )}
+        </div>
+
+        {/* Progress grid */}
+        <div className="space-y-3 mb-12">
+          {FULL_BUILD_ORDER.map((anchor) => {
+            const gen = state.anchorGenerations[anchor.slug]
+            const phase = gen?.phase ?? 'idle'
+            const isCurrent = state.currentGeneratingSlug === anchor.slug
+            const isDone = phase === 'complete'
+            const isError = phase === 'error'
+            const isWorking =
+              phase === 'analyzing' || phase === 'generating' || phase === 'streaming'
+
+            const statusLabel = (() => {
+              if (isDone) return 'Built'
+              if (isError) return 'Failed'
+              if (phase === 'analyzing') return 'Reading your answers...'
+              if (phase === 'generating') return 'Writing...'
+              if (phase === 'streaming') return 'Writing...'
+              if (isCurrent) return 'Starting...'
+              return 'Waiting'
+            })()
+
+            return (
+              <div
+                key={anchor.slug}
+                className={`flex items-center gap-4 px-5 py-4 rounded-xl border transition-all duration-300 ${
+                  isDone
+                    ? 'bg-teal/[0.04] border-teal/20'
+                    : isError
+                    ? 'bg-red-50 border-red-200'
+                    : isWorking
+                    ? 'bg-white border-ochre/30 shadow-md shadow-ochre/10'
+                    : 'bg-cream border-navy/[0.08]'
+                }`}
+              >
+                {/* Status icon */}
+                <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
+                  {isDone ? (
+                    <div className="w-9 h-9 rounded-full bg-teal flex items-center justify-center">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 13l4 4L19 7" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                  ) : isError ? (
+                    <div className="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 6l12 12M6 18L18 6" stroke="#dc2626" strokeWidth="2.5" strokeLinecap="round" />
+                      </svg>
+                    </div>
+                  ) : isWorking ? (
+                    <div className="w-9 h-9 rounded-full border-2 border-ochre/30 border-t-ochre animate-spin" />
+                  ) : (
+                    <div className="w-9 h-9 rounded-full border-2 border-navy/15" />
+                  )}
+                </div>
+
+                {/* Anchor name + status */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <p className="font-body text-navy font-semibold text-sm sm:text-base">
+                      {anchor.title}
+                    </p>
+                    <p
+                      className={`font-body text-xs tracking-wide ${
+                        isDone
+                          ? 'text-teal font-semibold'
+                          : isError
+                          ? 'text-red-600 font-semibold'
+                          : isWorking
+                          ? 'text-ochre font-semibold'
+                          : 'text-navy/40'
+                      }`}
+                    >
+                      {statusLabel}
+                    </p>
+                  </div>
+                  {isError && gen?.error && (
+                    <p className="font-body text-red-700/80 text-xs mt-1 leading-relaxed">
+                      {gen.error}
+                    </p>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Actions */}
+        {allFinished && (
+          <div className="space-y-5">
+            {completedCount > 0 && (
+              <div className="flex justify-center">
+                <button
+                  type="button"
+                  onClick={handleGoToVault}
+                  disabled={navigating}
+                  className={`font-body font-bold text-sm tracking-[0.1em] uppercase px-12 py-4 rounded-full shadow-lg transition-all duration-300 hover:-translate-y-[1px] ${
+                    navigating
+                      ? 'bg-teal/30 text-teal cursor-default'
+                      : 'bg-teal text-white shadow-teal/25 hover:bg-teal-light hover:shadow-xl hover:shadow-teal/30'
+                  }`}
+                >
+                  {navigating ? 'Opening Vault…' : 'Open Your Vault'}
+                </button>
+              </div>
+            )}
+
+            {erroredCount > 0 && (
+              <div className="text-center">
+                <p className="font-body text-navy/60 text-sm mb-3">
+                  {erroredCount} of {FULL_BUILD_ORDER.length} anchor{erroredCount === 1 ? '' : 's'} didn&apos;t build. Your answers are saved — try again.
+                </p>
+                <button
+                  type="button"
+                  onClick={handleRetryAll}
+                  className="font-body font-semibold text-sm px-7 py-3 rounded-full
+                             bg-white text-navy border border-navy/15
+                             hover:border-navy/30 hover:shadow-md
+                             transition-all duration-200"
+                >
+                  Retry All Anchors
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 // ── Anchor Wizard Body (inside WizardProvider) ──
 
 function AnchorWizardBody({ config }: { config: DocumentConfig }) {
@@ -587,10 +808,11 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
   }
 
   if (isComplete) {
+    const isFullBuild = config.slug === 'chart-your-course'
     return (
       <>
         <DocumentHero config={config} />
-        <AnchorComplete config={config} />
+        {isFullBuild ? <FullBuildComplete /> : <AnchorComplete config={config} />}
       </>
     )
   }
@@ -598,7 +820,9 @@ function AnchorWizardBody({ config }: { config: DocumentConfig }) {
   const contentSections = activeSections.filter(s => s !== 0) as number[]
   const currentIdx = contentSections.indexOf(state.currentSection as number)
 
-  const showFullBuildCTA = showingSectionIntro && state.currentSection === 0
+  // Suppress the "Build All Six" upsell when the user is already on the all-in-one journey.
+  const showFullBuildCTA =
+    showingSectionIntro && state.currentSection === 0 && config.slug !== 'chart-your-course'
 
   return (
     <div className="min-h-screen bg-cream">
