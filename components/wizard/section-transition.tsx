@@ -6,13 +6,13 @@ import { SECTION_NAMES, SECTION_SUBTITLES, type Section } from '@/types/wizard'
 // Per-anchor copy for the Getting Started section
 const ANCHOR_INTRO: Record<string, { howItWorks: string; beThorough: string; upload: string; uploadTitle?: string; whatYouGet: string }> = {
   constitution: {
-    howItWorks: 'We map your context through guided questions about who you are, what you value, and how you see the world. Your answers become your Personal Constitution.',
+    howItWorks: 'We mine your context through guided questions about who you are, what you value, and how you see the world. Your answers become your Personal Constitution.',
     beThorough: 'The more detail you give, the better your AI will understand you. No wrong answers — just honest ones.',
     upload: 'Have a bio, resume, or personal mission statement? Upload them early on to give RUMO a head start.',
     whatYouGet: 'Critical context you can upload to Claude, ChatGPT, Gemini, or any AI agent — so it works more effectively on your behalf.',
   },
   codex: {
-    howItWorks: 'We map your writing voice through questions about how you communicate, your stylistic preferences, and what makes your words yours. Your answers become your Writing Codex.',
+    howItWorks: 'We mine your writing voice through questions about how you communicate, your stylistic preferences, and what makes your words yours. Your answers become your Writing Codex.',
     beThorough: 'Include examples. The more specific you are about your voice — phrases you love, patterns you avoid — the sharper your codex will be.',
     upload: 'Have writing samples, blog posts, or emails that sound like you? Upload them to give RUMO your voice in action.',
     whatYouGet: 'A structured voice profile you can paste into Claude, ChatGPT, Gemini, or any AI — capturing your tone, rhythm, rules, and the patterns that make your writing yours.',
