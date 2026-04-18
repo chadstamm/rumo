@@ -338,7 +338,7 @@ export function Nav() {
                            hover:bg-ochre-light hover:shadow-lg hover:shadow-ochre/30
                            transition-all duration-200 hover:-translate-y-[1px]"
               >
-                Chart Your Course
+                Chart Your Full Course
               </Link>
             )}
           </div>
