@@ -30,15 +30,20 @@ alter table profiles add column if not exists subscription_expires_at timestampt
 alter table profiles add column if not exists stripe_customer_id text unique;
 
 -- Auto-create profile on signup, capture email from auth
+-- search_path pinned to prevent schema-hijack attacks
 create or replace function public.handle_new_user()
-returns trigger as $$
+returns trigger
+language plpgsql
+security definer
+set search_path = public, pg_temp
+as $$
 begin
   insert into public.profiles (id, email)
   values (new.id, new.email)
   on conflict (id) do nothing;
   return new;
 end;
-$$ language plpgsql security definer;
+$$;
 
 drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
@@ -251,13 +256,17 @@ create policy "Users can delete own instruction results"
 -- UPDATED_AT TRIGGERS
 -- ============================================================================
 
+-- search_path pinned to prevent schema-hijack attacks
 create or replace function update_updated_at()
-returns trigger as $$
+returns trigger
+language plpgsql
+set search_path = public, pg_temp
+as $$
 begin
   new.updated_at = now();
   return new;
 end;
-$$ language plpgsql;
+$$;
 
 drop trigger if exists profiles_updated_at on profiles;
 create trigger profiles_updated_at
@@ -284,8 +293,12 @@ create trigger wizard_state_updated_at
 -- ============================================================================
 -- Single source of truth for "is this user paid right now?"
 
-create or replace view active_paid_users as
-  select id, email, subscription_status, subscription_expires_at
-  from profiles
-  where subscription_status = 'active'
-    and (subscription_expires_at is null or subscription_expires_at > now());
+-- security_invoker so RLS applies to querying user (not view creator)
+drop view if exists active_paid_users;
+create view active_paid_users
+  with (security_invoker = true)
+  as
+    select id, email, subscription_status, subscription_expires_at
+    from profiles
+    where subscription_status = 'active'
+      and (subscription_expires_at is null or subscription_expires_at > now());
