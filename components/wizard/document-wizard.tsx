@@ -562,9 +562,13 @@ function FullBuildComplete() {
   const { state, generateAllAnchors, resetFullBuild } = useWizard()
   const router = useRouter()
   const hasTriggered = useRef(false)
+  const hasHydratedFromVault = useRef(false)
   const [navigating, setNavigating] = useState(false)
 
-  // Auto-trigger generation on mount (only once, only if nothing in flight or done)
+  // On mount, hydrate any anchors already saved to vault (handles mid-build reloads
+  // where the user lost anchorGenerations state but their docs are still saved).
+  // We dispatch one-time via the wizard's reducer by calling generateAllAnchors,
+  // which now skips vault-existing anchors and hydrates their state inline.
   useEffect(() => {
     if (hasTriggered.current) return
     const anyInProgress = Object.values(state.anchorGenerations).some(
@@ -575,6 +579,7 @@ function FullBuildComplete() {
       FULL_BUILD_ORDER.every((a) => state.anchorGenerations[a.slug]?.phase === 'complete')
     if (!anyInProgress && !allDone) {
       hasTriggered.current = true
+      hasHydratedFromVault.current = true
       generateAllAnchors()
     } else if (allDone) {
       hasTriggered.current = true

@@ -13,7 +13,9 @@ import {
 import type { Section, WizardState } from '@/types/wizard'
 import { INITIAL_WIZARD_STATE } from '@/types/wizard'
 import { getQuestionsForSection, getVisibleQuestions, QUESTIONS } from '@/data/questions'
-import { saveToVault } from '@/lib/vault-storage'
+import { saveToVault, getFromVault } from '@/lib/vault-storage'
+import { createClient as createSupabaseClient } from '@/lib/supabase/client'
+import { useAuth } from '@/components/auth-provider'
 
 /** Anchors built by the full Chart Your Course flow, in build order. */
 const FULL_BUILD_ANCHORS: Array<{ slug: string; title: string; sections: Section[] }> = [
@@ -50,6 +52,7 @@ type WizardAction =
   | { type: 'SET_ANCHOR_ERROR'; slug: string; error: string }
   | { type: 'SET_CURRENT_GENERATING'; slug: string | null }
   | { type: 'RESET_FULL_BUILD' }
+  | { type: 'HYDRATE_ANCHOR_FROM_VAULT'; slug: string; content: string; answeredCount: number }
 
 // ── Reducer ──
 
@@ -252,6 +255,21 @@ function wizardReducer(state: WizardState, action: WizardAction): WizardState {
         updatedAt: now,
       }
 
+    case 'HYDRATE_ANCHOR_FROM_VAULT':
+      return {
+        ...state,
+        anchorGenerations: {
+          ...state.anchorGenerations,
+          [action.slug]: {
+            phase: 'complete',
+            content: action.content,
+            error: null,
+            answeredCount: action.answeredCount,
+          },
+        },
+        updatedAt: now,
+      }
+
     default:
       return state
   }
@@ -316,47 +334,151 @@ export function WizardProvider({
 
   const [state, dispatch] = useReducer(wizardReducer, initialState)
 
-  // Hydrate from localStorage
+  // ── Persistence: Supabase for authenticated users, localStorage fallback ──
+  //
+  // When a user is signed in, the wizard state is the source of truth in
+  // `wizard_state` (keyed on user_id + anchor_slug) so progress follows them
+  // across devices and survives a crashed tab. When they're not signed in
+  // (or auth is still loading), we fall back to localStorage. The fallback
+  // path also covers unauthenticated local testing before Stripe lands.
+  const { user, loading: authLoading } = useAuth()
+  const useSupabase = !authLoading && !!user
+  const anchorSlug = storageKey ?? 'full'
+  const hasHydratedRef = useRef(false)
+
+  // Hydrate — runs on mount and whenever auth state resolves / changes.
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(fullStorageKey)
-      if (saved) {
-        const parsed = JSON.parse(saved) as WizardState
-        // Verify the saved section is still valid for this wizard
-        if (activeSections.includes(parsed.currentSection)) {
-          dispatch({ type: 'HYDRATE', state: parsed })
+    if (authLoading) return
+    let cancelled = false
+
+    const hydrate = async () => {
+      if (user) {
+        try {
+          const supabase = createSupabaseClient()
+          const { data, error } = await supabase
+            .from('wizard_state')
+            .select('current_section, current_step, answers, analyzed_insights, completed_sections, created_at, updated_at')
+            .eq('user_id', user.id)
+            .eq('anchor_slug', anchorSlug)
+            .maybeSingle()
+
+          if (cancelled) return
+          if (error) {
+            console.warn('wizard_state hydrate failed, falling back to localStorage:', error.message)
+          } else if (data) {
+            const loadedSection = (data.current_section ?? activeSections[0]) as Section
+            if (activeSections.includes(loadedSection)) {
+              dispatch({
+                type: 'HYDRATE',
+                state: {
+                  ...INITIAL_WIZARD_STATE,
+                  currentSection: loadedSection,
+                  currentStep: data.current_step ?? 0,
+                  answers: (data.answers as WizardState['answers']) ?? {},
+                  analyzedInsights: (data.analyzed_insights as WizardState['analyzedInsights']) ?? {},
+                  completedSections: ((data.completed_sections as Section[]) ?? []),
+                  startedAt: data.created_at ?? new Date().toISOString(),
+                  updatedAt: data.updated_at ?? new Date().toISOString(),
+                },
+              })
+              hasHydratedRef.current = true
+              return
+            }
+          }
+        } catch (e) {
+          console.warn('wizard_state hydrate threw, falling back to localStorage:', e)
         }
       }
-    } catch {
-      // Start fresh
-    }
-  }, [fullStorageKey, activeSections])
 
-  // Persist to localStorage. Strip transient generation state — anchorGenerations
-  // and currentGeneratingSlug are transient UI state; completed docs live in vault
-  // storage (rumo-vault-${slug}). Streaming partials would bloat this on every chunk.
-  useEffect(() => {
-    try {
-      const {
-        generationError,
-        analyzedInsights,
-        anchorGenerations: _anchorGenerations,
-        currentGeneratingSlug: _currentGeneratingSlug,
-        ...persistState
-      } = state
-      void _anchorGenerations
-      void _currentGeneratingSlug
-      // Only persist generation output if complete (avoid saving partial streams)
-      if (state.generationPhase !== 'complete') {
-        const { generationPhase, streamedText, ...cleanState } = persistState
-        localStorage.setItem(fullStorageKey, JSON.stringify(cleanState))
-      } else {
-        localStorage.setItem(fullStorageKey, JSON.stringify(persistState))
+      // localStorage fallback (unauthenticated OR Supabase failed / empty)
+      try {
+        const saved = localStorage.getItem(fullStorageKey)
+        if (saved && !cancelled) {
+          const parsed = JSON.parse(saved) as WizardState
+          if (activeSections.includes(parsed.currentSection)) {
+            dispatch({ type: 'HYDRATE', state: parsed })
+          }
+        }
+      } catch {
+        // Start fresh
+      } finally {
+        hasHydratedRef.current = true
       }
+    }
+
+    hydrate()
+    return () => {
+      cancelled = true
+    }
+  }, [authLoading, user?.id, anchorSlug, fullStorageKey, activeSections])
+
+  // Persist — Supabase (debounced) for signed-in users, localStorage otherwise.
+  // anchorGenerations and currentGeneratingSlug are transient UI state (completed
+  // docs live in vault storage). Streaming partials would bloat storage per chunk.
+  useEffect(() => {
+    // Don't write until hydration has run, otherwise we can clobber saved state
+    // with INITIAL_WIZARD_STATE on mount.
+    if (!hasHydratedRef.current) return
+
+    const {
+      generationError,
+      analyzedInsights,
+      anchorGenerations: _anchorGenerations,
+      currentGeneratingSlug: _currentGeneratingSlug,
+      ...persistState
+    } = state
+    void _anchorGenerations
+    void _currentGeneratingSlug
+
+    const shouldStripStream = state.generationPhase !== 'complete'
+    const cleanState = shouldStripStream
+      ? (() => {
+          const { generationPhase, streamedText, ...rest } = persistState
+          return rest
+        })()
+      : persistState
+
+    if (useSupabase && user) {
+      // Debounce Supabase writes: batch rapid state changes into one upsert.
+      const timer = setTimeout(async () => {
+        try {
+          const supabase = createSupabaseClient()
+          const isDone = activeSections.every((s) => state.completedSections.includes(s))
+          await supabase.from('wizard_state').upsert(
+            {
+              user_id: user.id,
+              anchor_slug: anchorSlug,
+              current_section: state.currentSection,
+              current_step: state.currentStep,
+              answers: state.answers,
+              analyzed_insights: state.analyzedInsights,
+              completed_sections: state.completedSections,
+              completed: isDone,
+            },
+            { onConflict: 'user_id,anchor_slug' }
+          )
+        } catch (e) {
+          // Swallow — next state change will retry. Keep localStorage as a
+          // best-effort mirror so we don't lose work on persistent network issues.
+          console.warn('wizard_state upsert failed:', e)
+          try {
+            localStorage.setItem(fullStorageKey, JSON.stringify(cleanState))
+          } catch {
+            // Storage full
+          }
+        }
+      }, 1000)
+
+      return () => clearTimeout(timer)
+    }
+
+    // Unauthenticated path: localStorage write immediately.
+    try {
+      localStorage.setItem(fullStorageKey, JSON.stringify(cleanState))
     } catch {
       // Storage full
     }
-  }, [state, fullStorageKey])
+  }, [state, fullStorageKey, useSupabase, user?.id, anchorSlug, activeSections])
 
   // Derived values
   const sectionQuestions = getQuestionsForSection(state.currentSection)
@@ -512,6 +634,18 @@ export function WizardProvider({
 
     try {
       for (const anchor of FULL_BUILD_ANCHORS) {
+        // Skip anchors already saved to vault (e.g. page reloaded mid-build, or retry after partial failure)
+        const existing = getFromVault(anchor.slug)
+        if (existing && existing.content) {
+          dispatch({
+            type: 'HYDRATE_ANCHOR_FROM_VAULT',
+            slug: anchor.slug,
+            content: existing.content,
+            answeredCount: existing.answeredCount,
+          })
+          continue
+        }
+
         // Filter answers to this anchor's sections (intake + the anchor's own section)
         const relevantQuestionIds = new Set(
           QUESTIONS.filter((q) => anchor.sections.includes(q.section)).map((q) => q.id)

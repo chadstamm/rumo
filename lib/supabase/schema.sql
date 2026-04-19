@@ -132,10 +132,12 @@ create table if not exists wizard_state (
   id uuid default gen_random_uuid() primary key,
   user_id uuid references profiles on delete cascade not null,
   anchor_slug text not null,
+  current_section smallint default 0,
   current_step int default 0,
-  answers jsonb default '[]'::jsonb,
-  analyzed_insights jsonb default '[]'::jsonb,
+  answers jsonb default '{}'::jsonb,
+  analyzed_insights jsonb default '{}'::jsonb,
   writing_samples jsonb default '[]'::jsonb,
+  completed_sections smallint[] default '{}',
   completed boolean default false,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
@@ -143,8 +145,8 @@ create table if not exists wizard_state (
 
 alter table wizard_state add column if not exists anchor_slug text;
 alter table wizard_state add column if not exists completed boolean default false;
-alter table wizard_state drop column if exists current_section;
-alter table wizard_state drop column if exists completed_sections;
+alter table wizard_state add column if not exists current_section smallint default 0;
+alter table wizard_state add column if not exists completed_sections smallint[] default '{}';
 
 -- Drop the legacy unique(user_id) if it's still around; replace with composite
 do $$
