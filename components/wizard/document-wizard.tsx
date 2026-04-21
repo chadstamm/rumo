@@ -375,15 +375,19 @@ function AnchorComplete({ config }: { config: DocumentConfig }) {
             <div className="flex justify-center">
               <button
                 type="button"
-                onClick={() => {
-                  saveToVault({
-                    content: state.streamedText,
-                    anchorSlug: config.slug,
-                    anchorTitle: config.title,
-                    generatedAt: new Date().toISOString(),
-                    answeredCount: totalAnswered,
-                  })
+                onClick={async () => {
                   setSavedToVault(true)
+                  try {
+                    await saveToVault({
+                      content: state.streamedText,
+                      anchorSlug: config.slug,
+                      anchorTitle: config.title,
+                      generatedAt: new Date().toISOString(),
+                      answeredCount: totalAnswered,
+                    })
+                  } catch (e) {
+                    console.warn('Save to vault failed', e)
+                  }
                   setTimeout(() => router.push('/vault'), 800)
                 }}
                 disabled={savedToVault}

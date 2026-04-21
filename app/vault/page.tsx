@@ -26,8 +26,13 @@ export default function VaultPage() {
   const [revisionError, setRevisionError] = useState<string | null>(null)
 
   useEffect(() => {
-    setDocs(getAllVaultDocuments())
-    setLoaded(true)
+    let mounted = true
+    getAllVaultDocuments().then((d) => {
+      if (!mounted) return
+      setDocs(d)
+      setLoaded(true)
+    })
+    return () => { mounted = false }
   }, [])
 
   const generatedCount = Object.values(docs).filter(Boolean).length
@@ -53,9 +58,10 @@ export default function VaultPage() {
     URL.revokeObjectURL(url)
   }
 
-  const handleDelete = (slug: string) => {
-    removeFromVault(slug)
-    setDocs(getAllVaultDocuments())
+  const handleDelete = async (slug: string) => {
+    await removeFromVault(slug)
+    const fresh = await getAllVaultDocuments()
+    setDocs(fresh)
     setConfirmDelete(null)
     setExpandedSlug(null)
   }
@@ -153,7 +159,7 @@ export default function VaultPage() {
         return
       }
 
-      saveToVault({
+      await saveToVault({
         content: text,
         anchorSlug: slug,
         anchorTitle: ANCHOR_META[slug].title,
@@ -161,7 +167,8 @@ export default function VaultPage() {
         answeredCount: 0, // 0 = uploaded (not wizard-generated)
       })
 
-      setDocs(getAllVaultDocuments())
+      const fresh = await getAllVaultDocuments()
+      setDocs(fresh)
       e.target.value = ''
     } catch {
       setUploadError('Could not read that file.')
@@ -169,12 +176,12 @@ export default function VaultPage() {
     }
   }
 
-  const handleAcceptRevision = () => {
+  const handleAcceptRevision = async () => {
     if (!refiningSlug || !revisionResult.trim()) return
     const existing = docs[refiningSlug]
     if (!existing) return
 
-    saveToVault({
+    await saveToVault({
       content: revisionResult.trim(),
       anchorSlug: refiningSlug,
       anchorTitle: existing.anchorTitle,
@@ -182,7 +189,8 @@ export default function VaultPage() {
       answeredCount: existing.answeredCount,
     })
 
-    setDocs(getAllVaultDocuments())
+    const fresh = await getAllVaultDocuments()
+    setDocs(fresh)
     handleCancelRefine()
   }
 

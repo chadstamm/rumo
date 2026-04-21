@@ -635,7 +635,7 @@ export function WizardProvider({
     try {
       for (const anchor of FULL_BUILD_ANCHORS) {
         // Skip anchors already saved to vault (e.g. page reloaded mid-build, or retry after partial failure)
-        const existing = getFromVault(anchor.slug)
+        const existing = await getFromVault(anchor.slug)
         if (existing && existing.content) {
           dispatch({
             type: 'HYDRATE_ANCHOR_FROM_VAULT',
@@ -766,13 +766,17 @@ export function WizardProvider({
           }
 
           // Save the completed document to the per-anchor vault slot
-          saveToVault({
-            content: fullText,
-            anchorSlug: anchor.slug,
-            anchorTitle: anchor.title,
-            generatedAt: new Date().toISOString(),
-            answeredCount: answeredEntries.length,
-          })
+          try {
+            await saveToVault({
+              content: fullText,
+              anchorSlug: anchor.slug,
+              anchorTitle: anchor.title,
+              generatedAt: new Date().toISOString(),
+              answeredCount: answeredEntries.length,
+            })
+          } catch (e) {
+            console.warn(`Save to vault failed for ${anchor.slug}:`, e)
+          }
 
           dispatch({ type: 'SET_ANCHOR_PHASE', slug: anchor.slug, phase: 'complete' })
         } catch (error) {
