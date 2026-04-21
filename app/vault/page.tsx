@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { CompassRose } from '@/components/compass-rose'
 import {
   getAllVaultDocuments,
+  saveToVault,
   removeFromVault,
   ANCHOR_META,
   ANCHOR_ORDER,
@@ -16,6 +17,13 @@ export default function VaultPage() {
   const [loaded, setLoaded] = useState(false)
   const [expandedSlug, setExpandedSlug] = useState<string | null>(null)
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
+
+  // Refine-with-AI state
+  const [refiningSlug, setRefiningSlug] = useState<string | null>(null)
+  const [revisionInstruction, setRevisionInstruction] = useState('')
+  const [revisionResult, setRevisionResult] = useState('')
+  const [isRevising, setIsRevising] = useState(false)
+  const [revisionError, setRevisionError] = useState<string | null>(null)
 
   useEffect(() => {
     setDocs(getAllVaultDocuments())
@@ -50,6 +58,85 @@ export default function VaultPage() {
     setDocs(getAllVaultDocuments())
     setConfirmDelete(null)
     setExpandedSlug(null)
+  }
+
+  // ── Refine with AI ──
+
+  const handleStartRefine = (slug: string) => {
+    setRefiningSlug(slug)
+    setRevisionInstruction('')
+    setRevisionResult('')
+    setRevisionError(null)
+  }
+
+  const handleCancelRefine = () => {
+    setRefiningSlug(null)
+    setRevisionInstruction('')
+    setRevisionResult('')
+    setRevisionError(null)
+    setIsRevising(false)
+  }
+
+  const handleRevise = async () => {
+    if (!refiningSlug || !revisionInstruction.trim()) return
+    const doc = docs[refiningSlug]
+    if (!doc) return
+
+    setIsRevising(true)
+    setRevisionResult('')
+    setRevisionError(null)
+
+    try {
+      const response = await fetch('/api/revise-anchor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          anchorSlug: refiningSlug,
+          anchorTitle: ANCHOR_META[refiningSlug]?.title ?? refiningSlug,
+          currentContent: doc.content,
+          revisionInstruction: revisionInstruction.trim(),
+        }),
+      })
+
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({ error: 'Request failed' }))
+        throw new Error(err.error ?? `HTTP ${response.status}`)
+      }
+
+      if (!response.body) throw new Error('No response body')
+
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let accumulated = ''
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        accumulated += decoder.decode(value, { stream: true })
+        setRevisionResult(accumulated)
+      }
+    } catch (error) {
+      setRevisionError(error instanceof Error ? error.message : 'Something went wrong')
+    } finally {
+      setIsRevising(false)
+    }
+  }
+
+  const handleAcceptRevision = () => {
+    if (!refiningSlug || !revisionResult.trim()) return
+    const existing = docs[refiningSlug]
+    if (!existing) return
+
+    saveToVault({
+      content: revisionResult.trim(),
+      anchorSlug: refiningSlug,
+      anchorTitle: existing.anchorTitle,
+      generatedAt: new Date().toISOString(),
+      answeredCount: existing.answeredCount,
+    })
+
+    setDocs(getAllVaultDocuments())
+    handleCancelRefine()
   }
 
   return (
@@ -169,6 +256,13 @@ export default function VaultPage() {
 
                         {/* Actions */}
                         <div className="flex items-center gap-2 flex-wrap">
+                          <button
+                            type="button"
+                            onClick={() => handleStartRefine(slug)}
+                            className="font-body text-xs font-semibold px-4 py-2 rounded-full bg-ochre text-white hover:bg-ochre-light transition-all duration-200"
+                          >
+                            Refine with AI
+                          </button>
                           <Link
                             href={`/anchors/${slug}`}
                             className="font-body text-xs font-semibold px-4 py-2 rounded-full bg-teal text-white hover:bg-teal-light transition-all duration-200"
@@ -217,6 +311,101 @@ export default function VaultPage() {
                             </button>
                           )}
                         </div>
+
+                        {/* Refine-with-AI panel */}
+                        {refiningSlug === slug && (
+                          <div className="mt-5 pt-5 border-t border-navy/10">
+                            <label className="block font-body text-xs font-bold tracking-[0.15em] uppercase text-ochre mb-2">
+                              Refine with AI
+                            </label>
+                            <p className="font-body text-xs text-navy/45 mb-3">
+                              Tell RUMO what to change. It'll rewrite the full document, keeping everything else intact.
+                            </p>
+                            <textarea
+                              value={revisionInstruction}
+                              onChange={(e) => setRevisionInstruction(e.target.value)}
+                              placeholder="e.g., make it more concise · add more about my time in Lisbon · soften the tone in Article III"
+                              className="w-full px-3 py-2 rounded-lg border border-navy/15 bg-white font-body text-sm text-navy placeholder:text-navy/30 focus:outline-none focus:border-ochre focus:ring-1 focus:ring-ochre/30 resize-y min-h-[80px]"
+                              disabled={isRevising}
+                              maxLength={2000}
+                            />
+                            <div className="flex items-center gap-2 mt-3 flex-wrap">
+                              <button
+                                type="button"
+                                onClick={handleRevise}
+                                disabled={isRevising || !revisionInstruction.trim()}
+                                className="font-body text-xs font-semibold px-4 py-2 rounded-full bg-ochre text-white hover:bg-ochre-light disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                              >
+                                {isRevising ? 'Revising…' : 'Revise'}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={handleCancelRefine}
+                                disabled={isRevising}
+                                className="font-body text-xs text-navy/50 hover:text-navy/80 disabled:opacity-40 transition-colors duration-200"
+                              >
+                                Cancel
+                              </button>
+                              {revisionInstruction.length > 1500 && (
+                                <span className="font-body text-xs text-navy/40 ml-auto">
+                                  {revisionInstruction.length}/2000
+                                </span>
+                              )}
+                            </div>
+
+                            {revisionError && (
+                              <div className="mt-3 px-3 py-2 rounded-lg bg-red-50 border border-red-200 font-body text-xs text-red-700">
+                                {revisionError}
+                              </div>
+                            )}
+
+                            {(isRevising || revisionResult) && (
+                              <div className="mt-4">
+                                <div className="flex items-center justify-between mb-2">
+                                  <span className="font-body text-xs font-bold tracking-[0.15em] uppercase text-teal">
+                                    {isRevising ? 'Revising…' : 'Revised Version'}
+                                  </span>
+                                  {!isRevising && revisionResult && (
+                                    <span className="font-body text-xs text-navy/40">
+                                      {revisionResult.length.toLocaleString()} chars
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="bg-cream rounded-lg border border-teal/30 px-4 py-3 max-h-[40vh] overflow-y-auto">
+                                  <pre className="font-body text-xs text-navy/80 leading-relaxed whitespace-pre-wrap break-words" style={{ fontFamily: 'inherit' }}>
+                                    {revisionResult || (isRevising ? '…' : '')}
+                                  </pre>
+                                </div>
+
+                                {!isRevising && revisionResult && (
+                                  <div className="flex items-center gap-2 mt-3">
+                                    <button
+                                      type="button"
+                                      onClick={handleAcceptRevision}
+                                      className="font-body text-xs font-semibold px-4 py-2 rounded-full bg-teal text-white hover:bg-teal-light transition-all duration-200"
+                                    >
+                                      Replace original
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => setRevisionResult('')}
+                                      className="font-body text-xs font-semibold px-4 py-2 rounded-full border border-navy/15 text-navy/60 hover:border-navy/30 hover:text-navy transition-all duration-200"
+                                    >
+                                      Discard
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={handleRevise}
+                                      className="font-body text-xs text-navy/50 hover:text-navy/80 transition-colors duration-200 ml-auto"
+                                    >
+                                      Try again
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </>
                     ) : meta.free ? (
                       /* Empty free anchor — CTA to build */
