@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
+import { createClient } from '@/lib/supabase/server'
+
+const FREE_ANCHORS = new Set(['constitution'])
 
 export const maxDuration = 300 // 5 minutes
 
@@ -241,6 +244,43 @@ export async function POST(request: NextRequest) {
         { error: 'Missing anchor slug or answers' },
         { status: 400 }
       )
+    }
+
+    // ── Paywall gate ──
+    // Free anchors (Constitution) are open to everyone.
+    // All other anchors require an authenticated user with active subscription.
+    if (!FREE_ANCHORS.has(data.anchorSlug)) {
+      const supabase = await createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        return NextResponse.json(
+          { error: 'Sign in required for this anchor.', code: 'auth_required' },
+          { status: 401 }
+        )
+      }
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('subscription_status, subscription_expires_at')
+        .eq('id', user.id)
+        .maybeSingle()
+
+      const isActive =
+        profile?.subscription_status === 'active' &&
+        (!profile?.subscription_expires_at ||
+          new Date(profile.subscription_expires_at) > new Date())
+
+      if (!isActive) {
+        return NextResponse.json(
+          {
+            error: 'This anchor requires an active subscription.',
+            code: 'subscription_required',
+            upgrade_url: '/pricing',
+          },
+          { status: 402 }
+        )
+      }
     }
 
     const systemPrompt = ANCHOR_PROMPTS[data.anchorSlug]

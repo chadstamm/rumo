@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { UpgradeButton } from '@/components/upgrade-button'
 
 export const metadata = {
   title: 'Pricing — RUMO',
@@ -104,15 +105,14 @@ export default function PricingPage() {
                 <PricingFeature included>Save progress with account</PricingFeature>
               </div>
 
-              <Link
-                href="/start"
-                className="block text-center font-body text-sm font-bold tracking-[0.1em] uppercase px-7 py-3.5 rounded-full
+              <UpgradeButton
+                label="Chart Your Course · $49/year"
+                className="block w-full text-center font-body text-sm font-bold tracking-[0.1em] uppercase px-7 py-3.5 rounded-full
                            bg-teal text-white shadow-md shadow-teal/20
                            hover:bg-teal-light hover:shadow-lg hover:shadow-teal/30
+                           disabled:opacity-60 disabled:cursor-wait
                            transition-all duration-200"
-              >
-                Chart Your Course
-              </Link>
+              />
             </div>
           </div>
 
