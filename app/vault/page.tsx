@@ -238,13 +238,13 @@ export default function VaultPage() {
       {/* Anchor Cards */}
       <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
         {!loaded ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
             {ANCHOR_ORDER.map((slug) => (
               <div key={slug} className="h-64 rounded-2xl bg-navy/5 animate-pulse" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
             {ANCHOR_ORDER.map((slug) => {
               const meta = ANCHOR_META[slug]
               const doc = docs[slug]
@@ -262,8 +262,8 @@ export default function VaultPage() {
                   }`}
                 >
                   {/* Card header */}
-                  <div className="px-6 pt-6 pb-4">
-                    <div className="flex items-start justify-between mb-4">
+                  <div className="px-7 pt-7 pb-5">
+                    <div className="flex items-start justify-between mb-5">
                       <img
                         src={meta.icon}
                         alt=""
@@ -288,7 +288,7 @@ export default function VaultPage() {
                       )}
                     </div>
 
-                    <h3 className="font-display text-navy font-bold text-lg mb-1">
+                    <h3 className="font-display text-navy font-bold text-lg mb-1.5">
                       {meta.title}
                     </h3>
                     <p className="font-body text-navy/45 text-sm leading-relaxed">
@@ -297,13 +297,15 @@ export default function VaultPage() {
                   </div>
 
                   {/* Card body — depends on state */}
-                  <div className="px-6 pb-6">
+                  <div className="px-7 pb-7">
                     {doc ? (
                       <>
                         {/* Stats */}
-                        <div className="flex items-center gap-4 mb-4 text-xs font-body text-navy/40">
+                        <div className="flex items-center gap-2 mb-5 text-[11px] font-body text-navy/40 uppercase tracking-wider">
                           <span>v{doc.version}</span>
+                          <span className="text-navy/15">·</span>
                           <span>{doc.answeredCount > 0 ? `${doc.answeredCount} answers` : 'Uploaded'}</span>
+                          <span className="text-navy/15">·</span>
                           <span>{new Date(doc.generatedAt).toLocaleDateString()}</span>
                         </div>
 
@@ -311,63 +313,83 @@ export default function VaultPage() {
                         <button
                           type="button"
                           onClick={() => setExpandedSlug(isExpanded ? null : slug)}
-                          className="w-full text-left mb-4"
+                          className="w-full text-left mb-6 group"
                         >
-                          <div className={`bg-cream rounded-lg border border-navy/5 px-4 py-3 transition-all duration-300 ${
+                          <div className={`bg-cream rounded-lg border border-navy/5 px-4 py-3.5 transition-all duration-300 ${
                             isExpanded ? 'max-h-[50vh] overflow-y-auto' : 'max-h-24 overflow-hidden'
                           }`}>
                             <pre className="font-body text-xs text-navy/70 leading-relaxed whitespace-pre-wrap break-words" style={{ fontFamily: 'inherit' }}>
                               {doc.content}
                             </pre>
                           </div>
-                          <p className="font-body text-xs text-teal mt-2">
-                            {isExpanded ? 'Collapse' : 'Preview full document'}
+                          <p className="font-body text-[11px] text-teal/80 group-hover:text-teal mt-2 inline-flex items-center gap-1 uppercase tracking-wider font-medium">
+                            {isExpanded ? 'Collapse' : 'Preview full'}
+                            <svg className={`w-3 h-3 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="6 9 12 15 18 9"/>
+                            </svg>
                           </p>
                         </button>
 
-                        {/* Actions */}
-                        <div className="flex items-center gap-2 flex-wrap">
+                        {/* Primary actions */}
+                        <div className="flex items-center gap-2 mb-4">
                           <button
                             type="button"
                             onClick={() => handleStartRefine(slug)}
-                            className="font-body text-xs font-semibold px-4 py-2 rounded-full bg-ochre text-white hover:bg-ochre-light transition-all duration-200"
+                            className="flex-1 font-body text-xs font-semibold px-4 py-2.5 rounded-full bg-ochre text-white hover:bg-ochre-light transition-all duration-200 text-center"
                           >
                             Refine with AI
                           </button>
                           <Link
                             href={`/anchors/${slug}`}
-                            className="font-body text-xs font-semibold px-4 py-2 rounded-full bg-teal text-white hover:bg-teal-light transition-all duration-200"
+                            className="flex-1 font-body text-xs font-semibold px-4 py-2.5 rounded-full bg-teal text-white hover:bg-teal-light transition-all duration-200 text-center"
                           >
                             Regenerate
                           </Link>
-                          <button
-                            type="button"
-                            onClick={() => handleCopy(doc.content)}
-                            className="font-body text-xs font-semibold px-4 py-2 rounded-full border border-navy/15 text-navy/60 hover:border-navy/30 hover:text-navy transition-all duration-200"
-                          >
-                            Copy
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => handleDownload(slug, doc.content)}
-                            className="font-body text-xs font-semibold px-4 py-2 rounded-full border border-navy/15 text-navy/60 hover:border-navy/30 hover:text-navy transition-all duration-200"
-                          >
-                            Download
-                          </button>
+                        </div>
+
+                        {/* Secondary actions — subtle utility row */}
+                        <div className="flex items-center justify-between pt-3 border-t border-navy/5">
+                          <div className="flex items-center gap-1">
+                            <button
+                              type="button"
+                              onClick={() => handleCopy(doc.content)}
+                              title="Copy to clipboard"
+                              className="inline-flex items-center gap-1.5 font-body text-[11px] font-medium text-navy/50 hover:text-navy px-2 py-1 transition-colors duration-200"
+                            >
+                              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                              </svg>
+                              Copy
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleDownload(slug, doc.content)}
+                              title="Download as Markdown"
+                              className="inline-flex items-center gap-1.5 font-body text-[11px] font-medium text-navy/50 hover:text-navy px-2 py-1 transition-colors duration-200"
+                            >
+                              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                              </svg>
+                              Download
+                            </button>
+                          </div>
                           {confirmDelete === slug ? (
-                            <div className="flex items-center gap-2 ml-auto">
-                              <span className="font-body text-xs text-navy/40">Delete?</span>
+                            <div className="flex items-center gap-2">
+                              <span className="font-body text-[11px] text-navy/50">Delete?</span>
                               <button
                                 type="button"
                                 onClick={() => handleDelete(slug)}
-                                className="font-body text-xs text-red-500 hover:text-red-600 font-medium"
+                                className="font-body text-[11px] text-red-500 hover:text-red-600 font-semibold px-2"
                               >
                                 Yes
                               </button>
                               <button
                                 type="button"
                                 onClick={() => setConfirmDelete(null)}
-                                className="font-body text-xs text-navy/40 hover:text-navy/60"
+                                className="font-body text-[11px] text-navy/40 hover:text-navy/60 px-2"
                               >
                                 No
                               </button>
@@ -376,8 +398,13 @@ export default function VaultPage() {
                             <button
                               type="button"
                               onClick={() => setConfirmDelete(slug)}
-                              className="font-body text-xs text-navy/30 hover:text-red-400 ml-auto transition-colors duration-200"
+                              title="Delete this anchor"
+                              className="inline-flex items-center gap-1.5 font-body text-[11px] font-medium text-navy/30 hover:text-red-500 px-2 py-1 transition-colors duration-200"
                             >
+                              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="3 6 5 6 21 6"/>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                              </svg>
                               Delete
                             </button>
                           )}
