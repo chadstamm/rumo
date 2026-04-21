@@ -129,7 +129,7 @@ export default function PricingPage() {
               />
               <FAQ
                 question="How does the subscription work?"
-                answer="Yes — $49/year gives you unlimited access to all six anchors, the Chart Your Course guided session, and your personal vault. Regenerate and update your documents anytime."
+                answer="$49/year gives you unlimited access to all six anchors, the Chart Your Course guided session, and your personal vault. Regenerate and update your documents anytime."
               />
               <FAQ
                 question="What do I get at the end?"
@@ -149,7 +149,7 @@ export default function PricingPage() {
           {/* ── End Result repeat ── */}
           <div className="mt-16 sm:mt-20 text-center">
             <p className="font-body text-navy font-semibold text-lg sm:text-xl max-w-lg mx-auto">
-              The result is personalized AI that helps you succeed across everything you do.
+              The result is AI that stops guessing who you are.
             </p>
           </div>
         </div>

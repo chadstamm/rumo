@@ -41,7 +41,7 @@ const ANCHOR_QUESTIONS: Record<string, string> = {
 // `highlight` marks the high-value phrase rendered in ochre.
 const ANCHOR_HEADLINES: Record<string, { text: string; highlight: string }> = {
   codex: { text: 'Your Voice, in Every AI.', highlight: 'Voice' },
-  'story-bank': { text: 'The Stories Make the Output.', highlight: 'the Output' },
+  'story-bank': { text: 'Your Stories. In Every Output.', highlight: 'Stories' },
   sotu: { text: 'Where You Actually Are.', highlight: 'Actually' },
   timeline: { text: 'Your Arc, Not Your Resume.', highlight: 'Arc' },
   roster: { text: 'The People Come with You.', highlight: 'People' },
@@ -65,13 +65,13 @@ const ANCHOR_TEASERS: Record<string, string> = {
   codex:
     'AI writes like AI — no matter how you prompt it. The Codex captures your real voice and hands it to every model you use. So the words finally sound like you.',
   'story-bank':
-    'AI outputs feel generic because they are — AI doesn’t know the stories that made you. Drop the ones you keep returning to into the Story Bank. Every output after lands lived-in, because it is.',
+    'AI outputs feel generic because they are — AI doesn’t know the stories that made you. Drop the ones you keep returning to into the Story Bank. Every output after sounds lived-in, because it is.',
   sotu:
     'Who you are doesn’t change. Where you are changes every season. The State of the Union tells AI what’s loud in your life right now — so every answer meets you where you actually are.',
   timeline:
     'AI treats you like a blank slate. You’re not — you’ve earned a path. The Timeline gives AI your arc, so its recommendations fit where you’ve been, not just where you are.',
   roster:
-    'You live inside a web of people — spouse, kids, mentors, rivals. AI doesn’t know them. The Roster maps who sits at your table, so every answer respects your actual relationships, not a hypothetical one.',
+    'You live inside a web of people — spouse, kids, mentors, rivals. AI doesn’t know them. The Roster maps who sits at your table, so every answer respects your actual relationships, not hypothetical ones.',
 }
 
 export function AnchorPaywall({
@@ -189,7 +189,7 @@ export function AnchorPaywall({
             All six anchors. $49/year.
           </h2>
           <p className="font-body text-navy/60 text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto">
-            The Personal Constitution is free. The other five &mdash; including this one &mdash; come with RUMO Annual. Yours to keep. Renews yearly, cancel anytime.
+            The Personal Constitution is free. The other five &mdash; including this one &mdash; come with RUMO Annual. Yours to keep. 30-day refund if it&apos;s not for you. Cancel anytime.
           </p>
           <Link
             href="/pricing"
