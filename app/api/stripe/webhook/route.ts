@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe, STRIPE_WEBHOOK_SECRET } from '@/lib/stripe'
 import { createServiceClient } from '@/lib/supabase/service'
+import { ensureUserIdForEmail } from '@/lib/supabase/ensure-user'
 import type Stripe from 'stripe'
 
 export const dynamic = 'force-dynamic'
@@ -47,13 +48,26 @@ export async function POST(request: NextRequest) {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session
-        const userId = session.metadata?.supabase_user_id ?? session.client_reference_id
+        let userId: string | undefined =
+          session.metadata?.supabase_user_id ?? session.client_reference_id ?? undefined
         const customerId = typeof session.customer === 'string' ? session.customer : session.customer?.id
         const subscriptionId =
           typeof session.subscription === 'string' ? session.subscription : session.subscription?.id
 
+        // Guest checkout: no metadata — resolve user by email
         if (!userId) {
-          console.warn('[stripe/webhook] No supabase_user_id on checkout.session.completed')
+          const email = session.customer_details?.email ?? session.customer_email ?? undefined
+          if (email) {
+            try {
+              userId = await ensureUserIdForEmail(email)
+            } catch (e) {
+              console.error('[stripe/webhook] ensureUserIdForEmail failed:', e)
+            }
+          }
+        }
+
+        if (!userId) {
+          console.warn('[stripe/webhook] Could not resolve user for checkout.session.completed')
           break
         }
 
