@@ -19,7 +19,7 @@ export function UpgradeButton({
   const handleClick = async () => {
     if (loading) return
     if (!user) {
-      router.push('/login?returnTo=/pricing')
+      router.push('/auth/login?returnTo=/pricing')
       return
     }
 
