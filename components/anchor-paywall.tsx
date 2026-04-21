@@ -124,19 +124,10 @@ export function AnchorPaywall({
 
                 {question && (
                   <p
-                    className="font-display italic text-cream/90 leading-tight mb-3"
+                    className="font-display italic text-cream/90 leading-tight"
                     style={{ fontSize: 'clamp(1.125rem, 2.2vw, 1.5rem)' }}
                   >
                     &ldquo;{question}&rdquo;
-                  </p>
-                )}
-
-                {headline && (
-                  <p
-                    className="font-body font-bold text-ochre-light leading-tight"
-                    style={{ fontSize: 'clamp(1rem, 1.8vw, 1.25rem)' }}
-                  >
-                    {headline}
                   </p>
                 )}
               </div>
@@ -161,6 +152,14 @@ export function AnchorPaywall({
 
       {/* ── Teaser body + paywall card ── */}
       <section className="max-w-3xl mx-auto px-6 sm:px-10 lg:px-16 py-16 sm:py-24">
+        {headline && (
+          <h2
+            className="font-display text-navy font-bold leading-tight mb-6"
+            style={{ fontSize: 'clamp(1.75rem, 4vw, 2.75rem)' }}
+          >
+            {headline}
+          </h2>
+        )}
         <p className="font-body text-navy/85 text-lg sm:text-xl leading-relaxed mb-12 sm:mb-16">
           {teaser}
         </p>
