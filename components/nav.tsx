@@ -215,6 +215,24 @@ export function Nav() {
 
             <NavLink href="/vault" label="Vault" active={false} light />
 
+            {!loading && (
+              user ? (
+                <button
+                  onClick={() => signOut()}
+                  className="font-body text-sm tracking-wide text-white/70 hover:text-white transition-colors duration-200"
+                >
+                  Sign out
+                </button>
+              ) : (
+                <Link
+                  href="/auth/login"
+                  className="font-body text-sm tracking-wide text-white/70 hover:text-white transition-colors duration-200"
+                >
+                  Sign in
+                </Link>
+              )
+            )}
+
             <Link
               href="/anchors/constitution"
               className="shimmer-hover font-body text-sm font-semibold tracking-wide px-5 py-2 rounded-full
