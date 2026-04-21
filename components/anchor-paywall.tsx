@@ -174,9 +174,31 @@ export function AnchorPaywall({
             {renderHeadline(headline)}
           </h2>
         )}
-        <p className="font-body text-navy/85 text-lg sm:text-xl leading-relaxed">
+        <p className="font-body text-navy/85 text-lg sm:text-xl leading-relaxed mb-10 sm:mb-12">
           {teaser}
         </p>
+
+        <div className="flex flex-col items-start gap-5">
+          <Link
+            href="/pricing"
+            className="inline-flex font-body text-sm font-bold tracking-[0.12em] uppercase px-8 py-3.5 rounded-full
+                       bg-teal text-white shadow-md shadow-teal/25
+                       hover:bg-teal-light hover:shadow-lg hover:shadow-teal/35 hover:-translate-y-0.5
+                       transition-all duration-200"
+          >
+            Chart Your Course · $49/year
+          </Link>
+          <p className="font-body text-navy/50 text-sm">
+            Or{' '}
+            <Link
+              href="/anchors/constitution"
+              className="font-semibold text-teal hover:text-teal-dark underline underline-offset-2 transition-colors"
+            >
+              build your Personal Constitution free
+            </Link>
+            .
+          </p>
+        </div>
       </section>
 
       <FullBuildCTA currentSlug={doc.slug} />
