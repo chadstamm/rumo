@@ -26,19 +26,28 @@ const HERO_FOCUS: Record<string, string> = {
   timeline: 'center 40%',
 }
 
-// Per-anchor teaser: 2-3 sentences, punchy, Chad's voice.
-// Sells the value, not the mechanics.
+// First-person question per anchor — shown prominently in the hero.
+const ANCHOR_QUESTIONS: Record<string, string> = {
+  codex: 'How do I write?',
+  'story-bank': 'What stories do I always tell?',
+  sotu: 'What matters to me right now?',
+  timeline: 'How has my life unfolded?',
+  roster: 'Who are the people that matter?',
+}
+
+// StoryBrand-framed teaser: problem → answer → end result.
+// Tight, pitchy, hero-centric. Zero mental calories.
 const ANCHOR_TEASERS: Record<string, string> = {
   codex:
-    'AI that writes in your voice — not a generic one. The Codex captures the rhythm, the cadence, the moves you make and the ones you never would. Extracted from how you actually write, not guessed at. Feed it to Claude, ChatGPT, Gemini, and watch the outputs finally sound like you.',
+    'AI writes like AI — no matter how you prompt it. The Codex captures your real voice and hands it to every model you use. So the words finally sound like you.',
   'story-bank':
-    'The anchor that makes your AI feel lived-in. Every story you return to — the close call, the summer that changed everything, the line you still quote from your grandfather. Not prompts. Not a profile. Raw material. The kind of context that turns AI outputs from plausible to unmistakably yours.',
+    'AI outputs feel generic because they are — AI doesn’t know the stories that made you. Drop the ones you keep returning to into the Story Bank. Every output after lands lived-in, because it is.',
   sotu:
-    'Who you are doesn’t change much. Where you are changes every season. The State of the Union is the living document AI needs to understand your current situation — what you’re grinding on, what you’re letting go of, what’s loud right now. Update it monthly. Feed it to every AI that matters.',
+    'Who you are doesn’t change. Where you are changes every season. The State of the Union tells AI what’s loud in your life right now — so every answer meets you where you actually are.',
   timeline:
-    'The chronological arc — your map, not your resume. When AI knows where you’ve been, it understands why you’d say yes to one thing and no to another. Context that turns a general-purpose model into your model.',
+    'AI treats you like a blank slate. You’re not — you’ve earned a path. The Timeline gives AI your arc, so its recommendations fit where you’ve been, not just where you are.',
   roster:
-    'The people shape you. Your mentors, your rivals, your kids, the ones who made you, the ones you’re trying to make proud. When AI knows who sits at your table — and who doesn’t — it stops answering in hypotheticals and starts answering for your actual life.',
+    'You live inside a web of people — spouse, kids, mentors, rivals. AI doesn’t know them. The Roster maps who sits at your table, so every answer respects your actual relationships, not a hypothetical one.',
 }
 
 export function AnchorPaywall({
@@ -49,6 +58,7 @@ export function AnchorPaywall({
 }) {
   const heroImage = HERO_IMAGES[doc.slug]
   const icon = ANCHOR_ICONS[doc.slug]
+  const question = ANCHOR_QUESTIONS[doc.slug]
   const teaser = ANCHOR_TEASERS[doc.slug] ?? doc.description
 
   return (
@@ -93,15 +103,24 @@ export function AnchorPaywall({
                 </div>
 
                 <h1
-                  className="font-display text-cream font-bold leading-tight mb-3"
+                  className="font-display text-cream font-bold leading-tight mb-4"
                   style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}
                 >
                   {doc.title}
                 </h1>
 
+                {question && (
+                  <p
+                    className="font-display italic text-cream/90 leading-tight mb-5"
+                    style={{ fontSize: 'clamp(1.125rem, 2.2vw, 1.5rem)' }}
+                  >
+                    &ldquo;{question}&rdquo;
+                  </p>
+                )}
+
                 <div className="w-10 h-[2px] bg-ochre/50 mb-4" aria-hidden="true" />
 
-                <p className="font-body text-cream/70 text-base sm:text-lg leading-relaxed font-medium">
+                <p className="font-body text-cream/65 text-sm sm:text-base leading-relaxed">
                   {doc.subtitle}
                 </p>
               </div>
