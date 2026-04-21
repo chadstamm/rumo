@@ -167,22 +167,22 @@ function buildUserPrompt(data: GenerateRequest): string {
   }
 
   if (writingCodex) {
-    const truncated = writingCodex.length > 4000
-      ? writingCodex.slice(0, 4000) + '\n[... truncated]'
+    const truncated = writingCodex.length > 50000
+      ? writingCodex.slice(0, 50000) + '\n[... truncated]'
       : writingCodex;
     prompt += `\nMy Writing Codex:\n${truncated}\n`;
   }
 
   if (personalConstitution) {
-    const truncated = personalConstitution.length > 4000
-      ? personalConstitution.slice(0, 4000) + '\n[... truncated]'
+    const truncated = personalConstitution.length > 50000
+      ? personalConstitution.slice(0, 50000) + '\n[... truncated]'
       : personalConstitution;
     prompt += `\nMy Personal Constitution:\n${truncated}\n`;
   }
 
   if (storyBank) {
-    const truncated = storyBank.length > 4000
-      ? storyBank.slice(0, 4000) + '\n[... truncated]'
+    const truncated = storyBank.length > 50000
+      ? storyBank.slice(0, 50000) + '\n[... truncated]'
       : storyBank;
     prompt += `\nMy Story Bank:\n${truncated}\n`;
   }
@@ -192,19 +192,19 @@ function buildUserPrompt(data: GenerateRequest): string {
 
 export async function POST(request: NextRequest) {
   try {
-    // Validate total request body size (500KB limit)
+    // Validate total request body size (4MB limit)
     const contentLength = request.headers.get('content-length');
-    if (contentLength && parseInt(contentLength, 10) > 500 * 1024) {
+    if (contentLength && parseInt(contentLength, 10) > 4 * 1024 * 1024) {
       return NextResponse.json(
-        { error: 'Request body too large. Maximum size is 500KB.' },
+        { error: 'Request body too large. Maximum size is 4MB.' },
         { status: 400 }
       );
     }
 
     const rawBody = await request.text();
-    if (rawBody.length > 500 * 1024) {
+    if (rawBody.length > 4 * 1024 * 1024) {
       return NextResponse.json(
-        { error: 'Request body too large. Maximum size is 500KB.' },
+        { error: 'Request body too large. Maximum size is 4MB.' },
         { status: 400 }
       );
     }
@@ -232,7 +232,7 @@ export async function POST(request: NextRequest) {
     // Stream the Anthropic response directly to the client
     const stream = client.messages.stream({
       model: 'claude-opus-4-6',
-      max_tokens: 8000,
+      max_tokens: 16000,
       messages: [{ role: 'user', content: userPrompt }],
       system: systemPrompt,
     });

@@ -227,9 +227,9 @@ function buildUserPrompt(data: GenerateAnchorRequest): string {
 export async function POST(request: NextRequest) {
   try {
     const contentLength = request.headers.get('content-length')
-    if (contentLength && parseInt(contentLength, 10) > 500 * 1024) {
+    if (contentLength && parseInt(contentLength, 10) > 4 * 1024 * 1024) {
       return NextResponse.json(
-        { error: 'Request body too large. Maximum size is 500KB.' },
+        { error: 'Request body too large. Maximum size is 4MB.' },
         { status: 400 }
       )
     }
@@ -256,7 +256,7 @@ export async function POST(request: NextRequest) {
     // Stream the Opus response
     const stream = client.messages.stream({
       model: 'claude-opus-4-6',
-      max_tokens: 16000,
+      max_tokens: 32000,
       system: systemPrompt + SHARED_GUIDELINES,
       messages: [{ role: 'user', content: userPrompt }],
     })
