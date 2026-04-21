@@ -37,12 +37,25 @@ const ANCHOR_QUESTIONS: Record<string, string> = {
 
 // SoundByte-style promise per anchor. The "Change" step of PEACE —
 // what life looks like after. Short, bumper-sticker clear.
-const ANCHOR_HEADLINES: Record<string, string> = {
-  codex: 'Your Voice, in Every AI.',
-  'story-bank': 'The Stories Make the Output.',
-  sotu: 'Where You Actually Are.',
-  timeline: 'Your Arc, Not Your Resume.',
-  roster: 'The People Come with You.',
+// `highlight` marks the high-value phrase rendered in ochre.
+const ANCHOR_HEADLINES: Record<string, { text: string; highlight: string }> = {
+  codex: { text: 'Your Voice, in Every AI.', highlight: 'Voice' },
+  'story-bank': { text: 'The Stories Make the Output.', highlight: 'the Output' },
+  sotu: { text: 'Where You Actually Are.', highlight: 'Actually' },
+  timeline: { text: 'Your Arc, Not Your Resume.', highlight: 'Arc' },
+  roster: { text: 'The People Come with You.', highlight: 'People' },
+}
+
+function renderHeadline({ text, highlight }: { text: string; highlight: string }) {
+  const idx = text.indexOf(highlight)
+  if (idx === -1) return text
+  return (
+    <>
+      {text.slice(0, idx)}
+      <span className="text-ochre">{highlight}</span>
+      {text.slice(idx + highlight.length)}
+    </>
+  )
 }
 
 // StoryBrand-framed teaser: problem → answer → end result.
@@ -157,7 +170,7 @@ export function AnchorPaywall({
             className="font-display text-navy font-bold leading-tight mb-6"
             style={{ fontSize: 'clamp(1.75rem, 4vw, 2.75rem)' }}
           >
-            {headline}
+            {renderHeadline(headline)}
           </h2>
         )}
         <p className="font-body text-navy/85 text-lg sm:text-xl leading-relaxed mb-12 sm:mb-16">
