@@ -428,7 +428,7 @@ export function FoundationStep() {
                     href={`/anchors/${card.slug}`}
                     className="link-accent"
                   >
-                    Build yours with Rumo &rarr;
+                    Build yours with RUMO &rarr;
                   </a>
                 </p>
               </motion.div>

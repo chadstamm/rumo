@@ -32,7 +32,7 @@ function IntroStep() {
 
       <p className="font-body text-muted text-base sm:text-lg leading-relaxed max-w-lg mb-4">
         Answer a few questions about how you work and communicate.
-        Rumo generates custom instructions for every AI platform you use.
+        RUMO generates custom instructions for every AI platform you use.
       </p>
 
       <p className="font-body text-navy/30 text-sm mb-10">

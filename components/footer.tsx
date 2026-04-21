@@ -89,7 +89,7 @@ export function Footer() {
         {/* ── Bottom bar ── */}
         <div className="pt-6 border-t border-cream/10">
           <p className="font-body text-cream/40 text-xs tracking-wide">
-            &copy; {new Date().getFullYear()} Rumo. All rights reserved.
+            &copy; {new Date().getFullYear()} RUMO. All rights reserved.
           </p>
         </div>
       </div>
