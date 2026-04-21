@@ -20,7 +20,7 @@ export default function PrivacyPage() {
           </h1>
           <div className="w-12 h-[2px] bg-ochre/50 mb-6 sm:mb-8" aria-hidden="true" />
           <p className="font-body text-cream/60 text-base">
-            Last updated: March 2026
+            Last updated: April 21, 2026
           </p>
         </div>
       </div>
@@ -31,7 +31,10 @@ export default function PrivacyPage() {
           <div className="space-y-10">
             <Section title="What we collect">
               <p>
-                When you use RUMO, we collect the answers you provide to our anchor builder questions, any writing samples you submit for voice analysis, and the context anchor documents we generate on your behalf &mdash; including your Personal Constitution, Writing Codex, Story Bank, State of the Union, Timeline, and Influence Roster. We collect your name and email address when you generate a document.
+                When you use RUMO, we collect the answers you provide to our anchor builder questions, any writing samples you submit for voice analysis, and the context anchor documents we generate on your behalf &mdash; including your Personal Constitution, Writing Codex, Story Bank, State of the Union, Timeline, and Influence Roster.
+              </p>
+              <p>
+                We collect your email address in two cases: when you sign in to build a free Personal Constitution, and when you purchase a RUMO subscription. In the subscription case we receive your email from Stripe and use it to create your RUMO account. After payment, we send a magic link to that email so you can access your vault.
               </p>
             </Section>
 
@@ -44,6 +47,15 @@ export default function PrivacyPage() {
             <Section title="What we don&apos;t do">
               <p>
                 We do not sell your data. We do not share your information with third parties for marketing or any other purpose. We do not use your writing samples, answers, or generated documents to train AI models &mdash; yours or anyone else&apos;s.
+              </p>
+            </Section>
+
+            <Section title="Who helps us run RUMO">
+              <p>
+                RUMO uses Anthropic&rsquo;s Claude API to generate your Context Anchors. When you build an anchor, your answers and any writing samples you&rsquo;ve provided are sent to Anthropic for processing. Per Anthropic&rsquo;s commercial terms, they do not use API input or output to train their models.
+              </p>
+              <p>
+                We also rely on Supabase (database and authentication) and Stripe (payment processing). These are the only third parties that touch your data.
               </p>
             </Section>
 

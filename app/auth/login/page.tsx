@@ -118,6 +118,10 @@ function LoginForm() {
 
           <p className="font-body text-[11px] text-navy/30 text-center">
             By signing in you agree to our{' '}
+            <Link href="/terms" className="underline hover:text-navy/50 transition-colors">
+              terms of service
+            </Link>
+            {' '}and{' '}
             <Link href="/privacy" className="underline hover:text-navy/50 transition-colors">
               privacy policy
             </Link>

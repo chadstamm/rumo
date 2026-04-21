@@ -20,7 +20,7 @@ export default function TermsPage() {
           </h1>
           <div className="w-12 h-[2px] bg-ochre/50 mb-6 sm:mb-8" aria-hidden="true" />
           <p className="font-body text-cream/60 text-base">
-            Last updated: March 30, 2026
+            Last updated: April 21, 2026
           </p>
         </div>
       </div>
@@ -46,7 +46,7 @@ export default function TermsPage() {
                 Everything you write in RUMO belongs to you. Your answers, your documents, your Context Anchors &mdash; all yours. We don&apos;t claim ownership of any content you create through the Service.
               </p>
               <p>
-                Your answers are stored locally in your browser by default. If you create an account, your data is stored securely on our servers. You can export or delete your data at any time.
+                Your answers are stored locally in your browser by default. If you create an account, your data is stored securely on our servers. You can export or delete your data at any time. If you cancel your subscription, your existing documents remain accessible in read-only mode until you choose to delete them.
               </p>
             </Section>
 
@@ -58,7 +58,7 @@ export default function TermsPage() {
 
             <Section title="5. Payments and Refunds">
               <p>
-                Payments are processed securely through Stripe. We do not store your payment information. If you&apos;re unsatisfied with your purchase, contact us within 30 days for a full refund. No questions asked.
+                Payments are processed securely through Stripe. We do not store your payment information. If you&apos;re unsatisfied with your purchase, email <a href="mailto:chad@chadstamm.com" className="text-teal hover:text-teal-light underline underline-offset-2">chad@chadstamm.com</a> within 30 days of purchase for a full refund. No questions asked. Refunds are processed within three business days.
               </p>
             </Section>
 
@@ -86,7 +86,13 @@ export default function TermsPage() {
               </p>
             </Section>
 
-            <Section title="10. Contact">
+            <Section title="10. Governing Law">
+              <p>
+                These terms are governed by the laws of the State of Colorado, USA, without regard to conflict of laws principles. Any disputes arising from your use of RUMO will be resolved in the state or federal courts located in Colorado.
+              </p>
+            </Section>
+
+            <Section title="11. Contact">
               <p>
                 Questions about these terms? Reach out at{' '}
                 <a href="mailto:chad@chadstamm.com" className="text-teal hover:text-teal-light underline underline-offset-2">
