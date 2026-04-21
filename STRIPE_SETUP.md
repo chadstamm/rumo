@@ -1,21 +1,35 @@
-# Rumo Stripe Setup — Checklist
+# RUMO Stripe Setup — Checklist
 
-Code is built. Follow these steps once in Stripe Test mode, then again when flipping to Live.
+Code is built. Follow these steps once in Stripe Sandbox (Test mode), then again when flipping to Live.
 
-## 1. Stripe Dashboard — Test Mode
+## Progress (2026-04-21)
 
-Go to **https://dashboard.stripe.com** and make sure the toggle at top-left says **"Test mode"** (yellow banner).
+- [x] **1a. Product created** — `RUMO Annual` / $49 USD / Yearly
+- [x] **STRIPE_PRICE_ID** = `price_1TOefHG88VrgK92M5Jpb3imw`
+- [ ] 1b. API keys
+- [ ] 1c. Webhook endpoint + signing secret
+- [ ] 2. Supabase service_role key
+- [ ] 3. Vercel env vars
+- [ ] 4. Local `.env.local`
+- [ ] 5. E2E test with 4242 4242 4242 4242
+- [ ] 6. Flip to Live Mode
 
-### 1a. Create the product
+## 1. Stripe Dashboard — Sandbox (Test Mode)
+
+Go to **https://dashboard.stripe.com** and make sure the toggle at top-left says **"Test mode"** / **"Sandbox"** (yellow banner).
+
+### 1a. Create the product ✅ DONE
 
 1. **Products** → **Add product**
-2. Name: `Rumo — Full Journey`
-3. Description: `All six Context Anchors + Chart Your Course guided session + vault.`
+2. Name: `RUMO Annual`
+3. Description: `All six Context Anchors + Chart Your Course guided session + vault access. Renews annually.`
 4. Pricing model: **Recurring**
 5. Price: `$49.00 USD`
 6. Billing period: **Yearly**
 7. Save.
 8. After save, **copy the Price ID** (starts with `price_...`). This is `STRIPE_PRICE_ID`.
+
+**Captured:** `price_1TOefHG88VrgK92M5Jpb3imw`
 
 ### 1b. Get API keys
 
