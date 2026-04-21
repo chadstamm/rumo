@@ -12,7 +12,7 @@ export function UpgradeButton({
   className?: string
 }) {
   const router = useRouter()
-  const { user, loading } = useAuth()
+  const { user, loading, isSubscribed } = useAuth()
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -20,6 +20,10 @@ export function UpgradeButton({
     if (loading) return
     if (!user) {
       router.push('/auth/login?returnTo=/pricing')
+      return
+    }
+    if (isSubscribed) {
+      router.push('/vault')
       return
     }
 

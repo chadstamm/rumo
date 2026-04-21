@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { CompassRose } from '@/components/compass-rose'
+import { useAuth } from '@/components/auth-provider'
 import {
   getAllVaultDocuments,
   saveToVault,
@@ -13,6 +14,7 @@ import {
 } from '@/lib/vault-storage'
 
 export default function VaultPage() {
+  const { isSubscribed } = useAuth()
   const [docs, setDocs] = useState<Record<string, VaultDocument | null>>({})
   const [loaded, setLoaded] = useState(false)
   const [expandedSlug, setExpandedSlug] = useState<string | null>(null)
@@ -505,8 +507,8 @@ export default function VaultPage() {
                           </div>
                         )}
                       </>
-                    ) : meta.free ? (
-                      /* Empty free anchor — CTA to build OR upload */
+                    ) : meta.free || isSubscribed ? (
+                      /* Empty buildable anchor — CTA to build OR upload */
                       <div className="pt-2">
                         <p className="font-body text-navy/35 text-sm mb-4">
                           Start here. Answer {slug === 'constitution' ? '10' : 'a few'} questions and RUMO builds your {meta.title.toLowerCase()}.
