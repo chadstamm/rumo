@@ -56,9 +56,9 @@ export default function TermsPage() {
               </p>
             </Section>
 
-            <Section title="5. Payments and Refunds">
+            <Section title="5. Payments and Cancellation">
               <p>
-                Payments are processed securely through Stripe. We do not store your payment information. If you&apos;re unsatisfied with your purchase, email <a href="mailto:chad@chadstamm.com" className="text-teal hover:text-teal-light underline underline-offset-2">chad@chadstamm.com</a> within 30 days of purchase for a full refund. No questions asked. Refunds are processed within three business days.
+                Payments are processed securely through Stripe. We do not store your payment information. Subscriptions are non-refundable. You can cancel your subscription anytime to prevent automatic renewal &mdash; your access continues through the end of your current term.
               </p>
             </Section>
 

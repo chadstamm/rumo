@@ -189,7 +189,7 @@ export function AnchorPaywall({
             All six anchors. $49/year.
           </h2>
           <p className="font-body text-navy/60 text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto">
-            The Personal Constitution is free. The other five &mdash; including this one &mdash; come with RUMO Annual. Yours to keep. 30-day refund if it&apos;s not for you. Cancel anytime.
+            The Personal Constitution is free. The other five &mdash; including this one &mdash; come with RUMO Annual. Yours to keep. Cancel anytime.
           </p>
           <Link
             href="/pricing"
