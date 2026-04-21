@@ -122,6 +122,53 @@ export default function VaultPage() {
     }
   }
 
+  // ── Direct upload to vault ──
+
+  const [uploadError, setUploadError] = useState<string | null>(null)
+
+  const handleUpload = async (slug: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    setUploadError(null)
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const isMarkdown = /\.(md|markdown|txt)$/i.test(file.name) ||
+                      ['text/markdown', 'text/plain'].includes(file.type)
+    if (!isMarkdown) {
+      setUploadError('Please upload a .md or .txt file.')
+      e.target.value = ''
+      return
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      setUploadError('File too large. Maximum 2MB.')
+      e.target.value = ''
+      return
+    }
+
+    try {
+      const text = await file.text()
+      if (!text.trim()) {
+        setUploadError('File is empty.')
+        e.target.value = ''
+        return
+      }
+
+      saveToVault({
+        content: text,
+        anchorSlug: slug,
+        anchorTitle: ANCHOR_META[slug].title,
+        generatedAt: new Date().toISOString(),
+        answeredCount: 0, // 0 = uploaded (not wizard-generated)
+      })
+
+      setDocs(getAllVaultDocuments())
+      e.target.value = ''
+    } catch {
+      setUploadError('Could not read that file.')
+      e.target.value = ''
+    }
+  }
+
   const handleAcceptRevision = () => {
     if (!refiningSlug || !revisionResult.trim()) return
     const existing = docs[refiningSlug]
@@ -163,6 +210,22 @@ export default function VaultPage() {
           </p>
         </div>
       </div>
+
+      {/* Upload error banner */}
+      {uploadError && (
+        <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 pt-6">
+          <div className="flex items-center justify-between gap-4 px-4 py-3 rounded-lg bg-red-50 border border-red-200">
+            <span className="font-body text-sm text-red-700">{uploadError}</span>
+            <button
+              type="button"
+              onClick={() => setUploadError(null)}
+              className="font-body text-xs text-red-600/70 hover:text-red-800"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Anchor Cards */}
       <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
@@ -232,7 +295,7 @@ export default function VaultPage() {
                         {/* Stats */}
                         <div className="flex items-center gap-4 mb-4 text-xs font-body text-navy/40">
                           <span>v{doc.version}</span>
-                          <span>{doc.answeredCount} answers</span>
+                          <span>{doc.answeredCount > 0 ? `${doc.answeredCount} answers` : 'Uploaded'}</span>
                           <span>{new Date(doc.generatedAt).toLocaleDateString()}</span>
                         </div>
 
@@ -408,7 +471,7 @@ export default function VaultPage() {
                         )}
                       </>
                     ) : meta.free ? (
-                      /* Empty free anchor — CTA to build */
+                      /* Empty free anchor — CTA to build OR upload */
                       <div className="pt-2">
                         <p className="font-body text-navy/35 text-sm mb-4">
                           Start here. Answer {slug === 'constitution' ? '10' : 'a few'} questions and RUMO builds your {meta.title.toLowerCase()}.
@@ -422,9 +485,29 @@ export default function VaultPage() {
                         >
                           Build Now
                         </Link>
+
+                        <div className="mt-4 pt-4 border-t border-navy/10">
+                          <p className="font-body text-navy/40 text-xs mb-2">
+                            Already have a {meta.title.toLowerCase()}?
+                          </p>
+                          <label className="inline-flex items-center gap-1.5 font-body text-xs font-semibold text-teal hover:text-teal-dark cursor-pointer transition-colors duration-200">
+                            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                              <polyline points="17 8 12 3 7 8"/>
+                              <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                            Upload .md to vault
+                            <input
+                              type="file"
+                              accept=".md,.markdown,.txt,text/markdown,text/plain"
+                              className="hidden"
+                              onChange={(e) => handleUpload(slug, e)}
+                            />
+                          </label>
+                        </div>
                       </div>
                     ) : (
-                      /* Locked pro anchor — teaser */
+                      /* Locked pro anchor — teaser with upload option */
                       <div className="pt-2">
                         <p className="font-body text-navy/30 text-sm mb-4">
                           Unlock this anchor to give your AI even deeper context.
@@ -438,6 +521,26 @@ export default function VaultPage() {
                         >
                           Unlock with Pro
                         </Link>
+
+                        <div className="mt-4 pt-4 border-t border-navy/10">
+                          <p className="font-body text-navy/40 text-xs mb-2">
+                            Already have a {meta.title.toLowerCase()}?
+                          </p>
+                          <label className="inline-flex items-center gap-1.5 font-body text-xs font-semibold text-teal hover:text-teal-dark cursor-pointer transition-colors duration-200">
+                            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                              <polyline points="17 8 12 3 7 8"/>
+                              <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                            Upload .md to vault
+                            <input
+                              type="file"
+                              accept=".md,.markdown,.txt,text/markdown,text/plain"
+                              className="hidden"
+                              onChange={(e) => handleUpload(slug, e)}
+                            />
+                          </label>
+                        </div>
                       </div>
                     )}
                   </div>
