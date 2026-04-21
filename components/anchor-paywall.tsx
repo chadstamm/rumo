@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { CompassRose } from '@/components/compass-rose'
 import { FullBuildCTA } from '@/components/full-build-cta'
+import { UpgradeButton } from '@/components/upgrade-button'
 import type { DocumentConfig } from '@/data/documents'
 
 const ANCHOR_ICONS: Record<string, string> = {
@@ -191,15 +192,14 @@ export function AnchorPaywall({
           <p className="font-body text-navy/60 text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto">
             The Personal Constitution is free. The other five &mdash; including this one &mdash; come with RUMO Annual. Yours to keep. Cancel anytime.
           </p>
-          <Link
-            href="/pricing"
+          <UpgradeButton
+            label="Chart Your Course · $49/year"
             className="inline-flex font-body text-sm font-bold tracking-[0.12em] uppercase px-8 py-3.5 rounded-full
                        bg-teal text-white shadow-md shadow-teal/25
                        hover:bg-teal-light hover:shadow-lg hover:shadow-teal/35 hover:-translate-y-0.5
+                       disabled:opacity-60 disabled:cursor-wait
                        transition-all duration-200"
-          >
-            Chart Your Course · $49/year
-          </Link>
+          />
         </div>
 
         <p className="font-body text-navy/45 text-sm text-center mt-10">
