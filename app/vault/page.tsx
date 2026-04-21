@@ -238,13 +238,13 @@ export default function VaultPage() {
       {/* Anchor Cards */}
       <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
         {!loaded ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {ANCHOR_ORDER.map((slug) => (
               <div key={slug} className="h-64 rounded-2xl bg-navy/5 animate-pulse" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {ANCHOR_ORDER.map((slug) => {
               const meta = ANCHOR_META[slug]
               const doc = docs[slug]
