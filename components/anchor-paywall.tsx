@@ -38,11 +38,11 @@ const ANCHOR_QUESTIONS: Record<string, string> = {
 // SoundByte-style promise per anchor. The "Change" step of PEACE —
 // what life looks like after. Short, bumper-sticker clear.
 const ANCHOR_HEADLINES: Record<string, string> = {
-  codex: 'Your voice, in every AI.',
-  'story-bank': 'The stories make the output.',
-  sotu: 'Where you actually are.',
-  timeline: 'Your arc, not your resume.',
-  roster: 'The people come with you.',
+  codex: 'Your Voice, in Every AI.',
+  'story-bank': 'The Stories Make the Output.',
+  sotu: 'Where You Actually Are.',
+  timeline: 'Your Arc, Not Your Resume.',
+  roster: 'The People Come with You.',
 }
 
 // StoryBrand-framed teaser: problem → answer → end result.
