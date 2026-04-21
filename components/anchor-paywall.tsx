@@ -26,13 +26,23 @@ const HERO_FOCUS: Record<string, string> = {
   timeline: 'center 40%',
 }
 
-// First-person question per anchor — shown prominently in the hero.
+// First-person question per anchor — shown in the hero.
 const ANCHOR_QUESTIONS: Record<string, string> = {
   codex: 'How do I write?',
   'story-bank': 'What stories do I always tell?',
   sotu: 'What matters to me right now?',
   timeline: 'How has my life unfolded?',
   roster: 'Who are the people that matter?',
+}
+
+// SoundByte-style promise per anchor. The "Change" step of PEACE —
+// what life looks like after. Short, bumper-sticker clear.
+const ANCHOR_HEADLINES: Record<string, string> = {
+  codex: 'Your voice, in every AI.',
+  'story-bank': 'The stories make the output.',
+  sotu: 'Where you actually are.',
+  timeline: 'Your arc, not your resume.',
+  roster: 'The people come with you.',
 }
 
 // StoryBrand-framed teaser: problem → answer → end result.
@@ -59,6 +69,7 @@ export function AnchorPaywall({
   const heroImage = HERO_IMAGES[doc.slug]
   const icon = ANCHOR_ICONS[doc.slug]
   const question = ANCHOR_QUESTIONS[doc.slug]
+  const headline = ANCHOR_HEADLINES[doc.slug]
   const teaser = ANCHOR_TEASERS[doc.slug] ?? doc.description
 
   return (
@@ -109,20 +120,25 @@ export function AnchorPaywall({
                   {doc.title}
                 </h1>
 
+                <div className="w-10 h-[2px] bg-ochre/50 mb-5" aria-hidden="true" />
+
                 {question && (
                   <p
-                    className="font-display italic text-cream/90 leading-tight mb-5"
+                    className="font-display italic text-cream/90 leading-tight mb-3"
                     style={{ fontSize: 'clamp(1.125rem, 2.2vw, 1.5rem)' }}
                   >
                     &ldquo;{question}&rdquo;
                   </p>
                 )}
 
-                <div className="w-10 h-[2px] bg-ochre/50 mb-4" aria-hidden="true" />
-
-                <p className="font-body text-cream/65 text-sm sm:text-base leading-relaxed">
-                  {doc.subtitle}
-                </p>
+                {headline && (
+                  <p
+                    className="font-body font-bold text-ochre-light leading-tight"
+                    style={{ fontSize: 'clamp(1rem, 1.8vw, 1.25rem)' }}
+                  >
+                    {headline}
+                  </p>
+                )}
               </div>
 
               {icon && (
