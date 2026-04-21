@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Open_Sans, Sail } from 'next/font/google'
+import { Open_Sans, Aclonica } from 'next/font/google'
 import './globals.css'
 import { Nav } from '@/components/nav'
 import { Footer } from '@/components/footer'
@@ -12,10 +12,10 @@ const openSans = Open_Sans({
   display: 'swap',
 })
 
-const sail = Sail({
+const aclonica = Aclonica({
   weight: '400',
   subsets: ['latin'],
-  variable: '--font-sail',
+  variable: '--font-aclonica',
   display: 'swap',
 })
 
@@ -55,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${openSans.variable} ${sail.variable}`}>
+    <html lang="en" className={`${openSans.variable} ${aclonica.variable}`}>
       <body className="font-body">
         <AuthProvider>
           <Nav />

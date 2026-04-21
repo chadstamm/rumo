@@ -77,17 +77,17 @@ export function Overview() {
             <blockquote className="relative text-center">
               {/* Opening quote mark */}
               <span
-                className="absolute -top-8 -left-6 font-script text-[7rem] leading-none text-ochre/30 select-none pointer-events-none"
+                className="absolute -top-8 -left-6 font-accent text-[7rem] leading-none text-ochre/30 select-none pointer-events-none"
                 aria-hidden="true"
               >
                 &ldquo;
               </span>
-              <p className="font-script text-cream/80 text-[clamp(2rem,3.8vw,3rem)] leading-[1.35]">
+              <p className="font-accent text-cream/80 text-[clamp(2rem,3.8vw,3rem)] leading-[1.35]">
                 Give AI your context before you give it your questions.
               </p>
               {/* Closing quote mark */}
               <span
-                className="absolute -bottom-16 -right-8 font-script text-[7rem] leading-none text-ochre/30 select-none pointer-events-none"
+                className="absolute -bottom-16 -right-8 font-accent text-[7rem] leading-none text-ochre/30 select-none pointer-events-none"
                 aria-hidden="true"
               >
                 &rdquo;
