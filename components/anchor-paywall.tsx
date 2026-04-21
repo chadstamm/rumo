@@ -178,7 +178,19 @@ export function AnchorPaywall({
           {teaser}
         </p>
 
-        <div className="flex flex-col items-start gap-5">
+        <div className="bg-white/60 border border-navy/10 rounded-3xl p-8 sm:p-12 text-center shadow-sm">
+          <p className="font-body text-ochre font-bold text-xs tracking-[0.25em] uppercase mb-4">
+            Unlock the Vault
+          </p>
+          <h2
+            className="font-display text-navy font-bold leading-tight mb-4"
+            style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}
+          >
+            All six anchors. $49/year.
+          </h2>
+          <p className="font-body text-navy/60 text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto">
+            The Personal Constitution is free. The other five &mdash; including this one &mdash; come with RUMO Annual. Yours to keep. Renews yearly, cancel anytime.
+          </p>
           <Link
             href="/pricing"
             className="inline-flex font-body text-sm font-bold tracking-[0.12em] uppercase px-8 py-3.5 rounded-full
@@ -188,17 +200,18 @@ export function AnchorPaywall({
           >
             Chart Your Course · $49/year
           </Link>
-          <p className="font-body text-navy/50 text-sm">
-            Or{' '}
-            <Link
-              href="/anchors/constitution"
-              className="font-semibold text-teal hover:text-teal-dark underline underline-offset-2 transition-colors"
-            >
-              build your Personal Constitution free
-            </Link>
-            .
-          </p>
         </div>
+
+        <p className="font-body text-navy/45 text-sm text-center mt-10">
+          Want to start free?{' '}
+          <Link
+            href="/anchors/constitution"
+            className="font-semibold text-teal hover:text-teal-dark underline underline-offset-2 transition-colors"
+          >
+            Build your Personal Constitution
+          </Link>
+          .
+        </p>
       </section>
 
       <FullBuildCTA currentSlug={doc.slug} />
