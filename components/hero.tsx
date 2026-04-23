@@ -46,13 +46,13 @@ export function Hero() {
           background: `
             linear-gradient(
               to bottom,
-              rgba(26, 39, 68, 0.50) 0%,
-              rgba(26, 39, 68, 0.25) 25%,
-              rgba(26, 39, 68, 0.20) 40%,
-              rgba(26, 39, 68, 0.30) 55%,
-              rgba(26, 39, 68, 0.55) 70%,
-              rgba(26, 39, 68, 0.80) 85%,
-              rgba(26, 39, 68, 0.95) 100%
+              rgba(12, 35, 64, 0.50) 0%,
+              rgba(12, 35, 64, 0.25) 25%,
+              rgba(12, 35, 64, 0.20) 40%,
+              rgba(12, 35, 64, 0.30) 55%,
+              rgba(12, 35, 64, 0.55) 70%,
+              rgba(12, 35, 64, 0.80) 85%,
+              rgba(12, 35, 64, 0.95) 100%
             )
           `,
         }}
@@ -67,7 +67,7 @@ export function Hero() {
             radial-gradient(
               ellipse at center,
               transparent 40%,
-              rgba(26, 39, 68, 0.5) 100%
+              rgba(12, 35, 64, 0.5) 100%
             )
           `,
         }}

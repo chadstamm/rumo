@@ -88,10 +88,10 @@ export function ChartYourCourseClient() {
           aria-hidden="true"
           style={{
             background: `linear-gradient(to bottom,
-              rgba(26, 39, 68, 0.65) 0%,
-              rgba(26, 39, 68, 0.75) 50%,
-              rgba(26, 39, 68, 0.92) 85%,
-              rgba(26, 39, 68, 1) 100%)`,
+              rgba(12, 35, 64, 0.65) 0%,
+              rgba(12, 35, 64, 0.75) 50%,
+              rgba(12, 35, 64, 0.92) 85%,
+              rgba(12, 35, 64, 1) 100%)`,
           }}
         />
 

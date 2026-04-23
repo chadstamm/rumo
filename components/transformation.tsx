@@ -59,13 +59,13 @@ export function Transformation() {
           xmlns="http://www.w3.org/2000/svg"
           className="w-full h-full"
         >
-          <circle cx="200" cy="200" r="180" stroke="#1a2744" strokeWidth="2" />
-          <circle cx="200" cy="200" r="160" stroke="#1a2744" strokeWidth="1" />
-          <polygon points="200,20 228,160 200,130 172,160" fill="#1a2744" />
-          <polygon points="200,380 172,240 200,270 228,240" fill="#1a2744" />
-          <polygon points="380,200 240,172 270,200 240,228" fill="#1a2744" />
-          <polygon points="20,200 160,228 130,200 160,172" fill="#1a2744" />
-          <circle cx="200" cy="200" r="22" fill="#1a2744" />
+          <circle cx="200" cy="200" r="180" stroke="#0c2340" strokeWidth="2" />
+          <circle cx="200" cy="200" r="160" stroke="#0c2340" strokeWidth="1" />
+          <polygon points="200,20 228,160 200,130 172,160" fill="#0c2340" />
+          <polygon points="200,380 172,240 200,270 228,240" fill="#0c2340" />
+          <polygon points="380,200 240,172 270,200 240,228" fill="#0c2340" />
+          <polygon points="20,200 160,228 130,200 160,172" fill="#0c2340" />
+          <circle cx="200" cy="200" r="22" fill="#0c2340" />
           <circle cx="200" cy="200" r="10" fill="#faf6f1" />
         </svg>
       </div>

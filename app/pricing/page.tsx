@@ -167,7 +167,7 @@ function PricingFeature({ children, included }: { children: React.ReactNode; inc
         </svg>
       ) : (
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="flex-shrink-0 mt-0.5 opacity-20">
-          <path d="M5 9h8" stroke="#1a2744" strokeWidth="2" strokeLinecap="round" />
+          <path d="M5 9h8" stroke="#0c2340" strokeWidth="2" strokeLinecap="round" />
         </svg>
       )}
       <span className={`font-body text-sm ${included ? 'text-navy/90' : 'text-navy/35'}`}>

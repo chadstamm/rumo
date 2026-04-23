@@ -82,7 +82,7 @@ Hero → Problem → Overview ("The Missing Ingredient") → How It Works (4 ste
 ## Design System
 | Token | Hex | Usage |
 |-------|-----|-------|
-| navy | `#1a2744` | Primary text, dark backgrounds |
+| navy | `#0c2340` | Primary text, dark backgrounds |
 | ochre | `#c4943a` | Brand accent, labels, section eyebrows |
 | teal | `#1ebeb1` | Directional/structural only — CTAs, buttons, links, progress bars, lines |
 | teal-light | `#3ed4c8` | Hover states |

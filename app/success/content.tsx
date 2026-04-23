@@ -47,7 +47,7 @@ export function SuccessContent({
           aria-hidden="true"
           style={{
             background:
-              'radial-gradient(ellipse at center, transparent 0%, rgba(26, 39, 68, 0.6) 85%)',
+              'radial-gradient(ellipse at center, transparent 0%, rgba(12, 35, 64, 0.6) 85%)',
           }}
         />
 

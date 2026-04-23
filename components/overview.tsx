@@ -26,8 +26,8 @@ export function Overview() {
         aria-hidden="true"
         style={{
           background: `linear-gradient(to bottom,
-            rgba(26, 39, 68, 0.93) 0%, rgba(26, 39, 68, 0.90) 40%,
-            rgba(26, 39, 68, 0.82) 70%, rgba(30, 35, 44, 0.72) 100%)`,
+            rgba(12, 35, 64, 0.93) 0%, rgba(12, 35, 64, 0.90) 40%,
+            rgba(12, 35, 64, 0.82) 70%, rgba(30, 35, 44, 0.72) 100%)`,
         }}
       />
       <div

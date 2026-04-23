@@ -84,8 +84,8 @@ function DocumentHero({ config }: { config: DocumentConfig }) {
         aria-hidden="true"
         style={{
           background: heroImage
-            ? `linear-gradient(to bottom, rgba(40,32,18,0.35) 0%, rgba(30,28,20,0.55) 40%, rgba(26,39,68,0.88) 80%, rgba(26,39,68,1) 100%)`
-            : '#1a2744',
+            ? `linear-gradient(to bottom, rgba(40,32,18,0.35) 0%, rgba(30,28,20,0.55) 40%, rgba(12,35,64,0.88) 80%, rgba(12,35,64,1) 100%)`
+            : '#0c2340',
         }}
       />
 

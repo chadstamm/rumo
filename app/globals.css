@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy: #1a2744;
+  --color-navy: #0c2340;
   --color-navy-light: #243352;
   --color-cream: #faf6f1;
   --color-cream-dark: #f0e8dd;
@@ -106,7 +106,7 @@ a, button, [role="button"], input[type="submit"], input[type="button"], select, 
   --primary-light: #3ed4c8;
   --primary-dark: #179e93;
   --accent: #c4943a;
-  --ink: #1a2744;
+  --ink: #0c2340;
   --ink-light: #3a4a64;
   --bg-card: #ffffff;
   --border: #e2ddd5;
@@ -185,13 +185,13 @@ a, button, [role="button"], input[type="submit"], input[type="button"], select, 
 .btn-ghost:hover {
   color: var(--ink);
   border-color: var(--ink-light);
-  background: rgba(26, 39, 68, 0.04);
+  background: rgba(12, 35, 64, 0.04);
   transform: translateY(-1px);
 }
 
 .btn-ghost:active {
   transform: translateY(0);
-  background: rgba(26, 39, 68, 0.08);
+  background: rgba(12, 35, 64, 0.08);
 }
 
 /* ── Voice Input Button ────────────────────────────────────── */

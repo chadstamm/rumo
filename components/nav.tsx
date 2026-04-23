@@ -76,7 +76,7 @@ function AnchorsMegaDropdown({ pathname, onSelect, glass }: {
           ? 'bg-navy/80 backdrop-blur-xl border border-white/10 shadow-navy/30'
           : 'bg-white border border-navy/10 shadow-navy/5'
       }`}>
-      <div className="grid grid-cols-2 gap-px" style={{ background: glass ? 'rgba(255,255,255,0.05)' : 'rgba(26,39,68,0.04)' }}>
+      <div className="grid grid-cols-2 gap-px" style={{ background: glass ? 'rgba(255,255,255,0.05)' : 'rgba(12,35,64,0.04)' }}>
         {ANCHOR_ITEMS.map(({ label, subtitle, href, accent, icon, isFree }) => {
           const isActive = pathname === href
           const accentColor = accent === 'teal' ? 'var(--teal)' : 'var(--ochre)'
