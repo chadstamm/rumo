@@ -103,6 +103,21 @@ export async function POST(request: NextRequest) {
           { onConflict: 'stripe_session_id' }
         )
 
+        // Capture name from Stripe checkout (single field — split on first space).
+        // Don't overwrite existing first_name/last_name; only fill if currently null.
+        const fullName = session.customer_details?.name?.trim()
+        let firstName: string | null = null
+        let lastName: string | null = null
+        if (fullName) {
+          const idx = fullName.indexOf(' ')
+          if (idx === -1) {
+            firstName = fullName
+          } else {
+            firstName = fullName.slice(0, idx)
+            lastName = fullName.slice(idx + 1).trim() || null
+          }
+        }
+
         // Update profile to active
         await supabase
           .from('profiles')
@@ -113,6 +128,22 @@ export async function POST(request: NextRequest) {
             stripe_customer_id: customerId ?? null,
           })
           .eq('id', userId)
+
+        // Backfill name fields only if empty — preserves any manual edits
+        if (firstName) {
+          const { data: existingProfile } = await supabase
+            .from('profiles')
+            .select('first_name, last_name')
+            .eq('id', userId)
+            .maybeSingle()
+
+          const nameUpdate: { first_name?: string; last_name?: string } = {}
+          if (!existingProfile?.first_name) nameUpdate.first_name = firstName
+          if (!existingProfile?.last_name && lastName) nameUpdate.last_name = lastName
+          if (Object.keys(nameUpdate).length > 0) {
+            await supabase.from('profiles').update(nameUpdate).eq('id', userId)
+          }
+        }
 
         break
       }

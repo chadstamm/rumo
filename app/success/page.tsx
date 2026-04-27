@@ -53,6 +53,20 @@ export default async function SuccessPage({
         ? checkoutSession.customer
         : checkoutSession.customer?.id ?? null
 
+    // Capture name from Stripe (single string — split on first space).
+    const fullName = checkoutSession.customer_details?.name?.trim()
+    let firstName: string | null = null
+    let lastName: string | null = null
+    if (fullName) {
+      const idx = fullName.indexOf(' ')
+      if (idx === -1) {
+        firstName = fullName
+      } else {
+        firstName = fullName.slice(0, idx)
+        lastName = fullName.slice(idx + 1).trim() || null
+      }
+    }
+
     const admin = createServiceClient()
     await admin
       .from('profiles')
@@ -61,6 +75,22 @@ export default async function SuccessPage({
         stripe_customer_id: customerId,
       })
       .eq('id', userId)
+
+    // Backfill name fields only if currently empty (preserves manual edits).
+    if (firstName) {
+      const { data: existingProfile } = await admin
+        .from('profiles')
+        .select('first_name, last_name')
+        .eq('id', userId)
+        .maybeSingle()
+
+      const nameUpdate: { first_name?: string; last_name?: string } = {}
+      if (!existingProfile?.first_name) nameUpdate.first_name = firstName
+      if (!existingProfile?.last_name && lastName) nameUpdate.last_name = lastName
+      if (Object.keys(nameUpdate).length > 0) {
+        await admin.from('profiles').update(nameUpdate).eq('id', userId)
+      }
+    }
 
     try {
       await sendMagicLink(email, '/vault')
