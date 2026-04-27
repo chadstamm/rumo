@@ -46,3 +46,38 @@ One line per anchor, drawn from the audit. Working hypotheses, not commitments.
 - **Do not modify `data/questions.ts` or any wizard copy before Apr 24 paywall launch.** Question surgery 24 hours before launch introduces bugs into UX that's already calibrated and shakes copy that's already dialed in.
 - Ship the 77 questions as they are. Data from live users beats launch-eve nerves.
 - Wait for Chad's ratification of the editorial thesis before anything else touches the question set.
+
+---
+
+## 4. Beyond the question set — product architecture
+
+These are separate from the question-set audit. Surfaced 2026-04-27 during paywall fix work, post-launch only. Do not touch before May 3.
+
+### 4a. Vault as dashboard, not card grid
+
+Today the vault is a 2-col card grid — six equal cards, each treating its anchor as a destination you click into. Chad's read: "still not what I want it to be. I want it to feel like a dashboard."
+
+Direction worth exploring:
+- At-a-glance state across the six anchors — what's built, what's stale, what's been edited recently
+- Quick actions surfaced without expanding cards — copy, download, edit
+- A different visual hierarchy that frames the six as components of one workspace, not six separate destinations
+- Possibly: recent activity, version history, "last edited" timeline
+
+What "dashboard" means to Chad still needs to be pinned down before any design work — the word covers a lot of patterns. Brainstorm with him before drawing.
+
+### 4b. Story Bank as structured records, not a single document
+
+Surfaced from this exchange: *"For the storybank, I want to have the phrases and maybe the stories listed out so one can add to them and/or subtract — right now that is just at the document level, and maybe, for this anchor especially, having more nuance like that would make sense, similar to what we did for the storybank app."*
+
+The reference is to `~/Desktop/Claude Code Projects/story-archive/` — Chad's existing structured story app.
+
+**Why it matters:** Every anchor is currently one content blob. For Story Bank, the natural unit is a single phrase or story — discrete records you'd want to add, remove, tag, or reorder individually. The current single-document model collapses that natural structure.
+
+**The cascade question:** If you do this for Story Bank, you start asking the same of the others:
+- **Influence Roster** — one record per person?
+- **Timeline** — one record per moment?
+- **Constitution** — one record per article/principle?
+
+If the answer is yes for any of them, this isn't a Story Bank feature — it's a vault data-model migration. Documents become collections; collections render as documents on demand for AI upload. That's a real v2 architectural decision and changes the schema (`vault_entries` table with anchor_slug, entry_type, content, ordering, tags), the editor (per-entry CRUD instead of textarea), and the AI generation prompts.
+
+**Decision needed before any work:** Is structured-records a Story Bank-only experiment, or the v2 architectural direction for the whole vault? Chad's gut on this drives the scope.
