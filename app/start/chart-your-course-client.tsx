@@ -1,11 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { DOCUMENTS, FULL_BUILD_SECTIONS, type DocumentConfig } from '@/data/documents'
+import { DOCUMENTS, FULL_BUILD_SECTIONS } from '@/data/documents'
 import { getQuestionsForSection } from '@/data/questions'
-import { DocumentWizard } from '@/components/wizard/document-wizard'
 
 const ANCHOR_ICONS: Record<string, string> = {
   constitution: '/icons/constitution.png',
@@ -34,41 +33,31 @@ const ANCHOR_SHORT_LABELS: Record<string, string> = {
   roster: 'Influence',
 }
 
-// Synthesized config for the full all-in-one Chart Your Course wizard.
-// storageKey 'chart-your-course' isolates state from the per-anchor wizards
-// so a user mid-build on Constitution doesn't collide with the full journey.
-const FULL_BUILD_CONFIG: DocumentConfig = {
-  slug: 'chart-your-course',
-  title: 'Chart Your Course',
-  subtitle: 'The full journey — all six anchors',
-  description:
-    'Build all six context anchors in one session — identity, voice, stories, situation, timeline, and roster.',
-  sections: FULL_BUILD_SECTIONS,
-  accent: 'ochre',
-}
-
 export function ChartYourCourseClient() {
-  const [started, setStarted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  // When the wizard mounts, jump to top so the user sees its hero, not mid-page.
-  useEffect(() => {
-    if (started) {
-      window.scrollTo({ top: 0, behavior: 'auto' })
+  const handleCheckout = async () => {
+    if (submitting) return
+    setSubmitting(true)
+    setError(null)
+    try {
+      const response = await fetch('/api/stripe/checkout', { method: 'POST' })
+      const data = await response.json().catch(() => null)
+      if (!response.ok || !data?.url) {
+        throw new Error(data?.error ?? 'Checkout failed')
+      }
+      window.location.href = data.url
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong')
+      setSubmitting(false)
     }
-  }, [started])
+  }
 
   const totalQuestions = FULL_BUILD_SECTIONS.reduce<number>(
     (sum, s) => sum + getQuestionsForSection(s).length,
     0
   )
-
-  if (started) {
-    return (
-      <main className="min-h-screen">
-        <DocumentWizard config={FULL_BUILD_CONFIG} />
-      </main>
-    )
-  }
 
   return (
     <main className="min-h-screen">
@@ -112,23 +101,34 @@ export function ChartYourCourseClient() {
           <div className="flex flex-col sm:flex-row items-start gap-4 mt-10">
             <button
               type="button"
-              onClick={() => setStarted(true)}
+              onClick={handleCheckout}
+              disabled={submitting}
               className="inline-flex items-center gap-3 font-body font-bold text-sm sm:text-base tracking-[0.1em] uppercase
                          px-10 py-4 sm:py-5 rounded-full
                          bg-ochre text-white shadow-lg shadow-ochre/25
                          hover:bg-ochre-light hover:shadow-xl hover:shadow-ochre/35
                          hover:-translate-y-1 active:translate-y-0
+                         disabled:opacity-70 disabled:cursor-wait disabled:hover:translate-y-0
                          transition-all duration-300"
             >
-              GET STARTED
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M5 10h10M12 6.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              {submitting ? (
+                'Opening checkout…'
+              ) : (
+                <>
+                  GET STARTED
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M5 10h10M12 6.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </>
+              )}
             </button>
             <span className="font-body text-cream/60 text-sm self-center">
               $49/year <span className="text-cream/40">·</span> all six anchors <span className="text-cream/40">·</span> unlimited updates
             </span>
           </div>
+          {error && (
+            <p className="font-body text-red-300 text-sm mt-4">{error}</p>
+          )}
         </div>
       </div>
 
@@ -323,19 +323,30 @@ export function ChartYourCourseClient() {
           <div className="text-center">
             <button
               type="button"
-              onClick={() => setStarted(true)}
+              onClick={handleCheckout}
+              disabled={submitting}
               className="inline-flex items-center gap-3 font-body font-bold text-sm sm:text-base tracking-[0.1em] uppercase
                          px-10 sm:px-14 py-4 sm:py-5 rounded-full
                          bg-ochre text-white shadow-lg shadow-ochre/25
                          hover:bg-ochre-light hover:shadow-xl hover:shadow-ochre/35
                          hover:-translate-y-1 active:translate-y-0
+                         disabled:opacity-70 disabled:cursor-wait disabled:hover:translate-y-0
                          transition-all duration-300"
             >
-              GET STARTED
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M5 10h10M12 6.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              {submitting ? (
+                'Opening checkout…'
+              ) : (
+                <>
+                  GET STARTED
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M5 10h10M12 6.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </>
+              )}
             </button>
+            {error && (
+              <p className="font-body text-red-300 text-sm mt-4">{error}</p>
+            )}
           </div>
 
           <div className="text-center mt-8">
