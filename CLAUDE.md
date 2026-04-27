@@ -14,7 +14,7 @@ Consolidates four standalone apps (WeTheMe, WriteLikeMe, StoryArchive, Customize
 - Deployed on Vercel (Turbopack dev) — auto-deploys on push to main
 - Vercel project: `rumo` (linked via `.vercel/project.json`)
 - GitHub: `chadstamm/rumo` (origin remote configured)
-- Domain: withrumo.com (purchased, needs Vercel domain connection)
+- Domain: withrumo.com (live, connected to Vercel)
 
 ## Environment Variables
 | Variable | Required | Notes |
@@ -28,12 +28,17 @@ Consolidates four standalone apps (WeTheMe, WriteLikeMe, StoryArchive, Customize
 ### Landing Page (`/`)
 Hero → Problem → Overview ("The Missing Ingredient") → How It Works (4 steps) → Instructions Wizard → Footer
 
-### The Full Build (`/start`)
-- 68 curated questions across 7 sections: Shared Intake (7q) → Identity (10q) → Situation (10q) → Voice (12q) → Stories (9q) → Timeline (10q) → Roster (10q)
-- Produces raw material for all 6 context anchors
-- All documents generated AFTER completion (not mid-journey)
-- Auth deferred — users start immediately, sign-in required to save
-- State: `WizardProvider` context + useReducer + localStorage
+### The Full Build (`/start`) — paywalled
+- 81 curated questions across 7 sections covering identity, voice, stories, situation, timeline, and roster (exact per-section counts pending v2 audit reconciliation — see `docs/v2-scoping.md`)
+- Produces raw material for all 6 context anchors, generated sequentially after completion
+- **Pay-first paywall.** Server component (`app/start/page.tsx`) checks subscription. Unsubscribed users see marketing page (`app/start/chart-your-course-client.tsx`) with gold CTAs that fire `/api/stripe/checkout`. Subscribed users mount `<DocumentWizard config={FULL_BUILD_CONFIG} />` directly. Constitution-only free path stays at `/anchors/constitution`.
+- State: `WizardProvider` context + useReducer + localStorage. Storage key `chart-your-course` isolates state from per-anchor wizards.
+
+### Per-Anchor Paywall (`/anchors/[slug]`)
+- Server component does subscription check before rendering
+- Free anchor: `constitution` (renders wizard directly)
+- Paid anchors: `codex`, `story-bank`, `sotu`, `timeline`, `roster` — unsubscribed users see `<AnchorPaywall>` with Stripe CTA
+- Same gating pattern as `/start` (the canonical reference)
 
 ### Individual Anchor Builders (`/anchors/[slug]`)
 - Each anchor can be built standalone via its own scoped wizard
@@ -43,6 +48,14 @@ Hero → Problem → Overview ("The Missing Ingredient") → How It Works (4 ste
 - Routes: `/anchors/constitution`, `/anchors/sotu`, `/anchors/codex`, `/anchors/story-bank`, `/anchors/timeline`, `/anchors/roster`
 - Old `/docs/*` URLs permanently redirect to `/anchors/*`
 
+### Subscription & Account Model
+- **Two tiers:** Free (Constitution only, lead-gate at end captures email) vs. Paid ($49/yr unlocks all 6 anchors + vault + Chart Your Course)
+- **Stripe:** Checkout at `/api/stripe/checkout/route.ts` (creates session via `lib/stripe.ts`), webhook at `/api/stripe/webhook/route.ts` (handles `checkout.session.completed`, `customer.subscription.{updated,deleted}`, `invoice.payment_failed`). Both webhook + `/success/page.tsx` capture customer name from `customer_details.name` (split on first space, only fills empty fields).
+- **`profiles.subscription_status`:** `'free'` / `'active'` / `'expired'` / `'refunded'` / `'past_due'` — gates feature access
+- **`profiles.account_type`:** `'standard'` / `'comp'` / `'lifetime'` — for reporting and intent (paying vs. complimentary vs. one-time/founder). Default `'standard'`. Distinct from subscription status.
+- **Comp accounts:** `scripts/comp-account.mjs <email>` — creates Supabase user if missing, sets `subscription_status='active'` + `account_type='comp'`, sends magic link. Run with `node --env-file=.env.local scripts/comp-account.mjs <email>`. Used for family, beta testers, gifted access.
+- **Schema source of truth:** `lib/supabase/schema.sql` (idempotent, run in Supabase SQL Editor on changes)
+
 ### Instructions Wizard (embedded on homepage + `/instructions`)
 - CustomizedAI port — dynamic AI-generated questions, multi-model output
 - Steps: Intro → Model Selection → Foundation Upload → AI Questions → Generate → Results
@@ -51,9 +64,13 @@ Hero → Problem → Overview ("The Missing Ingredient") → How It Works (4 ste
 - Model hardcoded to `claude-opus-4-6` in API routes
 
 ### The Vault (`/vault`)
-- Shows saved custom instructions (from instructions wizard) with per-field copy
-- Lists all 6 context anchors with links to builders (currently "Coming Soon — Pro" for generated docs)
-- Will eventually show generated anchor documents with view/copy/download/regenerate
+- Per-anchor cards showing build state, version, answer count, generation date
+- Per-anchor actions when built: **Edit** (manual textarea), **Refine with AI** (instruction-based AI revision via `/api/revise-anchor`), **Regenerate** (returns to wizard at `/anchors/[slug]`)
+- Per-anchor utility: Copy, Download (.md), Delete, Upload (.md/.txt to seed)
+- Edit and Refine are mutually exclusive — opening one closes the other
+- Free / locked states for unbuilt anchors based on subscription
+- Storage: localStorage for guests, Supabase for authed (auto-migrates on sign-in via `migrateLocalToSupabase` in `lib/vault-storage.ts`)
+- See `docs/v2-scoping.md` section 4a for vault redesign direction (post-launch)
 
 ## Key Files
 | Path | Purpose |
@@ -78,6 +95,26 @@ Hero → Problem → Overview ("The Missing Ingredient") → How It Works (4 ste
 | `app/api/next-question/route.ts` | Dynamic AI question generation |
 | `app/api/analyze-answer/route.ts` | Answer analysis for insight extraction |
 | `app/api/parse-file/route.ts` | Server-side file parsing (PDF, DOCX) |
+| `app/api/generate-anchor/route.ts` | Streaming anchor doc generation (Anthropic SDK, opus-4-6, max_tokens=32000) |
+| `app/api/revise-anchor/route.ts` | Streaming "Refine with AI" rewrites |
+| `app/api/stripe/checkout/route.ts` | Stripe Checkout Session creation (subscription mode) |
+| `app/api/stripe/webhook/route.ts` | Stripe webhook handler — subscription state + name capture |
+| `app/start/page.tsx` | Server-side paywall check; routes to wizard or marketing |
+| `app/start/chart-your-course-client.tsx` | Marketing page for unsubscribed visitors |
+| `app/start/full-build-config.ts` | Chart Your Course wizard config (shared) |
+| `app/anchors/[slug]/page.tsx` | Per-anchor paywall + wizard mount |
+| `app/vault/page.tsx` | Vault dashboard — Edit / Refine / Regenerate / Copy / Download / Delete / Upload |
+| `app/success/page.tsx` | Post-checkout celebration + guest provisioning |
+| `components/anchor-paywall.tsx` | Locked-anchor teaser w/ Stripe CTA |
+| `components/upgrade-button.tsx` | Stripe checkout trigger (handles loading + already-subscribed redirect) |
+| `components/auth-provider.tsx` | Auth context, subscription state, localStorage→Supabase migration |
+| `components/wizard/document-wizard.tsx` | Anchor wizard shell, hero, completion + FullBuildComplete |
+| `lib/vault-storage.ts` | Vault doc CRUD (localStorage + Supabase, with migration on sign-in) |
+| `lib/supabase/service.ts` | Service-role client (bypasses RLS, server-only) |
+| `lib/supabase/ensure-user.ts` | Look up or create Supabase user by email |
+| `lib/supabase/send-magic-link.ts` | Magic link helper (used by /success + comp script) |
+| `lib/supabase/schema.sql` | Schema source of truth (idempotent) |
+| `scripts/comp-account.mjs` | Provision a comp account by email |
 
 ## Design System
 | Token | Hex | Usage |
@@ -141,3 +178,10 @@ This project is managed from the Vasco hub at `~/Desktop/Claude Code Projects/va
 
 ## Owner
 Chad Stamm (chad@chadstamm.com) — GitHub: chadstamm/rumo
+
+## Audit Status
+Last targeted update: 2026-04-27 (paywall + comp + name capture + vault edit). Sections that may still be stale and need a fuller audit before launch:
+- Per-section question counts in `data/questions.ts` (CLAUDE.md says 68 across 7 sections; chart-your-course total is 81; v2 audit references 77)
+- "Known Issues" list — some may be resolved, others new
+- Tech stack version pins
+- Architecture diagrams of any per-anchor question deltas
