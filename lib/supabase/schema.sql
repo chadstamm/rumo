@@ -17,6 +17,11 @@ create table if not exists profiles (
   subscription_started_at timestamptz,
   subscription_expires_at timestamptz,
   stripe_customer_id text unique,
+  -- Account category: 'standard' (default — free or paying via Stripe),
+  -- 'comp' (complimentary access, no billing), 'lifetime' (one-time / founder access).
+  -- Subscription_status still gates feature access; account_type is for reporting and intent.
+  account_type text not null default 'standard'
+    check (account_type in ('standard', 'comp', 'lifetime')),
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -28,6 +33,8 @@ alter table profiles add column if not exists subscription_status text not null 
 alter table profiles add column if not exists subscription_started_at timestamptz;
 alter table profiles add column if not exists subscription_expires_at timestamptz;
 alter table profiles add column if not exists stripe_customer_id text unique;
+alter table profiles add column if not exists account_type text not null default 'standard'
+  check (account_type in ('standard', 'comp', 'lifetime'));
 
 -- Auto-create profile on signup, capture email from auth
 -- search_path pinned to prevent schema-hijack attacks

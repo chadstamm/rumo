@@ -76,6 +76,7 @@ const { error: updateError } = await admin
     subscription_status: 'active',
     subscription_started_at: new Date().toISOString(),
     subscription_expires_at: null,
+    account_type: 'comp',
   })
   .eq('id', userId)
 
@@ -83,7 +84,7 @@ if (updateError) {
   console.error('[comp] Profile update failed:', updateError)
   process.exit(1)
 }
-console.log('[comp] subscription_status set to active.')
+console.log('[comp] subscription_status=active, account_type=comp.')
 
 const anon = createClient(url, anonKey, {
   auth: { autoRefreshToken: false, persistSession: false },
