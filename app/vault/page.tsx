@@ -27,6 +27,12 @@ export default function VaultPage() {
   const [isRevising, setIsRevising] = useState(false)
   const [revisionError, setRevisionError] = useState<string | null>(null)
 
+  // Manual-edit state — direct text edit, no AI involved.
+  const [editingSlug, setEditingSlug] = useState<string | null>(null)
+  const [editContent, setEditContent] = useState('')
+  const [isSavingEdit, setIsSavingEdit] = useState(false)
+  const [editError, setEditError] = useState<string | null>(null)
+
   useEffect(() => {
     let mounted = true
     getAllVaultDocuments().then((d) => {
@@ -71,6 +77,11 @@ export default function VaultPage() {
   // ── Refine with AI ──
 
   const handleStartRefine = (slug: string) => {
+    // Close edit panel if open — one transform at a time.
+    setEditingSlug(null)
+    setEditContent('')
+    setEditError(null)
+    setIsSavingEdit(false)
     setRefiningSlug(slug)
     setRevisionInstruction('')
     setRevisionResult('')
@@ -175,6 +186,63 @@ export default function VaultPage() {
     } catch {
       setUploadError('Could not read that file.')
       e.target.value = ''
+    }
+  }
+
+  // ── Manual edit ──
+
+  const handleStartEdit = (slug: string) => {
+    const doc = docs[slug]
+    if (!doc) return
+    // Close refine panel if open — one transform at a time.
+    setRefiningSlug(null)
+    setRevisionInstruction('')
+    setRevisionResult('')
+    setRevisionError(null)
+    setIsRevising(false)
+    setEditingSlug(slug)
+    setEditContent(doc.content)
+    setEditError(null)
+  }
+
+  const handleCancelEdit = () => {
+    setEditingSlug(null)
+    setEditContent('')
+    setEditError(null)
+    setIsSavingEdit(false)
+  }
+
+  const handleSaveEdit = async () => {
+    if (!editingSlug) return
+    const existing = docs[editingSlug]
+    if (!existing) return
+    const trimmed = editContent.trim()
+    if (!trimmed) {
+      setEditError('Cannot save an empty document.')
+      return
+    }
+    if (trimmed === existing.content.trim()) {
+      // No actual change — just close.
+      handleCancelEdit()
+      return
+    }
+
+    setIsSavingEdit(true)
+    setEditError(null)
+    try {
+      await saveToVault({
+        content: trimmed,
+        anchorSlug: editingSlug,
+        anchorTitle: existing.anchorTitle,
+        generatedAt: new Date().toISOString(),
+        answeredCount: existing.answeredCount,
+      })
+      const fresh = await getAllVaultDocuments()
+      setDocs(fresh)
+      handleCancelEdit()
+    } catch (e) {
+      setEditError(e instanceof Error ? e.message : 'Could not save changes.')
+      setIsSavingEdit(false)
     }
   }
 
@@ -336,6 +404,13 @@ export default function VaultPage() {
                         <div className="flex items-center gap-2 mb-4">
                           <button
                             type="button"
+                            onClick={() => handleStartEdit(slug)}
+                            className="flex-1 font-body text-xs font-semibold px-4 py-2.5 rounded-full border-2 border-navy/15 text-navy/80 hover:border-navy/35 hover:text-navy hover:bg-navy/5 transition-all duration-200 text-center"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            type="button"
                             onClick={() => handleStartRefine(slug)}
                             className="flex-1 font-body text-xs font-semibold px-4 py-2.5 rounded-full bg-ochre text-white hover:bg-ochre-light transition-all duration-200 text-center"
                           >
@@ -411,6 +486,50 @@ export default function VaultPage() {
                             </button>
                           )}
                         </div>
+
+                        {/* Manual edit panel */}
+                        {editingSlug === slug && (
+                          <div className="mt-5 pt-5 border-t border-navy/10">
+                            <label className="block font-body text-xs font-bold tracking-[0.15em] uppercase text-navy/70 mb-2">
+                              Edit Manually
+                            </label>
+                            <p className="font-body text-xs text-navy/45 mb-3">
+                              Direct edits to the document — no AI. Save to overwrite the current version.
+                            </p>
+                            <textarea
+                              value={editContent}
+                              onChange={(e) => setEditContent(e.target.value)}
+                              disabled={isSavingEdit}
+                              className="w-full px-3 py-2 rounded-lg border border-navy/15 bg-white font-body text-sm text-navy placeholder:text-navy/30 focus:outline-none focus:border-navy/40 focus:ring-1 focus:ring-navy/20 resize-y min-h-[400px] leading-relaxed"
+                            />
+                            <div className="flex items-center gap-2 mt-3 flex-wrap">
+                              <button
+                                type="button"
+                                onClick={handleSaveEdit}
+                                disabled={isSavingEdit || !editContent.trim()}
+                                className="font-body text-xs font-semibold px-4 py-2 rounded-full bg-navy text-white hover:bg-navy/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                              >
+                                {isSavingEdit ? 'Saving…' : 'Save'}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={handleCancelEdit}
+                                disabled={isSavingEdit}
+                                className="font-body text-xs text-navy/50 hover:text-navy/80 disabled:opacity-40 transition-colors duration-200"
+                              >
+                                Cancel
+                              </button>
+                              <span className="font-body text-xs text-navy/40 ml-auto">
+                                {editContent.length.toLocaleString()} chars
+                              </span>
+                            </div>
+                            {editError && (
+                              <div className="mt-3 px-3 py-2 rounded-lg bg-red-50 border border-red-200 font-body text-xs text-red-700">
+                                {editError}
+                              </div>
+                            )}
+                          </div>
+                        )}
 
                         {/* Refine-with-AI panel */}
                         {refiningSlug === slug && (
