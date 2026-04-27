@@ -642,7 +642,7 @@ function FullBuildComplete() {
                 Generating Your Anchors
               </h2>
               <p className="font-body text-navy/55 text-base leading-relaxed max-w-xl mx-auto">
-                Building one at a time. Each anchor takes about a minute. {completedCount} of {FULL_BUILD_ORDER.length} done.
+                Building one at a time. Each anchor takes a couple of minutes. {completedCount} of {FULL_BUILD_ORDER.length} done.
               </p>
             </>
           )}
