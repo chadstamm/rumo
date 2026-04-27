@@ -81,3 +81,23 @@ The reference is to `~/Desktop/Claude Code Projects/story-archive/` — Chad's e
 If the answer is yes for any of them, this isn't a Story Bank feature — it's a vault data-model migration. Documents become collections; collections render as documents on demand for AI upload. That's a real v2 architectural decision and changes the schema (`vault_entries` table with anchor_slug, entry_type, content, ordering, tags), the editor (per-entry CRUD instead of textarea), and the AI generation prompts.
 
 **Decision needed before any work:** Is structured-records a Story Bank-only experiment, or the v2 architectural direction for the whole vault? Chad's gut on this drives the scope.
+
+### 4c. Brand / Business Context as a separate anchor (or axis)
+
+Surfaced 2026-04-27 from George B. Thomas's Strategy Talks transcript (logged at `vasco/log/raw/2026-04-22-gbt-strategy-talks-content-system.md`). George's foundation-first content architecture has five layers — and notably **separates Personal Identity from Brand/Business Identity**:
+
+1. Brand identity — voice, tone, principles, services
+2. Personal identity — frameworks, philosophy, stories, voice
+3. Story bank — tagged by theme
+4. Timeline
+5. Sidekick Strategies (his business) — services + capabilities
+
+RUMO today maps to layers 2, 3, 4 — and collapses brand/business entirely. That's the gap.
+
+**Why it matters:** RUMO's natural buyer is a solopreneur, founder, or creator — someone with both a personal brand AND a business identity. The AI they're configuring needs to know which "who" to write as in a given moment. Personal-mode and business-mode have different vocabularies, different stakes, different voice. Today RUMO can't distinguish them.
+
+**Two ways to ship it:**
+- **Add a 7th anchor: Brand Voice / Business Identity.** Lower-lift, fits the existing model. Risks feeling tacked-on.
+- **Introduce a "context axis" — Personal vs. Organizational.** Each anchor exists on either axis (or both). User toggles which context they're feeding their AI for a given task. Higher-lift, real architectural shift, but matches how George actually uses his system in practice.
+
+**Decision needed before any work:** Is this v2 the "add Anchor #7" interpretation or the "Personal/Org axis" interpretation? Chad's Cultural Currents writer + TMC Executive Creative Director duality is the exact use case — gut-check on which model maps cleaner to his own life.
